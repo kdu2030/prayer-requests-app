@@ -1,13 +1,17 @@
 import * as React from "react";
 import { PaperProvider } from "react-native-paper";
 import { Text } from "react-native-paper";
+import { AuthScreen } from "../components/auth-screen";
+import { registerRootComponent } from "expo";
 
-const Main: React.FC = () => {
+const AppContainer: React.FC = () => {
     return (
         <PaperProvider>
-            <Text>Test</Text>
+            <AuthScreen />
         </PaperProvider>
     )
 }
 
-export default Main;
+registerRootComponent(AppContainer)
+
+export default AppContainer;

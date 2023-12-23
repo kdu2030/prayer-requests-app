@@ -8,10 +8,6 @@ import { AuthContainer } from "./auth-container";
 export function AuthScreen() {
   const { t } = useTranslation();
 
-  const backgroundImageSrc = {
-    uri: "https://cdn.pixabay.com/photo/2020/03/03/20/31/boat-4899802_1280.jpg",
-  };
-
   return (
     <AuthContainer>
       <Text variant="displaySmall" className="font-bold mt-5">

@@ -3,6 +3,7 @@ import { PaperProvider } from "react-native-paper";
 import { Text } from "react-native-paper";
 import { AuthScreen } from "../components/auth-screen";
 import { registerRootComponent } from "expo";
+import "../i18n/i18n";
 
 const AppContainer: React.FC = () => {
     return (

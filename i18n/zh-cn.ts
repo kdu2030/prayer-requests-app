@@ -3,6 +3,7 @@ export const chineseTranslations = {
   "common.actions.select": "选择",
 
   "language.chooseLanguage.text": "选你的语言",
+  "language.chooseLanguage.label": "语言",
   "language.english.option": "英文",
   "language.chinese.option": "中文",
 

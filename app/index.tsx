@@ -4,7 +4,8 @@ import { Text } from "react-native-paper";
 import { AuthScreen } from "../components/authentication/auth-screen";
 import { registerRootComponent } from "expo";
 import "../i18n/i18n";
-import { LanguageForm } from "../components/authentication/language-form";
+import { LanguageForm } from "../components/languages/language-form";
+import { NativeWindStyleSheet } from "nativewind";
 
 const AppContainer: React.FC = () => {
   return (
@@ -13,6 +14,10 @@ const AppContainer: React.FC = () => {
     </PaperProvider>
   );
 };
+
+NativeWindStyleSheet.setOutput({
+  default: "native",
+});
 
 registerRootComponent(AppContainer);
 

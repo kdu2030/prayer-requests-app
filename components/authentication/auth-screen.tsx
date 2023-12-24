@@ -4,27 +4,28 @@ import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import { AuthContainer } from "./auth-container";
+import { useI18N } from "../../hooks/use-i18n";
 
 export function AuthScreen() {
-  const { t } = useTranslation();
+  const { translate } = useI18N();
 
   return (
     <AuthContainer>
       <Text variant="displaySmall" className="font-bold mt-5">
-        {t("authScreen.welcome.header")}
+        {translate("authScreen.welcome.header")}
       </Text>
       <Text variant="displaySmall" className="font-bold">
-        {t("common.appName")}
+        {translate("common.appName")}
       </Text>
       <Text variant="bodyLarge" className="text-gray-500 mt-3">
-        {t("authScreen.tagline.text")}
+        {translate("authScreen.tagline.text")}
       </Text>
       <View className="flex flex-row w-full mt-auto mb-10">
         <Button mode="contained" className="w-2/5 mr-3">
-          {t("authScreen.signIn.action")}
+          {translate("authScreen.signIn.action")}
         </Button>
         <Button mode="outlined" className="w-2/5">
-          {t("authScreen.signUp.action")}
+          {translate("authScreen.signUp.action")}
         </Button>
       </View>
     </AuthContainer>

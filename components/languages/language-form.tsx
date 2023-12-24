@@ -9,9 +9,15 @@ import { Select } from "../inputs/select";
 import { getLanguageDropdownOptions } from "./helpers/language-helper";
 import { SupportedLanguages } from "../../types/languages";
 import { View } from "react-native";
+import { router } from "expo-router";
 
 export const LanguageForm: React.FC = () => {
   const { translate, i18n, setLanguage } = useI18N();
+
+  const onClick = () => {
+    //TODO: Save language to local storage here
+    router.push("/auth/welcome");
+  };
 
   return (
     <AuthContainer classNames="w-full px-3 mt-8" containerClassNames="h-1/3">
@@ -26,7 +32,7 @@ export const LanguageForm: React.FC = () => {
           await setLanguage(value);
         }}
       />
-      <Button mode="contained" className="mt-8">
+      <Button mode="contained" className="mt-8" onPress={onClick}>
         {translate("common.actions.save")}
       </Button>
     </AuthContainer>

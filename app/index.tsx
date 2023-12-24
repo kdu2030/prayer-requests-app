@@ -6,13 +6,10 @@ import { registerRootComponent } from "expo";
 import "../i18n/i18n";
 import { LanguageForm } from "../components/languages/language-form";
 import { NativeWindStyleSheet } from "nativewind";
+import "expo-router/entry";
 
 const AppContainer: React.FC = () => {
-  return (
-    <PaperProvider>
-      <LanguageForm />
-    </PaperProvider>
-  );
+  return <LanguageForm />;
 };
 
 NativeWindStyleSheet.setOutput({

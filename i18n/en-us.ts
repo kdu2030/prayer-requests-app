@@ -1,6 +1,7 @@
 export const englishTranslations = {
   "common.appName": "Prayer Requests App",
   "common.actions.select": "Select",
+  "common.actions.save": "Save",
 
   "language.chooseLanguage.text": "Choose your language",
   "language.chooseLanguage.label": "Language",

@@ -14,7 +14,7 @@ export const LanguageForm: React.FC = () => {
   const { translate, i18n, setLanguage } = useI18N();
 
   return (
-    <AuthContainer classNames="w-full px-3 mt-5" containerClassNames="h-2/5">
+    <AuthContainer classNames="w-full px-3 mt-8" containerClassNames="h-1/3">
       <Text variant="titleMedium" className="mb-3">
         {translate("language.chooseLanguage.text")}
       </Text>
@@ -26,6 +26,9 @@ export const LanguageForm: React.FC = () => {
           await setLanguage(value);
         }}
       />
+      <Button mode="contained" className="mt-8">
+        {translate("common.actions.save")}
+      </Button>
     </AuthContainer>
   );
 };

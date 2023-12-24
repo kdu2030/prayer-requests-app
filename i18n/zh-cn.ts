@@ -1,6 +1,7 @@
 export const chineseTranslations = {
   "common.appName": "祷告事项软件",
   "common.actions.select": "选择",
+  "common.actions.save": "保存",
 
   "language.chooseLanguage.text": "选你的语言",
   "language.chooseLanguage.label": "语言",

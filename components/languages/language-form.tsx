@@ -47,6 +47,7 @@ export const LanguageForm: React.FC = () => {
         onDismiss={() => {
           setIsErrorVisible(false);
         }}
+        onIconPress={() => setIsErrorVisible(false)}
       >
         {translate("toaster.failed.saveFailure", {
           item: translate("language.setting.label").toLocaleLowerCase(),

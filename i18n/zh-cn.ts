@@ -5,6 +5,7 @@ export const chineseTranslations = {
 
   "language.chooseLanguage.text": "选你的语言",
   "language.chooseLanguage.label": "语言",
+  "language.setting.label": "语言偏好",
   "language.english.option": "英文",
   "language.chinese.option": "中文",
 
@@ -12,4 +13,6 @@ export const chineseTranslations = {
   "authScreen.tagline.text": "最容易的方法来管理你的祷告生活",
   "authScreen.signIn.action": "登录",
   "authScreen.signUp.action": "注册",
+
+  "toaster.failed.saveFailure": "保存{{item}}失败",
 };

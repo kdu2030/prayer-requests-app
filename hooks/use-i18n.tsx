@@ -4,6 +4,12 @@ import { SupportedLanguages } from "../types/languages";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LANGUAGE_STORAGE_KEY } from "../constants/languages";
 import { ManagedErrorResponse } from "../types/error-handling";
+import { TFunction, TOptions } from "i18next";
+import {
+  InterpolationMap,
+  TFunctionDetailedResult,
+} from "i18next/typescript/t.v4";
+import { TOptionsBase } from "i18next/typescript/options";
 
 export const useI18N = () => {
   const resources = useTranslation();
@@ -22,9 +28,9 @@ export const useI18N = () => {
     }
   };
 
-  const translate = (key: TranslationKey): string => {
+  const translate = (key: TranslationKey, options?: any): string => {
     // This wrapper is for typing purposes
-    return resources.t(key);
+    return resources.t(key, options) as string;
   };
 
   const setLanguage = async (language: SupportedLanguages) => {

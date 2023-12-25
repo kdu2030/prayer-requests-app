@@ -1,8 +1,6 @@
 import * as React from "react";
 import { Text, Button } from "react-native-paper";
 import { View } from "react-native";
-import { StyleSheet } from "react-native";
-import { useTranslation } from "react-i18next";
 import { AuthContainer } from "./auth-container";
 import { useI18N } from "../../hooks/use-i18n";
 
@@ -31,9 +29,3 @@ export function AuthScreen() {
     </AuthContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  signUpButton: {
-    marginTop: "10%",
-  },
-});

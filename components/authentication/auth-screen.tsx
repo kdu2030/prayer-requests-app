@@ -1,18 +1,23 @@
 import * as React from "react";
-import { Text, Button } from "react-native-paper";
+import { Text, Button, useTheme } from "react-native-paper";
 import { View } from "react-native";
 import { AuthContainer } from "./auth-container";
 import { useI18N } from "../../hooks/use-i18n";
 
 export function AuthScreen() {
   const { translate } = useI18N();
+  const theme = useTheme();
 
   return (
     <AuthContainer>
       <Text variant="displaySmall" className="font-bold mt-5">
         {translate("authScreen.welcome.header")}
       </Text>
-      <Text variant="displaySmall" className="font-bold">
+      <Text
+        variant="displaySmall"
+        className="font-bold"
+        style={{ color: theme.colors.primary }}
+      >
         {translate("common.appName")}
       </Text>
       <Text variant="bodyLarge" className="text-gray-500 mt-3">

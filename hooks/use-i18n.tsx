@@ -22,7 +22,10 @@ export const useI18N = () => {
       if (language) {
         resources.i18n.changeLanguage(language);
       }
-      return { isError: false, value: language as SupportedLanguages };
+      return {
+        isError: false,
+        value: language as SupportedLanguages | undefined,
+      };
     } catch (error) {
       return { isError: true, error };
     }

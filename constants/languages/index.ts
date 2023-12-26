@@ -12,3 +12,5 @@ export const LANGUAGE_OPTIONS: LanguageOption[] = [
     value: SupportedLanguages.Chinese,
   },
 ];
+
+export const LANGUAGE_STORAGE_KEY = "prayerRequestsApp.language";

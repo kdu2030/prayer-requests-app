@@ -1,20 +1,24 @@
 import * as React from "react";
-import { Text, Button } from "react-native-paper";
 import { View } from "react-native";
-import { StyleSheet } from "react-native";
-import { useTranslation } from "react-i18next";
-import { AuthContainer } from "./auth-container";
+import { Button, Text, useTheme } from "react-native-paper";
+
 import { useI18N } from "../../hooks/use-i18n";
+import { AuthContainer } from "./auth-container";
 
 export function AuthScreen() {
   const { translate } = useI18N();
+  const theme = useTheme();
 
   return (
     <AuthContainer>
       <Text variant="displaySmall" className="font-bold mt-5">
         {translate("authScreen.welcome.header")}
       </Text>
-      <Text variant="displaySmall" className="font-bold">
+      <Text
+        variant="displaySmall"
+        className="font-bold"
+        style={{ color: theme.colors.primary }}
+      >
         {translate("common.appName")}
       </Text>
       <Text variant="bodyLarge" className="text-gray-500 mt-3">
@@ -31,9 +35,3 @@ export function AuthScreen() {
     </AuthContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  signUpButton: {
-    marginTop: "10%",
-  },
-});

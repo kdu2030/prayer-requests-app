@@ -1,5 +1,5 @@
-import { DropdownOption } from "../../../types/inputs/dropdown";
 import { LANGUAGE_OPTIONS } from "../../../constants/languages";
+import { DropdownOption } from "../../../types/inputs/dropdown";
 import { TranslationKey } from "../../../types/languages";
 
 export function getLanguageDropdownOptions(

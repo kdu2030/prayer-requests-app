@@ -1,15 +1,10 @@
-import { useTranslation } from "react-i18next";
-import { TranslationKey } from "../types/languages";
-import { SupportedLanguages } from "../types/languages";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTranslation } from "react-i18next";
+
 import { LANGUAGE_STORAGE_KEY } from "../constants/languages";
 import { ManagedErrorResponse } from "../types/error-handling";
-import { TFunction, TOptions } from "i18next";
-import {
-  InterpolationMap,
-  TFunctionDetailedResult,
-} from "i18next/typescript/t.v4";
-import { TOptionsBase } from "i18next/typescript/options";
+import { TranslationKey } from "../types/languages";
+import { SupportedLanguages } from "../types/languages";
 
 export const useI18N = () => {
   const resources = useTranslation();

@@ -1,12 +1,13 @@
-import * as React from "react";
-import { registerRootComponent } from "expo";
-import { LanguageForm } from "../components/languages/language-form";
-import { NativeWindStyleSheet } from "nativewind";
 import "expo-router/entry";
-import { useI18N } from "../hooks/use-i18n";
-import { ActivityIndicator, Snackbar, Text } from "react-native-paper";
-import { View } from "react-native";
+
+import { registerRootComponent } from "expo";
 import { router } from "expo-router";
+import { NativeWindStyleSheet } from "nativewind";
+import * as React from "react";
+import { View } from "react-native";
+import { ActivityIndicator, Snackbar, Text } from "react-native-paper";
+
+import { useI18N } from "../hooks/use-i18n";
 
 const AppContainer: React.FC = () => {
   const { loadLanguage, translate } = useI18N();

@@ -1,5 +1,6 @@
 import * as React from "react";
 import DropDown from "react-native-paper-dropdown";
+
 import { DropdownOption } from "../../types/inputs/dropdown";
 
 type Props = {

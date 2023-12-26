@@ -1,12 +1,13 @@
+import { router } from "expo-router";
 import * as React from "react";
 import { Text } from "react-native-paper";
-import { AuthContainer } from "../authentication/auth-container";
 import { Button, Snackbar } from "react-native-paper";
+
 import { useI18N } from "../../hooks/use-i18n";
+import { SupportedLanguages } from "../../types/languages";
+import { AuthContainer } from "../authentication/auth-container";
 import { Select } from "../inputs/select";
 import { getLanguageDropdownOptions } from "./helpers/language-helper";
-import { SupportedLanguages } from "../../types/languages";
-import { router } from "expo-router";
 
 export const LanguageForm: React.FC = () => {
   const { translate, i18n, setLanguage, storeLanguage } = useI18N();

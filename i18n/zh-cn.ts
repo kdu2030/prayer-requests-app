@@ -14,8 +14,15 @@ export const chineseTranslations = {
 
   "authScreen.welcome.header": "欢迎使用",
   "authScreen.tagline.text": "最容易的方法来管理你的祷告生活",
-  "authScreen.signIn.action": "登录",
-  "authScreen.signUp.action": "注册",
+  "authScreen.signin.action": "登录",
+  "authScreen.signup.action": "注册",
+
+  "signup.createAccount.label": "建立你的帐号",
+  "signup.username.label": "用户名",
+  "signup.email.label": "电子邮件地址",
+  "signup.password.label": "密码",
+  "signup.confirmPassword.label": "确认密码",
+  "signup.haveAccount.text": "已经有账号吗？",
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "如载{{item}}失败",

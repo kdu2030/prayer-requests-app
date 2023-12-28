@@ -14,8 +14,15 @@ export const englishTranslations = {
 
   "authScreen.welcome.header": "Welcome To",
   "authScreen.tagline.text": "The easier way to manage your prayer life",
-  "authScreen.signIn.action": "Sign In",
-  "authScreen.signUp.action": "Sign Up",
+  "authScreen.signin.action": "Sign In",
+  "authScreen.signup.action": "Sign Up",
+
+  "signup.createAccount.label": "Create Your Account",
+  "signup.username.label": "Username",
+  "signup.email.label": "Email",
+  "signup.password.label": "Password",
+  "signup.confirmPassword.label": "Confirm Password",
+  "signup.haveAccount.text": "Already have an account?",
 
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",

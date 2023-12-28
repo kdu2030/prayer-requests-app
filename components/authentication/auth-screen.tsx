@@ -4,6 +4,7 @@ import { Button, Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { AuthContainer } from "./auth-container";
+import { router } from "expo-router";
 
 export function AuthScreen() {
   const { translate } = useI18N();
@@ -26,10 +27,14 @@ export function AuthScreen() {
       </Text>
       <View className="flex flex-row w-full mt-auto mb-10">
         <Button mode="contained" className="w-2/5 mr-3">
-          {translate("authScreen.signIn.action")}
+          {translate("authScreen.signin.action")}
         </Button>
-        <Button mode="outlined" className="w-2/5">
-          {translate("authScreen.signUp.action")}
+        <Button
+          mode="outlined"
+          className="w-2/5"
+          onPress={() => router.push("/auth/sign-up")}
+        >
+          {translate("authScreen.signup.action")}
         </Button>
       </View>
     </AuthContainer>

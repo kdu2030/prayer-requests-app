@@ -13,10 +13,13 @@ interface Props extends TextInputProps {
   classNames?: string;
   containerClassNames?: string;
   onBlur?: () => void;
+  required?: boolean;
 }
 
 export const TextInput: React.FC<Props> = ({
   name,
+  label,
+  required,
   classNames = "",
   containerClassNames = "",
   onBlur = () => {},
@@ -29,6 +32,7 @@ export const TextInput: React.FC<Props> = ({
   return (
     <View className={containerClassNames}>
       <PaperTextInput
+        label={required ? `${label} *` : label}
         value={field.value}
         className={`${classNames} ${isError ? "bg-red-200" : ""}`}
         onChangeText={(text: string) => {

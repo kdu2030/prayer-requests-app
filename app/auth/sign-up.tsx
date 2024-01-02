@@ -38,6 +38,7 @@ const Signup: React.FC = () => {
                 name={"username"}
                 mode={"flat"}
                 containerClassNames="mb-5"
+                required
               />
 
               <TextInput

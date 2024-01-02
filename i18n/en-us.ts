@@ -24,6 +24,8 @@ export const englishTranslations = {
   "signup.confirmPassword.label": "Confirm Password",
   "signup.haveAccount.text": "Already have an account?",
 
+  "form.validation.isRequired.error": "{{field}} is required.",
+
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",
 };

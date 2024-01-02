@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Text, useTheme, TextInput, Button } from "react-native-paper";
+import { Text, useTheme, Button } from "react-native-paper";
 import { useI18N } from "../../hooks/use-i18n";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import { Formik } from "formik";
-import { TextInput as FormikTextInput } from "../../components/inputs/text-input";
+import { TextInput } from "../../components/inputs/text-input";
 import { signupValidationSchema } from "../../helpers/signup/signup-validation-schema";
 
 const Signup: React.FC = () => {
@@ -11,7 +11,10 @@ const Signup: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <View className="flex flex-1 items-center">
+    <ScrollView
+      className="flex flex-1"
+      contentContainerStyle={{ alignItems: "center" }}
+    >
       <View className="flex flex-col">
         <Formik
           initialValues={{}}
@@ -33,32 +36,38 @@ const Signup: React.FC = () => {
                 {translate("signup.createAccount.label")}
               </Text>
 
-              <FormikTextInput
+              <TextInput
+                name="username"
                 label={translate("signup.username.label")}
-                name={"username"}
                 mode={"flat"}
                 containerClassNames="mb-5"
                 required
               />
 
               <TextInput
+                name="email"
                 label={translate("signup.email.label")}
-                className="mb-5"
+                containerClassNames="mb-5"
                 mode={"flat"}
+                required
               />
 
               <TextInput
+                name="password"
                 label={translate("signup.password.label")}
-                className="mb-5"
+                containerClassNames="mb-5"
                 mode={"flat"}
                 secureTextEntry={true}
+                required
               />
 
               <TextInput
+                name="confirmPassword"
                 label={translate("signup.confirmPassword.label")}
-                className="mb-5"
+                containerClassNames="mb-5"
                 mode={"flat"}
                 secureTextEntry={true}
+                required
               />
 
               <Button mode="contained" className="mt-3 mb-10">
@@ -75,7 +84,7 @@ const Signup: React.FC = () => {
           </Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

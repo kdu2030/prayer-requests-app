@@ -16,7 +16,7 @@ const Signup: React.FC = () => {
       className="flex flex-col flex-1"
       contentContainerStyle={{ alignItems: "center" }}
     >
-      <View className="flex flex-col">
+      <View className="flex flex-col" style={{ minWidth: "80%" }}>
         <Formik
           initialValues={{}}
           onSubmit={() => {}}

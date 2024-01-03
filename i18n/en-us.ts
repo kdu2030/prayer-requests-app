@@ -25,8 +25,10 @@ export const englishTranslations = {
   "signup.haveAccount.text": "Already have an account?",
 
   "form.validation.isRequired.error": "{{field}} is required.",
+  "form.validation.isInvalid.error": "{{field}} is invalid.",
   "form.validation.confirmPasswordRequired.error":
     "Please confirm your password.",
+  "form.validation.passwordsMismatch.error": "Passwords do not match.",
 
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",

@@ -5,6 +5,7 @@ import { View, ScrollView } from "react-native";
 import { Formik } from "formik";
 import { TextInput } from "../../components/inputs/text-input";
 import { signupValidationSchema } from "../../helpers/signup/signup-validation-schema";
+import { isEmpty } from "lodash";
 
 const Signup: React.FC = () => {
   const { translate } = useI18N();
@@ -12,7 +13,7 @@ const Signup: React.FC = () => {
 
   return (
     <ScrollView
-      className="flex flex-1"
+      className="flex flex-col flex-1"
       contentContainerStyle={{ alignItems: "center" }}
     >
       <View className="flex flex-col">
@@ -70,14 +71,18 @@ const Signup: React.FC = () => {
                 required
               />
 
-              <Button mode="contained" className="mt-3 mb-10">
+              <Button
+                mode="contained"
+                className="mt-3 mb-10"
+                disabled={!isEmpty(props.touched) && !props.isValid}
+              >
                 {translate("authScreen.signup.action")}
               </Button>
             </>
           )}
         </Formik>
 
-        <View className="flex flex-row w-full items-center">
+        <View className="flex flex-row mx-auto">
           <Text className="mr-3">{translate("signup.haveAccount.text")}</Text>
           <Text className="font-bold" style={{ color: theme.colors.primary }}>
             {translate("authScreen.signin.action")}

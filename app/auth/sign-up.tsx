@@ -2,14 +2,23 @@ import * as React from "react";
 import { Text, useTheme, Button } from "react-native-paper";
 import { useI18N } from "../../hooks/use-i18n";
 import { View, ScrollView } from "react-native";
-import { Formik } from "formik";
+import { Formik, FormikProps } from "formik";
 import { TextInput } from "../../components/inputs/text-input";
 import { signupValidationSchema } from "../../helpers/signup/signup-validation-schema";
 import { isEmpty } from "lodash";
+import { SignupForm } from "../../types/forms/signup-form";
+import { postSignup } from "../../api/post-signup";
+import { useAPIDataContext } from "../../hooks/use-api-data";
 
 const Signup: React.FC = () => {
   const { translate } = useI18N();
   const theme = useTheme();
+  const { baseURL } = useAPIDataContext();
+
+  const onSubmit = async (values: SignupForm) => {
+    const response = await postSignup(baseURL, values);
+    // console.log(response);
+  };
 
   return (
     <ScrollView
@@ -19,7 +28,7 @@ const Signup: React.FC = () => {
       <View className="flex flex-col" style={{ minWidth: "80%" }}>
         <Formik
           initialValues={{}}
-          onSubmit={() => {}}
+          onSubmit={onSubmit}
           validationSchema={signupValidationSchema(translate)}
           validateOnBlur
         >
@@ -74,6 +83,7 @@ const Signup: React.FC = () => {
               <Button
                 mode="contained"
                 className="mt-3 mb-10"
+                onPress={() => props.submitForm()}
                 disabled={!isEmpty(props.touched) && !props.isValid}
               >
                 {translate("authScreen.signup.action")}

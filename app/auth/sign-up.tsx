@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, useTheme, Button } from "react-native-paper";
 import { useI18N } from "../../hooks/use-i18n";
 import { View, ScrollView } from "react-native";
-import { Formik, FormikProps } from "formik";
+import { Formik } from "formik";
 import { TextInput } from "../../components/inputs/text-input";
 import { signupValidationSchema } from "../../helpers/signup/signup-validation-schema";
 import { isEmpty } from "lodash";
@@ -22,8 +22,12 @@ const Signup: React.FC = () => {
 
   return (
     <ScrollView
-      className="flex flex-col flex-1"
-      contentContainerStyle={{ alignItems: "center" }}
+      contentContainerStyle={{
+        display: "flex",
+        flexGrow: 1,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
     >
       <View className="flex flex-col" style={{ minWidth: "80%" }}>
         <Formik
@@ -36,7 +40,7 @@ const Signup: React.FC = () => {
             <>
               <Text
                 variant="displaySmall"
-                className="font-bold mt-20"
+                className="font-bold"
                 style={{ color: theme.colors.primary }}
               >
                 {translate("common.appName")}

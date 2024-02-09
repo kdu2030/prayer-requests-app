@@ -6,8 +6,7 @@ import {
 } from "../types/context/api-data-context-type";
 
 const defaultAPIData: APIDataContextType = {
-  // TODO: Change this to point to production
-  baseURL: "http://localhost:5000",
+  baseURL: "https://prayer-app-api.onrender.com",
   setUserData: () => {},
   setUserTokens: () => {},
 };

@@ -13,12 +13,12 @@ export const postSignup = async (
 ): Promise<SignupResponse> => {
   try {
     const URL = `${baseURL}/auth/signup`;
+    console.log(URL);
     const signupResponse = await axios.post<SignupResponse>(URL, signupRequest);
 
     return signupResponse.data;
   } catch (error) {
     const axiosError = error as AxiosError<SignupResponse>;
-    console.log(axiosError);
     return { isError: true, errors: axiosError?.response?.data.errors };
   }
 };

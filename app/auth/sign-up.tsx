@@ -17,7 +17,7 @@ const Signup: React.FC = () => {
 
   const onSubmit = async (values: SignupForm) => {
     const response = await postSignup(baseURL, values);
-    // console.log(response);
+    console.log(response);
   };
 
   return (

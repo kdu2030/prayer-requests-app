@@ -8,11 +8,11 @@ export interface SignupResponse extends BaseAPIResponse {
 }
 
 export const postSignup = async (
-  baseURL: string,
+  baseUrl: string,
   signupRequest: SignupForm
 ): Promise<SignupResponse> => {
   try {
-    const URL = `${baseURL}/auth/signup`;
+    const URL = `${baseUrl}/auth/signup`;
     console.log(URL);
     const signupResponse = await axios.post<SignupResponse>(URL, signupRequest);
 

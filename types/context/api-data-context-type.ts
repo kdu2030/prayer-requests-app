@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export type UserData = {
-  userID?: string;
+  userId?: string;
   username?: string;
   email?: string;
 };
@@ -13,8 +13,8 @@ export type UserTokenPair = {
   refreshTokenExpiryDate: Date;
 };
 
-export type APIDataContextType = {
-  baseURL: string;
+export type ApiDataContextType = {
+  baseUrl: string;
   userTokens?: UserTokenPair;
   setUserTokens: React.Dispatch<
     React.SetStateAction<UserTokenPair | undefined>

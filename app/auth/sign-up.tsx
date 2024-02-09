@@ -13,10 +13,10 @@ import { useAPIDataContext } from "../../hooks/use-api-data";
 const Signup: React.FC = () => {
   const { translate } = useI18N();
   const theme = useTheme();
-  const { baseURL } = useAPIDataContext();
+  const { baseUrl } = useAPIDataContext();
 
   const onSubmit = async (values: SignupForm) => {
-    const response = await postSignup(baseURL, values);
+    const response = await postSignup(baseUrl, values);
     console.log(response);
   };
 

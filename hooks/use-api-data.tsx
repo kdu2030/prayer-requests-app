@@ -1,12 +1,12 @@
 import * as React from "react";
 import {
   UserData,
-  APIDataContextType,
+  ApiDataContextType,
   UserTokenPair,
 } from "../types/context/api-data-context-type";
 
-const defaultAPIData: APIDataContextType = {
-  baseURL: "https://prayer-app-api.onrender.com",
+const defaultAPIData: ApiDataContextType = {
+  baseUrl: "https://prayer-app-api.onrender.com",
   setUserData: () => {},
   setUserTokens: () => {},
 };
@@ -26,7 +26,13 @@ export const APIDataContextProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <APIDataContext.Provider
-      value={{ baseURL, userData, setUserData, userTokens, setUserTokens }}
+      value={{
+        baseUrl: baseURL,
+        userData,
+        setUserData,
+        userTokens,
+        setUserTokens,
+      }}
     >
       {children}
     </APIDataContext.Provider>

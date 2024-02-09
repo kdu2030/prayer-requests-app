@@ -8,12 +8,12 @@ import { signupValidationSchema } from "../../helpers/signup/signup-validation-s
 import { isEmpty } from "lodash";
 import { SignupForm } from "../../types/forms/signup-form";
 import { postSignup } from "../../api/post-signup";
-import { useAPIDataContext } from "../../hooks/use-api-data";
+import { useApiDataContext } from "../../hooks/use-api-data";
 
 const Signup: React.FC = () => {
   const { translate } = useI18N();
   const theme = useTheme();
-  const { baseUrl } = useAPIDataContext();
+  const { baseUrl } = useApiDataContext();
 
   const onSubmit = async (values: SignupForm) => {
     const response = await postSignup(baseUrl, values);

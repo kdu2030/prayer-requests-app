@@ -5,13 +5,13 @@ import {
   UserTokenPair,
 } from "../types/context/api-data-context-type";
 
-const defaultAPIData: ApiDataContextType = {
+const defaultApiData: ApiDataContextType = {
   baseUrl: "https://prayer-app-api.onrender.com",
   setUserData: () => {},
   setUserTokens: () => {},
 };
 
-const APIDataContext = React.createContext(defaultAPIData);
+const ApiDataContext = React.createContext(defaultApiData);
 
 type Props = {
   children: React.ReactNode;
@@ -25,7 +25,7 @@ export const APIDataContextProvider: React.FC<Props> = ({ children }) => {
   >();
 
   return (
-    <APIDataContext.Provider
+    <ApiDataContext.Provider
       value={{
         baseUrl: baseURL,
         userData,
@@ -35,8 +35,8 @@ export const APIDataContextProvider: React.FC<Props> = ({ children }) => {
       }}
     >
       {children}
-    </APIDataContext.Provider>
+    </ApiDataContext.Provider>
   );
 };
 
-export const useAPIDataContext = () => React.useContext(APIDataContext);
+export const useApiDataContext = () => React.useContext(ApiDataContext);

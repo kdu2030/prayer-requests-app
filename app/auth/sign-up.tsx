@@ -24,7 +24,7 @@ const Signup: React.FC = () => {
     const response = await postSignup(baseUrl, formProps.values);
     setIsLoading(false);
 
-    if (errorsArrayIncludes(response, "Email", "Email must be unique")) {
+    if (errorsArrayIncludes(response, "email", "Email must be unique")) {
       formProps.setFieldError(
         "email",
         translate("form.validation.emailUnique.error")

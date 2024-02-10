@@ -28,6 +28,8 @@ export const chineseTranslations = {
   "form.validation.isInvalid.error": "{{field}}无效。",
   "form.validation.confirmPasswordRequired.error": "请确认你的密码。",
   "form.validation.passwordsMismatch.error": "密码不一样。",
+  "form.validation.uniqueEmail.error":
+    "此电子邮件已被使用。请用另一个电子邮件。",
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "如载{{item}}失败",

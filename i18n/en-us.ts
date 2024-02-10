@@ -29,6 +29,8 @@ export const englishTranslations = {
   "form.validation.confirmPasswordRequired.error":
     "Please confirm your password.",
   "form.validation.passwordsMismatch.error": "Passwords do not match.",
+  "form.validation.emailUnique.error":
+    "This email has already been used. Please use another email.",
 
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",

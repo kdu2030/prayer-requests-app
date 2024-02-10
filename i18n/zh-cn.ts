@@ -33,4 +33,5 @@ export const chineseTranslations = {
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "如载{{item}}失败",
+  "toaster.failed.signupFailure": "注册失败",
 };

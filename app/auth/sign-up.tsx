@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, useTheme, Button } from "react-native-paper";
+import { Text, useTheme, Button, Snackbar } from "react-native-paper";
 import { useI18N } from "../../hooks/use-i18n";
 import { View, ScrollView } from "react-native";
 import { Formik, FormikProps } from "formik";
@@ -17,10 +17,10 @@ const Signup: React.FC = () => {
   const theme = useTheme();
   const { baseUrl } = useApiDataContext();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
 
   const onSubmit = async (formProps: FormikProps<SignupForm>) => {
     setIsLoading(true);
-
     const response = await postSignup(baseUrl, formProps.values);
     setIsLoading(false);
 
@@ -29,7 +29,13 @@ const Signup: React.FC = () => {
         "email",
         translate("form.validation.emailUnique.error")
       );
+      return;
+    } else if (response.isError) {
+      setIsErrorVisible(true);
+      return;
     }
+
+    //TODO: Redirect to homepage here
   };
 
   return (
@@ -120,6 +126,18 @@ const Signup: React.FC = () => {
             </Text>
           </View>
         </View>
+
+        <Snackbar
+          className="bg-red-700"
+          duration={3000}
+          visible={isErrorVisible}
+          onDismiss={() => {
+            setIsErrorVisible(false);
+          }}
+          onIconPress={() => setIsErrorVisible(false)}
+        >
+          {translate("toaster.failed.signupError")}
+        </Snackbar>
       </ScrollView>
     </>
   );

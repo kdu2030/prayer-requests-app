@@ -34,4 +34,5 @@ export const englishTranslations = {
 
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",
+  "toaster.failed.signupError": "Sign up failed",
 };

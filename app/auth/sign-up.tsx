@@ -11,7 +11,6 @@ import { postSignup } from "../../api/post-signup";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { ProgressBar } from "react-native-paper";
 import {
-  decodeJwtToken,
   errorsArrayIncludes,
   handleSuccessfulAuthentication,
 } from "../../helpers/common/auth-helpers";

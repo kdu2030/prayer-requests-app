@@ -10,12 +10,16 @@ import { SignupForm } from "../../types/forms/signup-form";
 import { postSignup } from "../../api/post-signup";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { ProgressBar } from "react-native-paper";
-import { errorsArrayIncludes } from "../../helpers/common/validation-helpers";
+import {
+  decodeJwtToken,
+  errorsArrayIncludes,
+  handleSuccessfulAuthentication,
+} from "../../helpers/common/auth-helpers";
 
 const Signup: React.FC = () => {
   const { translate } = useI18N();
   const theme = useTheme();
-  const { baseUrl } = useApiDataContext();
+  const { baseUrl, setUserData, setUserTokens } = useApiDataContext();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
 
@@ -30,12 +34,21 @@ const Signup: React.FC = () => {
         translate("form.validation.emailUnique.error")
       );
       return;
-    } else if (response.isError) {
+    } else if (
+      response.isError ||
+      !response.value.token ||
+      !response.value.refreshToken
+    ) {
       setIsErrorVisible(true);
       return;
     }
 
-    //TODO: Redirect to homepage here
+    handleSuccessfulAuthentication(
+      response.value.token,
+      response.value.refreshToken,
+      setUserData,
+      setUserTokens
+    );
   };
 
   return (

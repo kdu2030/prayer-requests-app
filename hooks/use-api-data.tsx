@@ -1,7 +1,8 @@
 import * as React from "react";
+
 import {
-  UserData,
   ApiDataContextType,
+  UserData,
   UserTokenPair,
 } from "../types/context/api-data-context-type";
 

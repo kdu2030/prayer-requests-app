@@ -1,10 +1,12 @@
 import "expo-router/entry";
+
 import { registerRootComponent } from "expo";
 import { router } from "expo-router";
 import { NativeWindStyleSheet } from "nativewind";
 import * as React from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Snackbar, Text } from "react-native-paper";
+
 import { useI18N } from "../hooks/use-i18n";
 
 const AppContainer: React.FC = () => {

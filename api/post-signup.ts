@@ -1,9 +1,10 @@
+import axios, { AxiosError } from "axios";
+
 import {
   ApiResponse,
   ValidationErrorResponse,
 } from "../types/api-response-types";
 import { SignupForm } from "../types/forms/signup-form";
-import axios, { AxiosError } from "axios";
 
 export interface ApiSignupResponse extends ValidationErrorResponse {
   token?: string;

@@ -1,20 +1,21 @@
-import * as React from "react";
-import { Text, useTheme, Button, Snackbar } from "react-native-paper";
-import { useI18N } from "../../hooks/use-i18n";
-import { View, ScrollView } from "react-native";
 import { Formik, FormikProps, setNestedObjectValues } from "formik";
-import { TextInput } from "../../components/inputs/text-input";
-import { signupValidationSchema } from "../../helpers/signup/signup-validation-schema";
 import { isEmpty } from "lodash";
-import { SignupForm } from "../../types/forms/signup-form";
-import { postSignup } from "../../api/post-signup";
-import { useApiDataContext } from "../../hooks/use-api-data";
+import * as React from "react";
+import { ScrollView,View } from "react-native";
+import { Button, Snackbar,Text, useTheme } from "react-native-paper";
 import { ProgressBar } from "react-native-paper";
+
+import { postSignup } from "../../api/post-signup";
+import { TextInput } from "../../components/inputs/text-input";
+import { SignupTestIds } from "../../constants/auth/auth-constants";
 import {
   errorsArrayIncludes,
   handleSuccessfulAuthentication,
 } from "../../helpers/common/auth-helpers";
-import { SignupTestIds } from "../../constants/auth/auth-constants";
+import { signupValidationSchema } from "../../helpers/signup/signup-validation-schema";
+import { useApiDataContext } from "../../hooks/use-api-data";
+import { useI18N } from "../../hooks/use-i18n";
+import { SignupForm } from "../../types/forms/signup-form";
 
 const Signup: React.FC = () => {
   const { translate } = useI18N();

@@ -1,10 +1,11 @@
 jest.useFakeTimers();
 
-import * as React from "react";
-import { mountComponent } from "./utils/test-utils";
 import { RenderResult, waitFor } from "@testing-library/react-native";
+import * as React from "react";
+
 import AppContainer from "../app/index";
 import { SupportedLanguages } from "../types/languages";
+import { mountComponent } from "./utils/test-utils";
 
 let component: RenderResult;
 const mockLoadLanguage = jest.fn();

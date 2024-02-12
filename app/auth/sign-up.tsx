@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, useTheme, Button, Snackbar } from "react-native-paper";
 import { useI18N } from "../../hooks/use-i18n";
 import { View, ScrollView } from "react-native";
-import { Formik, FormikProps } from "formik";
+import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { TextInput } from "../../components/inputs/text-input";
 import { signupValidationSchema } from "../../helpers/signup/signup-validation-schema";
 import { isEmpty } from "lodash";
@@ -14,6 +14,7 @@ import {
   errorsArrayIncludes,
   handleSuccessfulAuthentication,
 } from "../../helpers/common/auth-helpers";
+import { SignupTestIds } from "../../constants/auth/auth-constants";
 
 const Signup: React.FC = () => {
   const { translate } = useI18N();
@@ -23,6 +24,16 @@ const Signup: React.FC = () => {
   const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
 
   const onSubmit = async (formProps: FormikProps<SignupForm>) => {
+    const errors = await formProps.validateForm();
+
+    if (!isEmpty(errors)) {
+      formProps.setErrors(errors);
+      formProps.setTouched(
+        setNestedObjectValues({ ...errors, ...formProps.touched }, true)
+      );
+      return;
+    }
+
     setIsLoading(true);
     const response = await postSignup(baseUrl, formProps.values);
     setIsLoading(false);
@@ -88,6 +99,7 @@ const Signup: React.FC = () => {
                   label={translate("signup.username.label")}
                   mode={"flat"}
                   containerClassNames="mb-5"
+                  testID={SignupTestIds.usernameInput}
                   required
                 />
 
@@ -96,6 +108,7 @@ const Signup: React.FC = () => {
                   label={translate("signup.email.label")}
                   containerClassNames="mb-5"
                   mode={"flat"}
+                  testID={SignupTestIds.emailInput}
                   required
                 />
 
@@ -105,6 +118,7 @@ const Signup: React.FC = () => {
                   containerClassNames="mb-5"
                   mode={"flat"}
                   secureTextEntry={true}
+                  testID={SignupTestIds.passwordInput}
                   required
                 />
 
@@ -114,6 +128,7 @@ const Signup: React.FC = () => {
                   containerClassNames="mb-5"
                   mode={"flat"}
                   secureTextEntry={true}
+                  testID={SignupTestIds.confirmPasswordInput}
                   required
                 />
 
@@ -124,6 +139,7 @@ const Signup: React.FC = () => {
                   disabled={
                     isLoading || (!isEmpty(props.touched) && !props.isValid)
                   }
+                  testID={SignupTestIds.submitButton}
                 >
                   {translate("authScreen.signup.action")}
                 </Button>

@@ -17,7 +17,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const APIDataContextProvider: React.FC<Props> = ({ children }) => {
+export const ApiDataContextProvider: React.FC<Props> = ({ children }) => {
   const baseURL = process.env.EXPO_PUBLIC_API_URL ?? "";
   const [userData, setUserData] = React.useState<UserData>({});
   const [userTokens, setUserTokens] = React.useState<

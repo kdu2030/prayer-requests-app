@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
@@ -26,10 +27,14 @@ export function AuthScreen() {
       </Text>
       <View className="flex flex-row w-full mt-auto mb-10">
         <Button mode="contained" className="w-2/5 mr-3">
-          {translate("authScreen.signIn.action")}
+          {translate("authScreen.signin.action")}
         </Button>
-        <Button mode="outlined" className="w-2/5">
-          {translate("authScreen.signUp.action")}
+        <Button
+          mode="outlined"
+          className="w-2/5"
+          onPress={() => router.push("/auth/sign-up")}
+        >
+          {translate("authScreen.signup.action")}
         </Button>
       </View>
     </AuthContainer>

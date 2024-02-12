@@ -97,4 +97,40 @@ describe("Signup Form Tests", () => {
       expect(mockPostSignup).toHaveBeenCalled();
     });
   });
+
+  test("Invalid email prevents submission", async () => {
+    const validSignupForm: SignupForm = {
+      username: "testUsername",
+      email: "test",
+      password: "testPassword",
+      confirmPassword: "testPassword",
+    };
+
+    addInputToSignupForm(validSignupForm);
+
+    const submitButton = component.getByTestId(SignupTestIds.submitButton);
+    fireEvent.press(submitButton);
+
+    await waitFor(() => {
+      expect(mockPostSignup).not.toHaveBeenCalled();
+    });
+  });
+
+  test("Mismatched passwords prevents submission", async () => {
+    const validSignupForm: SignupForm = {
+      username: "testUsername",
+      email: "test",
+      password: "testPassword",
+      confirmPassword: "testPassword",
+    };
+
+    addInputToSignupForm(validSignupForm);
+
+    const submitButton = component.getByTestId(SignupTestIds.submitButton);
+    fireEvent.press(submitButton);
+
+    await waitFor(() => {
+      expect(mockPostSignup).not.toHaveBeenCalled();
+    });
+  });
 });

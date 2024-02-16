@@ -4,7 +4,7 @@ import {
   ApiResponse,
   ValidationErrorResponse,
 } from "../types/api-response-types";
-import { SignupForm } from "../types/forms/signup-form";
+import { SignupForm } from "../types/forms/authentication-forms";
 
 export interface ApiSignupResponse extends ValidationErrorResponse {
   token?: string;

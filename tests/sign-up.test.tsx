@@ -9,7 +9,7 @@ import { ApiSignupResponse } from "../api/post-signup";
 import Signup from "../app/auth/sign-up";
 import { SignupTestIds } from "../constants/auth/auth-constants";
 import { ApiResponse } from "../types/api-response-types";
-import { SignupForm } from "../types/forms/authentication-forms";
+import { SignupForm } from "../types/forms/auth-forms";
 import { SupportedLanguages } from "../types/languages";
 import { userTokenPair } from "./mock-data/mock-tokens";
 import { mountComponent } from "./utils/test-utils";

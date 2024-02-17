@@ -15,7 +15,7 @@ import {
 import { signupValidationSchema } from "../../helpers/signup/signup-validation-schema";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
-import { SignupForm } from "../../types/forms/authentication-forms";
+import { SignupForm } from "../../types/forms/auth-forms";
 
 const Signup: React.FC = () => {
   const { translate } = useI18N();

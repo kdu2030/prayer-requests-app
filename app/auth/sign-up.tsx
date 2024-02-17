@@ -11,8 +11,8 @@ import { SignupTestIds } from "../../constants/auth/auth-constants";
 import {
   errorsArrayIncludes,
   handleSuccessfulAuthentication,
-} from "../../helpers/common/auth-helpers";
-import { signupValidationSchema } from "../../helpers/signup/signup-validation-schema";
+} from "../../helpers/auth/auth-helpers";
+import { signupValidationSchema } from "../../helpers/auth/signup-validation-schema";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SignupForm } from "../../types/forms/auth-forms";

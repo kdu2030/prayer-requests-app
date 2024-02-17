@@ -14,6 +14,7 @@ import { isEmpty } from "lodash";
 import { SignupTestIds } from "../../constants/auth/auth-constants";
 import { useI18N } from "../../hooks/use-i18n";
 import { router } from "expo-router";
+import { signinValidationSchema } from "../../helpers/auth/signin-validation-schema";
 
 const Signin: React.FC = () => {
   const theme = useTheme();
@@ -31,6 +32,7 @@ const Signin: React.FC = () => {
     >
       <View className="flex flex-col" style={{ minWidth: "80%" }}>
         <Formik
+          validationSchema={signinValidationSchema(translate)}
           initialValues={{}}
           onSubmit={() => {}}
           validateOnChange={false}

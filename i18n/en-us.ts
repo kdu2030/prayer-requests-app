@@ -24,6 +24,9 @@ export const englishTranslations = {
   "signup.confirmPassword.label": "Confirm Password",
   "signup.haveAccount.text": "Already have an account?",
 
+  "signin.signinToAccount.label": "Sign in to your account",
+  "signin.missingAccount.text": "Don't have an account?",
+
   "form.validation.isRequired.error": "{{field}} is required.",
   "form.validation.isInvalid.error": "{{field}} is invalid.",
   "form.validation.confirmPasswordRequired.error":

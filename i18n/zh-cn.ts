@@ -24,6 +24,9 @@ export const chineseTranslations = {
   "signup.confirmPassword.label": "确认密码",
   "signup.haveAccount.text": "已经有账号吗？",
 
+  "signin.signinToAccount.label": "登录到你的账号",
+  "signin.missingAccount.label": "还没有长好？",
+
   "form.validation.isRequired.error": "{{field}}必填。",
   "form.validation.isInvalid.error": "{{field}}无效。",
   "form.validation.confirmPasswordRequired.error": "请确认你的密码。",

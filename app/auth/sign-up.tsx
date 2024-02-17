@@ -16,6 +16,7 @@ import { signupValidationSchema } from "../../helpers/signup/signup-validation-s
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SignupForm } from "../../types/forms/auth-forms";
+import { router } from "expo-router";
 
 const Signup: React.FC = () => {
   const { translate } = useI18N();
@@ -77,6 +78,7 @@ const Signup: React.FC = () => {
             initialValues={{}}
             onSubmit={() => {}}
             validationSchema={signupValidationSchema(translate)}
+            validateOnChange={false}
             validateOnBlur
           >
             {(props) => (
@@ -150,7 +152,13 @@ const Signup: React.FC = () => {
 
           <View className="flex flex-row mx-auto">
             <Text className="mr-3">{translate("signup.haveAccount.text")}</Text>
-            <Text className="font-bold" style={{ color: theme.colors.primary }}>
+            <Text
+              className="font-bold"
+              style={{ color: theme.colors.primary }}
+              onPress={() => {
+                router.push("/auth/sign-in");
+              }}
+            >
               {translate("authScreen.signin.action")}
             </Text>
           </View>

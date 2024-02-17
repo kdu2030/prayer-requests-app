@@ -35,8 +35,8 @@ const Signin: React.FC = () => {
           validationSchema={signinValidationSchema(translate)}
           initialValues={{}}
           onSubmit={() => {}}
-          validateOnChange={false}
           validateOnBlur
+          validateOnChange={false}
         >
           {(props) => (
             <>

@@ -78,8 +78,8 @@ const Signup: React.FC = () => {
             initialValues={{}}
             onSubmit={() => {}}
             validationSchema={signupValidationSchema(translate)}
-            validateOnChange={false}
             validateOnBlur
+            validateOnChange={false}
           >
             {(props) => (
               <>

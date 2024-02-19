@@ -34,8 +34,11 @@ export const englishTranslations = {
   "form.validation.passwordsMismatch.error": "Passwords do not match.",
   "form.validation.emailUnique.error":
     "This email has already been used. Please use another email.",
+  "form.validation.emailNotFound.error":
+    "We couldn't find a user with this email.",
+  "form.validation.incorrectPassword.error": "Your password is incorrect",
 
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",
-  "toaster.failed.signupError": "Sign up failed",
+  "toaster.failed.genericFailure": "{{item}} failed",
 };

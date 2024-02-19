@@ -5,7 +5,7 @@ import {
 } from "@testing-library/react-native";
 import * as React from "react";
 
-import { ApiSignupResponse } from "../api/post-signup";
+import { ApiAuthResponse } from "../api/post-signup";
 import Signup from "../app/auth/sign-up";
 import { SignupTestIds } from "../constants/auth/auth-constants";
 import { ApiResponse } from "../types/api-response-types";
@@ -82,7 +82,7 @@ describe("Signup Form Tests", () => {
       confirmPassword: "testPassword",
     };
 
-    const mockResponse: ApiResponse<ApiSignupResponse> = {
+    const mockResponse: ApiResponse<ApiAuthResponse> = {
       isError: false,
       value: userTokenPair,
     };

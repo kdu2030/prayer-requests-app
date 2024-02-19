@@ -9,17 +9,80 @@ import {
 } from "react-native-paper";
 import { TextInput } from "../../components/inputs/text-input";
 import { isLoading } from "expo-font";
-import { Formik } from "formik";
+import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
-import { SignupTestIds } from "../../constants/auth/auth-constants";
+import {
+  SigninErrors,
+  SignupErrors,
+  SignupTestIds,
+} from "../../constants/auth/auth-constants";
 import { useI18N } from "../../hooks/use-i18n";
 import { router } from "expo-router";
 import { signinValidationSchema } from "../../helpers/auth/signin-validation-schema";
+import { SigninForm } from "../../types/forms/auth-forms";
+import { postSignin } from "../../api/post-signin";
+import { useApiDataContext } from "../../hooks/use-api-data";
+import {
+  errorsArrayIncludes,
+  handleSuccessfulAuthentication,
+} from "../../helpers/auth/auth-helpers";
 
 const Signin: React.FC = () => {
   const theme = useTheme();
   const { translate } = useI18N();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
+  const { baseUrl, setUserData, setUserTokens } = useApiDataContext();
+
+  const handleSubmit = async (formProps: FormikProps<SigninForm>) => {
+    const errors = await formProps.validateForm(formProps.values);
+
+    if (!isEmpty(errors)) {
+      formProps.setErrors(errors);
+      formProps.setFieldTouched(
+        setNestedObjectValues({ ...formProps.touched, errors }, true)
+      );
+      return;
+    }
+
+    const signinResponse = await postSignin(baseUrl, formProps.values);
+
+    if (
+      errorsArrayIncludes(signinResponse, "email", SigninErrors.EmailNotFound)
+    ) {
+      formProps.setFieldError(
+        "email",
+        translate("form.validation.emailNotFound.error")
+      );
+      return;
+    } else if (
+      errorsArrayIncludes(
+        signinResponse,
+        "password",
+        SigninErrors.IncorrectPassword
+      )
+    ) {
+      formProps.setFieldError(
+        "password",
+        translate("form.validation.incorrectPassword.error")
+      );
+      return;
+    } else if (
+      signinResponse.isError ||
+      !signinResponse.value?.token ||
+      !signinResponse.value?.refreshToken
+    ) {
+      setIsErrorVisible(true);
+      return;
+    }
+
+    handleSuccessfulAuthentication(
+      signinResponse.value.token,
+      signinResponse.value.refreshToken,
+      setUserData,
+      setUserTokens
+    );
+  };
 
   return (
     <ScrollView
@@ -76,7 +139,9 @@ const Signin: React.FC = () => {
               <Button
                 mode="contained"
                 className="mt-3 mb-10"
-                onPress={() => {}}
+                onPress={() => {
+                  handleSubmit(props);
+                }}
                 disabled={
                   isLoading || (!isEmpty(props.touched) && !props.isValid)
                 }
@@ -103,6 +168,20 @@ const Signin: React.FC = () => {
           </Text>
         </View>
       </View>
+
+      <Snackbar
+        className="bg-red-700"
+        duration={3000}
+        visible={isErrorVisible}
+        onDismiss={() => {
+          setIsErrorVisible(false);
+        }}
+        onIconPress={() => setIsErrorVisible(false)}
+      >
+        {translate("toaster.failed.genericFailure", {
+          item: translate("authScreen.signin.action"),
+        })}
+      </Snackbar>
     </ScrollView>
   );
 };

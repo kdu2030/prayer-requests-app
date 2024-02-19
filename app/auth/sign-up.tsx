@@ -7,7 +7,10 @@ import { ProgressBar } from "react-native-paper";
 
 import { postSignup } from "../../api/post-signup";
 import { TextInput } from "../../components/inputs/text-input";
-import { SignupTestIds } from "../../constants/auth/auth-constants";
+import {
+  SignupErrors,
+  SignupTestIds,
+} from "../../constants/auth/auth-constants";
 import {
   errorsArrayIncludes,
   handleSuccessfulAuthentication,
@@ -40,7 +43,7 @@ const Signup: React.FC = () => {
     const response = await postSignup(baseUrl, formProps.values);
     setIsLoading(false);
 
-    if (errorsArrayIncludes(response, "email", "Email must be unique")) {
+    if (errorsArrayIncludes(response, "email", SignupErrors.EmailUnique)) {
       formProps.setFieldError(
         "email",
         translate("form.validation.emailUnique.error")
@@ -173,7 +176,9 @@ const Signup: React.FC = () => {
           }}
           onIconPress={() => setIsErrorVisible(false)}
         >
-          {translate("toaster.failed.signupError")}
+          {translate("toaster.failed.genericFailure", {
+            item: translate("authScreen.signin.action"),
+          })}
         </Snackbar>
       </ScrollView>
     </>

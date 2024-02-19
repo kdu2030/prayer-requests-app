@@ -33,8 +33,10 @@ export const chineseTranslations = {
   "form.validation.passwordsMismatch.error": "密码不一样。",
   "form.validation.uniqueEmail.error":
     "此电子邮件已被使用。请用另一个电子邮件。",
+  "form.validation.emailNotFound.error": "我们找不到使用该电子邮件地址的用户。",
+  "form.validation.incorrectPassword.error": "你的密码不正确",
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "如载{{item}}失败",
-  "toaster.failed.signupFailure": "注册失败",
+  "oaster.failed.genericFailure": "{{item}}失败",
 };

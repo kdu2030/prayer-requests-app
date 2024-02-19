@@ -15,3 +15,12 @@ export const SignupTestIds = {
   confirmPasswordInput: "signup-confirm-password-input",
   submitButton: "signup-submit-button",
 };
+
+export enum SignupErrors {
+  EmailUnique = "Email must be unique",
+}
+
+export enum SigninErrors {
+  EmailNotFound = "A user with this email was not found",
+  IncorrectPassword = "Password is incorrect",
+}

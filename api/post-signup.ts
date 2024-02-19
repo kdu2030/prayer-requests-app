@@ -6,7 +6,7 @@ import {
 } from "../types/api-response-types";
 import { SignupForm } from "../types/forms/auth-forms";
 
-export interface ApiSignupResponse extends ValidationErrorResponse {
+export interface ApiAuthResponse extends ValidationErrorResponse {
   token?: string;
   refreshToken?: string;
 }
@@ -14,17 +14,17 @@ export interface ApiSignupResponse extends ValidationErrorResponse {
 export const postSignup = async (
   baseUrl: string,
   signupRequest: SignupForm
-): Promise<ApiResponse<ApiSignupResponse>> => {
+): Promise<ApiResponse<ApiAuthResponse>> => {
   try {
     const url = `${baseUrl}/auth/signup`;
-    const signupResponse = await axios.post<ApiSignupResponse>(
+    const signupResponse = await axios.post<ApiAuthResponse>(
       url,
       signupRequest
     );
 
     return { isError: false, value: signupResponse.data };
   } catch (error) {
-    const axiosError = error as AxiosError<ApiSignupResponse>;
+    const axiosError = error as AxiosError<ApiAuthResponse>;
     return { isError: true, errors: axiosError?.response?.data.errors };
   }
 };

@@ -16,6 +16,12 @@ export const SignupTestIds = {
   submitButton: "signup-submit-button",
 };
 
+export const SigninTestIds = {
+  emailInput: "signin-email-input",
+  passwordInput: "signin-password-input",
+  submitButton: "signin-submit-button",
+};
+
 export enum SignupErrors {
   EmailUnique = "Email must be unique",
 }

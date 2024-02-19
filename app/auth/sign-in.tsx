@@ -8,12 +8,11 @@ import {
   useTheme,
 } from "react-native-paper";
 import { TextInput } from "../../components/inputs/text-input";
-import { isLoading } from "expo-font";
 import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
 import {
   SigninErrors,
-  SignupErrors,
+  SigninTestIds,
   SignupTestIds,
 } from "../../constants/auth/auth-constants";
 import { useI18N } from "../../hooks/use-i18n";
@@ -39,8 +38,8 @@ const Signin: React.FC = () => {
 
     if (!isEmpty(errors)) {
       formProps.setErrors(errors);
-      formProps.setFieldTouched(
-        setNestedObjectValues({ ...formProps.touched, errors }, true)
+      formProps.setTouched(
+        setNestedObjectValues({ ...formProps.touched, ...errors }, true)
       );
       return;
     }
@@ -125,7 +124,7 @@ const Signin: React.FC = () => {
                 label={translate("signup.email.label")}
                 containerClassNames="mb-5"
                 mode={"flat"}
-                testID={SignupTestIds.emailInput}
+                testID={SigninTestIds.emailInput}
                 required
               />
 
@@ -135,7 +134,7 @@ const Signin: React.FC = () => {
                 containerClassNames="mb-5"
                 mode={"flat"}
                 secureTextEntry={true}
-                testID={SignupTestIds.passwordInput}
+                testID={SigninTestIds.passwordInput}
                 required
               />
 
@@ -148,7 +147,7 @@ const Signin: React.FC = () => {
                 disabled={
                   isLoading || (!isEmpty(props.touched) && !props.isValid)
                 }
-                testID={SignupTestIds.submitButton}
+                testID={SigninTestIds.submitButton}
               >
                 {translate("authScreen.signin.action")}
               </Button>

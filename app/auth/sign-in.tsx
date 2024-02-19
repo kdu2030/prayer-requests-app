@@ -45,7 +45,10 @@ const Signin: React.FC = () => {
       return;
     }
 
+    setIsLoading(true);
+
     const signinResponse = await postSignin(baseUrl, formProps.values);
+    setIsLoading(false);
 
     if (
       errorsArrayIncludes(signinResponse, "email", SigninErrors.EmailNotFound)

@@ -24,14 +24,19 @@ export const chineseTranslations = {
   "signup.confirmPassword.label": "确认密码",
   "signup.haveAccount.text": "已经有账号吗？",
 
+  "signin.signinToAccount.label": "登录到你的账号",
+  "signin.missingAccount.text": "还没有长好？",
+
   "form.validation.isRequired.error": "{{field}}必填。",
   "form.validation.isInvalid.error": "{{field}}无效。",
   "form.validation.confirmPasswordRequired.error": "请确认你的密码。",
   "form.validation.passwordsMismatch.error": "密码不一样。",
   "form.validation.uniqueEmail.error":
     "此电子邮件已被使用。请用另一个电子邮件。",
+  "form.validation.emailNotFound.error": "我们找不到使用该电子邮件地址的用户。",
+  "form.validation.incorrectPassword.error": "你的密码不正确",
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "如载{{item}}失败",
-  "toaster.failed.signupFailure": "注册失败",
+  "oaster.failed.genericFailure": "{{item}}失败",
 };

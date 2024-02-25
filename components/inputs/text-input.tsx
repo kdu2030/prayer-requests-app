@@ -40,9 +40,7 @@ export const TextInput: React.FC<Props> = ({
         }}
         onBlur={() => {
           onBlur();
-          if (!meta.touched) {
-            helpers.setTouched(true);
-          }
+          helpers.setTouched(true, true);
         }}
         error={!!isError}
         textColor={isError ? theme.colors.error : undefined}

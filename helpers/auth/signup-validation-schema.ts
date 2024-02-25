@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { SignupForm } from "../../types/forms/signup-form";
+import { SignupForm } from "../../types/forms/auth-forms";
 import { TranslationKey } from "../../types/languages";
 
 export const signupValidationSchema = (

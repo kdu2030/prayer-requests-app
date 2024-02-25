@@ -4,3 +4,8 @@ export type SignupForm = {
   password?: string;
   confirmPassword?: string;
 };
+
+export type SigninForm = {
+  email?: string;
+  password?: string;
+};

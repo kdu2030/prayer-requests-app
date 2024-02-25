@@ -26,7 +26,11 @@ export function AuthScreen() {
         {translate("authScreen.tagline.text")}
       </Text>
       <View className="flex flex-row w-full mt-auto mb-10">
-        <Button mode="contained" className="w-2/5 mr-3">
+        <Button
+          mode="contained"
+          className="w-2/5 mr-3"
+          onPress={() => router.push("/auth/sign-in")}
+        >
           {translate("authScreen.signin.action")}
         </Button>
         <Button

@@ -1,3 +1,6 @@
+import { router } from "expo-router";
+import { Formik, FormikProps, setNestedObjectValues } from "formik";
+import { isEmpty } from "lodash";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
 import {
@@ -7,24 +10,21 @@ import {
   Text,
   useTheme,
 } from "react-native-paper";
+
+import { postSignin } from "../../api/post-signin";
 import { TextInput } from "../../components/inputs/text-input";
-import { Formik, FormikProps, setNestedObjectValues } from "formik";
-import { isEmpty } from "lodash";
 import {
   SigninErrors,
   SigninTestIds,
-  SignupTestIds,
 } from "../../constants/auth/auth-constants";
-import { useI18N } from "../../hooks/use-i18n";
-import { router } from "expo-router";
-import { signinValidationSchema } from "../../helpers/auth/signin-validation-schema";
-import { SigninForm } from "../../types/forms/auth-forms";
-import { postSignin } from "../../api/post-signin";
-import { useApiDataContext } from "../../hooks/use-api-data";
 import {
   errorsArrayIncludes,
   handleSuccessfulAuthentication,
 } from "../../helpers/auth/auth-helpers";
+import { signinValidationSchema } from "../../helpers/auth/signin-validation-schema";
+import { useApiDataContext } from "../../hooks/use-api-data";
+import { useI18N } from "../../hooks/use-i18n";
+import { SigninForm } from "../../types/forms/auth-forms";
 
 const Signin: React.FC = () => {
   const theme = useTheme();

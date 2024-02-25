@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
@@ -19,7 +20,6 @@ import { signupValidationSchema } from "../../helpers/auth/signup-validation-sch
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SignupForm } from "../../types/forms/auth-forms";
-import { router } from "expo-router";
 
 const Signup: React.FC = () => {
   const { translate } = useI18N();

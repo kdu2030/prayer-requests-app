@@ -1,17 +1,18 @@
-import Signin from "../app/auth/sign-in";
 import {
-  RenderResult,
   fireEvent,
+  RenderResult,
   waitFor,
 } from "@testing-library/react-native";
 import * as React from "react";
-import { mountComponent } from "./utils/test-utils";
-import { SupportedLanguages } from "../types/languages";
-import { SigninTestIds } from "../constants/auth/auth-constants";
-import { SigninForm } from "../types/forms/auth-forms";
-import { ApiResponse } from "../types/api-response-types";
+
 import { ApiAuthResponse } from "../api/post-signup";
+import Signin from "../app/auth/sign-in";
+import { SigninTestIds } from "../constants/auth/auth-constants";
+import { ApiResponse } from "../types/api-response-types";
+import { SigninForm } from "../types/forms/auth-forms";
+import { SupportedLanguages } from "../types/languages";
 import { userTokenPair } from "./mock-data/mock-tokens";
+import { mountComponent } from "./utils/test-utils";
 
 let component: RenderResult;
 
@@ -36,6 +37,10 @@ const addInputToSignInForm = (
 
   const passwordInput = component.getByTestId(SigninTestIds.passwordInput);
   fireEvent.changeText(passwordInput, password);
+
+  if (!clickSubmit) {
+    return;
+  }
 
   const submitButton = component.getByTestId(SigninTestIds.submitButton);
   fireEvent.press(submitButton);

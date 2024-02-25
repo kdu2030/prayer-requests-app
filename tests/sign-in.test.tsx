@@ -12,7 +12,6 @@ import { SigninForm } from "../types/forms/auth-forms";
 import { ApiResponse } from "../types/api-response-types";
 import { ApiAuthResponse } from "../api/post-signup";
 import { userTokenPair } from "./mock-data/mock-tokens";
-import { postSignin } from "../api/post-signin";
 
 let component: RenderResult;
 
@@ -85,6 +84,32 @@ describe("Sign In Tests", () => {
 
     await waitFor(() => {
       expect(mockPostSignin).toHaveBeenCalled();
+    });
+  });
+
+  test("Email with invalid format not submitted", async () => {
+    const signinForm: SigninForm = {
+      email: "darthVader",
+      password: "IL0veTheD@rkSide",
+    };
+
+    addInputToSignInForm(signinForm);
+
+    await waitFor(() => {
+      expect(mockPostSignin).not.toHaveBeenCalled();
+    });
+  });
+
+  test("Missing password not submitted", async () => {
+    const signinForm: SigninForm = {
+      email: "darthVader@empire.gov",
+      password: "",
+    };
+
+    addInputToSignInForm(signinForm);
+
+    await waitFor(() => {
+      expect(mockPostSignin).not.toHaveBeenCalled();
     });
   });
 });

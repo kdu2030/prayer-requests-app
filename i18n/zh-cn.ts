@@ -27,6 +27,14 @@ export const chineseTranslations = {
   "signin.signinToAccount.label": "登录到你的账号",
   "signin.missingAccount.text": "还没有长好？",
 
+  "createPrayerRequest.action.header": "创造祷告事项",
+  "createPrayerRequest.title.label": "题目",
+  "createPrayerRequest.visibility.label": "可见性",
+  "createPrayerRequest.private.label": "私密",
+  "createPrayerRequest.public.label": "公开",
+  "createPrayerRequest.friendsOnly.label": "仅限好友",
+  "createPrayerRequest.groupOnly.label": "仅限团队",
+
   "form.validation.isRequired.error": "{{field}}必填。",
   "form.validation.isInvalid.error": "{{field}}无效。",
   "form.validation.confirmPasswordRequired.error": "请确认你的密码。",

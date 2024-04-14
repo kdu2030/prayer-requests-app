@@ -27,6 +27,14 @@ export const englishTranslations = {
   "signin.signinToAccount.label": "Sign in to your account",
   "signin.missingAccount.text": "Don't have an account?",
 
+  "createPrayerRequest.action.header": "Create Prayer Request",
+  "createPrayerRequest.title.label": "Title",
+  "createPrayerRequest.visibility.label": "Visibility",
+  "createPrayerRequest.private.label": "Private",
+  "createPrayerRequest.public.label": "Public",
+  "createPrayerRequest.friendsOnly.label": "Friends Only",
+  "createPrayerRequest.groupOnly.label": "Group Only",
+
   "form.validation.isRequired.error": "{{field}} is required.",
   "form.validation.isInvalid.error": "{{field}} is invalid.",
   "form.validation.confirmPasswordRequired.error":

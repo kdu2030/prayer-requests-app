@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export type UserData = {
-  userId?: string;
+  userId?: number;
   username?: string;
   email?: string;
 };

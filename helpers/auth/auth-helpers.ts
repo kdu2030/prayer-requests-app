@@ -36,7 +36,7 @@ export const decodeJwtToken = (token: string): DecodeData => {
   const payload = JSON.parse(decode(tokenParts[1]));
 
   const userData: UserData = {
-    userId: payload[JwtTokenFields.UserId],
+    userId: Number.parseInt(payload[JwtTokenFields.UserId]),
     username: payload[JwtTokenFields.Username],
     email: payload[JwtTokenFields.EmailAddress],
   };

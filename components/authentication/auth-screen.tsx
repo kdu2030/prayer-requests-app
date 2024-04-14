@@ -37,7 +37,7 @@ export function AuthScreen() {
           mode="outlined"
           className="w-2/5"
           // onPress={() => router.push("/auth/sign-up")}
-          onPress={() => router.push("/app-bar")}
+          onPress={() => router.push("/test")}
         >
           {translate("authScreen.signup.action")}
         </Button>

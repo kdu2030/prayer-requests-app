@@ -5,6 +5,8 @@ import { useTheme, Text } from "react-native-paper";
 import { TextInput } from "../../components/inputs/text-input";
 import { Formik } from "formik";
 import { Select } from "../../components/inputs/select";
+import { SelectInput } from "../../components/inputs/select-input";
+import { getOptionsForVisibilityDropdown } from "../../helpers/prayer-request/prayer-request-helpers";
 
 const CreatePrayerRequest: React.FC = () => {
   const theme = useTheme();
@@ -35,6 +37,15 @@ const CreatePrayerRequest: React.FC = () => {
                 name="title"
                 label={translate("createPrayerRequest.title.label")}
                 mode={"flat"}
+                containerClassNames="mb-5"
+                required
+              />
+
+              <SelectInput
+                name="visibility"
+                label={translate("createPrayerRequest.visibility.label")}
+                options={getOptionsForVisibilityDropdown(translate)}
+                mode="flat"
                 required
               />
             </View>

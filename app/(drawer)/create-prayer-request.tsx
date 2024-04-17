@@ -4,9 +4,13 @@ import { ScrollView, View } from "react-native";
 import { useTheme, Text } from "react-native-paper";
 import { TextInput } from "../../components/inputs/text-input";
 import { Formik } from "formik";
-import { Select } from "../../components/inputs/select";
 import { SelectInput } from "../../components/inputs/select-input";
-import { getOptionsForVisibilityDropdown } from "../../helpers/prayer-request/prayer-request-helpers";
+import {
+  getOptionsForExpireRadioButtons,
+  getOptionsForVisibilityDropdown,
+} from "../../helpers/prayer-request/prayer-request-helpers";
+import { MULTILINE_INPUT_NUM_LINES } from "../../constants/common/input-constants";
+import { RadioButtonInput } from "../../components/inputs/radio-button-input";
 
 const CreatePrayerRequest: React.FC = () => {
   const theme = useTheme();
@@ -46,7 +50,23 @@ const CreatePrayerRequest: React.FC = () => {
                 label={translate("createPrayerRequest.visibility.label")}
                 options={getOptionsForVisibilityDropdown(translate)}
                 mode="flat"
+                containerClassNames="mb-5"
                 required
+              />
+
+              <TextInput
+                name="description"
+                label={translate("createPrayerRequest.description.label")}
+                mode={"flat"}
+                containerClassNames="mb-5"
+                multiline
+                numberOfLines={MULTILINE_INPUT_NUM_LINES}
+              />
+
+              <RadioButtonInput
+                name="canExpire"
+                label={translate("createPrayerRequest.canExpire.label")}
+                options={getOptionsForExpireRadioButtons(translate)}
               />
             </View>
           );

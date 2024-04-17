@@ -3,15 +3,16 @@ import { Select } from "./select";
 import { useField } from "formik";
 import { HelperText, TextInputProps } from "react-native-paper";
 import { View } from "react-native";
-import { DropdownOption } from "../../types/inputs/dropdown";
+import { SelectOption } from "../../types/inputs/select";
 import { useTheme } from "react-native-paper";
 
 interface Props {
   name: string;
   label: string;
+  options: SelectOption[];
   mode?: "flat" | "outlined";
   containerClassNames?: string;
-  options: DropdownOption[];
+  onChange?: (value: any) => void;
   required?: boolean;
 }
 
@@ -22,6 +23,7 @@ export const SelectInput: React.FC<Props> = ({
   label,
   mode,
   required,
+  onChange,
 }) => {
   const theme = useTheme();
   const [field, meta, helpers] = useField(name);
@@ -39,7 +41,10 @@ export const SelectInput: React.FC<Props> = ({
       <Select
         value={field.value}
         label={required ? `${label} *` : label}
-        setValue={(value) => helpers.setValue(value)}
+        setValue={(value) => {
+          helpers.setValue(value);
+          onChange?.(value);
+        }}
         onDismiss={() => helpers.setTouched(true, true)}
         inputProps={!!isError ? errorStyles : undefined}
         options={options}

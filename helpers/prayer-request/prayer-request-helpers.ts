@@ -1,10 +1,13 @@
-import { PrayerRequestVisibility } from "../../types/forms/create-prayer-request-form";
-import { DropdownOption } from "../../types/inputs/dropdown";
+import {
+  CanExpireValue,
+  PrayerRequestVisibility,
+} from "../../types/forms/create-prayer-request-form";
+import { SelectOption } from "../../types/inputs/select";
 import { TranslationKey } from "../../types/languages";
 
 export const getOptionsForVisibilityDropdown = (
   translate: (key: TranslationKey) => string
-): DropdownOption<PrayerRequestVisibility>[] => {
+): SelectOption<PrayerRequestVisibility>[] => {
   return [
     {
       label: translate("createPrayerRequest.private.label"),
@@ -21,6 +24,21 @@ export const getOptionsForVisibilityDropdown = (
     {
       label: translate("createPrayerRequest.public.label"),
       value: PrayerRequestVisibility.Public,
+    },
+  ];
+};
+
+export const getOptionsForExpireRadioButtons = (
+  translate: (key: TranslationKey) => string
+): SelectOption<CanExpireValue>[] => {
+  return [
+    {
+      label: translate("createPrayerRequest.canExpire.yes.option"),
+      value: CanExpireValue.Yes,
+    },
+    {
+      label: translate("createPrayerRequest.canExpire.no.option"),
+      value: CanExpireValue.No,
     },
   ];
 };

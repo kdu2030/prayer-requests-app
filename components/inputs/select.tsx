@@ -1,7 +1,7 @@
 import * as React from "react";
-import DropDown, { DropDownPropsInterface } from "react-native-paper-dropdown";
+import DropDown from "react-native-paper-dropdown";
 
-import { DropdownOption } from "../../types/inputs/dropdown";
+import { SelectOption } from "../../types/inputs/select";
 import { TextInputProps } from "react-native-paper";
 
 export interface SelectProps {
@@ -10,7 +10,7 @@ export interface SelectProps {
   setValue: (value: any) => void;
   mode?: "outlined" | "flat";
   onDismiss?: () => void;
-  options: DropdownOption<any>[];
+  options: SelectOption<any>[];
   inputProps?: TextInputProps;
 }
 

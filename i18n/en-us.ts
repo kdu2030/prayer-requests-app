@@ -34,6 +34,11 @@ export const englishTranslations = {
   "createPrayerRequest.public.label": "Public",
   "createPrayerRequest.friendsOnly.label": "Friends Only",
   "createPrayerRequest.groupOnly.label": "Group Only",
+  "createPrayerRequest.description.label": "Description",
+  "createPrayerRequest.canExpire.label": "Can expire?",
+
+  "createPrayerRequest.canExpire.yes.option": "Yes",
+  "createPrayerRequest.canExpire.no.option": "No",
 
   "form.validation.isRequired.error": "{{field}} is required.",
   "form.validation.isInvalid.error": "{{field}} is invalid.",

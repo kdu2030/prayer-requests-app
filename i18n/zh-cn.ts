@@ -34,6 +34,11 @@ export const chineseTranslations = {
   "createPrayerRequest.public.label": "公开",
   "createPrayerRequest.friendsOnly.label": "仅限好友",
   "createPrayerRequest.groupOnly.label": "仅限团队",
+  "createPrayerRequest.description.label": "描述",
+  "createPrayerRequest.canExpire.label": "能过期？",
+
+  "createPrayerRequest.canExpire.yes.option": "能",
+  "createPrayerRequest.canExpire.no.option": "不能",
 
   "form.validation.isRequired.error": "{{field}}必填。",
   "form.validation.isInvalid.error": "{{field}}无效。",

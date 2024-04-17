@@ -1,0 +1,1 @@
+export const MULTILINE_INPUT_NUM_LINES = 5;

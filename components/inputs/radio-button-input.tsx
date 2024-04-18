@@ -11,6 +11,7 @@ interface Props {
   options: SelectOption<number>[];
   onChange?: (value: number) => void;
   containerClassNames?: string;
+  required?: boolean;
 }
 
 export const RadioButtonInput: React.FC<Props> = ({
@@ -19,6 +20,7 @@ export const RadioButtonInput: React.FC<Props> = ({
   onChange,
   options,
   containerClassNames,
+  required,
 }) => {
   const [field, meta, helpers] = useField(name);
   const isError = meta.touched && meta.error;
@@ -34,9 +36,11 @@ export const RadioButtonInput: React.FC<Props> = ({
 
   return (
     <View className={containerClassNames}>
-      <Text>{label}</Text>
+      <Text variant="bodyLarge" className="mb-3">
+        {required ? `${label} *` : label}
+      </Text>
       <RadioButton.Group
-        value={field.value.toString()}
+        value={field.value?.toString()}
         onValueChange={handleChange}
       >
         {options.map((option) => {

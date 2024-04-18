@@ -3,7 +3,7 @@ import { useI18N } from "../../hooks/use-i18n";
 import { ScrollView, View } from "react-native";
 import { useTheme, Text } from "react-native-paper";
 import { TextInput } from "../../components/inputs/text-input";
-import { Formik } from "formik";
+import { Formik, FormikProps } from "formik";
 import { SelectInput } from "../../components/inputs/select-input";
 import {
   getOptionsForExpireRadioButtons,
@@ -11,6 +11,7 @@ import {
 } from "../../helpers/prayer-request/prayer-request-helpers";
 import { MULTILINE_INPUT_NUM_LINES } from "../../constants/common/input-constants";
 import { RadioButtonInput } from "../../components/inputs/radio-button-input";
+import { PrayerRequest } from "../../types/forms/create-prayer-request-form";
 
 const CreatePrayerRequest: React.FC = () => {
   const theme = useTheme();
@@ -26,7 +27,7 @@ const CreatePrayerRequest: React.FC = () => {
       }}
     >
       <Formik initialValues={{}} onSubmit={() => {}}>
-        {() => {
+        {({ values }: FormikProps<PrayerRequest>) => {
           return (
             <View className="flex flex-col mt-5" style={{ minWidth: "80%" }}>
               <Text
@@ -67,6 +68,7 @@ const CreatePrayerRequest: React.FC = () => {
                 name="canExpire"
                 label={translate("createPrayerRequest.canExpire.label")}
                 options={getOptionsForExpireRadioButtons(translate)}
+                required
               />
             </View>
           );

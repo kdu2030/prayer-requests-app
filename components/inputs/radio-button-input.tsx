@@ -8,8 +8,8 @@ import { Text } from "react-native-paper";
 interface Props {
   name: string;
   label: string;
-  options: SelectOption<number>[];
-  onChange?: (value: number) => void;
+  options: SelectOption[];
+  onChange?: (value: any) => void;
   containerClassNames?: string;
   required?: boolean;
 }
@@ -26,7 +26,7 @@ export const RadioButtonInput: React.FC<Props> = ({
   const isError = meta.touched && meta.error;
 
   const handleChange = (valueStr: string) => {
-    const value = Number.parseInt(valueStr);
+    const value = JSON.parse(valueStr);
     helpers.setValue(value);
     helpers.setTouched(true, true);
     onChange?.(value);

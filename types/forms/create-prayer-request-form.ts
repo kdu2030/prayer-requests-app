@@ -5,11 +5,6 @@ export enum PrayerRequestVisibility {
   GroupOnly,
 }
 
-export enum CanExpireValue {
-  Yes = 1,
-  No,
-}
-
 export type PrayerRequest = {
   applicationUserId?: string;
   title?: string;

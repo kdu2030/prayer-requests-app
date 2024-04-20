@@ -74,13 +74,15 @@ const CreatePrayerRequest: React.FC = () => {
                 required
               />
 
-              <DatePickerInput
-                name="expiryDate"
-                label={"Test"}
-                locale={i18n.language as SupportedLanguages}
-                mode="flat"
-                required
-              />
+              {values.canExpire === true && (
+                <DatePickerInput
+                  name="expiryDate"
+                  label={"Test"}
+                  locale={i18n.language as SupportedLanguages}
+                  mode="flat"
+                  required
+                />
+              )}
             </View>
           );
         }}

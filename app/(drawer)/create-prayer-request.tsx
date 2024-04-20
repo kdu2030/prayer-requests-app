@@ -28,7 +28,7 @@ const CreatePrayerRequest: React.FC = () => {
       }}
     >
       <Formik initialValues={{}} onSubmit={() => {}}>
-        {({ values }: FormikProps<PrayerRequest>) => {
+        {({ values, setFieldValue }: FormikProps<PrayerRequest>) => {
           return (
             <View className="flex flex-col mt-5 w-4/5">
               <Text
@@ -70,6 +70,12 @@ const CreatePrayerRequest: React.FC = () => {
                 containerClassNames="mb-5"
                 label={translate("createPrayerRequest.canExpire.label")}
                 options={getOptionsForExpireRadioButtons(translate)}
+                onChange={(value: boolean) => {
+                  if (!value) {
+                    setFieldValue("expiryDate", undefined);
+                    setFieldValue("expiryDateStr", undefined);
+                  }
+                }}
                 required
               />
 

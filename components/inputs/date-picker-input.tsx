@@ -7,6 +7,8 @@ import { View } from "react-native";
 import { HelperText, useTheme } from "react-native-paper";
 import { DatePickerValidRange } from "../../types/inputs/select";
 import _ from "lodash";
+import { formatDate } from "../../helpers/common/format-helpers";
+import { DATE_INPUT_FORMAT_OPTIONS } from "../../constants/common/input-constants";
 
 interface Props {
   name: string;
@@ -49,7 +51,7 @@ export const DatePickerInput: React.FC<Props> = ({
 
   const handleBlur = () => {
     setFieldValue(textInputName, textFieldStr);
-    textFieldHelpers.setTouched(true, true);
+    textFieldHelpers.setTouched(true, false);
   };
 
   const getError = () => {

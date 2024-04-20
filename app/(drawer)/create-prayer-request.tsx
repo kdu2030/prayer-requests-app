@@ -14,6 +14,7 @@ import { RadioButtonInput } from "../../components/inputs/radio-button-input";
 import { PrayerRequest } from "../../types/forms/create-prayer-request-form";
 import { DatePickerInput } from "../../components/inputs/date-picker-input";
 import { SupportedLanguages } from "../../types/languages";
+import { createPrayerRequestValidationSchema } from "../../helpers/prayer-request/create-prayer-request-validation-schema";
 
 const CreatePrayerRequest: React.FC = () => {
   const theme = useTheme();
@@ -27,7 +28,14 @@ const CreatePrayerRequest: React.FC = () => {
         alignItems: "center",
       }}
     >
-      <Formik initialValues={{}} onSubmit={() => {}}>
+      <Formik
+        validationSchema={createPrayerRequestValidationSchema(
+          translate,
+          i18n.language as SupportedLanguages
+        )}
+        initialValues={{}}
+        onSubmit={() => {}}
+      >
         {({ values, setFieldValue }: FormikProps<PrayerRequest>) => {
           return (
             <View className="flex flex-col mt-5 w-4/5">

@@ -10,7 +10,7 @@ const resources = {
       ...englishTranslations,
     },
   },
-  cn: {
+  zh: {
     translation: {
       ...chineseTranslations,
     },

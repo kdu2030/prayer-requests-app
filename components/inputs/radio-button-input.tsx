@@ -25,8 +25,6 @@ export const RadioButtonInput: React.FC<Props> = ({
   const [field, meta, helpers] = useField(name);
   const isError = meta.touched && meta.error;
 
-  // TODO: Make label for the entire field the same size as the other fields
-
   const handleChange = (valueStr: string) => {
     const value = Number.parseInt(valueStr);
     helpers.setValue(value);

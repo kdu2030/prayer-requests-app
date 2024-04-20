@@ -5,9 +5,15 @@ import { LANGUAGE_STORAGE_KEY } from "../constants/languages";
 import { ManagedErrorResponse } from "../types/error-handling";
 import { TranslationKey } from "../types/languages";
 import { SupportedLanguages } from "../types/languages";
+import { registerTranslation, zh, en } from "react-native-paper-dates";
 
 export const useI18N = () => {
   const resources = useTranslation();
+
+  const registerDatePickerTranslations = () => {
+    registerTranslation(SupportedLanguages.English, en);
+    registerTranslation(SupportedLanguages.Chinese, zh);
+  };
 
   const loadLanguage = async (): Promise<
     ManagedErrorResponse<SupportedLanguages>
@@ -52,5 +58,6 @@ export const useI18N = () => {
     storeLanguage,
     setLanguage,
     translate,
+    registerDatePickerTranslations,
   };
 };

@@ -15,7 +15,7 @@ import { PrayerRequest } from "../../types/forms/create-prayer-request-form";
 
 const CreatePrayerRequest: React.FC = () => {
   const theme = useTheme();
-  const { translate } = useI18N();
+  const { translate, i18n } = useI18N();
 
   return (
     <ScrollView

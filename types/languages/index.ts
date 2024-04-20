@@ -4,7 +4,7 @@ export type TranslationKey = keyof typeof englishTranslations;
 
 export enum SupportedLanguages {
   English = "en",
-  Chinese = "cn",
+  Chinese = "zh",
 }
 
 export type LanguageOption = {

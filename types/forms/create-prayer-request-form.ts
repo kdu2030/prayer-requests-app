@@ -17,6 +17,6 @@ export type PrayerRequest = {
   visibility?: PrayerRequestVisibility;
   description?: string;
   canExpire?: boolean;
-  expiryDate?: string;
+  expiryDate?: Date;
   tags?: string[];
 };

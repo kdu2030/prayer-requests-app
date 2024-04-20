@@ -25,8 +25,8 @@ export const TextInput: React.FC<Props> = ({
   onBlur = () => {},
   ...props
 }) => {
-  const [field, meta, helpers] = useField(name);
-  const isError = meta.touched && meta.error;
+  const [field, meta, helpers] = useField<string | undefined>(name);
+  const isError = !!(meta.touched && meta.error);
   const theme = useTheme();
 
   return (
@@ -42,7 +42,7 @@ export const TextInput: React.FC<Props> = ({
           onBlur();
           helpers.setTouched(true, true);
         }}
-        error={!!isError}
+        error={isError}
         textColor={isError ? theme.colors.error : undefined}
         {...props}
       />

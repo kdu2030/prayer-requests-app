@@ -12,6 +12,8 @@ import {
 import { MULTILINE_INPUT_NUM_LINES } from "../../constants/common/input-constants";
 import { RadioButtonInput } from "../../components/inputs/radio-button-input";
 import { PrayerRequest } from "../../types/forms/create-prayer-request-form";
+import { DatePickerInput } from "../../components/inputs/date-picker-input";
+import { SupportedLanguages } from "../../types/languages";
 
 const CreatePrayerRequest: React.FC = () => {
   const theme = useTheme();
@@ -29,7 +31,7 @@ const CreatePrayerRequest: React.FC = () => {
       <Formik initialValues={{}} onSubmit={() => {}}>
         {({ values }: FormikProps<PrayerRequest>) => {
           return (
-            <View className="flex flex-col mt-5" style={{ minWidth: "80%" }}>
+            <View className="flex flex-col mt-5 w-4/5">
               <Text
                 variant="headlineMedium"
                 className="font-bold mb-5"
@@ -66,8 +68,17 @@ const CreatePrayerRequest: React.FC = () => {
 
               <RadioButtonInput
                 name="canExpire"
+                containerClassNames="mb-5"
                 label={translate("createPrayerRequest.canExpire.label")}
                 options={getOptionsForExpireRadioButtons(translate)}
+                required
+              />
+
+              <DatePickerInput
+                name="expiryDate"
+                label={"Test"}
+                locale={i18n.language as SupportedLanguages}
+                mode="flat"
                 required
               />
             </View>

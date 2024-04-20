@@ -24,7 +24,6 @@ const CreatePrayerRequest: React.FC = () => {
       contentContainerStyle={{
         display: "flex",
         flexGrow: 1,
-        // justifyContent: "center",
         alignItems: "center",
       }}
     >
@@ -77,9 +76,11 @@ const CreatePrayerRequest: React.FC = () => {
               {values.canExpire === true && (
                 <DatePickerInput
                   name="expiryDate"
-                  label={"Test"}
+                  textInputName="expiryDateStr"
+                  label={translate("createPrayerRequest.expiryDate.label")}
                   locale={i18n.language as SupportedLanguages}
                   mode="flat"
+                  validRange={{ startDate: new Date() }}
                   required
                 />
               )}

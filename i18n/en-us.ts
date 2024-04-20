@@ -36,6 +36,7 @@ export const englishTranslations = {
   "createPrayerRequest.groupOnly.label": "Group Only",
   "createPrayerRequest.description.label": "Description",
   "createPrayerRequest.canExpire.label": "Can expire?",
+  "createPrayerRequest.expiryDate.label": "Expiry Date",
 
   "createPrayerRequest.canExpire.yes.option": "Yes",
   "createPrayerRequest.canExpire.no.option": "No",

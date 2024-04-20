@@ -1,3 +1,5 @@
+import { DateValue } from "../inputs/select";
+
 export enum PrayerRequestVisibility {
   Private,
   Public,
@@ -13,5 +15,6 @@ export type PrayerRequest = {
   description?: string;
   canExpire?: boolean;
   expiryDate?: Date;
+  expiryDateStr?: string;
   tags?: string[];
 };

@@ -36,6 +36,7 @@ export const chineseTranslations = {
   "createPrayerRequest.groupOnly.label": "仅限团队",
   "createPrayerRequest.description.label": "描述",
   "createPrayerRequest.canExpire.label": "能过期？",
+  "createPrayerRequest.expiryDate.label": "截止日期",
 
   "createPrayerRequest.canExpire.yes.option": "能",
   "createPrayerRequest.canExpire.no.option": "不能",

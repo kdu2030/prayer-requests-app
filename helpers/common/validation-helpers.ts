@@ -3,7 +3,7 @@ import { SupportedLanguages } from "../../types/languages";
 import { formatDate } from "./format-helpers";
 
 export const isDateStringValid = (
-  locale: SupportedLanguages,
+  languageCode: SupportedLanguages,
   dateStr?: string
 ) => {
   if (!dateStr) {
@@ -12,7 +12,7 @@ export const isDateStringValid = (
 
   const validationDate = formatDate(
     new Date("1970-01-01"),
-    locale,
+    languageCode,
     DATE_INPUT_FORMAT_OPTIONS
   );
 

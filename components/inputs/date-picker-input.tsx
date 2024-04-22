@@ -13,7 +13,7 @@ import { DATE_INPUT_FORMAT_OPTIONS } from "../../constants/common/input-constant
 interface Props {
   name: string;
   textInputName: string;
-  locale: SupportedLanguages;
+  languageCode: SupportedLanguages;
   label: string;
   mode: "flat" | "outlined";
   onChange?: (value?: Date) => void;
@@ -24,7 +24,7 @@ interface Props {
 
 export const DatePickerInput: React.FC<Props> = ({
   name,
-  locale,
+  languageCode,
   label,
   mode,
   onChange,
@@ -57,7 +57,7 @@ export const DatePickerInput: React.FC<Props> = ({
 
   const setDateStrValueFromDate = (value?: Date) => {
     const dateStrValue = value
-      ? formatDate(value, locale, DATE_INPUT_FORMAT_OPTIONS)
+      ? formatDate(value, languageCode, DATE_INPUT_FORMAT_OPTIONS)
       : undefined;
 
     textFieldHelpers.setValue(dateStrValue, true);
@@ -72,7 +72,7 @@ export const DatePickerInput: React.FC<Props> = ({
     <View className={containerClassName}>
       <PaperDatePickerInput
         className={classnames({ "bg-red-200": isFieldError })}
-        locale={locale}
+        locale={languageCode}
         label={inputLabel}
         inputMode="start"
         mode={mode}

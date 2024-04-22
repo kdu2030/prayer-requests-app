@@ -23,11 +23,6 @@ export const createPrayerRequestValidationSchema = (
           year: "numeric",
         };
 
-        console.log(value);
-        console.log(
-          dateValue && formatDate(dateValue, languageCode, dateFormatOptions)
-        );
-
         if (!dateValue && value) {
           return false;
         } else if (!dateValue) {

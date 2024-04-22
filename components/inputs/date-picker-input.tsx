@@ -6,13 +6,13 @@ import { useField, useFormikContext } from "formik";
 import { View } from "react-native";
 import { HelperText, useTheme } from "react-native-paper";
 import { DatePickerValidRange } from "../../types/inputs/select";
-import _ from "lodash";
+import _, { isDate } from "lodash";
 import { formatDate } from "../../helpers/common/format-helpers";
 import { DATE_INPUT_FORMAT_OPTIONS } from "../../constants/common/input-constants";
+import { isDateStringValid } from "../../helpers/common/validation-helpers";
 
 interface Props {
   name: string;
-  textInputName: string;
   locale: SupportedLanguages;
   label: string;
   mode: "flat" | "outlined";
@@ -20,6 +20,7 @@ interface Props {
   containerClassName?: string;
   required?: boolean;
   validRange?: DatePickerValidRange;
+  invalidDateError: string;
 }
 
 export const DatePickerInput: React.FC<Props> = ({
@@ -30,57 +31,55 @@ export const DatePickerInput: React.FC<Props> = ({
   onChange,
   containerClassName,
   required,
-  textInputName,
+  invalidDateError,
 }) => {
-  // Datepicker requires a fixed width style to display properly
   const [field, meta, helpers] = useField<Date | undefined>(name);
-  const [_textField, textFieldMeta, textFieldHelpers] =
-    useField<string>(textInputName);
   const theme = useTheme();
 
-  const { setFieldValue, values } = useFormikContext();
+  const getDateFormatValue = (value?: Date) => {
+    return value
+      ? formatDate(value, locale, DATE_INPUT_FORMAT_OPTIONS)
+      : undefined;
+  };
+
   const [textFieldStr, setTextFieldStr] = React.useState<string | undefined>(
-    _.get(values, textInputName)
+    getDateFormatValue(field.value)
   );
+  const [dateStrValid, setDateStrValid] = React.useState<boolean>(true);
 
-  const isError = !!(meta.error && meta.touched);
-  const isTextFieldError = !!(textFieldMeta.error && textFieldMeta.touched);
-  const isFieldError = isError || isTextFieldError;
-
+  const isError = !!((meta.error || !dateStrValid) && meta.touched);
   const inputLabel = required ? `${label} *` : label;
 
   const handleBlur = () => {
-    setFieldValue(textInputName, textFieldStr);
-    textFieldHelpers.setTouched(true, false);
-  };
-
-  const getError = () => {
-    return isError ? meta.error : textFieldMeta.error;
+    helpers.setTouched(true, true);
+    setDateStrValid(isDateStringValid(locale, textFieldStr));
   };
 
   return (
     <View className={containerClassName}>
       <PaperDatePickerInput
-        className={classnames({ "bg-red-200": isFieldError })}
+        className={classnames({ "bg-red-200": isError })}
         locale={locale}
         label={inputLabel}
         inputMode="start"
         mode={mode}
         value={field.value}
-        hasError={isFieldError}
+        hasError={isError}
         onChange={(value) => {
           helpers.setValue(value);
           helpers.setTouched(true, true);
 
           onChange?.(value);
+          setTextFieldStr(getDateFormatValue(value));
+          setDateStrValid(true);
         }}
         onChangeText={(value) => {
           setTextFieldStr(value);
         }}
         onBlur={handleBlur}
-        textColor={isFieldError ? theme.colors.error : undefined}
+        textColor={isError ? theme.colors.error : undefined}
       />
-      {isFieldError && <HelperText type="error">{getError()}</HelperText>}
+      {isError && <HelperText type="error">{meta.error}</HelperText>}
     </View>
   );
 };

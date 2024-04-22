@@ -32,10 +32,11 @@ export const DatePickerInput: React.FC<Props> = ({
   required,
   textInputName,
 }) => {
-  // Datepicker requires a fixed width style to display properly
   const [field, meta, helpers] = useField<Date | undefined>(name);
-  const [_textField, textFieldMeta, textFieldHelpers] =
-    useField<string>(textInputName);
+  const [_textField, textFieldMeta, textFieldHelpers] = useField<
+    string | undefined
+  >(textInputName);
+
   const theme = useTheme();
 
   const { setFieldValue, values } = useFormikContext();
@@ -50,8 +51,17 @@ export const DatePickerInput: React.FC<Props> = ({
   const inputLabel = required ? `${label} *` : label;
 
   const handleBlur = () => {
-    setFieldValue(textInputName, textFieldStr);
+    setFieldValue(textInputName, textFieldStr, true);
     textFieldHelpers.setTouched(true, false);
+  };
+
+  const setDateStrValueFromDate = (value?: Date) => {
+    const dateStrValue = value
+      ? formatDate(value, locale, DATE_INPUT_FORMAT_OPTIONS)
+      : undefined;
+
+    textFieldHelpers.setValue(dateStrValue, true);
+    setTextFieldStr(dateStrValue);
   };
 
   const getError = () => {
@@ -73,6 +83,8 @@ export const DatePickerInput: React.FC<Props> = ({
           helpers.setTouched(true, true);
 
           onChange?.(value);
+
+          setDateStrValueFromDate(value);
         }}
         onChangeText={(value) => {
           setTextFieldStr(value);

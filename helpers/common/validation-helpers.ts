@@ -5,7 +5,7 @@ import { formatDate } from "./format-helpers";
 export const isDateStringValid = (
   languageCode: SupportedLanguages,
   dateStr?: string
-) => {
+): boolean => {
   if (!dateStr) {
     return true;
   }
@@ -19,5 +19,13 @@ export const isDateStringValid = (
   const validationDateParts = validationDate.split("/");
   const dateStrParts = dateStr.split("/");
 
-  return validationDateParts.length === dateStrParts.length;
+  if (validationDateParts.length === dateStrParts.length) {
+    return false;
+  }
+
+  const datePartInvalid = dateStrParts.find(
+    (datePart, i) => validationDateParts[i].length !== datePart.length
+  );
+
+  return !datePartInvalid;
 };

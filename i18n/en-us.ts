@@ -37,6 +37,7 @@ export const englishTranslations = {
   "createPrayerRequest.description.label": "Description",
   "createPrayerRequest.canExpire.label": "Can expire?",
   "createPrayerRequest.expiryDate.label": "Expiration Date",
+  "createPrayerRequest.addImage.label": "Add Image",
 
   "createPrayerRequest.canExpire.yes.option": "Yes",
   "createPrayerRequest.canExpire.no.option": "No",

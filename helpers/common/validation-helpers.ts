@@ -19,7 +19,7 @@ export const isDateStringValid = (
   const validationDateParts = validationDate.split("/");
   const dateStrParts = dateStr.split("/");
 
-  if (validationDateParts.length === dateStrParts.length) {
+  if (validationDateParts.length !== dateStrParts.length) {
     return false;
   }
 

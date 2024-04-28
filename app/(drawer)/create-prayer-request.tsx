@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useI18N } from "../../hooks/use-i18n";
 import { ScrollView, View } from "react-native";
-import { useTheme, Text } from "react-native-paper";
+import { useTheme, Text, Button } from "react-native-paper";
 import { TextInput } from "../../components/inputs/text-input";
 import { Formik, FormikProps } from "formik";
 import { SelectInput } from "../../components/inputs/select-input";
@@ -90,6 +90,7 @@ const CreatePrayerRequest: React.FC = () => {
               {values.canExpire === true && (
                 <DatePickerInput
                   name="expiryDate"
+                  containerClassName="mb-5"
                   textInputName="expiryDateStr"
                   label={translate("createPrayerRequest.expiryDate.label")}
                   languageCode={i18n.language as SupportedLanguages}
@@ -98,6 +99,19 @@ const CreatePrayerRequest: React.FC = () => {
                   required
                 />
               )}
+
+              <Button
+                className="mb-5"
+                icon="image"
+                mode="outlined"
+                onPress={() => {}}
+              >
+                {translate("createPrayerRequest.addImage.label")}
+              </Button>
+
+              <Button mode="contained" onPress={() => {}}>
+                {translate("common.actions.save")}
+              </Button>
             </View>
           );
         }}

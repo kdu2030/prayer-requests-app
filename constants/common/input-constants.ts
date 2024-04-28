@@ -13,5 +13,8 @@ export const IMAGE_PICKER_OPTIONS: ImagePickerOptions = {
   mediaTypes: MediaTypeOptions.Images,
 };
 
-export const IMAGE_CAMERA_PERMISSIONS_KEY =
+export const CAMERA_PERMISSIONS_KEY =
   "prayerRequestsApp.imageCameraPermissions";
+
+export const IMAGE_LIBRARY_PERMISSIONS_KEY =
+  "prayerRequestsApp.imageLibraryPermissions";

@@ -12,10 +12,7 @@ import {
   SignupErrors,
   SignupTestIds,
 } from "../../constants/auth/auth-constants";
-import {
-  errorsArrayIncludes,
-  handleSuccessfulAuthentication,
-} from "./auth-helpers";
+import { handleSuccessfulAuthentication } from "./auth-helpers";
 import { signupValidationSchema } from "../../helpers/auth/signup-validation-schema";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
@@ -58,12 +55,7 @@ const Signup: React.FC = () => {
       return;
     }
 
-    handleSuccessfulAuthentication(
-      response.value.token,
-      response.value.refreshToken,
-      setUserData,
-      setUserTokens
-    );
+    handleSuccessfulAuthentication(response.value, setUserData, setUserTokens);
   };
 
   return (

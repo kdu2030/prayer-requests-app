@@ -1,6 +1,6 @@
 import { ApiAuthResponse } from "../../api/post-signup";
 
-export const userTokenPair: ApiAuthResponse = {
+export const mockUserSummary: ApiAuthResponse = {
   userId: 212,
   username: "darth_vader",
   fullName: "Darth Vader",

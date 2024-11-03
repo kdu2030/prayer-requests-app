@@ -120,7 +120,7 @@ const Signup: React.FC = () => {
                   label={translate("signup.username.label")}
                   mode={"flat"}
                   containerClassNames="mb-5"
-                  testID={SignupTestIds.displayNameInput}
+                  testID={SignupTestIds.usernameInput}
                   required
                 />
 
@@ -129,7 +129,7 @@ const Signup: React.FC = () => {
                   label={translate("signup.displayName.label")}
                   mode={"flat"}
                   containerClassNames="mb-5"
-                  testID={SignupTestIds.usernameInput}
+                  testID={SignupTestIds.displayNameInput}
                   required
                 />
 

@@ -15,7 +15,7 @@ import {
 import {
   errorsArrayIncludes,
   handleSuccessfulAuthentication,
-} from "../../helpers/auth/auth-helpers";
+} from "../../components/authentication/auth-helpers";
 import { signupValidationSchema } from "../../helpers/auth/signup-validation-schema";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";

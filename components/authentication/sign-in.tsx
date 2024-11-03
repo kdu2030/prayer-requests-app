@@ -20,13 +20,13 @@ import {
 import {
   errorsArrayIncludes,
   handleSuccessfulAuthentication,
-} from "../../helpers/auth/auth-helpers";
+} from "./auth-helpers";
 import { signinValidationSchema } from "../../helpers/auth/signin-validation-schema";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SigninForm } from "../../types/forms/auth-forms";
 
-const Signin: React.FC = () => {
+export const Signin: React.FC = () => {
   const theme = useTheme();
   const { translate } = useI18N();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -187,5 +187,3 @@ const Signin: React.FC = () => {
     </ScrollView>
   );
 };
-
-export default Signin;

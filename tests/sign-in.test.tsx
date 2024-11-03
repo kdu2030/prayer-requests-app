@@ -6,7 +6,7 @@ import {
 import * as React from "react";
 
 import { ApiAuthResponse } from "../api/post-signup";
-import Signin from "../app/auth/sign-in";
+import Signin from "../app/auth/sign-in-container";
 import { SigninTestIds } from "../constants/auth/auth-constants";
 import { ApiResponse } from "../types/api-response-types";
 import { SigninForm } from "../types/forms/auth-forms";

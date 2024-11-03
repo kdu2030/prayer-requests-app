@@ -48,20 +48,32 @@ const Signup: React.FC = () => {
     const response = await postSignup(baseUrl, formProps.values);
     setIsLoading(false);
 
+    const uniqueUsernameError = AuthApiErrors.UniqueUsername.replace(
+      "string",
+      formProps.values.username ?? ""
+    );
+
     if (
       response.isError &&
       response.errors.includes(AuthApiErrors.UniqueEmail)
     ) {
       formProps.setFieldError(
         "email",
-        translate("form.validation.emailUnique.error")
+        translate("form.validation.unique.error", {
+          field: translate("signup.email.label").toLocaleLowerCase(),
+        })
       );
       return;
     } else if (
       response.isError &&
-      response.errors.includes(AuthApiErrors.UniqueUsername)
+      response.errors.includes(uniqueUsernameError)
     ) {
-      // TODO: Add Error Handling Here
+      formProps.setFieldError(
+        "username",
+        translate("form.validation.unique.error", {
+          field: translate("signup.username.label").toLocaleLowerCase(),
+        })
+      );
       return;
     } else if (response.isError) {
       setIsErrorVisible(true);
@@ -188,7 +200,7 @@ const Signup: React.FC = () => {
           onIconPress={() => setIsErrorVisible(false)}
         >
           {translate("toaster.failed.genericFailure", {
-            item: translate("authScreen.signin.action"),
+            item: translate("authScreen.signup.action"),
           })}
         </Snackbar>
       </ScrollView>

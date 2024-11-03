@@ -7,7 +7,7 @@ export interface ValidationErrorResponse {
 export type ApiResponse<ValueType> =
   | {
       isError: true;
-      errors?: string[];
+      errors: string[];
     }
   | {
       isError: false;

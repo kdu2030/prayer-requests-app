@@ -18,6 +18,6 @@ export const postSignin = async (
     return { isError: false, value: signinResponse.data };
   } catch (error) {
     const axiosError = error as AxiosError<ApiAuthResponse>;
-    return { isError: true, errors: axiosError?.response?.data.errors };
+    return { isError: true, errors: axiosError?.response?.data.errors ?? [] };
   }
 };

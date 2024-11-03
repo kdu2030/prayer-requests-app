@@ -8,12 +8,9 @@ import { ProgressBar } from "react-native-paper";
 
 import { postSignup } from "../../api/post-signup";
 import { TextInput } from "../inputs/text-input";
-import {
-  SignupErrors,
-  SignupTestIds,
-} from "../../constants/auth/auth-constants";
+import { SignupTestIds } from "./auth-constants";
 import { handleSuccessfulAuthentication } from "./auth-helpers";
-import { signupValidationSchema } from "../../helpers/auth/signup-validation-schema";
+import { signupValidationSchema } from "./signup-validation-schema";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SignupForm } from "../../types/forms/auth-forms";
@@ -49,6 +46,11 @@ const Signup: React.FC = () => {
         "email",
         translate("form.validation.emailUnique.error")
       );
+      return;
+    } else if (
+      response.isError &&
+      response.errors.includes(AuthApiErrors.UniqueUsername)
+    ) {
       return;
     } else if (response.isError) {
       setIsErrorVisible(true);

@@ -6,7 +6,7 @@ import {
   JwtTokenFields,
   REFRESH_TOKEN_STORAGE_KEY,
   USER_TOKEN_STORAGE_KEY,
-} from "../../constants/auth/auth-constants";
+} from "./auth-constants";
 import { ApiResponse } from "../../types/api-response-types";
 import {
   UserData,

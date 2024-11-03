@@ -13,10 +13,7 @@ import {
 
 import { postSignin } from "../../api/post-signin";
 import { TextInput } from "../../components/inputs/text-input";
-import {
-  SigninErrors,
-  SigninTestIds,
-} from "../../constants/auth/auth-constants";
+import { SigninErrors, SigninTestIds } from "./auth-constants";
 import {
   errorsArrayIncludes,
   handleSuccessfulAuthentication,

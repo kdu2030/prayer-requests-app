@@ -1,15 +1,20 @@
 import axios, { AxiosError } from "axios";
 
-import {
-  ApiResponse,
-  ValidationErrorResponse,
-} from "../types/api-response-types";
+import { ApiErrorResponse, ApiResponse } from "../types/api-response-types";
 import { SignupForm } from "../types/forms/auth-forms";
 
-export interface ApiAuthResponse extends ValidationErrorResponse {
-  token?: string;
+export type RawUserTokenPair = {
+  accessToken?: string;
   refreshToken?: string;
-}
+};
+
+export type ApiAuthResponse = {
+  userId?: number;
+  username?: string;
+  emailAddress?: string;
+  fullName?: string;
+  tokens?: RawUserTokenPair;
+};
 
 export const postSignup = async (
   baseUrl: string,
@@ -24,7 +29,10 @@ export const postSignup = async (
 
     return { isError: false, value: signupResponse.data };
   } catch (error) {
-    const axiosError = error as AxiosError<ApiAuthResponse>;
-    return { isError: true, errors: axiosError?.response?.data.errors };
+    const axiosError = error as AxiosError<ApiErrorResponse>;
+    return {
+      isError: true,
+      errors: axiosError?.response?.data.dataValidationErrors ?? [],
+    };
   }
 };

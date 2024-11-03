@@ -100,6 +100,15 @@ const Signup: React.FC = () => {
                   label={translate("signup.username.label")}
                   mode={"flat"}
                   containerClassNames="mb-5"
+                  testID={SignupTestIds.displayNameInput}
+                  required
+                />
+
+                <TextInput
+                  name="fullName"
+                  label={translate("signup.displayName.label")}
+                  mode={"flat"}
+                  containerClassNames="mb-5"
                   testID={SignupTestIds.usernameInput}
                   required
                 />

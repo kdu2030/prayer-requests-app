@@ -11,6 +11,7 @@ export const REFRESH_TOKEN_STORAGE_KEY = "prayerRequestsApp.refreshToken";
 export const SignupTestIds = {
   usernameInput: "signup-username-input",
   emailInput: "signup-email-input",
+  displayNameInput: "signup-display-name-input",
   passwordInput: "signup-password-input",
   confirmPasswordInput: "signup-confirm-password-input",
   submitButton: "signup-submit-button",

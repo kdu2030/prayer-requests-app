@@ -14,11 +14,8 @@ import {
 import { postSignin } from "../../api/post-signin";
 import { TextInput } from "../../components/inputs/text-input";
 import { SigninErrors, SigninTestIds } from "./auth-constants";
-import {
-  errorsArrayIncludes,
-  handleSuccessfulAuthentication,
-} from "./auth-helpers";
-import { signinValidationSchema } from "../../helpers/auth/signin-validation-schema";
+import { handleSuccessfulAuthentication } from "./auth-helpers";
+import { signinValidationSchema } from "./signin-validation-schema";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SigninForm } from "../../types/forms/auth-forms";

@@ -14,6 +14,10 @@ export const signupValidationSchema = (
     field: translate("signup.email.label"),
   });
 
+  const fullNameRequiredError = translate("form.validation.isRequired.error", {
+    field: translate("signup.displayName.label"),
+  });
+
   const emailInvalidError = translate("form.validation.isInvalid.error", {
     field: translate("signup.email.label"),
   });
@@ -32,6 +36,7 @@ export const signupValidationSchema = (
 
   return Yup.object().shape({
     username: Yup.string().required(usernameRequiredError),
+    fullName: Yup.string().required(fullNameRequiredError),
     email: Yup.string().required(emailRequiredError).email(emailInvalidError),
     password: Yup.string().required(passwordRequiredError),
     confirmPassword: Yup.string()

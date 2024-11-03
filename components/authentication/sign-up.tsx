@@ -3,7 +3,13 @@ import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
-import { Button, Snackbar, Text, useTheme } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Button,
+  Snackbar,
+  Text,
+  useTheme,
+} from "react-native-paper";
 import { ProgressBar } from "react-native-paper";
 
 import { postSignup } from "../../api/post-signup";
@@ -89,8 +95,6 @@ const Signup: React.FC = () => {
                   {translate("common.appName")}
                 </Text>
 
-                {isLoading && <ProgressBar className="mt-5" indeterminate />}
-
                 <Text className="text-lg font-bold mt-5 mb-5">
                   {translate("signup.createAccount.label")}
                 </Text>
@@ -149,6 +153,7 @@ const Signup: React.FC = () => {
                   disabled={
                     isLoading || (!isEmpty(props.touched) && !props.isValid)
                   }
+                  loading={isLoading}
                   testID={SignupTestIds.submitButton}
                 >
                   {translate("authScreen.signup.action")}

@@ -21,7 +21,7 @@ export const postSignup = async (
   signupRequest: SignupForm
 ): Promise<ApiResponse<ApiAuthResponse>> => {
   try {
-    const url = `${baseUrl}/auth/signup`;
+    const url = `${baseUrl}/api/v1/user`;
     const signupResponse = await axios.post<ApiAuthResponse>(
       url,
       signupRequest

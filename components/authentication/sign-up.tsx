@@ -51,6 +51,7 @@ const Signup: React.FC = () => {
       response.isError &&
       response.errors.includes(AuthApiErrors.UniqueUsername)
     ) {
+      // TODO: Add Error Handling Here
       return;
     } else if (response.isError) {
       setIsErrorVisible(true);

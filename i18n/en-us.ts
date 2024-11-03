@@ -21,6 +21,7 @@ export const englishTranslations = {
   "signup.username.label": "Username",
   "signup.email.label": "Email",
   "signup.password.label": "Password",
+  "signup.displayName.label": "Display Name",
   "signup.confirmPassword.label": "Confirm Password",
   "signup.haveAccount.text": "Already have an account?",
 

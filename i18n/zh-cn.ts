@@ -21,6 +21,7 @@ export const chineseTranslations = {
   "signup.username.label": "用户名",
   "signup.email.label": "电子邮件地址",
   "signup.password.label": "密码",
+  "signup.displayName.label": "显示名称",
   "signup.confirmPassword.label": "确认密码",
   "signup.haveAccount.text": "已经有账号吗？",
 

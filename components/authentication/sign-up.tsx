@@ -30,6 +30,10 @@ const Signup: React.FC = () => {
   const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
 
   const onSubmit = async (formProps: FormikProps<SignupForm>) => {
+    if (isLoading) {
+      return;
+    }
+
     const errors = await formProps.validateForm();
 
     if (!isEmpty(errors)) {
@@ -150,9 +154,7 @@ const Signup: React.FC = () => {
                   mode="contained"
                   className="mt-3 mb-10"
                   onPress={() => onSubmit(props)}
-                  disabled={
-                    isLoading || (!isEmpty(props.touched) && !props.isValid)
-                  }
+                  disabled={isEmpty(props.touched) && !props.isValid}
                   loading={isLoading}
                   testID={SignupTestIds.submitButton}
                 >

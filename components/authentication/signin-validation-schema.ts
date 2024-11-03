@@ -7,5 +7,6 @@ export const signinValidationSchema = (
   return signupValidationSchema(translate).omit([
     "username",
     "confirmPassword",
+    "fullName",
   ]);
 };

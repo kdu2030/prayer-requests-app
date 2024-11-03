@@ -28,6 +28,10 @@ export const Signin: React.FC = () => {
   const { baseUrl, setUserData, setUserTokens } = useApiDataContext();
 
   const handleSubmit = async (formProps: FormikProps<SigninForm>) => {
+    if (isLoading) {
+      return;
+    }
+
     const errors = await formProps.validateForm(formProps.values);
 
     if (!isEmpty(errors)) {
@@ -44,7 +48,8 @@ export const Signin: React.FC = () => {
     setIsLoading(false);
 
     if (
-      errorsArrayIncludes(signinResponse, "email", SigninErrors.EmailNotFound)
+      signinResponse.isError &&
+      signinResponse.errors.includes(SigninErrors.EmailNotFound)
     ) {
       formProps.setFieldError(
         "email",
@@ -52,29 +57,21 @@ export const Signin: React.FC = () => {
       );
       return;
     } else if (
-      errorsArrayIncludes(
-        signinResponse,
-        "password",
-        SigninErrors.IncorrectPassword
-      )
+      signinResponse.isError &&
+      signinResponse.errors.includes(SigninErrors.IncorrectPassword)
     ) {
       formProps.setFieldError(
         "password",
         translate("form.validation.incorrectPassword.error")
       );
       return;
-    } else if (
-      signinResponse.isError ||
-      !signinResponse.value?.token ||
-      !signinResponse.value?.refreshToken
-    ) {
+    } else if (signinResponse.isError) {
       setIsErrorVisible(true);
       return;
     }
 
     handleSuccessfulAuthentication(
-      signinResponse.value.token,
-      signinResponse.value.refreshToken,
+      signinResponse.value,
       setUserData,
       setUserTokens
     );
@@ -107,8 +104,6 @@ export const Signin: React.FC = () => {
                 {translate("common.appName")}
               </Text>
 
-              {isLoading && <ProgressBar className="mt-5" indeterminate />}
-
               <Text className="text-lg font-bold mt-5 mb-5">
                 {translate("signin.signinToAccount.label")}
               </Text>
@@ -138,10 +133,9 @@ export const Signin: React.FC = () => {
                 onPress={() => {
                   handleSubmit(props);
                 }}
-                disabled={
-                  isLoading || (!isEmpty(props.touched) && !props.isValid)
-                }
+                disabled={!isEmpty(props.touched) && !props.isValid}
                 testID={SigninTestIds.submitButton}
+                loading={isLoading}
               >
                 {translate("authScreen.signin.action")}
               </Button>

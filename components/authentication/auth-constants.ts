@@ -28,6 +28,6 @@ export enum SignupErrors {
 }
 
 export enum SigninErrors {
-  EmailNotFound = "A user with this email was not found",
-  IncorrectPassword = "Password is incorrect",
+  EmailNotFound = "A User with this email does not exist.",
+  IncorrectPassword = "Password is incorrect.",
 }

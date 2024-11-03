@@ -30,6 +30,8 @@ export const chineseTranslations = {
 
   "form.validation.isRequired.error": "{{field}}必填。",
   "form.validation.isInvalid.error": "{{field}}无效。",
+  "form.validation.characters.error":
+    "{{field}} cannot contain #, @, or spaces.",
   "form.validation.confirmPasswordRequired.error": "请确认你的密码。",
   "form.validation.passwordsMismatch.error": "密码不一样。",
   "form.validation.uniqueEmail.error":

@@ -30,6 +30,7 @@ export const englishTranslations = {
 
   "form.validation.isRequired.error": "{{field}} is required.",
   "form.validation.isInvalid.error": "{{field}} is invalid.",
+  "form.validation.characters.error": "{{field}}不能包含#、@或空格。",
   "form.validation.confirmPasswordRequired.error":
     "Please confirm your password.",
   "form.validation.passwordsMismatch.error": "Passwords do not match.",

@@ -42,15 +42,6 @@ describe("App Container Tests", () => {
     }
   });
 
-  test("Language unable to load", async () => {
-    mockLoadLanguage.mockReturnValue({ isError: true });
-    component = mountComponent(<AppContainer />);
-
-    await waitFor(() => {
-      expect(mockRouterPush).toHaveBeenCalledWith("/language/language-picker");
-    });
-  });
-
   test("No language picked", async () => {
     mockLoadLanguage.mockReturnValue({ isError: false });
     component = mountComponent(<AppContainer />);

@@ -6,12 +6,12 @@ import {
 import * as React from "react";
 
 import { ApiAuthResponse } from "../api/post-signup";
-import Signup from "../app/auth/sign-up";
-import { SignupTestIds } from "../constants/auth/auth-constants";
+import Signup from "../components/authentication/sign-up";
+import { SignupTestIds } from "../components/authentication/auth-constants";
 import { ApiResponse } from "../types/api-response-types";
 import { SignupForm } from "../types/forms/auth-forms";
 import { SupportedLanguages } from "../types/languages";
-import { userTokenPair } from "./mock-data/mock-tokens";
+import { mockUserSummary } from "./mock-data/mock-tokens";
 import { mountComponent } from "./utils/test-utils";
 
 const mockPostSignup = jest.fn();
@@ -33,12 +33,18 @@ const addInputToSignupForm = ({
   password,
   confirmPassword,
   username,
+  fullName,
 }: SignupForm) => {
   const usernameInput = component.getByTestId(SignupTestIds.usernameInput);
   fireEvent.changeText(usernameInput, username);
 
   const emailInput = component.getByTestId(SignupTestIds.emailInput);
   fireEvent.changeText(emailInput, email);
+
+  const displayNameInput = component.getByTestId(
+    SignupTestIds.displayNameInput
+  );
+  fireEvent.changeText(displayNameInput, fullName);
 
   const passwordInput = component.getByTestId(SignupTestIds.passwordInput);
   fireEvent.changeText(passwordInput, password);
@@ -79,12 +85,13 @@ describe("Signup Form Tests", () => {
       username: "testUsername",
       email: "test@test.com",
       password: "testPassword",
+      fullName: "Test Name",
       confirmPassword: "testPassword",
     };
 
     const mockResponse: ApiResponse<ApiAuthResponse> = {
       isError: false,
-      value: userTokenPair,
+      value: mockUserSummary,
     };
 
     mockPostSignup.mockReturnValueOnce(mockResponse);
@@ -102,6 +109,7 @@ describe("Signup Form Tests", () => {
   test("Invalid email prevents submission", async () => {
     const validSignupForm: SignupForm = {
       username: "testUsername",
+      fullName: "Test Name",
       email: "test",
       password: "testPassword",
       confirmPassword: "testPassword",
@@ -120,9 +128,10 @@ describe("Signup Form Tests", () => {
   test("Mismatched passwords prevents submission", async () => {
     const validSignupForm: SignupForm = {
       username: "testUsername",
+      fullName: "Test Name",
       email: "test",
       password: "testPassword",
-      confirmPassword: "testPassword",
+      confirmPassword: "testPassword2",
     };
 
     addInputToSignupForm(validSignupForm);

@@ -10,6 +10,17 @@ export const signupValidationSchema = (
     field: translate("signup.username.label"),
   });
 
+  const usernameCharactersError = translate(
+    "form.validation.characters.error",
+    {
+      field: translate("signup.username.label"),
+    }
+  );
+
+  const fullNameRequiredError = translate("form.validation.isRequired.error", {
+    field: translate("signup.displayName.label"),
+  });
+
   const emailRequiredError = translate("form.validation.isRequired.error", {
     field: translate("signup.email.label"),
   });
@@ -31,7 +42,10 @@ export const signupValidationSchema = (
   );
 
   return Yup.object().shape({
-    username: Yup.string().required(usernameRequiredError),
+    username: Yup.string()
+      .required(usernameRequiredError)
+      .matches(/^[^@# ]*$/gm, usernameCharactersError),
+    fullName: Yup.string().required(fullNameRequiredError),
     email: Yup.string().required(emailRequiredError).email(emailInvalidError),
     password: Yup.string().required(passwordRequiredError),
     confirmPassword: Yup.string()

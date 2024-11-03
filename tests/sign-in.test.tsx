@@ -7,11 +7,11 @@ import * as React from "react";
 
 import { ApiAuthResponse } from "../api/post-signup";
 import Signin from "../app/auth/sign-in";
-import { SigninTestIds } from "../constants/auth/auth-constants";
+import { SigninTestIds } from "../components/authentication/auth-constants";
 import { ApiResponse } from "../types/api-response-types";
 import { SigninForm } from "../types/forms/auth-forms";
 import { SupportedLanguages } from "../types/languages";
-import { userTokenPair } from "./mock-data/mock-tokens";
+import { mockUserSummary } from "./mock-data/mock-tokens";
 import { mountComponent } from "./utils/test-utils";
 
 let component: RenderResult;
@@ -80,7 +80,7 @@ describe("Sign In Tests", () => {
 
     const apiResponse: ApiResponse<ApiAuthResponse> = {
       isError: false,
-      value: userTokenPair,
+      value: mockUserSummary,
     };
 
     mockPostSignin.mockReturnValueOnce(apiResponse);

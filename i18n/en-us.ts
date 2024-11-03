@@ -21,6 +21,7 @@ export const englishTranslations = {
   "signup.username.label": "Username",
   "signup.email.label": "Email",
   "signup.password.label": "Password",
+  "signup.displayName.label": "Display Name",
   "signup.confirmPassword.label": "Confirm Password",
   "signup.haveAccount.text": "Already have an account?",
 
@@ -29,11 +30,12 @@ export const englishTranslations = {
 
   "form.validation.isRequired.error": "{{field}} is required.",
   "form.validation.isInvalid.error": "{{field}} is invalid.",
+  "form.validation.characters.error":
+    "{{field}} cannot contain #, @, or spaces.",
   "form.validation.confirmPasswordRequired.error":
     "Please confirm your password.",
   "form.validation.passwordsMismatch.error": "Passwords do not match.",
-  "form.validation.emailUnique.error":
-    "This email has already been used. Please use another email.",
+  "form.validation.unique.error": "This {{field}} has already been used.",
   "form.validation.emailNotFound.error":
     "We couldn't find a user with this email.",
   "form.validation.incorrectPassword.error": "Your password is incorrect",

@@ -21,6 +21,7 @@ export const chineseTranslations = {
   "signup.username.label": "用户名",
   "signup.email.label": "电子邮件地址",
   "signup.password.label": "密码",
+  "signup.displayName.label": "显示名称",
   "signup.confirmPassword.label": "确认密码",
   "signup.haveAccount.text": "已经有账号吗？",
 
@@ -29,10 +30,10 @@ export const chineseTranslations = {
 
   "form.validation.isRequired.error": "{{field}}必填。",
   "form.validation.isInvalid.error": "{{field}}无效。",
+  "form.validation.characters.error": "{{field}}不能包含#、@或空格。",
   "form.validation.confirmPasswordRequired.error": "请确认你的密码。",
   "form.validation.passwordsMismatch.error": "密码不一样。",
-  "form.validation.uniqueEmail.error":
-    "此电子邮件已被使用。请用另一个电子邮件。",
+  "form.validation.unique.error": "此{{field}}已被使用。",
   "form.validation.emailNotFound.error": "我们找不到使用该电子邮件地址的用户。",
   "form.validation.incorrectPassword.error": "你的密码不正确",
 

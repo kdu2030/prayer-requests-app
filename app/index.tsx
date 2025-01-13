@@ -8,6 +8,12 @@ import { View } from "react-native";
 import { ActivityIndicator, Snackbar, Text } from "react-native-paper";
 
 import { useI18N } from "../hooks/use-i18n";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  REFRESH_TOKEN_STORAGE_KEY,
+  USER_TOKEN_STORAGE_KEY,
+} from "../components/authentication/auth-constants";
+import { decodeJwtToken } from "../components/authentication/auth-helpers";
 
 const AppContainer: React.FC = () => {
   const { loadLanguage, translate } = useI18N();
@@ -21,6 +27,24 @@ const AppContainer: React.FC = () => {
 
     if (true || response.isError || response.value == null) {
       router.push("/language/language-picker");
+      return;
+    }
+
+    const [accessToken, refreshToken] = await Promise.all([
+      AsyncStorage.getItem(USER_TOKEN_STORAGE_KEY),
+      AsyncStorage.getItem(REFRESH_TOKEN_STORAGE_KEY),
+    ]);
+
+    const refreshTokenExpiryDate = refreshToken
+      ? decodeJwtToken(refreshToken).tokenExpiryDate
+      : undefined;
+
+    if (
+      refreshToken == null ||
+      refreshTokenExpiryDate == null ||
+      refreshTokenExpiryDate >= new Date()
+    ) {
+      router.push("/auth/welcome");
       return;
     }
 

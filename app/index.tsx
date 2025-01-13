@@ -14,10 +14,13 @@ import {
   USER_TOKEN_STORAGE_KEY,
 } from "../components/authentication/auth-constants";
 import { decodeJwtToken } from "../components/authentication/auth-helpers";
+import { useApiDataContext } from "../hooks/use-api-data";
+import { getUserTokenPair } from "../api/get-user-token-pair";
 
 const AppContainer: React.FC = () => {
   const { loadLanguage, translate } = useI18N();
   const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
+  const { baseUrl } = useApiDataContext();
 
   const loadUserData = async () => {
     const response = await loadLanguage();
@@ -42,12 +45,18 @@ const AppContainer: React.FC = () => {
     if (
       refreshToken == null ||
       refreshTokenExpiryDate == null ||
-      refreshTokenExpiryDate >= new Date()
+      refreshTokenExpiryDate <= new Date()
     ) {
       router.push("/auth/welcome");
       return;
     }
 
+    console.log(
+      await getUserTokenPair(
+        baseUrl,
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiamhhbHBlcnQiLCJleHAiOjE3MzgxMDgxMDUsImlzcyI6Imh0dHBzOi8vcHJheWVyYXBwc2VydmljZXMub25yZW5kZXIuY29tIiwiYXVkIjoiaHR0cHM6Ly9wcmF5ZXJhcHBzZXJ2aWNlcy5vbnJlbmRlci5jb20ifQ.CGvicRCgO94wgd1zSjw03AYTUOx4Kg8vS1kmAE_ilWA"
+      )
+    );
     // Logic missing: Check if user is signed in
     router.push("/auth/welcome");
   };

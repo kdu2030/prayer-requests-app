@@ -65,6 +65,8 @@ export const handleSuccessfulAuthentication = (
   setUserData(userData);
   setUserTokens(userTokenPair);
 
+  console.log(apiAuthResponse.tokens);
+
   AsyncStorage.setItem(USER_TOKEN_STORAGE_KEY, userTokenPair.token);
   AsyncStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, userTokenPair.refreshToken);
 };

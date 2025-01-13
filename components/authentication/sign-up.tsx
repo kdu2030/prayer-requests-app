@@ -3,14 +3,7 @@ import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
-import {
-  ActivityIndicator,
-  Button,
-  Snackbar,
-  Text,
-  useTheme,
-} from "react-native-paper";
-import { ProgressBar } from "react-native-paper";
+import { Button, Snackbar, Text, useTheme } from "react-native-paper";
 
 import { postSignup } from "../../api/post-signup";
 import { TextInput } from "../inputs/text-input";
@@ -48,11 +41,6 @@ const Signup: React.FC = () => {
     const response = await postSignup(baseUrl, formProps.values);
     setIsLoading(false);
 
-    const uniqueUsernameError = AuthApiErrors.UniqueUsername.replace(
-      "string",
-      formProps.values.username ?? ""
-    );
-
     if (
       response.isError &&
       response.errors.includes(AuthApiErrors.UniqueEmail)
@@ -66,7 +54,7 @@ const Signup: React.FC = () => {
       return;
     } else if (
       response.isError &&
-      response.errors.includes(uniqueUsernameError)
+      response.errors.includes(AuthApiErrors.UniqueUsername)
     ) {
       formProps.setFieldError(
         "username",

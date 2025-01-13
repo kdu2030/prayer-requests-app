@@ -7,7 +7,7 @@ import {
 } from "../types/context/api-data-context-type";
 
 const defaultApiData: ApiDataContextType = {
-  baseUrl: "https://prayer-app-api.onrender.com",
+  baseUrl: "https://prayerappservices.onrender.com",
   setUserData: () => {},
   setUserTokens: () => {},
 };

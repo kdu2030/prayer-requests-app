@@ -8,8 +8,8 @@ export type UserData = {
 };
 
 export type UserTokenPair = {
-  token: string;
-  tokenExpiryDate: Date;
+  accessToken: string;
+  accessTokenExpiryDate: Date;
   refreshToken: string;
   refreshTokenExpiryDate: Date;
 };

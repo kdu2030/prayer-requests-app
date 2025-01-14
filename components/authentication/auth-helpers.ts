@@ -2,17 +2,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { decode } from "base-64";
 import _ from "lodash";
 
-import {
-  JwtTokenFields,
-  REFRESH_TOKEN_STORAGE_KEY,
-  USER_TOKEN_STORAGE_KEY,
-} from "./auth-constants";
+import { ApiAuthResponse } from "../../api/post-signup";
 import { ApiResponse } from "../../types/api-response-types";
 import {
   UserData,
   UserTokenPair,
 } from "../../types/context/api-data-context-type";
-import { ApiAuthResponse } from "../../api/post-signup";
+import {
+  JwtTokenFields,
+  REFRESH_TOKEN_STORAGE_KEY,
+  USER_TOKEN_STORAGE_KEY,
+} from "./auth-constants";
 
 export type DecodeData = {
   token: string;
@@ -49,8 +49,8 @@ export const handleSuccessfulAuthentication = (
   const refreshTokenDecodeData = decodeJwtToken(refreshToken);
 
   const userTokenPair: UserTokenPair = {
-    token: userTokenDecodeData.token,
-    tokenExpiryDate: userTokenDecodeData.tokenExpiryDate,
+    accessToken: userTokenDecodeData.token,
+    accessTokenExpiryDate: userTokenDecodeData.tokenExpiryDate,
     refreshToken: refreshTokenDecodeData.token,
     refreshTokenExpiryDate: userTokenDecodeData.tokenExpiryDate,
   };
@@ -65,6 +65,8 @@ export const handleSuccessfulAuthentication = (
   setUserData(userData);
   setUserTokens(userTokenPair);
 
-  AsyncStorage.setItem(USER_TOKEN_STORAGE_KEY, userTokenPair.token);
+  console.log(apiAuthResponse.tokens);
+
+  AsyncStorage.setItem(USER_TOKEN_STORAGE_KEY, userTokenPair.accessToken);
   AsyncStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, userTokenPair.refreshToken);
 };

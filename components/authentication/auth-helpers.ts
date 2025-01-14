@@ -1,9 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { decode } from "base-64";
-import _ from "lodash";
 
 import { ApiAuthResponse } from "../../api/post-signup";
-import { ApiResponse } from "../../types/api-response-types";
 import {
   UserData,
   UserTokenPair,
@@ -64,8 +62,6 @@ export const handleSuccessfulAuthentication = (
 
   setUserData(userData);
   setUserTokens(userTokenPair);
-
-  console.log(apiAuthResponse.tokens);
 
   AsyncStorage.setItem(USER_TOKEN_STORAGE_KEY, userTokenPair.accessToken);
   AsyncStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, userTokenPair.refreshToken);

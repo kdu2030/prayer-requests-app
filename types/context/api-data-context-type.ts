@@ -8,10 +8,10 @@ export type UserData = {
 };
 
 export type UserTokenPair = {
-  accessToken: string;
-  accessTokenExpiryDate: Date;
-  refreshToken: string;
-  refreshTokenExpiryDate: Date;
+  accessToken?: string;
+  accessTokenExpiryDate?: Date;
+  refreshToken?: string;
+  refreshTokenExpiryDate?: Date;
 };
 
 export type ApiDataContextType = {

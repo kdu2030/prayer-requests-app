@@ -69,6 +69,5 @@ export const handleSuccessfulAuthentication = (
     REFRESH_TOKEN_STORAGE_KEY,
     userTokenPair.refreshToken ?? ""
   );
-  console.log(userId);
   AsyncStorage.setItem(USER_ID_STORAGE_KEY, (userId ?? "").toString());
 };

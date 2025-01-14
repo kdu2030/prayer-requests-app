@@ -37,7 +37,7 @@ export const handleSuccessfulAuthentication = (
   setUserData: (userData: UserData) => void,
   setUserTokens: (userTokenPair: UserTokenPair) => void
 ) => {
-  const { userId, username, emailAddress, fullName } = apiAuthResponse;
+  const { id: userId, username, emailAddress, fullName } = apiAuthResponse;
   const { refreshToken, accessToken } = apiAuthResponse?.tokens ?? {};
 
   if (!refreshToken || !accessToken) {
@@ -69,5 +69,6 @@ export const handleSuccessfulAuthentication = (
     REFRESH_TOKEN_STORAGE_KEY,
     userTokenPair.refreshToken ?? ""
   );
-  AsyncStorage.setItem(USER_ID_STORAGE_KEY, (userId ?? -1).toString());
+  console.log(userId);
+  AsyncStorage.setItem(USER_ID_STORAGE_KEY, (userId ?? "").toString());
 };

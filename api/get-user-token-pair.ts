@@ -1,7 +1,8 @@
+import axios, { AxiosError } from "axios";
+
 import { BEARER_PREFIX } from "../constants/auth-constants";
 import { ManagedErrorResponse } from "../types/error-handling";
 import { RawUserTokenPair } from "./post-signup";
-import axios, { AxiosError } from "axios";
 
 export const getUserTokenPair = async (
   baseUrl: string,

@@ -2,10 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import * as React from "react";
 
-import {
-  REFRESH_TOKEN_STORAGE_KEY,
-  USER_TOKEN_STORAGE_KEY,
-} from "../components/authentication/auth-constants";
+import { REFRESH_TOKEN_STORAGE_KEY } from "../components/authentication/auth-constants";
 import { decodeJwtToken } from "../components/authentication/auth-helpers";
 import {
   ApiDataContextType,

@@ -1,5 +1,6 @@
 import "expo-router/entry";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { registerRootComponent } from "expo";
 import { router } from "expo-router";
 import { NativeWindStyleSheet } from "nativewind";
@@ -7,8 +8,7 @@ import * as React from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Snackbar, Text } from "react-native-paper";
 
-import { useI18N } from "../hooks/use-i18n";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getUserTokenPair } from "../api/get-user-token-pair";
 import {
   REFRESH_TOKEN_STORAGE_KEY,
   USER_TOKEN_STORAGE_KEY,

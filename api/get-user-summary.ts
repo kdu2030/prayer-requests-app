@@ -2,6 +2,7 @@ import { AxiosInstance } from "axios";
 import * as React from "react";
 
 import { handleApiErrors } from "../helpers/api-helpers";
+import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
 import { MediaFile } from "../types/media-file-types";
 import { RawUserTokenPair } from "./post-signup";
@@ -30,4 +31,12 @@ const getUserSummary = async (
   } catch (error) {
     return handleApiErrors<GetUserSummaryResponse>(error);
   }
+};
+
+export const useGetUserSummary = () => {
+  const { baseUrl, fetch } = useApiDataContext();
+
+  return React.useCallback((userId: number) => {
+    return getUserSummary(fetch, baseUrl, userId);
+  }, []);
 };

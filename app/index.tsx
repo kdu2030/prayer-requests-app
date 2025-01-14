@@ -8,19 +8,13 @@ import * as React from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Snackbar, Text } from "react-native-paper";
 
-import { getUserTokenPair } from "../api/get-user-token-pair";
-import {
-  REFRESH_TOKEN_STORAGE_KEY,
-  USER_TOKEN_STORAGE_KEY,
-} from "../components/authentication/auth-constants";
-import { decodeJwtToken } from "../components/authentication/auth-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { useI18N } from "../hooks/use-i18n";
 
 const AppContainer: React.FC = () => {
   const { loadLanguage, translate } = useI18N();
   const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
-  const { baseUrl } = useApiDataContext();
+  const { initializeContextFromStorage } = useApiDataContext();
 
   const loadUserData = async () => {
     const response = await loadLanguage();
@@ -33,26 +27,7 @@ const AppContainer: React.FC = () => {
       return;
     }
 
-    const [accessToken, refreshToken] = await Promise.all([
-      AsyncStorage.getItem(USER_TOKEN_STORAGE_KEY),
-      AsyncStorage.getItem(REFRESH_TOKEN_STORAGE_KEY),
-    ]);
-
-    const refreshTokenExpiryDate = refreshToken
-      ? decodeJwtToken(refreshToken).tokenExpiryDate
-      : undefined;
-
-    if (
-      refreshToken == null ||
-      refreshTokenExpiryDate == null ||
-      refreshTokenExpiryDate <= new Date()
-    ) {
-      router.push("/auth/welcome");
-      return;
-    }
-
-    // Logic missing: Check if user is signed in
-    router.push("/auth/welcome");
+    await initializeContextFromStorage();
   };
 
   React.useEffect(() => {

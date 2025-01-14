@@ -8,7 +8,7 @@ import * as React from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Snackbar, Text } from "react-native-paper";
 
-import { useGetUserSummary } from "../api/get-user-summary";
+import { getUserSummaryRaw } from "../api/get-user-summary";
 import {
   REFRESH_TOKEN_STORAGE_KEY,
   USER_ID_STORAGE_KEY,
@@ -17,13 +17,19 @@ import { decodeJwtToken } from "../components/authentication/auth-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { useI18N } from "../hooks/use-i18n";
 
+type StoredUserData = {
+  refreshToken: string;
+  userId: number;
+};
+
 const AppContainer: React.FC = () => {
   const { loadLanguage, translate } = useI18N();
   const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
-  const { setUserTokens, userTokens } = useApiDataContext();
-  const getUserSummary = useGetUserSummary();
+  const { setUserTokens, userTokens, baseUrl } = useApiDataContext();
 
-  const checkStoredUserDataValidity = async (): Promise<number | undefined> => {
+  const checkStoredUserDataValidity = async (): Promise<
+    StoredUserData | undefined
+  > => {
     const [userIdStr, refreshToken] = await Promise.all([
       AsyncStorage.getItem(USER_ID_STORAGE_KEY),
       AsyncStorage.getItem(REFRESH_TOKEN_STORAGE_KEY),
@@ -45,9 +51,8 @@ const AppContainer: React.FC = () => {
       return;
     }
 
-    console.log(userId);
     setUserTokens({ ...userTokens, refreshToken, refreshTokenExpiryDate });
-    return userId;
+    return { userId, refreshToken };
   };
 
   const loadUserData = async () => {
@@ -61,13 +66,15 @@ const AppContainer: React.FC = () => {
       return;
     }
 
-    const userId = await checkStoredUserDataValidity();
-    if (!userId) {
+    const { refreshToken, userId } =
+      (await checkStoredUserDataValidity()) ?? {};
+
+    if (!userId || !refreshToken) {
       return;
     }
 
-    const userSummaryResponse = await getUserSummary(userId);
-    console.log(userSummaryResponse);
+    const userSummary = await getUserSummaryRaw(refreshToken, baseUrl, userId);
+    console.log(userSummary);
 
     // TODO: Remove this?
     router.push("/auth/welcome");

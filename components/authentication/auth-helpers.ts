@@ -9,6 +9,7 @@ import {
 import {
   JwtTokenFields,
   REFRESH_TOKEN_STORAGE_KEY,
+  USER_ID_STORAGE_KEY,
   USER_TOKEN_STORAGE_KEY,
 } from "./auth-constants";
 
@@ -63,6 +64,10 @@ export const handleSuccessfulAuthentication = (
   setUserData(userData);
   setUserTokens(userTokenPair);
 
-  AsyncStorage.setItem(USER_TOKEN_STORAGE_KEY, userTokenPair.accessToken);
-  AsyncStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, userTokenPair.refreshToken);
+  AsyncStorage.setItem(USER_TOKEN_STORAGE_KEY, userTokenPair.accessToken ?? "");
+  AsyncStorage.setItem(
+    REFRESH_TOKEN_STORAGE_KEY,
+    userTokenPair.refreshToken ?? ""
+  );
+  AsyncStorage.setItem(USER_ID_STORAGE_KEY, (userId ?? -1).toString());
 };

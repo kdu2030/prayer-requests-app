@@ -1,10 +1,8 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 import { router } from "expo-router";
 import * as React from "react";
 
 import { getUserTokenPair } from "../api/get-user-token-pair";
-import { REFRESH_TOKEN_STORAGE_KEY } from "../components/authentication/auth-constants";
 import { decodeJwtToken } from "../components/authentication/auth-helpers";
 import { BEARER_PREFIX } from "../constants/auth-constants";
 import {
@@ -50,23 +48,6 @@ export const ApiDataContextProvider: React.FC<Props> = ({ children }) => {
 export const useApiDataContext = () => {
   const apiDataContext = React.useContext(ApiDataContext);
   const fetchRef = React.useRef<AxiosInstance>(axios.create());
-
-  const initializeContextFromStorage = async () => {
-    const refreshToken = await AsyncStorage.getItem(REFRESH_TOKEN_STORAGE_KEY);
-
-    const refreshTokenExpiryDate = refreshToken
-      ? decodeJwtToken(refreshToken).tokenExpiryDate
-      : undefined;
-
-    if (
-      refreshToken == null ||
-      refreshTokenExpiryDate == null ||
-      refreshTokenExpiryDate <= new Date()
-    ) {
-      router.push("/auth/welcome");
-      return;
-    }
-  };
 
   const addAuthorizationHeader = async (config: InternalAxiosRequestConfig) => {
     const { userTokens, baseUrl, setUserTokens } = apiDataContext;
@@ -121,7 +102,6 @@ export const useApiDataContext = () => {
 
   return {
     ...apiDataContext,
-    initializeContextFromStorage,
     fetch: fetchRef.current,
   };
 };

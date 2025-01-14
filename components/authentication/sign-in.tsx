@@ -3,22 +3,16 @@ import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
-import {
-  Button,
-  ProgressBar,
-  Snackbar,
-  Text,
-  useTheme,
-} from "react-native-paper";
+import { Button, Snackbar, Text, useTheme } from "react-native-paper";
 
 import { postSignin } from "../../api/post-signin";
 import { TextInput } from "../../components/inputs/text-input";
-import { SigninErrors, SigninTestIds } from "./auth-constants";
-import { handleSuccessfulAuthentication } from "./auth-helpers";
-import { signinValidationSchema } from "./signin-validation-schema";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SigninForm } from "../../types/forms/auth-forms";
+import { SigninErrors, SigninTestIds } from "./auth-constants";
+import { handleSuccessfulAuthentication } from "./auth-helpers";
+import { signinValidationSchema } from "./signin-validation-schema";
 
 export const Signin: React.FC = () => {
   const theme = useTheme();
@@ -104,7 +98,7 @@ export const Signin: React.FC = () => {
                 {translate("common.appName")}
               </Text>
 
-              <Text className="text-lg font-bold mt-5 mb-5">
+              <Text className="mt-5 mb-5 text-lg font-bold">
                 {translate("signin.signinToAccount.label")}
               </Text>
 

@@ -1,6 +1,5 @@
 import "expo-router/entry";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { registerRootComponent } from "expo";
 import { router } from "expo-router";
 import { NativeWindStyleSheet } from "nativewind";

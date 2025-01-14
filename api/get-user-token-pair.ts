@@ -1,6 +1,7 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 import { BEARER_PREFIX } from "../constants/auth-constants";
+import { handleApiErrors } from "../helpers/api-helpers";
 import { ManagedErrorResponse } from "../types/error-handling";
 import { RawUserTokenPair } from "./post-signup";
 
@@ -18,10 +19,6 @@ export const getUserTokenPair = async (
 
     return { isError: false, value: response.data };
   } catch (error) {
-    const axiosError = error as AxiosError<ManagedErrorResponse<any>>;
-    return {
-      isError: true,
-      error: axiosError.response?.data,
-    };
+    return handleApiErrors(error);
   }
 };

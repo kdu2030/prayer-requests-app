@@ -2,7 +2,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 
 import { LANGUAGE_STORAGE_KEY } from "../constants/languages";
-import { ManagedErrorResponse } from "../types/error-handling";
+import {
+  BaseManagedErrorResponse,
+  ManagedErrorResponse,
+} from "../types/error-handling";
 import { TranslationKey } from "../types/languages";
 import { SupportedLanguages } from "../types/languages";
 
@@ -19,7 +22,7 @@ export const useI18N = () => {
       }
       return {
         isError: false,
-        value: language as SupportedLanguages | undefined,
+        value: language as SupportedLanguages,
       };
     } catch (error) {
       return { isError: true, error };
@@ -37,7 +40,7 @@ export const useI18N = () => {
 
   const storeLanguage = async (
     language: SupportedLanguages
-  ): Promise<ManagedErrorResponse<undefined>> => {
+  ): Promise<BaseManagedErrorResponse> => {
     try {
       await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, language);
       return { isError: false };

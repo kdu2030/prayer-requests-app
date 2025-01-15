@@ -16,6 +16,7 @@ import {
 import { decodeJwtToken } from "../components/authentication/auth-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { useI18N } from "../hooks/use-i18n";
+import { mapUserData } from "../mappers/map-user-data";
 import { Token } from "../types/context/api-data-context-type";
 
 type StoredUserData = {
@@ -26,7 +27,8 @@ type StoredUserData = {
 const AppContainer: React.FC = () => {
   const { loadLanguage, translate } = useI18N();
   const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
-  const { setUserTokens, userTokens, baseUrl } = useApiDataContext();
+  const { setUserTokens, userTokens, baseUrl, setUserData } =
+    useApiDataContext();
 
   const checkStoredUserDataValidity = async (): Promise<
     StoredUserData | undefined
@@ -79,10 +81,22 @@ const AppContainer: React.FC = () => {
       return;
     }
 
-    const userSummary = await getUserSummaryRaw(refreshToken, baseUrl, userId);
-    console.log(userSummary);
+    const userSummaryResponse = await getUserSummaryRaw(
+      refreshToken,
+      baseUrl,
+      userId
+    );
 
-    // TODO: Remove this?
+    if (userSummaryResponse.isError) {
+      setIsErrorVisible(true);
+      router.push("/auth/welcome");
+      return;
+    }
+
+    const userData = mapUserData(userSummaryResponse.value);
+    setUserData(userData);
+
+    // FIXME: Replace with sign in
     router.push("/auth/welcome");
   };
 

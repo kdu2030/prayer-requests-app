@@ -5,12 +5,12 @@ import * as React from "react";
 import { getUserTokenPair } from "../api/get-user-token-pair";
 import { decodeJwtToken } from "../components/authentication/auth-helpers";
 import { BEARER_PREFIX } from "../constants/auth-constants";
+import { isTokenValid } from "../helpers/api-helpers";
 import {
   ApiDataContextType,
   UserData,
   UserTokenPair,
 } from "../types/context/api-data-context-type";
-import { isTokenValid } from "../helpers/api-helpers";
 
 const defaultApiData: ApiDataContextType = {
   baseUrl: "https://prayerappservices.onrender.com",

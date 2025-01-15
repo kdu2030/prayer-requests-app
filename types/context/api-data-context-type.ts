@@ -7,11 +7,14 @@ export type UserData = {
   fullName?: string;
 };
 
+export type Token = {
+  token: string;
+  expiryDate: Date;
+};
+
 export type UserTokenPair = {
-  accessToken?: string;
-  accessTokenExpiryDate?: Date;
-  refreshToken?: string;
-  refreshTokenExpiryDate?: Date;
+  accessToken?: Token;
+  refreshToken?: Token;
 };
 
 export type ApiDataContextType = {

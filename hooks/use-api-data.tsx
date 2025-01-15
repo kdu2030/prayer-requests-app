@@ -10,6 +10,7 @@ import {
   UserData,
   UserTokenPair,
 } from "../types/context/api-data-context-type";
+import { isTokenValid } from "../helpers/api-helpers";
 
 const defaultApiData: ApiDataContextType = {
   baseUrl: "https://prayerappservices.onrender.com",
@@ -51,24 +52,18 @@ export const useApiDataContext = () => {
 
   const addAuthorizationHeader = async (config: InternalAxiosRequestConfig) => {
     const { userTokens, baseUrl, setUserTokens } = apiDataContext;
-    const currentDate = new Date();
     let currentUserTokens: UserTokenPair = { ...userTokens };
 
-    if (
-      !userTokens?.refreshToken ||
-      !userTokens.refreshTokenExpiryDate ||
-      userTokens.refreshTokenExpiryDate < currentDate
-    ) {
+    if (isTokenValid(userTokens?.refreshToken)) {
       router.push("/auth/welcome");
       throw new Error("Refresh token is expired.");
     }
 
-    if (
-      !userTokens.accessToken ||
-      !userTokens.accessTokenExpiryDate ||
-      userTokens.accessTokenExpiryDate < currentDate
-    ) {
-      const response = await getUserTokenPair(baseUrl, userTokens.refreshToken);
+    if (isTokenValid(userTokens?.accessToken)) {
+      const response = await getUserTokenPair(
+        baseUrl,
+        userTokens?.refreshToken?.token ?? ""
+      );
       if (response.isError) {
         router.push("/auth/welcome");
         throw new Error("Unable to fetch user tokens.");
@@ -82,10 +77,8 @@ export const useApiDataContext = () => {
       );
 
       currentUserTokens = {
-        accessToken: updatedAccessToken.token,
-        accessTokenExpiryDate: updatedAccessToken.tokenExpiryDate,
-        refreshToken: updatedRefreshToken.token,
-        refreshTokenExpiryDate: updatedRefreshToken.tokenExpiryDate,
+        accessToken: updatedAccessToken,
+        refreshToken: updatedRefreshToken,
       };
 
       setUserTokens(currentUserTokens);

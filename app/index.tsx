@@ -16,6 +16,7 @@ import {
 import { decodeJwtToken } from "../components/authentication/auth-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { useI18N } from "../hooks/use-i18n";
+import { Token } from "../types/context/api-data-context-type";
 
 type StoredUserData = {
   refreshToken: string;
@@ -38,7 +39,7 @@ const AppContainer: React.FC = () => {
     const userId = Number.parseInt(userIdStr ?? "");
 
     const refreshTokenExpiryDate = refreshToken
-      ? decodeJwtToken(refreshToken).tokenExpiryDate
+      ? decodeJwtToken(refreshToken).expiryDate
       : undefined;
 
     if (
@@ -51,7 +52,12 @@ const AppContainer: React.FC = () => {
       return;
     }
 
-    setUserTokens({ ...userTokens, refreshToken, refreshTokenExpiryDate });
+    const storedRefreshToken: Token = {
+      token: refreshToken,
+      expiryDate: refreshTokenExpiryDate,
+    };
+
+    setUserTokens({ ...userTokens, refreshToken: storedRefreshToken });
     return { userId, refreshToken };
   };
 

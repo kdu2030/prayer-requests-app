@@ -3,6 +3,7 @@ import { decode } from "base-64";
 
 import { ApiAuthResponse } from "../../api/post-signup";
 import {
+  Token,
   UserData,
   UserTokenPair,
 } from "../../types/context/api-data-context-type";
@@ -13,22 +14,15 @@ import {
   USER_TOKEN_STORAGE_KEY,
 } from "./auth-constants";
 
-export type DecodeData = {
-  token: string;
-  tokenExpiryDate: Date;
-};
-
-export const decodeJwtToken = (token: string): DecodeData => {
+export const decodeJwtToken = (token: string): Token => {
   const tokenParts = token.split(".");
   const payload = JSON.parse(decode(tokenParts[1]));
   // exp field is in seconds since Jan 1, 1970. Date constructor expects ms since 1970
-  const tokenExpiryDate = new Date(
-    payload[JwtTokenFields.ExpiryDateSecs] * 1000
-  );
+  const expiryDate = new Date(payload[JwtTokenFields.ExpiryDateSecs] * 1000);
 
   return {
     token,
-    tokenExpiryDate,
+    expiryDate,
   };
 };
 
@@ -44,14 +38,12 @@ export const handleSuccessfulAuthentication = (
     return;
   }
 
-  const userTokenDecodeData = decodeJwtToken(accessToken);
-  const refreshTokenDecodeData = decodeJwtToken(refreshToken);
+  const accessTokenData = decodeJwtToken(accessToken);
+  const refreshTokenData = decodeJwtToken(refreshToken);
 
   const userTokenPair: UserTokenPair = {
-    accessToken: userTokenDecodeData.token,
-    accessTokenExpiryDate: userTokenDecodeData.tokenExpiryDate,
-    refreshToken: refreshTokenDecodeData.token,
-    refreshTokenExpiryDate: userTokenDecodeData.tokenExpiryDate,
+    accessToken: accessTokenData,
+    refreshToken: refreshTokenData,
   };
 
   const userData: UserData = {
@@ -64,10 +56,13 @@ export const handleSuccessfulAuthentication = (
   setUserData(userData);
   setUserTokens(userTokenPair);
 
-  AsyncStorage.setItem(USER_TOKEN_STORAGE_KEY, userTokenPair.accessToken ?? "");
+  AsyncStorage.setItem(
+    USER_TOKEN_STORAGE_KEY,
+    userTokenPair.accessToken?.token ?? ""
+  );
   AsyncStorage.setItem(
     REFRESH_TOKEN_STORAGE_KEY,
-    userTokenPair.refreshToken ?? ""
+    userTokenPair.refreshToken?.token ?? ""
   );
   AsyncStorage.setItem(USER_ID_STORAGE_KEY, (userId ?? "").toString());
 };

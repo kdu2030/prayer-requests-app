@@ -3,7 +3,7 @@
     "name": "prayer-requests-app",
     "slug": "prayer-requests-app",
     "version": "1.0.0",
-    "orientation": "portrait",
+    // "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
@@ -12,11 +12,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "requireFullScreen": true
     },
     "android": {
       "adaptiveIcon": {
@@ -30,7 +29,8 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      ["expo-screen-orientation", { "initialOrientation": "DEFAULT" }]
     ],
     "experiments": {
       "typedRoutes": true

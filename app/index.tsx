@@ -16,7 +16,7 @@ import {
 import { decodeJwtToken } from "../components/authentication/auth-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { useI18N } from "../hooks/use-i18n";
-import { mapUserData } from "../mappers/map-user-data";
+import { mapUserData, mapUserTokens } from "../mappers/map-user-data";
 import { Token } from "../types/context/api-data-context-type";
 
 type StoredUserData = {
@@ -95,6 +95,9 @@ const AppContainer: React.FC = () => {
 
     const userData = mapUserData(userSummaryResponse.value);
     setUserData(userData);
+
+    const tokens = mapUserTokens(userSummaryResponse.value);
+    setUserTokens(tokens);
 
     // FIXME: Replace with sign in
     router.push("/auth/welcome");

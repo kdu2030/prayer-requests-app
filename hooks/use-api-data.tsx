@@ -50,42 +50,49 @@ export const useApiDataContext = () => {
   const apiDataContext = React.useContext(ApiDataContext);
   const fetchRef = React.useRef<AxiosInstance>(axios.create());
 
-  const addAuthorizationHeader = async (config: InternalAxiosRequestConfig) => {
-    const { userTokens, baseUrl, setUserTokens } = apiDataContext;
-    let currentUserTokens: UserTokenPair = { ...userTokens };
+  const refreshTokens = async () => {
+    const { baseUrl, userTokens, setUserTokens } = apiDataContext;
+    const response = await getUserTokenPair(
+      baseUrl,
+      userTokens?.refreshToken?.token ?? ""
+    );
 
-    if (isTokenValid(userTokens?.refreshToken)) {
+    if (response.isError) {
+      router.push("/auth/welcome");
+      throw new Error("Unable to fetch user tokens.");
+    }
+
+    const updatedAccessToken = decodeJwtToken(
+      response.value?.accessToken ?? ""
+    );
+    const updatedRefreshToken = decodeJwtToken(
+      response.value?.refreshToken ?? ""
+    );
+
+    const newUserTokens = {
+      accessToken: updatedAccessToken,
+      refreshToken: updatedRefreshToken,
+    };
+
+    setUserTokens(newUserTokens);
+    return newUserTokens;
+  };
+
+  const addAuthorizationHeader = async (config: InternalAxiosRequestConfig) => {
+    const { userTokens } = apiDataContext;
+    let tokensToUse = userTokens;
+
+    if (!isTokenValid(userTokens?.refreshToken)) {
       router.push("/auth/welcome");
       throw new Error("Refresh token is expired.");
     }
 
-    if (isTokenValid(userTokens?.accessToken)) {
-      const response = await getUserTokenPair(
-        baseUrl,
-        userTokens?.refreshToken?.token ?? ""
-      );
-      if (response.isError) {
-        router.push("/auth/welcome");
-        throw new Error("Unable to fetch user tokens.");
-      }
-
-      const updatedAccessToken = decodeJwtToken(
-        response.value?.accessToken ?? ""
-      );
-      const updatedRefreshToken = decodeJwtToken(
-        response.value?.refreshToken ?? ""
-      );
-
-      currentUserTokens = {
-        accessToken: updatedAccessToken,
-        refreshToken: updatedRefreshToken,
-      };
-
-      setUserTokens(currentUserTokens);
+    if (!isTokenValid(userTokens?.accessToken)) {
+      tokensToUse = await refreshTokens();
     }
 
     config.headers.setAuthorization(
-      `${BEARER_PREFIX} ${currentUserTokens.accessToken}`
+      `${BEARER_PREFIX} ${tokensToUse?.accessToken?.token}`
     );
 
     return config;

@@ -10,7 +10,7 @@ type Props = {
 export const AuthContainer: React.FC<Props> = ({
   children,
   classNames,
-  containerClassNames = "h-1/2",
+  containerClassNames = "h-3/4",
 }) => {
   const backgroundImageSrc = {
     uri: "https://cdn.pixabay.com/photo/2020/03/03/20/31/boat-4899802_1280.jpg",

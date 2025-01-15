@@ -11,8 +11,8 @@ export function AuthScreen() {
   const theme = useTheme();
 
   return (
-    <AuthContainer>
-      <Text variant="displaySmall" className="font-bold mt-5">
+    <AuthContainer containerClassNames="h-3/4 portrait:h-1/2">
+      <Text variant="displaySmall" className="mt-5 font-bold">
         {translate("authScreen.welcome.header")}
       </Text>
       <Text
@@ -22,7 +22,7 @@ export function AuthScreen() {
       >
         {translate("common.appName")}
       </Text>
-      <Text variant="bodyLarge" className="text-gray-500 mt-3">
+      <Text variant="bodyLarge" className="mt-3 text-gray-500">
         {translate("authScreen.tagline.text")}
       </Text>
       <View className="flex flex-row w-full mt-auto mb-10">

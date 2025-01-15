@@ -101,7 +101,7 @@ const AppContainer: React.FC = () => {
     setUserTokens(tokens);
 
     // FIXME: Replace with sign in
-    router.push("/auth/welcome");
+    router.push("/(drawer)/home");
   };
 
   React.useEffect(() => {

@@ -5,7 +5,7 @@ import { BEARER_PREFIX } from "../constants/auth-constants";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
-import { MediaFile } from "../types/media-file-types";
+import { RawMediaFile } from "../types/media-file-types";
 import { RawUserTokenPair } from "./post-signup";
 
 export type GetUserSummaryResponse = {
@@ -14,7 +14,7 @@ export type GetUserSummaryResponse = {
   email?: string;
   fullName?: string;
   tokens?: RawUserTokenPair;
-  image?: MediaFile;
+  image?: RawMediaFile;
 };
 
 const getUserSummary = async (

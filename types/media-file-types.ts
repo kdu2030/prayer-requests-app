@@ -1,5 +1,12 @@
-export type MediaFile = {
+export type RawMediaFile = {
   id?: number;
+  fileName?: string;
+  url?: string;
+  fileType?: FileType;
+};
+
+export type MediaFile = {
+  mediaFileId?: number;
   fileName?: string;
   url?: string;
   fileType?: FileType;

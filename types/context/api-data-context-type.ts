@@ -1,10 +1,13 @@
 import * as React from "react";
 
+import { MediaFile } from "../media-file-types";
+
 export type UserData = {
   userId?: number;
   username?: string;
   email?: string;
   fullName?: string;
+  image?: MediaFile;
 };
 
 export type Token = {

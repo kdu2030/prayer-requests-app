@@ -3,7 +3,7 @@ import { Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 
-export const DrawerTitle: React.FC = () => {
+export const DrawerHeaderTitle: React.FC = () => {
   const { translate } = useI18N();
   const theme = useTheme();
 

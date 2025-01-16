@@ -6,10 +6,13 @@ import { TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 
+import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
+import { ProfilePicture } from "../layouts/profile-picture";
 
 export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const { translate } = useI18N();
+  const { userData } = useApiDataContext();
   const theme = useTheme();
 
   return (
@@ -17,10 +20,10 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
       <StatusBar backgroundColor={theme.colors.primary} />
 
       <View
-        className="flex flex-row items-center justify-between w-full px-2 py-4 pt-6 grow"
+        className="flex flex-row items-center justify-between w-full px-4 py-4 pt-6 grow"
         style={{ backgroundColor: theme.colors.primary }}
       >
-        <View className="flex flex-row">
+        <View className="flex flex-row items-center">
           <TouchableOpacity
             onPress={() => navigation.openDrawer()}
             className="mr-2"
@@ -32,9 +35,13 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
           </Text>
         </View>
 
-        <TouchableOpacity onPress={() => {}} className="mr-2">
-          <Ionicons name="search" size={24} color="white" />
-        </TouchableOpacity>
+        <View className="flex flex-row items-center">
+          <TouchableOpacity onPress={() => {}} className="mr-4">
+            <Ionicons name="search" size={24} color="white" />
+          </TouchableOpacity>
+
+          <ProfilePicture url={userData?.image?.url} width={36} height={36} />
+        </View>
       </View>
     </>
   );

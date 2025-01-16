@@ -6,7 +6,6 @@ import { useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
-import { THEME_COLORS } from "../../constants/theme/theme";
 import { StatusBar } from "expo-status-bar";
 
 export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {

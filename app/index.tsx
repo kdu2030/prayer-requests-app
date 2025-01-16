@@ -120,7 +120,10 @@ const AppContainer: React.FC = () => {
   return (
     <>
       <StatusBar backgroundColor={theme.colors.background} />
-      <View className="flex items-center justify-center flex-1">
+      <View
+        className="flex items-center justify-center flex-1"
+        style={{ backgroundColor: theme.colors.background }}
+      >
         <ActivityIndicator animating={true} size={70} />
         <Text className="mt-5" variant="titleMedium">
           {translate("loading.userData.text")}

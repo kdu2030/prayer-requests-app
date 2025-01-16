@@ -8,20 +8,14 @@ import { Text } from "react-native-paper";
 import { useI18N } from "../../hooks/use-i18n";
 import { THEME_COLORS } from "../../constants/theme/theme";
 import { StatusBar } from "expo-status-bar";
-import { useDrawerStatus } from "@react-navigation/drawer";
 
 export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const { translate } = useI18N();
   const theme = useTheme();
-  const drawerStatus = useDrawerStatus();
 
   return (
     <>
-      <StatusBar
-        backgroundColor={
-          drawerStatus === "open" ? "white" : theme.colors.primary
-        }
-      />
+      <StatusBar backgroundColor={theme.colors.primary} />
 
       <View
         className="flex flex-row items-center justify-between w-full px-2 py-4 pt-6 grow"

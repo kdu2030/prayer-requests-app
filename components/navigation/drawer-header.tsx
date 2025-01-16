@@ -1,12 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { DrawerHeaderProps } from "@react-navigation/drawer";
+import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { TouchableOpacity, View } from "react-native";
-import { useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
-import { StatusBar } from "expo-status-bar";
 
 export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const { translate } = useI18N();

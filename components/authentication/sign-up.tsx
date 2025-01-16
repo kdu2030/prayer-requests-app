@@ -69,6 +69,7 @@ const Signup: React.FC = () => {
     }
 
     handleSuccessfulAuthentication(response.value, setUserData, setUserTokens);
+    router.push("/home");
   };
 
   return (

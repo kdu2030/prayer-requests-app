@@ -69,6 +69,7 @@ export const Signin: React.FC = () => {
       setUserData,
       setUserTokens
     );
+    router.push("/home");
   };
 
   return (

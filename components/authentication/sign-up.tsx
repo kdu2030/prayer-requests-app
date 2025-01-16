@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
@@ -6,14 +7,14 @@ import { ScrollView, View } from "react-native";
 import { Button, Snackbar, Text, useTheme } from "react-native-paper";
 
 import { postSignup } from "../../api/post-signup";
-import { TextInput } from "../inputs/text-input";
-import { SignupTestIds } from "./auth-constants";
-import { handleSuccessfulAuthentication } from "./auth-helpers";
-import { signupValidationSchema } from "./signup-validation-schema";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SignupForm } from "../../types/forms/auth-forms";
+import { TextInput } from "../inputs/text-input";
+import { SignupTestIds } from "./auth-constants";
+import { handleSuccessfulAuthentication } from "./auth-helpers";
 import { AuthApiErrors } from "./auth-types";
+import { signupValidationSchema } from "./signup-validation-schema";
 
 const Signup: React.FC = () => {
   const { translate } = useI18N();
@@ -80,8 +81,10 @@ const Signup: React.FC = () => {
           flexGrow: 1,
           alignItems: "center",
           justifyContent: "center",
+          backgroundColor: theme.colors.background,
         }}
       >
+        <StatusBar backgroundColor={theme.colors.background} />
         <View className="flex flex-col" style={{ minWidth: "80%" }}>
           <Formik
             initialValues={{}}
@@ -100,7 +103,7 @@ const Signup: React.FC = () => {
                   {translate("common.appName")}
                 </Text>
 
-                <Text className="text-lg font-bold mt-5 mb-5">
+                <Text className="mt-5 mb-5 text-lg font-bold">
                   {translate("signup.createAccount.label")}
                 </Text>
 

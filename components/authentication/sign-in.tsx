@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
@@ -79,8 +80,10 @@ export const Signin: React.FC = () => {
         flexGrow: 1,
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor: theme.colors.background,
       }}
     >
+      <StatusBar backgroundColor={theme.colors.background} hidden={false} />
       <View className="flex flex-col" style={{ minWidth: "80%" }}>
         <Formik
           validationSchema={signinValidationSchema(translate)}

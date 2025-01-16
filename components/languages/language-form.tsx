@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Text } from "react-native-paper";
 import { Button, Snackbar } from "react-native-paper";
@@ -24,6 +25,7 @@ export const LanguageForm: React.FC = () => {
 
   return (
     <>
+      <StatusBar hidden />
       <AuthContainer
         classNames="w-full px-3 mt-8"
         containerClassNames="h-4/5 portrait:h-1/3"

@@ -4,10 +4,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { registerRootComponent } from "expo";
 import { router } from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";
+import { StatusBar } from "expo-status-bar";
 import { NativeWindStyleSheet } from "nativewind";
 import * as React from "react";
 import { View } from "react-native";
-import { ActivityIndicator, Snackbar, Text } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Snackbar,
+  Text,
+  useTheme,
+} from "react-native-paper";
 
 import { getUserSummaryRaw } from "../api/get-user-summary";
 import {
@@ -30,6 +36,7 @@ const AppContainer: React.FC = () => {
   const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
   const { setUserTokens, userTokens, baseUrl, setUserData } =
     useApiDataContext();
+  const theme = useTheme();
 
   const checkStoredUserDataValidity = async (): Promise<
     StoredUserData | undefined
@@ -101,7 +108,8 @@ const AppContainer: React.FC = () => {
     setUserTokens(tokens);
 
     // FIXME: Replace with sign in
-    router.push("/(drawer)/home");
+    // router.push("/(drawer)/home");
+    router.push("/auth/welcome");
   };
 
   React.useEffect(() => {
@@ -111,6 +119,7 @@ const AppContainer: React.FC = () => {
 
   return (
     <>
+      <StatusBar backgroundColor={theme.colors.background} />
       <View className="flex items-center justify-center flex-1">
         <ActivityIndicator animating={true} size={70} />
         <Text className="mt-5" variant="titleMedium">

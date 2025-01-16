@@ -12,10 +12,11 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const { translate } = useI18N();
   const theme = useTheme();
 
+  // FIXME: Change Status Bar Color on Mount
+
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.primary} />
-
+      {/* <StatusBar backgroundColor={theme.colors.primary} /> */}
       <View
         className="flex flex-row items-center justify-between w-full px-2 py-4 pt-6 grow"
         style={{ backgroundColor: theme.colors.primary }}

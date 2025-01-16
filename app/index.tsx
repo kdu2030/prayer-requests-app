@@ -7,7 +7,12 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import { NativeWindStyleSheet } from "nativewind";
 import * as React from "react";
 import { View } from "react-native";
-import { ActivityIndicator, Snackbar, Text } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Snackbar,
+  Text,
+  useTheme,
+} from "react-native-paper";
 
 import { getUserSummaryRaw } from "../api/get-user-summary";
 import {
@@ -17,6 +22,7 @@ import {
 import { decodeJwtToken } from "../components/authentication/auth-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { useI18N } from "../hooks/use-i18n";
+import { useUIContext } from "../hooks/use-ui-context";
 import { mapUserData, mapUserTokens } from "../mappers/map-user-data";
 import { Token } from "../types/context/api-data-context-type";
 
@@ -30,6 +36,8 @@ const AppContainer: React.FC = () => {
   const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
   const { setUserTokens, userTokens, baseUrl, setUserData } =
     useApiDataContext();
+  const { setStatusBarStyles } = useUIContext();
+  const theme = useTheme();
 
   const checkStoredUserDataValidity = async (): Promise<
     StoredUserData | undefined
@@ -105,6 +113,11 @@ const AppContainer: React.FC = () => {
   };
 
   React.useEffect(() => {
+    setStatusBarStyles((styles) => ({
+      ...styles,
+      backgroundColor: "red",
+    }));
+
     ScreenOrientation.unlockAsync();
     loadUserData();
   }, []);

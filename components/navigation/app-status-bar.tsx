@@ -5,10 +5,10 @@ import { useUIContext } from "../../hooks/use-ui-context";
 
 export const AppStatusBar: React.FC = () => {
   const { statusBarStyles } = useUIContext();
-  return (
-    <StatusBar
-      backgroundColor={statusBarStyles.backgroundColor}
-      hidden={statusBarStyles.isHidden}
-    />
-  );
+
+  React.useEffect(() => {
+    console.log(statusBarStyles);
+  }, [statusBarStyles]);
+
+  return <StatusBar backgroundColor={"red"} />;
 };

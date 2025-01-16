@@ -113,10 +113,10 @@ const AppContainer: React.FC = () => {
   };
 
   React.useEffect(() => {
-    setStatusBarStyles((styles) => ({
-      ...styles,
-      backgroundColor: "red",
-    }));
+    setStatusBarStyles({
+      isHidden: false,
+      backgroundColor: theme.colors.surface,
+    });
 
     ScreenOrientation.unlockAsync();
     loadUserData();

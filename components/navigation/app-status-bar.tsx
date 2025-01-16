@@ -10,5 +10,10 @@ export const AppStatusBar: React.FC = () => {
     console.log(statusBarStyles);
   }, [statusBarStyles]);
 
-  return <StatusBar backgroundColor={"red"} />;
+  return (
+    <StatusBar
+      backgroundColor={statusBarStyles.backgroundColor}
+      hidden={statusBarStyles.isHidden}
+    />
+  );
 };

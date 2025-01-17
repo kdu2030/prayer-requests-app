@@ -48,9 +48,9 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
             onPress={() => router.push("/home")}
           />
           <Drawer.Item
-            label={translate("naviagation.drawer.screen.createPrayerGroup")}
+            label={translate("navigation.drawer.screen.createPrayerGroup")}
             icon="plus"
-            onPress={() => {}}
+            onPress={() => router.push("/create-prayer-group")}
           />
         </View>
       </DrawerContentScrollView>

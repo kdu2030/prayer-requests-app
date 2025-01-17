@@ -42,4 +42,5 @@ export const chineseTranslations = {
   "toaster.failed.genericFailure": "{{item}}失败",
 
   "navigation.drawer.screen.home": "主页",
+  "navigation.drawer.screen.createPrayerGroup": "创建新祷告团",
 };

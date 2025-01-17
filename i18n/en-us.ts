@@ -45,4 +45,5 @@ export const englishTranslations = {
   "toaster.failed.genericFailure": "{{item}} failed",
 
   "navigation.drawer.screen.home": "Home",
+  "naviagation.drawer.screen.createPrayerGroup": "Create Prayer Group",
 };

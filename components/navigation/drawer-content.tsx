@@ -47,6 +47,11 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
             icon="home"
             onPress={() => router.push("/home")}
           />
+          <Drawer.Item
+            label={translate("naviagation.drawer.screen.createPrayerGroup")}
+            icon="plus"
+            onPress={() => {}}
+          />
         </View>
       </DrawerContentScrollView>
     </>

@@ -10,10 +10,15 @@ import { useCreatePrayerGroupWizard } from "./use-create-prayer-group-wizard";
 export const CreatePrayerGroupWizard: React.FC = () => {
   const theme = useTheme();
   const { translate } = useI18N();
-  const { getWizardContent } = useCreatePrayerGroupWizard();
+  const { getWizardContent, getValidationSchema } =
+    useCreatePrayerGroupWizard();
 
   return (
-    <Formik initialValues={() => {}} onSubmit={() => {}}>
+    <Formik
+      initialValues={() => {}}
+      onSubmit={() => {}}
+      validationSchema={getValidationSchema()}
+    >
       <ScrollView
         contentContainerStyle={{
           display: "flex",

@@ -31,11 +31,12 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = ({
         contentContainerStyle={{ paddingTop: insets.top }}
       >
         <View
-          className="flex flex-col items-center justify-center m-0"
+          className="flex flex-col items-center justify-center py-2"
           style={{ backgroundColor: theme.colors.primary }}
         >
-          <ProfilePicture url={userData?.image?.url} width={48} height={48} />
+          <ProfilePicture url={userData?.image?.url} width={52} height={52} />
           <Text className="mt-2 text-white">{userData?.fullName}</Text>
+          <Text className="text-white">{`@ ${userData?.username}`}</Text>
         </View>
       </DrawerContentScrollView>
     </>

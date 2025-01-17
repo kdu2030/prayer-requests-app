@@ -1,13 +1,9 @@
 import * as React from "react";
-import { View } from "react-native";
-import { Text } from "react-native-paper";
+
+import { CreatePrayerGroupWizard } from "../../components/create-prayer-group/create-prayer-group-wizard";
 
 const CreatePrayerGroup: React.FC = () => {
-  return (
-    <View>
-      <Text>Create Prayer Group</Text>
-    </View>
-  );
+  return <CreatePrayerGroupWizard />;
 };
 
 export default CreatePrayerGroup;

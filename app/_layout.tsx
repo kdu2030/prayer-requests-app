@@ -10,15 +10,13 @@ import { ApiDataContextProvider } from "../hooks/use-api-data";
 
 const BaseStack: React.FC = () => {
   return (
-    <SafeAreaView className="flex-1">
-      <SafeAreaProvider>
-        <PaperProvider theme={LIGHT_THEME}>
-          <ApiDataContextProvider>
-            <Stack screenOptions={{ headerShown: false }} />
-          </ApiDataContextProvider>
-        </PaperProvider>
-      </SafeAreaProvider>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <PaperProvider theme={LIGHT_THEME}>
+        <ApiDataContextProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+        </ApiDataContextProvider>
+      </PaperProvider>
+    </SafeAreaProvider>
   );
 };
 

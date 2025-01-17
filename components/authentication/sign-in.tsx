@@ -83,7 +83,7 @@ export const Signin: React.FC = () => {
         backgroundColor: theme.colors.background,
       }}
     >
-      <StatusBar backgroundColor={theme.colors.background} hidden={false} />
+      {/* <StatusBar backgroundColor={theme.colors.background} hidden={false} /> */}
       <View className="flex flex-col" style={{ minWidth: "80%" }}>
         <Formik
           validationSchema={signinValidationSchema(translate)}

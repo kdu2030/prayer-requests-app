@@ -17,7 +17,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.primary} />
+      {/* <StatusBar backgroundColor={theme.colors.primary} /> */}
 
       <View
         className="flex flex-row items-center justify-between w-full px-4 py-4 pt-6 grow"

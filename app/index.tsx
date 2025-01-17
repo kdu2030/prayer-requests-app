@@ -118,7 +118,7 @@ const AppContainer: React.FC = () => {
 
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.background} />
+      {/* <StatusBar backgroundColor={theme.colors.background} /> */}
       <View
         className="flex items-center justify-center flex-1"
         style={{ backgroundColor: theme.colors.background }}

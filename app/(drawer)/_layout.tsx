@@ -8,9 +8,9 @@ const DrawerLayout: React.FC = () => {
   return (
     <Drawer
       screenOptions={{
-        header: DrawerHeader,
+        header: (props) => <DrawerHeader {...props} />,
       }}
-      drawerContent={DrawerContent}
+      drawerContent={(props) => <DrawerContent {...props} />}
     />
   );
 };

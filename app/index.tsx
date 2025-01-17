@@ -70,7 +70,7 @@ const AppContainer: React.FC = () => {
       setIsErrorVisible(true);
     }
 
-    if (response.isError || response.value == null) {
+    if (true || response.isError || response.value == null) {
       router.push("/language/language-picker");
       return;
     }

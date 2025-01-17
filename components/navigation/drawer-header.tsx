@@ -5,8 +5,8 @@ import { TouchableOpacity, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
 
-import { useI18N } from "../../hooks/use-i18n";
 import { THEME_COLORS } from "../../constants/theme/theme";
+import { useI18N } from "../../hooks/use-i18n";
 
 export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const { translate } = useI18N();
@@ -14,10 +14,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
 
   return (
     <>
-      <View
-        className="flex flex-row items-center justify-between w-full px-2 py-4 pt-6 grow"
-        style={{ backgroundColor: theme.colors.primary }}
-      >
+      <View className="" style={{ backgroundColor: theme.colors.primary }}>
         <View className="flex flex-row">
           <TouchableOpacity
             onPress={() => navigation.openDrawer()}

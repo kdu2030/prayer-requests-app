@@ -7,6 +7,7 @@ import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { View } from "react-native";
 import { useTheme } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useApiDataContext } from "../../hooks/use-api-data";
@@ -34,6 +35,7 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = ({
           style={{ backgroundColor: theme.colors.primary }}
         >
           <ProfilePicture url={userData?.image?.url} width={48} height={48} />
+          <Text className="mt-2 text-white">{userData?.fullName}</Text>
         </View>
       </DrawerContentScrollView>
     </>

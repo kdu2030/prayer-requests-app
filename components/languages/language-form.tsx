@@ -25,7 +25,7 @@ export const LanguageForm: React.FC = () => {
 
   return (
     <>
-      {/* <StatusBar hidden /> */}
+      <StatusBar translucent />
       <AuthContainer
         classNames="w-full px-3 mt-8"
         containerClassNames="h-4/5 portrait:h-1/3"

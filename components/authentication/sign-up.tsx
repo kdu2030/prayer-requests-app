@@ -75,6 +75,7 @@ const Signup: React.FC = () => {
 
   return (
     <>
+      {/* <StatusBar backgroundColor={theme.colors.background} /> */}
       <ScrollView
         contentContainerStyle={{
           display: "flex",
@@ -84,7 +85,6 @@ const Signup: React.FC = () => {
           backgroundColor: theme.colors.background,
         }}
       >
-        {/* <StatusBar backgroundColor={theme.colors.background} /> */}
         <View className="flex flex-col" style={{ minWidth: "80%" }}>
           <Formik
             initialValues={{}}

@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { ImageBackground, View } from "react-native";
 
@@ -19,7 +18,6 @@ export const AuthContainer: React.FC<Props> = ({
 
   return (
     <>
-      {/* <StatusBar hidden /> */}
       <ImageBackground source={backgroundImageSrc} className="flex flex-1">
         <View
           className={`flex bg-white mt-auto rounded-xl items-center ${containerClassNames}`}

@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
-import { ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import { Button, Snackbar, Text, useTheme } from "react-native-paper";
 
 import { postSignin } from "../../api/post-signin";
@@ -74,102 +74,105 @@ export const Signin: React.FC = () => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        display: "flex",
-        flexGrow: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: theme.colors.background,
-      }}
-    >
-      {/* <StatusBar backgroundColor={theme.colors.background} hidden={false} /> */}
-      <View className="flex flex-col" style={{ minWidth: "80%" }}>
-        <Formik
-          validationSchema={signinValidationSchema(translate)}
-          initialValues={{}}
-          onSubmit={() => {}}
-          validateOnBlur
-          validateOnChange={false}
+    <>
+      <SafeAreaView className="flex-1">
+        <ScrollView
+          contentContainerStyle={{
+            display: "flex",
+            flexGrow: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: theme.colors.background,
+          }}
         >
-          {(props) => (
-            <>
+          <View className="flex flex-col" style={{ minWidth: "80%" }}>
+            <Formik
+              validationSchema={signinValidationSchema(translate)}
+              initialValues={{}}
+              onSubmit={() => {}}
+              validateOnBlur
+              validateOnChange={false}
+            >
+              {(props) => (
+                <>
+                  <Text
+                    variant="displaySmall"
+                    className="font-bold"
+                    style={{ color: theme.colors.primary }}
+                  >
+                    {translate("common.appName")}
+                  </Text>
+
+                  <Text className="mt-5 mb-5 text-lg font-bold">
+                    {translate("signin.signinToAccount.label")}
+                  </Text>
+
+                  <TextInput
+                    name="email"
+                    label={translate("signup.email.label")}
+                    containerClassNames="mb-5"
+                    mode={"flat"}
+                    testID={SigninTestIds.emailInput}
+                    required
+                  />
+
+                  <TextInput
+                    name="password"
+                    label={translate("signup.password.label")}
+                    containerClassNames="mb-5"
+                    mode={"flat"}
+                    secureTextEntry={true}
+                    testID={SigninTestIds.passwordInput}
+                    required
+                  />
+
+                  <Button
+                    mode="contained"
+                    className="mt-3 mb-10"
+                    onPress={() => {
+                      handleSubmit(props);
+                    }}
+                    disabled={!isEmpty(props.touched) && !props.isValid}
+                    testID={SigninTestIds.submitButton}
+                    loading={isLoading}
+                  >
+                    {translate("authScreen.signin.action")}
+                  </Button>
+                </>
+              )}
+            </Formik>
+
+            <View className="flex flex-row mx-auto">
+              <Text className="mr-3">
+                {translate("signin.missingAccount.text")}
+              </Text>
               <Text
-                variant="displaySmall"
                 className="font-bold"
                 style={{ color: theme.colors.primary }}
-              >
-                {translate("common.appName")}
-              </Text>
-
-              <Text className="mt-5 mb-5 text-lg font-bold">
-                {translate("signin.signinToAccount.label")}
-              </Text>
-
-              <TextInput
-                name="email"
-                label={translate("signup.email.label")}
-                containerClassNames="mb-5"
-                mode={"flat"}
-                testID={SigninTestIds.emailInput}
-                required
-              />
-
-              <TextInput
-                name="password"
-                label={translate("signup.password.label")}
-                containerClassNames="mb-5"
-                mode={"flat"}
-                secureTextEntry={true}
-                testID={SigninTestIds.passwordInput}
-                required
-              />
-
-              <Button
-                mode="contained"
-                className="mt-3 mb-10"
                 onPress={() => {
-                  handleSubmit(props);
+                  router.push("/auth/sign-up");
                 }}
-                disabled={!isEmpty(props.touched) && !props.isValid}
-                testID={SigninTestIds.submitButton}
-                loading={isLoading}
               >
-                {translate("authScreen.signin.action")}
-              </Button>
-            </>
-          )}
-        </Formik>
+                {translate("authScreen.signup.action")}
+              </Text>
+            </View>
+          </View>
 
-        <View className="flex flex-row mx-auto">
-          <Text className="mr-3">
-            {translate("signin.missingAccount.text")}
-          </Text>
-          <Text
-            className="font-bold"
-            style={{ color: theme.colors.primary }}
-            onPress={() => {
-              router.push("/auth/sign-up");
+          <Snackbar
+            className="bg-red-700"
+            duration={3000}
+            visible={isErrorVisible}
+            onDismiss={() => {
+              setIsErrorVisible(false);
             }}
+            onIconPress={() => setIsErrorVisible(false)}
           >
-            {translate("authScreen.signup.action")}
-          </Text>
-        </View>
-      </View>
-
-      <Snackbar
-        className="bg-red-700"
-        duration={3000}
-        visible={isErrorVisible}
-        onDismiss={() => {
-          setIsErrorVisible(false);
-        }}
-        onIconPress={() => setIsErrorVisible(false)}
-      >
-        {translate("toaster.failed.genericFailure", {
-          item: translate("authScreen.signin.action"),
-        })}
-      </Snackbar>
-    </ScrollView>
+            {translate("toaster.failed.genericFailure", {
+              item: translate("authScreen.signin.action"),
+            })}
+          </Snackbar>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };

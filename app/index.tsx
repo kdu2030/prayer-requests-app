@@ -77,8 +77,7 @@ const AppContainer: React.FC = () => {
       setIsErrorVisible(true);
     }
 
-    // TODO: Revert after fixing extra space issue
-    if (true || response.isError || response.value == null) {
+    if (response.isError || response.value == null) {
       router.push("/language/language-picker");
       return;
     }
@@ -96,7 +95,7 @@ const AppContainer: React.FC = () => {
       userId
     );
 
-    if (userSummaryResponse.isError) {
+    if (true || userSummaryResponse.isError) {
       setIsErrorVisible(true);
       router.push("/auth/welcome");
       return;
@@ -118,7 +117,7 @@ const AppContainer: React.FC = () => {
 
   return (
     <>
-      {/* <StatusBar backgroundColor={theme.colors.background} /> */}
+      <StatusBar backgroundColor={theme.colors.background} />
       <View
         className="flex items-center justify-center flex-1"
         style={{ backgroundColor: theme.colors.background }}

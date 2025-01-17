@@ -41,7 +41,7 @@ export const CreatePrayerGroupWizard: React.FC = () => {
             <Button mode="outlined">{translate("wizard.next")}</Button>
           </View>
 
-          <View className="mt-4">{getWizardContent()}</View>
+          <View className="mt-6">{getWizardContent()}</View>
         </View>
       </ScrollView>
     </Formik>

@@ -19,7 +19,7 @@ const AppContainer: React.FC = () => {
       setIsErrorVisible(true);
     }
 
-    if (response.isError || response.value == null) {
+    if (true || response.isError || response.value == null) {
       router.push("/language/language-picker");
       return;
     }
@@ -34,7 +34,7 @@ const AppContainer: React.FC = () => {
 
   return (
     <>
-      <View className="flex flex-1 items-center justify-center">
+      <View className="flex items-center justify-center flex-1">
         <ActivityIndicator animating={true} size={70} />
         <Text className="mt-5" variant="titleMedium">
           {translate("loading.userData.text")}

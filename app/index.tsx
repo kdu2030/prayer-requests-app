@@ -77,7 +77,8 @@ const AppContainer: React.FC = () => {
       setIsErrorVisible(true);
     }
 
-    if (response.isError || response.value == null) {
+    // TODO: Revert after fixing extra space issue
+    if (true || response.isError || response.value == null) {
       router.push("/language/language-picker");
       return;
     }

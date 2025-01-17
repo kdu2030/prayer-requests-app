@@ -39,5 +39,7 @@ export const chineseTranslations = {
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "如载{{item}}失败",
-  "oaster.failed.genericFailure": "{{item}}失败",
+  "toaster.failed.genericFailure": "{{item}}失败",
+
+  "navigation.drawer.screen.home": "主页",
 };

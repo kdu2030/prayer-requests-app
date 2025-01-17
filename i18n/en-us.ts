@@ -43,4 +43,6 @@ export const englishTranslations = {
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",
   "toaster.failed.genericFailure": "{{item}} failed",
+
+  "navigation.drawer.screen.home": "Home",
 };

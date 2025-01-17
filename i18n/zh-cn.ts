@@ -42,8 +42,11 @@ export const chineseTranslations = {
   "toaster.failed.genericFailure": "{{item}}失败",
 
   "navigation.drawer.screen.home": "主页",
-  "navigation.drawer.screen.createPrayerGroup": "创建新祷告团",
+  "navigation.drawer.screen.createPrayerGroup": "创建新祷告小组",
 
   "wizard.createPrayerGroup.stepCount": "第{{step}}步、共{{total}}步",
   "wizard.next": "下一步",
+
+  "createPrayerGroup.groupNameDescription.title": "介绍你的祷告小组",
+  "createPrayerGroup.groupNameDescription.groupName": "小组名字",
 };

@@ -4,6 +4,7 @@ import { Text, useTheme } from "react-native-paper";
 import { Button } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { GroupNameDescriptionStep } from "./group-name-description-step";
 
 export const CreatePrayerGroupWizard: React.FC = () => {
   const theme = useTheme();
@@ -35,6 +36,10 @@ export const CreatePrayerGroupWizard: React.FC = () => {
           </View>
 
           <Button mode="outlined">{translate("wizard.next")}</Button>
+        </View>
+
+        <View className="mt-4">
+          <GroupNameDescriptionStep />
         </View>
       </View>
     </ScrollView>

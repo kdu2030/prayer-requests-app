@@ -1,11 +1,11 @@
 import { useFormikContext } from "formik";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Modal, Portal, Text, useTheme } from "react-native-paper";
-import { isColor } from "react-native-reanimated";
+import { Button, Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
+import { RoundedModal } from "../modals/rounded-modal";
 import {
   CreatePrayerGroupWizardStep,
   NUM_CREATE_PRAYER_GROUP_STEPS,
@@ -74,7 +74,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
           </View>
         </View>
         <View className="mt-4 flex flex-row items-center">
-          <Text variant="bodyMedium" className="w-1/2">
+          <Text variant="bodyLarge" className="w-1/2">
             {translate("createPrayerGroup.groupImageColorStep.color")}
           </Text>
           <Button
@@ -87,20 +87,11 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
         </View>
       </View>
 
-      <Portal>
-        <Modal
-          visible={isColorPickerModalOpen}
-          onDismiss={() => setIsColorPickerOpen(false)}
-          style={{ padding: 8 }}
-          contentContainerStyle={{
-            backgroundColor: theme.colors.background,
-            padding: 20,
-            borderRadius: 8,
-          }}
-        >
-          <Text>{"Test"}</Text>
-        </Modal>
-      </Portal>
+      <RoundedModal
+        isOpen={isColorPickerModalOpen}
+        onClose={() => setIsColorPickerOpen(false)}
+        title={translate("createPrayerGroup.groupImageColorStep.selectColor")}
+      />
     </>
   );
 };

@@ -4,10 +4,17 @@ import * as React from "react";
 
 import { useGetPrayerGroupNameValidation } from "../../api/get-prayer-group-name-validation";
 import { useI18N } from "../../hooks/use-i18n";
-import { PRAYER_GROUP_NAME_EXISTS } from "./create-prayer-group-constants";
+import {
+  CreatePrayerGroupWizardStep,
+  PRAYER_GROUP_NAME_EXISTS,
+} from "./create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 
-export const usePrayerGroupDescriptionStep = () => {
+export const usePrayerGroupDescriptionStep = (
+  setWizardStep: React.Dispatch<
+    React.SetStateAction<CreatePrayerGroupWizardStep>
+  >
+) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
 
@@ -57,6 +64,11 @@ export const usePrayerGroupDescriptionStep = () => {
     }
 
     const isGroupNameValid = await validateGroupName(values.groupName!);
+    if (!isGroupNameValid) {
+      return;
+    }
+
+    setWizardStep(CreatePrayerGroupWizardStep.RulesStep);
   };
 
   return {

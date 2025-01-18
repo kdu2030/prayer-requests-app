@@ -5,14 +5,25 @@ import { Snackbar, Text } from "react-native-paper";
 import { TEXT_INPUT_MAX_LENGTH } from "../../constants/input-constants";
 import { useI18N } from "../../hooks/use-i18n";
 import { TextInput } from "../inputs/text-input";
-import { NUM_CREATE_PRAYER_GROUP_STEPS } from "./create-prayer-group-constants";
+import {
+  CreatePrayerGroupWizardStep,
+  NUM_CREATE_PRAYER_GROUP_STEPS,
+} from "./create-prayer-group-constants";
 import { CreatePrayerGroupWizardHeader } from "./create-prayer-group-wizard-header";
 import { usePrayerGroupDescriptionStep } from "./use-group-name-description-step";
 
-export const GroupNameDescriptionStep: React.FC = () => {
+type Props = {
+  setWizardStep: React.Dispatch<
+    React.SetStateAction<CreatePrayerGroupWizardStep>
+  >;
+};
+
+export const GroupNameDescriptionStep: React.FC<Props> = ({
+  setWizardStep,
+}) => {
   const { translate } = useI18N();
   const { isLoading, isErrorVisible, setIsErrorVisible, onNext } =
-    usePrayerGroupDescriptionStep();
+    usePrayerGroupDescriptionStep(setWizardStep);
 
   return (
     <>

@@ -1,5 +1,6 @@
 export enum CreatePrayerGroupWizardStep {
   NameDescriptionStep = 1,
+  RulesStep = 2,
 }
 
 export const PRAYER_GROUP_NAME_EXISTS =

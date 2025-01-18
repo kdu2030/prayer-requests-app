@@ -6,6 +6,7 @@ import { CreatePrayerGroupWizardStep } from "./create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 import { GroupNameDescriptionStep } from "./group-name-description-step";
 import { groupNameValidationSchema } from "./group-name-validation-schema";
+import { PrayerGroupRulesStep } from "./prayer-group-rules-step";
 
 export const useCreatePrayerGroupWizard = () => {
   const [wizardStep, setWizardStep] =
@@ -17,11 +18,15 @@ export const useCreatePrayerGroupWizard = () => {
   const getWizardContent = (): React.ReactNode => {
     switch (wizardStep) {
       case CreatePrayerGroupWizardStep.NameDescriptionStep:
-        return <GroupNameDescriptionStep />;
+        return <GroupNameDescriptionStep setWizardStep={setWizardStep} />;
+      case CreatePrayerGroupWizardStep.RulesStep:
+        return <PrayerGroupRulesStep />;
     }
   };
 
-  const getValidationSchema = (): ObjectSchema<CreatePrayerGroupForm> => {
+  const getValidationSchema = ():
+    | ObjectSchema<CreatePrayerGroupForm>
+    | undefined => {
     switch (wizardStep) {
       case CreatePrayerGroupWizardStep.NameDescriptionStep:
         return groupNameValidationSchema(translate);

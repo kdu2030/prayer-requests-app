@@ -8,6 +8,7 @@ export const chineseTranslations: Translations = {
   "common.appName": "祷告事项软件",
   "common.actions.select": "选择",
   "common.actions.save": "保存",
+  "common.preview": "预览",
 
   "loading.userData.text": "如载用户数据",
   "loading.userData.label": "用户数据",

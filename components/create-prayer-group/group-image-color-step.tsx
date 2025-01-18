@@ -1,12 +1,16 @@
+import classNames from "classnames";
+import { useFormikContext } from "formik";
 import * as React from "react";
 import { View } from "react-native";
-import { Text } from "react-native-paper";
+import { Card, Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { ProfilePicture } from "../layouts/profile-picture";
 import {
   CreatePrayerGroupWizardStep,
   NUM_CREATE_PRAYER_GROUP_STEPS,
 } from "./create-prayer-group-constants";
+import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 import { CreatePrayerGroupWizardHeader } from "./create-prayer-group-wizard-header";
 
 type Props = {
@@ -17,6 +21,8 @@ type Props = {
 
 export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
+  const theme = useTheme();
+  const { values } = useFormikContext<CreatePrayerGroupForm>();
 
   return (
     <>
@@ -34,6 +40,31 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
         <Text variant="bodyLarge" className="mb-5">
           {translate("createPrayerGroup.groupImageColorStep.description")}
         </Text>
+
+        <Text variant="bodyLarge" className="font-bold mb-2">
+          {translate("common.preview")}
+        </Text>
+
+        <View className="rounded-lg border border-gray-200 flex flex-grow-0">
+          <View
+            className="h-1/3 rounded-t-lg"
+            style={{ backgroundColor: values.color ?? theme.colors.primary }}
+          />
+          <View
+            className="p-4"
+            style={{ backgroundColor: theme.colors.background }}
+          >
+            <View className="flex flex-row items-center">
+              <ProfilePicture url={values.image?.url} width={48} height={48} />
+              <Text variant="titleMedium" className="ml-4 font-bold">
+                {values.groupName}
+              </Text>
+            </View>
+            <Text className="mt-5" variant="bodyLarge">
+              {values.description}
+            </Text>
+          </View>
+        </View>
       </View>
     </>
   );

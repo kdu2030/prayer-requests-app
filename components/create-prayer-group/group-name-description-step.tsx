@@ -5,30 +5,14 @@ import { Button, Text, useTheme } from "react-native-paper";
 import { TEXT_INPUT_MAX_LENGTH } from "../../constants/input-constants";
 import { useI18N } from "../../hooks/use-i18n";
 import { TextInput } from "../inputs/text-input";
+import { CreatePrayerGroupWizardHeader } from "./create-prayer-group-wizard-header";
 
 export const GroupNameDescriptionStep: React.FC = () => {
   const { translate } = useI18N();
-  const theme = useTheme();
 
   return (
     <>
-      <View className="flex flex-row justify-between">
-        <View
-          className="flex items-center justify-center px-4 rounded-full"
-          style={{
-            backgroundColor: theme.colors.primary,
-          }}
-        >
-          <Text className="text-white">
-            {translate("wizard.stepCount", {
-              step: "1",
-              total: "2",
-            })}
-          </Text>
-        </View>
-
-        <Button mode="outlined">{translate("wizard.next")}</Button>
-      </View>
+      <CreatePrayerGroupWizardHeader />
 
       <View className="mt-4">
         <Text className="mb-5 font-bold" variant="titleLarge">

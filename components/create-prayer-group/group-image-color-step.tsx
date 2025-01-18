@@ -47,7 +47,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
 
         <View className="rounded-lg border border-gray-200 flex flex-grow-0">
           <View
-            className="h-1/3 rounded-t-lg"
+            className="h-16 rounded-t-lg"
             style={{ backgroundColor: values.color ?? theme.colors.primary }}
           />
           <View
@@ -60,7 +60,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
                 {values.groupName}
               </Text>
             </View>
-            <Text className="mt-5" variant="bodyLarge">
+            <Text className="mt-3" variant="bodyLarge">
               {values.description}
             </Text>
           </View>

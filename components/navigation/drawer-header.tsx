@@ -22,10 +22,10 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
       <StatusBar backgroundColor={theme.colors.primary} />
 
       <View
-        className="flex flex-row items-center justify-between w-full px-4 py-4 pt-6 grow"
+        className="flex flex-row items-center justify-between w-full px-4 pb-4 pt-6 grow"
         style={{
           backgroundColor: theme.colors.primary,
-          paddingTop: insets.top,
+          paddingTop: insets.top + 16,
         }}
       >
         <View className="flex flex-row items-center">

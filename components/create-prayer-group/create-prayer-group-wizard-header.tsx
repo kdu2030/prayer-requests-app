@@ -12,13 +12,17 @@ type Props = {
   totalNumberOfSteps: number;
   isLoading?: boolean;
   onNext?: () => void;
+  onBack?: () => void;
+  showBackButton?: boolean;
 };
 
 export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
   isLoading,
   onNext,
+  onBack,
   stepNumber,
   totalNumberOfSteps,
+  showBackButton = true,
 }) => {
   const theme = useTheme();
   const { translate, i18n } = useI18N();
@@ -26,9 +30,11 @@ export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
   return (
     <View className="flex flex-row items-center justify-between">
       <View className="flex flex-row items-center">
-        <TouchableOpacity className="mr-3">
-          <Ionicons name="arrow-back" size={24} />
-        </TouchableOpacity>
+        {showBackButton && (
+          <TouchableOpacity className="mr-3" onPress={onBack}>
+            <Ionicons name="arrow-back" size={24} />
+          </TouchableOpacity>
+        )}
         <View
           className="flex items-center justify-center p-2 rounded-full"
           style={{

@@ -32,6 +32,7 @@ export const GroupNameDescriptionStep: React.FC<Props> = ({
         totalNumberOfSteps={NUM_CREATE_PRAYER_GROUP_STEPS}
         isLoading={isLoading}
         onNext={onNext}
+        showBackButton={false}
       />
 
       <View className="mt-4">

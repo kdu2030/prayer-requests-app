@@ -20,7 +20,7 @@ export const useCreatePrayerGroupWizard = () => {
       case CreatePrayerGroupWizardStep.NameDescriptionStep:
         return <GroupNameDescriptionStep setWizardStep={setWizardStep} />;
       case CreatePrayerGroupWizardStep.RulesStep:
-        return <PrayerGroupRulesStep />;
+        return <PrayerGroupRulesStep setWizardStep={setWizardStep} />;
     }
   };
 

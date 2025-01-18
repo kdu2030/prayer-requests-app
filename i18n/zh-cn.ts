@@ -50,4 +50,6 @@ export const chineseTranslations = {
   "createPrayerGroup.groupNameDescription.title": "介绍你的祷告小组",
   "createPrayerGroup.groupNameDescription.groupName": "小组名字",
   "createPrayerGroup.groupNameDescription.description": "描述",
+  "createPrayerGroup.groupNameDescription.validateGroupFailed":
+    "小组名字验证失败",
 };

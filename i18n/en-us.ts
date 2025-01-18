@@ -54,4 +54,6 @@ export const englishTranslations = {
     "Tell Us About Your Prayer Group",
   "createPrayerGroup.groupNameDescription.groupName": "Group Name",
   "createPrayerGroup.groupNameDescription.description": "Description",
+  "createPrayerGroup.groupNameDescription.validateGroupFailed":
+    "Unable to validate group name",
 };

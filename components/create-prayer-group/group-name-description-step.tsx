@@ -1,14 +1,16 @@
 import * as React from "react";
 import { View } from "react-native";
-import { Text } from "react-native-paper";
+import { Snackbar, Text } from "react-native-paper";
 
 import { TEXT_INPUT_MAX_LENGTH } from "../../constants/input-constants";
 import { useI18N } from "../../hooks/use-i18n";
 import { TextInput } from "../inputs/text-input";
 import { CreatePrayerGroupWizardHeader } from "./create-prayer-group-wizard-header";
+import { usePrayerGroupDescriptionStep } from "./use-group-name-description-step";
 
 export const GroupNameDescriptionStep: React.FC = () => {
   const { translate } = useI18N();
+  const { isErrorVisible, setIsErrorVisible } = usePrayerGroupDescriptionStep();
 
   return (
     <>
@@ -36,6 +38,20 @@ export const GroupNameDescriptionStep: React.FC = () => {
           numberOfLines={5}
           required
         />
+
+        <Snackbar
+          className="bg-red-700"
+          duration={3000}
+          visible={isErrorVisible}
+          onDismiss={() => {
+            setIsErrorVisible(false);
+          }}
+          onIconPress={() => setIsErrorVisible(false)}
+        >
+          {translate(
+            "createPrayerGroup.groupNameDescription.validateGroupFailed"
+          )}
+        </Snackbar>
       </View>
     </>
   );

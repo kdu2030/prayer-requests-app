@@ -5,10 +5,14 @@ import { Button, Text, useTheme } from "react-native-paper";
 import { useI18N } from "../../hooks/use-i18n";
 
 type Props = {
+  isLoading?: boolean;
   onNext?: () => void;
 };
 
-export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({ onNext }) => {
+export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
+  isLoading,
+  onNext,
+}) => {
   const theme = useTheme();
   const { translate } = useI18N();
 
@@ -28,7 +32,7 @@ export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({ onNext }) => {
         </Text>
       </View>
 
-      <Button mode="outlined" onPress={onNext}>
+      <Button mode="outlined" onPress={onNext} loading={isLoading}>
         {translate("wizard.next")}
       </Button>
     </View>

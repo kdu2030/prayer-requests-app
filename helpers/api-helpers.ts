@@ -13,12 +13,10 @@ export const handleApiErrors = <TResponse>(
 
 export const isTokenValid = (token: Token | undefined) => {
   const currentDate = new Date();
-  return token && currentDate > token.expiryDate;
+  return token && currentDate < token.expiryDate;
 };
 
 export const validateRefreshToken = (userTokens: UserTokenPair) => {
-  const currentDate = new Date();
-
   if (isTokenValid(userTokens.refreshToken)) {
     router.push("/auth/welcome");
     throw new Error("Refresh token is expired.");

@@ -10,11 +10,12 @@ import { usePrayerGroupDescriptionStep } from "./use-group-name-description-step
 
 export const GroupNameDescriptionStep: React.FC = () => {
   const { translate } = useI18N();
-  const { isErrorVisible, setIsErrorVisible } = usePrayerGroupDescriptionStep();
+  const { isLoading, isErrorVisible, setIsErrorVisible, onNext } =
+    usePrayerGroupDescriptionStep();
 
   return (
     <>
-      <CreatePrayerGroupWizardHeader />
+      <CreatePrayerGroupWizardHeader isLoading={isLoading} onNext={onNext} />
 
       <View className="mt-4">
         <Text className="mb-5 font-bold" variant="titleLarge">

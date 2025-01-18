@@ -1,15 +1,19 @@
 import { setNestedObjectValues, useFormikContext } from "formik";
-import { isEmpty, isError } from "lodash";
+import { isEmpty } from "lodash";
 import * as React from "react";
 
 import { useGetPrayerGroupNameValidation } from "../../api/get-prayer-group-name-validation";
+import { useI18N } from "../../hooks/use-i18n";
+import { PRAYER_GROUP_NAME_EXISTS } from "./create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 
 export const usePrayerGroupDescriptionStep = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
 
-  const { values, validateForm, touched, setTouched, setErrors } =
+  const { translate } = useI18N();
+
+  const { values, validateForm, touched, setTouched, errors, setErrors } =
     useFormikContext<CreatePrayerGroupForm>();
   const getPrayerGroupNameValidation = useGetPrayerGroupNameValidation();
 
@@ -23,10 +27,27 @@ export const usePrayerGroupDescriptionStep = () => {
     return true;
   };
 
-  const validateGroupName = async (groupName: string) => {
+  const validateGroupName = async (groupName: string): Promise<boolean> => {
     setIsLoading(true);
     const response = await getPrayerGroupNameValidation(groupName);
     setIsLoading(false);
+
+    if (response.isError) {
+      setIsErrorVisible(true);
+      return false;
+    }
+
+    const prayerGroupErrors = response.value.errors ?? [];
+    if (prayerGroupErrors.includes(PRAYER_GROUP_NAME_EXISTS)) {
+      setErrors({
+        ...errors,
+        groupName: translate("form.validation.unique.error", {
+          field: translate("createPrayerGroup.groupNameDescription.groupName"),
+        }),
+      });
+    }
+
+    return prayerGroupErrors.length === 0;
   };
 
   const onNext = async () => {
@@ -34,10 +55,14 @@ export const usePrayerGroupDescriptionStep = () => {
     if (!isStepValid) {
       return;
     }
+
+    const isGroupNameValid = await validateGroupName(values.groupName!);
   };
 
   return {
+    isLoading,
     isErrorVisible,
     setIsErrorVisible,
+    onNext,
   };
 };

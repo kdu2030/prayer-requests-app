@@ -88,6 +88,7 @@ export const useApiDataContext = () => {
     }
 
     if (!isTokenValid(userTokens?.accessToken)) {
+      console.log("Token refreshed!");
       tokensToUse = await refreshTokens();
     }
 

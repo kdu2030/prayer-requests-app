@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View } from "react-native";
-import { Text } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 
 import { TEXT_INPUT_MAX_LENGTH } from "../../constants/input-constants";
 import { useI18N } from "../../hooks/use-i18n";
@@ -8,28 +8,51 @@ import { TextInput } from "../inputs/text-input";
 
 export const GroupNameDescriptionStep: React.FC = () => {
   const { translate } = useI18N();
+  const theme = useTheme();
 
   return (
-    <View>
-      <Text className="mb-5 font-bold" variant="titleLarge">
-        {translate("createPrayerGroup.groupNameDescription.title")}
-      </Text>
+    <>
+      <View className="flex flex-row justify-between">
+        <View
+          className="flex items-center justify-center px-4 rounded-full"
+          style={{
+            backgroundColor: theme.colors.primary,
+          }}
+        >
+          <Text className="text-white">
+            {translate("wizard.stepCount", {
+              step: "1",
+              total: "2",
+            })}
+          </Text>
+        </View>
 
-      <TextInput
-        containerClassNames="mb-5"
-        name="groupName"
-        label={translate("createPrayerGroup.groupNameDescription.groupName")}
-        maxLength={TEXT_INPUT_MAX_LENGTH}
-        required
-      />
+        <Button mode="outlined">{translate("wizard.next")}</Button>
+      </View>
 
-      <TextInput
-        name="description"
-        label={translate("createPrayerGroup.groupNameDescription.description")}
-        multiline
-        numberOfLines={5}
-        required
-      />
-    </View>
+      <View className="mt-4">
+        <Text className="mb-5 font-bold" variant="titleLarge">
+          {translate("createPrayerGroup.groupNameDescription.title")}
+        </Text>
+
+        <TextInput
+          containerClassNames="mb-5"
+          name="groupName"
+          label={translate("createPrayerGroup.groupNameDescription.groupName")}
+          maxLength={TEXT_INPUT_MAX_LENGTH}
+          required
+        />
+
+        <TextInput
+          name="description"
+          label={translate(
+            "createPrayerGroup.groupNameDescription.description"
+          )}
+          multiline
+          numberOfLines={5}
+          required
+        />
+      </View>
+    </>
   );
 };

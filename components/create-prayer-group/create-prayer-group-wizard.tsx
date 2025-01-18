@@ -33,25 +33,7 @@ export const CreatePrayerGroupWizard: React.FC = () => {
         }}
       >
         <View className="flex flex-col w-full p-4">
-          <View className="flex flex-row justify-between">
-            <View
-              className="flex items-center justify-center px-4 rounded-full"
-              style={{
-                backgroundColor: theme.colors.primary,
-              }}
-            >
-              <Text className="text-white">
-                {translate("wizard.stepCount", {
-                  step: "1",
-                  total: "2",
-                })}
-              </Text>
-            </View>
-
-            <Button mode="outlined">{translate("wizard.next")}</Button>
-          </View>
-
-          <View className="mt-6">{getWizardContent()}</View>
+          <View>{getWizardContent()}</View>
         </View>
       </ScrollView>
     </Formik>

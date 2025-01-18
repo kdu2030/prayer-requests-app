@@ -63,5 +63,5 @@ export const englishTranslations = {
   "createPrayerGroup.rules.label": "Rules",
   "createPrayerGroup.groupImageColorStep.title": "Style your Prayer Group",
   "createPrayerGroup.groupImageColorStep.description":
-    "A group image and color helps your group stand out.",
+    "A group image and color help your group stand out.",
 };

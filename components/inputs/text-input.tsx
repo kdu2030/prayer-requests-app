@@ -10,7 +10,7 @@ import { useTheme } from "react-native-paper";
 
 interface Props extends TextInputProps {
   name: string;
-  classNames?: string;
+  inputClassNames?: string;
   containerClassNames?: string;
   onBlur?: () => void;
   required?: boolean;
@@ -20,7 +20,7 @@ export const TextInput: React.FC<Props> = ({
   name,
   label,
   required,
-  classNames = "",
+  inputClassNames = "",
   containerClassNames = "",
   onBlur = () => {},
   ...props
@@ -34,7 +34,7 @@ export const TextInput: React.FC<Props> = ({
       <PaperTextInput
         label={required ? `${label} *` : label}
         value={field.value}
-        className={`${classNames} ${isError ? "bg-red-200" : ""}`}
+        className={`${inputClassNames} ${isError ? "bg-red-200" : ""}`}
         onChangeText={(text: string) => {
           helpers.setValue(text);
         }}

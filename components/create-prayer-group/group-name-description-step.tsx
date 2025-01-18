@@ -16,8 +16,8 @@ export const GroupNameDescriptionStep: React.FC = () => {
       </Text>
 
       <TextInput
+        containerClassNames="mb-5"
         name="groupName"
-        className="mb-5"
         label={translate("createPrayerGroup.groupNameDescription.groupName")}
         maxLength={TEXT_INPUT_MAX_LENGTH}
         required

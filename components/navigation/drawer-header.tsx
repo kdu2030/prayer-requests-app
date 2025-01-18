@@ -9,19 +9,24 @@ import { useTheme } from "react-native-paper";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const { translate } = useI18N();
   const { userData } = useApiDataContext();
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
 
   return (
     <>
-      {/* <StatusBar backgroundColor={theme.colors.primary} /> */}
+      <StatusBar backgroundColor={theme.colors.primary} />
 
       <View
         className="flex flex-row items-center justify-between w-full px-4 py-4 pt-6 grow"
-        style={{ backgroundColor: theme.colors.primary }}
+        style={{
+          backgroundColor: theme.colors.primary,
+          paddingTop: insets.top,
+        }}
       >
         <View className="flex flex-row items-center">
           <TouchableOpacity

@@ -95,7 +95,7 @@ const AppContainer: React.FC = () => {
       userId
     );
 
-    if (true || userSummaryResponse.isError) {
+    if (userSummaryResponse.isError) {
       setIsErrorVisible(true);
       router.push("/auth/welcome");
       return;

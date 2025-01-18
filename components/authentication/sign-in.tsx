@@ -75,17 +75,17 @@ export const Signin: React.FC = () => {
 
   return (
     <>
-      <SafeAreaView className="flex-1">
+      <SafeAreaView style={{ display: "flex", flex: 1 }}>
+        <StatusBar backgroundColor={theme.colors.background} />
         <ScrollView
           contentContainerStyle={{
             display: "flex",
             flexGrow: 1,
-            alignItems: "center",
             justifyContent: "center",
             backgroundColor: theme.colors.background,
           }}
         >
-          <View className="flex flex-col" style={{ minWidth: "80%" }}>
+          <View className="flex flex-col px-8">
             <Formik
               validationSchema={signinValidationSchema(translate)}
               initialValues={{}}

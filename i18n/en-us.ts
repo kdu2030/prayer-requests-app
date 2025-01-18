@@ -60,4 +60,7 @@ export const englishTranslations = {
   "createPrayerGroup.rules.stepDescription":
     "Let your group members know what can be posted.",
   "createPrayerGroup.rules.label": "Rules",
+  "createPrayerGroup.groupImageColorStep.title": "Style your Prayer Group",
+  "createPrayerGroup.groupImageColorStep.description":
+    "A group image and color make your group stand out.",
 };

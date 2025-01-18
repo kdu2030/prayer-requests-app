@@ -62,4 +62,7 @@ export const chineseTranslations: Translations = {
   "createPrayerGroup.rules.stepDescription":
     "让您的小组成员知道可以发布什么内容。",
   "createPrayerGroup.rules.label": "规则",
+  "createPrayerGroup.groupImageColorStep.title": "为您的小组添加样式",
+  "createPrayerGroup.groupImageColorStep.description":
+    "小组图片和颜色可以让您的小组更突出。",
 };

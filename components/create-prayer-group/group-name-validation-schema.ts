@@ -10,7 +10,15 @@ export const groupNameValidationSchema = (
     field: translate("createPrayerGroup.groupNameDescription.groupName"),
   });
 
+  const descriptionRequiredError = translate(
+    "form.validation.isRequired.error",
+    {
+      field: translate("createPrayerGroup.groupNameDescription.description"),
+    }
+  );
+
   return Yup.object().shape({
-    groupName: Yup.string().required(groupNameRequiredError),
+    groupName: Yup.string().trim().required(groupNameRequiredError),
+    description: Yup.string().trim().required(descriptionRequiredError),
   }) as Yup.ObjectSchema<CreatePrayerGroupForm>;
 };

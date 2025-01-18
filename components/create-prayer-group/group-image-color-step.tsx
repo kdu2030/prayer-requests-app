@@ -1,8 +1,7 @@
-import classNames from "classnames";
 import { useFormikContext } from "formik";
 import * as React from "react";
 import { View } from "react-native";
-import { Card, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";

@@ -1,9 +1,14 @@
 import * as React from "react";
 import { View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
+
 import { useI18N } from "../../hooks/use-i18n";
 
-export const CreatePrayerGroupWizardHeader: React.FC = () => {
+type Props = {
+  onNext?: () => void;
+};
+
+export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({ onNext }) => {
   const theme = useTheme();
   const { translate } = useI18N();
 
@@ -23,7 +28,9 @@ export const CreatePrayerGroupWizardHeader: React.FC = () => {
         </Text>
       </View>
 
-      <Button mode="outlined">{translate("wizard.next")}</Button>
+      <Button mode="outlined" onPress={onNext}>
+        {translate("wizard.next")}
+      </Button>
     </View>
   );
 };

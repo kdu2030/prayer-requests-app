@@ -1,16 +1,13 @@
 import { Formik } from "formik";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
-import { Button } from "react-native-paper";
-
-import { useI18N } from "../../hooks/use-i18n";
-import { useCreatePrayerGroupWizard } from "./use-create-prayer-group-wizard";
+import { useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { useCreatePrayerGroupWizard } from "./use-create-prayer-group-wizard";
 
 export const CreatePrayerGroupWizard: React.FC = () => {
   const theme = useTheme();
-  const { translate } = useI18N();
   const { getWizardContent, getValidationSchema } =
     useCreatePrayerGroupWizard();
   const insets = useSafeAreaInsets();

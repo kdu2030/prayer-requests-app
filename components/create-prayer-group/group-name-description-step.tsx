@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Text } from "react-native-paper";
 
 import { TEXT_INPUT_MAX_LENGTH } from "../../constants/input-constants";
 import { useI18N } from "../../hooks/use-i18n";

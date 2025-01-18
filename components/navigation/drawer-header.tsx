@@ -5,11 +5,11 @@ import * as React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 import { useTheme } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const { translate } = useI18N();

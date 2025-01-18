@@ -1,4 +1,10 @@
-export const chineseTranslations = {
+import { TranslationKey } from "../types/languages";
+
+type Translations = {
+  [key in TranslationKey]: string;
+};
+
+export const chineseTranslations: Translations = {
   "common.appName": "祷告事项软件",
   "common.actions.select": "选择",
   "common.actions.save": "保存",
@@ -52,4 +58,7 @@ export const chineseTranslations = {
   "createPrayerGroup.groupNameDescription.description": "描述",
   "createPrayerGroup.groupNameDescription.validateGroupFailed":
     "小组名字验证失败",
+  "createPrayerGroup.rules.title": "为您的小组添加内容规则",
+  "createPrayerGroup.rules.stepDescription":
+    "让您的小组成员知道可以发布什么内容。",
 };

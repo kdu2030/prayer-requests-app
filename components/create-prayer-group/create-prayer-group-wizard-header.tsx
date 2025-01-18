@@ -2,9 +2,13 @@ import * as React from "react";
 import { View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 
+import { formatNumber } from "../../helpers/formatting-helpers";
 import { useI18N } from "../../hooks/use-i18n";
+import { SupportedLanguages } from "../../types/languages";
 
 type Props = {
+  stepNumber: number;
+  totalNumberOfSteps: number;
   isLoading?: boolean;
   onNext?: () => void;
 };
@@ -12,9 +16,11 @@ type Props = {
 export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
   isLoading,
   onNext,
+  stepNumber,
+  totalNumberOfSteps,
 }) => {
   const theme = useTheme();
-  const { translate } = useI18N();
+  const { translate, i18n } = useI18N();
 
   return (
     <View className="flex flex-row justify-between">
@@ -26,8 +32,11 @@ export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
       >
         <Text className="text-white">
           {translate("wizard.stepCount", {
-            step: "1",
-            total: "2",
+            step: formatNumber(stepNumber, i18n.language as SupportedLanguages),
+            total: formatNumber(
+              totalNumberOfSteps,
+              i18n.language as SupportedLanguages
+            ),
           })}
         </Text>
       </View>

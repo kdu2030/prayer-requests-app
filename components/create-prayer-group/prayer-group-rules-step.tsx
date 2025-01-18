@@ -26,6 +26,9 @@ export const PrayerGroupRulesStep: React.FC<Props> = ({ setWizardStep }) => {
         onBack={() =>
           setWizardStep(CreatePrayerGroupWizardStep.NameDescriptionStep)
         }
+        onNext={() => {
+          setWizardStep(CreatePrayerGroupWizardStep.ImageColorStep);
+        }}
       />
 
       <View className="mt-4">

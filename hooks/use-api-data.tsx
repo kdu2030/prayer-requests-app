@@ -78,28 +78,40 @@ export const useApiDataContext = () => {
     return newUserTokens;
   };
 
-  const addAuthorizationHeader = async (config: InternalAxiosRequestConfig) => {
-    const { userTokens } = apiDataContext;
-    let tokensToUse = userTokens;
+  const addAuthorizationHeader = React.useCallback(
+    async (config: InternalAxiosRequestConfig) => {
+      const { userTokens } = apiDataContext;
+      let tokensToUse = userTokens;
 
-    if (!isTokenValid(userTokens?.refreshToken)) {
-      router.push("/auth/welcome");
-      throw new Error("Refresh token is expired.");
-    }
+      if (!isTokenValid(userTokens?.refreshToken)) {
+        router.push("/auth/welcome");
+        throw new Error("Refresh token is expired.");
+      }
 
-    if (!isTokenValid(userTokens?.accessToken)) {
-      console.log("Token refreshed!");
-      tokensToUse = await refreshTokens();
-    }
+      if (!isTokenValid(userTokens?.accessToken)) {
+        tokensToUse = await refreshTokens();
+      }
 
-    config.headers.setAuthorization(
-      `${BEARER_PREFIX} ${tokensToUse?.accessToken?.token}`
+      config.headers.setAuthorization(
+        `${BEARER_PREFIX} ${tokensToUse?.accessToken?.token}`
+      );
+
+      return config;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  React.useEffect(() => {
+    const fetch = fetchRef.current;
+    const interceptorId = fetch.interceptors.request.use(
+      addAuthorizationHeader
     );
 
-    return config;
-  };
-
-  fetchRef.current.interceptors.request.use(addAuthorizationHeader);
+    return () => {
+      fetch.interceptors.request.eject(interceptorId);
+    };
+  }, [addAuthorizationHeader]);
 
   return {
     ...apiDataContext,

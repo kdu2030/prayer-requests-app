@@ -1,0 +1,45 @@
+import * as React from "react";
+import { AxiosInstance } from "axios";
+import { handleApiErrors } from "../helpers/api-helpers";
+import { ManagedErrorResponse } from "../types/error-handling";
+import { useApiDataContext } from "../hooks/use-api-data";
+
+export type GetPrayerGroupNameValidationResponse = {
+  isNameValid?: boolean;
+  errors?: string[];
+};
+
+const getPrayerGroupNameValidation = async (
+  fetch: AxiosInstance,
+  baseUrl: string,
+  prayerGroupName: string
+): Promise<ManagedErrorResponse<GetPrayerGroupNameValidationResponse>> => {
+  try {
+    const url = `${baseUrl}/api/v1/prayergroup/validate-name`;
+    const response = await fetch.get<GetPrayerGroupNameValidationResponse>(
+      url,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: {
+          name: prayerGroupName,
+        },
+      }
+    );
+
+    return { isError: false, value: response.data };
+  } catch (error) {
+    return handleApiErrors(error);
+  }
+};
+
+export const useGetPrayerGroupNameValidation = () => {
+  const { fetch, baseUrl } = useApiDataContext();
+
+  return React.useCallback(
+    (prayerGroupName: string) =>
+      getPrayerGroupNameValidation(fetch, baseUrl, prayerGroupName),
+    [fetch, baseUrl]
+  );
+};

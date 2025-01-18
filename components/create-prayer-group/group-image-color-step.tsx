@@ -1,7 +1,8 @@
 import { useFormikContext } from "formik";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Button, Modal, Portal, Text, useTheme } from "react-native-paper";
+import { isColor } from "react-native-reanimated";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
@@ -11,6 +12,7 @@ import {
 } from "./create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 import { CreatePrayerGroupWizardHeader } from "./create-prayer-group-wizard-header";
+import { useGroupImageColorStep } from "./use-group-image-color-step";
 
 type Props = {
   setWizardStep: React.Dispatch<
@@ -22,6 +24,8 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
   const theme = useTheme();
   const { values } = useFormikContext<CreatePrayerGroupForm>();
+  const { isColorPickerModalOpen, setIsColorPickerOpen } =
+    useGroupImageColorStep();
 
   return (
     <>
@@ -73,11 +77,30 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
           <Text variant="bodyMedium" className="w-1/2">
             {translate("createPrayerGroup.groupImageColorStep.color")}
           </Text>
-          <Button mode="outlined" className="w-1/2">
+          <Button
+            mode="outlined"
+            className="w-1/2"
+            onPress={() => setIsColorPickerOpen(true)}
+          >
             {translate("createPrayerGroup.groupImageColorStep.selectColor")}
           </Button>
         </View>
       </View>
+
+      <Portal>
+        <Modal
+          visible={isColorPickerModalOpen}
+          onDismiss={() => setIsColorPickerOpen(false)}
+          style={{ padding: 8 }}
+          contentContainerStyle={{
+            backgroundColor: theme.colors.background,
+            padding: 20,
+            borderRadius: 8,
+          }}
+        >
+          <Text>{"Test"}</Text>
+        </Modal>
+      </Portal>
     </>
   );
 };

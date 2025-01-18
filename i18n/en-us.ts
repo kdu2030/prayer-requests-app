@@ -59,4 +59,5 @@ export const englishTranslations = {
   "createPrayerGroup.rules.title": "Add Content Rules for Your Group",
   "createPrayerGroup.rules.stepDescription":
     "Let your group members know what can be posted.",
+  "createPrayerGroup.rules.label": "Rules",
 };

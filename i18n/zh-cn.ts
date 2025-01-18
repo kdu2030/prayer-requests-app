@@ -61,4 +61,5 @@ export const chineseTranslations: Translations = {
   "createPrayerGroup.rules.title": "为您的小组添加内容规则",
   "createPrayerGroup.rules.stepDescription":
     "让您的小组成员知道可以发布什么内容。",
+  "createPrayerGroup.rules.label": "规则",
 };

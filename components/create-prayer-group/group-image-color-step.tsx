@@ -1,7 +1,7 @@
 import { useFormikContext } from "formik";
 import * as React from "react";
 import { View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
@@ -68,6 +68,14 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
               {values.description}
             </Text>
           </View>
+        </View>
+        <View className="mt-4 flex flex-row items-center">
+          <Text variant="bodyMedium" className="w-1/2">
+            {translate("createPrayerGroup.groupImageColorStep.color")}
+          </Text>
+          <Button mode="outlined" className="w-1/2">
+            {translate("createPrayerGroup.groupImageColorStep.selectColor")}
+          </Button>
         </View>
       </View>
     </>

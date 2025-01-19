@@ -41,11 +41,11 @@ export const ColorPickerModal: React.FC<Props> = ({ isOpen, onClose }) => {
           ))}
         </View>
 
-        <View className="flex flex-row mt-4">
-          <Button className="w-1/2 mr-4" mode="outlined">
+        <View className="flex flex-row mt-4 justify-between gap-4">
+          <Button className="flex-1" mode="outlined">
             {"Cancel"}
           </Button>
-          <Button className="w-1/2" mode="contained">
+          <Button className="flex-1" mode="contained">
             {translate("common.actions.save")}
           </Button>
         </View>

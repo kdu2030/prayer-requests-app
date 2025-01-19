@@ -1,12 +1,10 @@
-import { useField, useFormikContext } from "formik";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useField } from "formik";
 import * as React from "react";
-import { View } from "react-native";
-import Animated from "react-native-reanimated";
-import ColorPicker, { HueSlider, Panel1 } from "reanimated-color-picker";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { RoundedModal } from "../modals/rounded-modal";
-import { CreatePrayerGroupForm } from "./create-prayer-group-types";
+import { AVAILABLE_PRAYER_GROUP_COLORS } from "./create-prayer-group-constants";
 
 type Props = {
   isOpen: boolean;
@@ -24,19 +22,11 @@ export const ColorPickerModal: React.FC<Props> = ({ isOpen, onClose }) => {
       onClose={onClose}
       title={translate("createPrayerGroup.groupImageColorStep.selectColor")}
     >
-      <ColorPicker
-        value={color}
-        sliderThickness={25}
-        thumbSize={24}
-        thumbShape="circle"
-        onChange={(color) => {
-          setColor(color.hex);
-        }}
-        boundedThumb
-      >
-        <Panel1 style={{ borderRadius: 16, shadowColor: "#000" }} />
-        <HueSlider />
-      </ColorPicker>
+      <FontAwesome
+        name="circle"
+        size={44}
+        color={AVAILABLE_PRAYER_GROUP_COLORS[0]}
+      />
     </RoundedModal>
   );
 };

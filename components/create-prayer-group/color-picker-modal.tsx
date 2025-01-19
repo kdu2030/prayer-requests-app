@@ -1,9 +1,11 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useField } from "formik";
 import * as React from "react";
+import { View } from "react-native";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { RoundedModal } from "../modals/rounded-modal";
+import { ColorButton } from "./color-button";
 import { AVAILABLE_PRAYER_GROUP_COLORS } from "./create-prayer-group-constants";
 
 type Props = {
@@ -22,11 +24,22 @@ export const ColorPickerModal: React.FC<Props> = ({ isOpen, onClose }) => {
       onClose={onClose}
       title={translate("createPrayerGroup.groupImageColorStep.selectColor")}
     >
-      <FontAwesome
-        name="circle"
-        size={44}
-        color={AVAILABLE_PRAYER_GROUP_COLORS[0]}
-      />
+      <>
+        <View className="flex flex-row flex-wrap">
+          {AVAILABLE_PRAYER_GROUP_COLORS.map((color) => (
+            <View className="mr-4 mb-4">
+              <ColorButton
+                color={color}
+                isChecked={color === field?.value}
+                onPress={() => {
+                  helpers.setValue(color);
+                  helpers.setTouched(true);
+                }}
+              />
+            </View>
+          ))}
+        </View>
+      </>
     </RoundedModal>
   );
 };

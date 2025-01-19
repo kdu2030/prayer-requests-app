@@ -4,6 +4,7 @@ import { ScrollView, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { DEFAULT_COLOR } from "./create-prayer-group-constants";
 import { useCreatePrayerGroupWizard } from "./use-create-prayer-group-wizard";
 
 export const CreatePrayerGroupWizard: React.FC = () => {
@@ -14,7 +15,7 @@ export const CreatePrayerGroupWizard: React.FC = () => {
 
   return (
     <Formik
-      initialValues={{ color: theme.colors.primary }}
+      initialValues={{ color: DEFAULT_COLOR }}
       onSubmit={() => {}}
       validationSchema={getValidationSchema()}
     >

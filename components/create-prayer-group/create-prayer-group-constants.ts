@@ -9,6 +9,8 @@ export const PRAYER_GROUP_NAME_EXISTS =
 
 export const NUM_CREATE_PRAYER_GROUP_STEPS = 3;
 
+export const DEFAULT_COLOR = "#106d20";
+
 export const AVAILABLE_PRAYER_GROUP_COLORS = [
   "#cf1717", // red
   "#f59802", // orange

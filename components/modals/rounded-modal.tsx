@@ -30,7 +30,10 @@ export const RoundedModal: React.FC<Props> = ({
           borderRadius: 8,
         }}
       >
-        <View className="flex flex-row justify-between items-center">
+        <View
+          className="flex flex-row justify-between items-center border-gray-600 pb-4 mb-6"
+          style={{ borderBottomWidth: 0.5 }}
+        >
           <Text variant="titleLarge" className="font-bold">
             {title}
           </Text>

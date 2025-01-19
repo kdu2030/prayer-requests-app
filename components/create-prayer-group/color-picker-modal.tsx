@@ -2,6 +2,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useField } from "formik";
 import * as React from "react";
 import { View } from "react-native";
+import { Button } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { RoundedModal } from "../modals/rounded-modal";
@@ -25,7 +26,7 @@ export const ColorPickerModal: React.FC<Props> = ({ isOpen, onClose }) => {
       title={translate("createPrayerGroup.groupImageColorStep.selectColor")}
     >
       <>
-        <View className="flex flex-row flex-wrap">
+        <View className="flex flex-row flex-wrap self-center">
           {AVAILABLE_PRAYER_GROUP_COLORS.map((color) => (
             <View className="mr-4 mb-4">
               <ColorButton
@@ -38,6 +39,15 @@ export const ColorPickerModal: React.FC<Props> = ({ isOpen, onClose }) => {
               />
             </View>
           ))}
+        </View>
+
+        <View className="flex flex-row mt-4">
+          <Button className="w-1/2 mr-4" mode="outlined">
+            {"Cancel"}
+          </Button>
+          <Button className="w-1/2" mode="contained">
+            {translate("common.actions.save")}
+          </Button>
         </View>
       </>
     </RoundedModal>

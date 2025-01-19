@@ -13,7 +13,7 @@ export const ColorButton: React.FC<Props> = ({ color, isChecked, onPress }) => {
     <Pressable onPress={onPress}>
       <FontAwesome
         name={isChecked ? "check-circle" : "circle"}
-        size={44}
+        size={48}
         color={color}
       />
     </Pressable>

@@ -14,7 +14,7 @@ export const CreatePrayerGroupWizard: React.FC = () => {
 
   return (
     <Formik
-      initialValues={() => {}}
+      initialValues={{ color: theme.colors.primary }}
       onSubmit={() => {}}
       validationSchema={getValidationSchema()}
     >

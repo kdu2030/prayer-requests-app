@@ -7,9 +7,15 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   title: string;
+  children: React.ReactNode;
 };
 
-export const RoundedModal: React.FC<Props> = ({ isOpen, onClose, title }) => {
+export const RoundedModal: React.FC<Props> = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+}) => {
   const theme = useTheme();
 
   return (
@@ -33,6 +39,7 @@ export const RoundedModal: React.FC<Props> = ({ isOpen, onClose, title }) => {
             <Ionicons name="close" size={28} />
           </TouchableOpacity>
         </View>
+        {children}
       </Modal>
     </Portal>
   );

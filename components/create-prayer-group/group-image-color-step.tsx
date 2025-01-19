@@ -5,7 +5,7 @@ import { Button, Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
-import { RoundedModal } from "../modals/rounded-modal";
+import { ColorPickerModal } from "./color-picker-modal";
 import {
   CreatePrayerGroupWizardStep,
   NUM_CREATE_PRAYER_GROUP_STEPS,
@@ -87,10 +87,9 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
         </View>
       </View>
 
-      <RoundedModal
+      <ColorPickerModal
         isOpen={isColorPickerModalOpen}
         onClose={() => setIsColorPickerOpen(false)}
-        title={translate("createPrayerGroup.groupImageColorStep.selectColor")}
       />
     </>
   );

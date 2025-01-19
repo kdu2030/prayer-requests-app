@@ -1,5 +1,3 @@
-import { CreatePrayerGroupForm } from "./create-prayer-group-types";
-
 export enum CreatePrayerGroupWizardStep {
   NameDescriptionStep = 1,
   RulesStep = 2,

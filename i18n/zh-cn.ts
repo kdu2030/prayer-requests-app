@@ -69,4 +69,6 @@ export const chineseTranslations: Translations = {
     "小组图片和颜色可以让您的小组更突出。",
   "createPrayerGroup.groupImageColorStep.color": "颜色",
   "createPrayerGroup.groupImageColorStep.selectColor": "选颜色",
+  "createPrayerGroup.groupImageColorStep.image": "图片",
+  "createPrayerGroup.groupImageColorStep.selectImage": "选图片",
 };

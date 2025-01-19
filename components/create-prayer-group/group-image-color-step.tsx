@@ -86,6 +86,15 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
             {translate("createPrayerGroup.groupImageColorStep.selectColor")}
           </Button>
         </View>
+
+        <View className="mt-4 flex flex-row items-center">
+          <Text variant="bodyLarge" className="w-1/2">
+            {translate("createPrayerGroup.groupImageColorStep.image")}
+          </Text>
+          <Button mode="outlined" className="w-1/2" onPress={() => {}}>
+            {translate("createPrayerGroup.groupImageColorStep.selectImage")}
+          </Button>
+        </View>
       </View>
 
       <ColorPickerModal

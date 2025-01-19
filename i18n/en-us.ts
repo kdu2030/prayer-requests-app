@@ -67,4 +67,6 @@ export const englishTranslations = {
     "A group image and color help your group stand out.",
   "createPrayerGroup.groupImageColorStep.color": "Color",
   "createPrayerGroup.groupImageColorStep.selectColor": "Select Color",
+  "createPrayerGroup.groupImageColorStep.image": "Image",
+  "createPrayerGroup.groupImageColorStep.selectImage": "Select Image",
 };

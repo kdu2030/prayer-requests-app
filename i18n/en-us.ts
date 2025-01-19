@@ -3,6 +3,7 @@ export const englishTranslations = {
   "common.actions.select": "Select",
   "common.actions.save": "Save",
   "common.preview": "Preview",
+  "common.actions.cancel": "Cancel",
 
   "loading.userData.text": "Loading user data",
   "loading.userData.label": "User Data",

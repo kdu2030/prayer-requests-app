@@ -23,7 +23,8 @@ type Props = {
 export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
   const theme = useTheme();
-  const { values } = useFormikContext<CreatePrayerGroupForm>();
+  const { values, setFieldValue, setFieldTouched } =
+    useFormikContext<CreatePrayerGroupForm>();
   const { isColorPickerModalOpen, setIsColorPickerOpen } =
     useGroupImageColorStep();
 
@@ -89,7 +90,13 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
 
       <ColorPickerModal
         isOpen={isColorPickerModalOpen}
-        onClose={() => setIsColorPickerOpen(false)}
+        onCancel={() => setIsColorPickerOpen(false)}
+        onSave={(color) => {
+          setFieldValue("color", color);
+          setFieldTouched("color", true);
+          setIsColorPickerOpen(false);
+        }}
+        initialColor={values.color}
       />
     </>
   );

@@ -57,7 +57,10 @@ export const getUserSummaryRaw = async (
 export const useGetUserSummary = () => {
   const { baseUrl, fetch } = useApiDataContext();
 
-  return React.useCallback((userId: number) => {
-    return getUserSummary(fetch, baseUrl, userId);
-  }, []);
+  return React.useCallback(
+    (userId: number) => {
+      return getUserSummary(fetch, baseUrl, userId);
+    },
+    [baseUrl, fetch]
+  );
 };

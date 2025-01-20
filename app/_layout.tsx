@@ -3,7 +3,7 @@ import "../i18n/i18n";
 import { Stack } from "expo-router";
 import * as React from "react";
 import { PaperProvider } from "react-native-paper";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { LIGHT_THEME } from "../constants/theme/theme";
 import { ApiDataContextProvider } from "../hooks/use-api-data";

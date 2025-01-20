@@ -6,8 +6,8 @@ import {
 import * as React from "react";
 
 import { ApiAuthResponse } from "../api/post-signup";
-import Signup from "../components/authentication/sign-up";
 import { SignupTestIds } from "../components/authentication/auth-constants";
+import Signup from "../components/authentication/sign-up";
 import { ApiResponse } from "../types/api-response-types";
 import { SignupForm } from "../types/forms/auth-forms";
 import { SupportedLanguages } from "../types/languages";

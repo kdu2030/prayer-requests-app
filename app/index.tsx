@@ -38,7 +38,7 @@ const AppContainer: React.FC = () => {
     useApiDataContext();
   const theme = useTheme();
 
-  const checkStoredUserDataValidity = async (): Promise<
+  const checkStoredUserDataValidity = React.useCallback(async (): Promise<
     StoredUserData | undefined
   > => {
     const [userIdStr, refreshToken] = await Promise.all([
@@ -69,9 +69,11 @@ const AppContainer: React.FC = () => {
 
     setUserTokens({ ...userTokens, refreshToken: storedRefreshToken });
     return { userId, refreshToken };
-  };
 
-  const loadUserData = async () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setUserTokens]);
+
+  const loadUserData = React.useCallback(async () => {
     const response = await loadLanguage();
     if (response.isError) {
       setIsErrorVisible(true);
@@ -108,12 +110,18 @@ const AppContainer: React.FC = () => {
     setUserTokens(tokens);
 
     router.push("/(drawer)/home");
-  };
+  }, [
+    baseUrl,
+    checkStoredUserDataValidity,
+    loadLanguage,
+    setUserData,
+    setUserTokens,
+  ]);
 
   React.useEffect(() => {
     ScreenOrientation.unlockAsync();
     loadUserData();
-  }, []);
+  }, [loadUserData]);
 
   return (
     <>

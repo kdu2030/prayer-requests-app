@@ -1,11 +1,11 @@
 import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { AuthContainer } from "./auth-container";
-import { StatusBar } from "expo-status-bar";
 
 export function AuthScreen() {
   const { translate } = useI18N();

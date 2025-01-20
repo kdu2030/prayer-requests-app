@@ -12,6 +12,7 @@ import {
 } from "./create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 import { CreatePrayerGroupWizardHeader } from "./create-prayer-group-wizard-header";
+import { GroupImageColorStepTestIds } from "./tests/test-ids";
 import { useGroupImageColorStep } from "./use-group-image-color-step";
 
 type Props = {
@@ -53,6 +54,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
           <View
             className="h-16 rounded-t-lg"
             style={{ backgroundColor: values.color ?? theme.colors.primary }}
+            testID={GroupImageColorStepTestIds.backgroundColorPreview}
           />
           <View
             className="p-4"
@@ -65,11 +67,16 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
                 className="ml-4 font-bold w-4/5"
                 numberOfLines={1}
                 ellipsizeMode="tail"
+                testID={GroupImageColorStepTestIds.groupNamePreview}
               >
                 {values.groupName}
               </Text>
             </View>
-            <Text className="mt-3" variant="bodyLarge">
+            <Text
+              className="mt-3"
+              variant="bodyLarge"
+              testID={GroupImageColorStepTestIds.descriptionPreview}
+            >
               {values.description}
             </Text>
           </View>

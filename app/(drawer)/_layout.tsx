@@ -11,7 +11,7 @@ import { DrawerHeader } from "../../components/navigation/drawer-header";
 
 const DrawerLayout: React.FC = () => {
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView className="flex-1">
       <Drawer
         screenOptions={{
           header: (props: DrawerHeaderProps) => <DrawerHeader {...props} />,

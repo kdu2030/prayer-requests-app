@@ -1,3 +1,6 @@
+import "@testing-library/jest-native/extend-expect";
+import "@testing-library/jest-native";
+
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import {
   fireEvent,
@@ -10,10 +13,14 @@ import * as React from "react";
 import { GetPrayerGroupNameValidationResponse } from "../../../api/get-prayer-group-name-validation";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { ManagedErrorResponse } from "../../../types/error-handling";
+import { TranslationKey } from "../../../types/languages";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 import { GroupNameDescriptionStep } from "../group-name-description-step";
 import { groupNameValidationSchema } from "../group-name-validation-schema";
-import { CreatePrayerGroupWizardHeaderTestIds } from "./test-ids";
+import {
+  CreatePrayerGroupWizardHeaderTestIds,
+  GroupNameDescriptionStepTestIds,
+} from "./test-ids";
 
 let component: RenderResult;
 
@@ -76,5 +83,41 @@ describe(GroupNameDescriptionStep, () => {
     await waitFor(() => {
       expect(mockSetWizardStep).toHaveBeenCalled();
     });
+  });
+
+  test("Group name and description are required", async () => {
+    mockTranslate.mockImplementation(
+      (key: TranslationKey, translationParams: any) => {
+        switch (key) {
+          case "form.validation.isRequired.error":
+            return `${translationParams.field} is required.`;
+          case "createPrayerGroup.groupNameDescription.groupName":
+            return "Group Name";
+          case "createPrayerGroup.groupNameDescription.description":
+            return "Description";
+        }
+      }
+    );
+
+    component = mountGroupNameDescriptionStep();
+
+    const nextButton = component.getByTestId(
+      CreatePrayerGroupWizardHeaderTestIds.nextButton
+    );
+    fireEvent.press(nextButton);
+
+    const groupNameInputContainer = await component.findByTestId(
+      `${GroupNameDescriptionStepTestIds.groupNameInput}-container`
+    );
+    const descriptionInputContainer = await component.findByTestId(
+      `${GroupNameDescriptionStepTestIds.descriptionInput}-container`
+    );
+
+    expect(groupNameInputContainer).toHaveTextContent(
+      "Group Name is required."
+    );
+    expect(descriptionInputContainer).toHaveTextContent(
+      "Description is required"
+    );
   });
 });

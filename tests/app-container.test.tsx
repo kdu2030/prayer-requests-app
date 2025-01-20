@@ -1,3 +1,4 @@
+import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import { RenderResult, waitFor } from "@testing-library/react-native";
 import * as React from "react";
 
@@ -10,6 +11,8 @@ jest.useFakeTimers();
 let component: RenderResult;
 const mockLoadLanguage = jest.fn();
 const mockRouterPush = jest.fn();
+
+jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
 jest.mock("expo-router/entry", () => ({
   match: jest.fn(),

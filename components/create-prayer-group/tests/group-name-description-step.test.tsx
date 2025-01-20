@@ -6,9 +6,11 @@ import * as React from "react";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 import { GroupNameDescriptionStep } from "../group-name-description-step";
+import { groupNameValidationSchema } from "../group-name-validation-schema";
 
 let component: RenderResult;
 const mockSetWizardStep = jest.fn();
+const mockTranslate = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
@@ -16,7 +18,11 @@ const mountGroupNameDescriptionStep = (
   initialValues: CreatePrayerGroupForm = {}
 ): RenderResult => {
   return mountComponent(
-    <Formik initialValues={initialValues} onSubmit={() => {}}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={groupNameValidationSchema(mockTranslate)}
+      onSubmit={() => {}}
+    >
       <GroupNameDescriptionStep setWizardStep={mockSetWizardStep} />
     </Formik>
   );

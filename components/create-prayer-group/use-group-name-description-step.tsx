@@ -20,8 +20,15 @@ export const usePrayerGroupDescriptionStep = (
 
   const { translate } = useI18N();
 
-  const { values, validateForm, touched, setTouched, errors, setErrors } =
-    useFormikContext<CreatePrayerGroupForm>();
+  const {
+    values,
+    validateForm,
+    touched,
+    setTouched,
+    setFieldTouched,
+    errors,
+    setErrors,
+  } = useFormikContext<CreatePrayerGroupForm>();
   const getPrayerGroupNameValidation = useGetPrayerGroupNameValidation();
 
   const validatePrayerGroupStep = async (): Promise<boolean> => {
@@ -52,6 +59,7 @@ export const usePrayerGroupDescriptionStep = (
           field: translate("createPrayerGroup.groupNameDescription.groupName"),
         }),
       });
+      setFieldTouched("groupName", true);
     }
 
     return prayerGroupErrors.length === 0;

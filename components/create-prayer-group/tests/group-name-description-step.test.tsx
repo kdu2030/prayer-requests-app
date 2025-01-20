@@ -14,6 +14,7 @@ import { GetPrayerGroupNameValidationResponse } from "../../../api/get-prayer-gr
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { ManagedErrorResponse } from "../../../types/error-handling";
 import { TranslationKey } from "../../../types/languages";
+import { PRAYER_GROUP_NAME_EXISTS } from "../create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 import { GroupNameDescriptionStep } from "../group-name-description-step";
 import { groupNameValidationSchema } from "../group-name-validation-schema";
@@ -50,7 +51,7 @@ const mountGroupNameDescriptionStep = (
 describe(GroupNameDescriptionStep, () => {
   afterEach(() => {
     component?.unmount();
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   test("Mount test", () => {
@@ -118,6 +119,49 @@ describe(GroupNameDescriptionStep, () => {
     );
     expect(descriptionInputContainer).toHaveTextContent(
       "Description is required"
+    );
+  });
+
+  test("If there is an existing prayer group with the same group name, an error shows", async () => {
+    mockTranslate.mockImplementation(
+      (key: TranslationKey, translationParams: any) => {
+        switch (key) {
+          case "form.validation.unique.error":
+            return `This ${translationParams.field} has already been used.`;
+          case "createPrayerGroup.groupNameDescription.groupName":
+            return "Group Name";
+        }
+      }
+    );
+
+    const mockResponse: ManagedErrorResponse<GetPrayerGroupNameValidationResponse> =
+      {
+        isError: false,
+        value: {
+          isNameValid: false,
+          errors: [PRAYER_GROUP_NAME_EXISTS],
+        },
+      };
+
+    mockGetPrayerGroupNameValidation.mockReturnValue(mockResponse);
+
+    component = mountGroupNameDescriptionStep({
+      groupName: "GCBCR Youth Group",
+      description:
+        "This is a group for middle school and high school students of GCBCR.",
+    });
+
+    const nextButton = component.getByTestId(
+      CreatePrayerGroupWizardHeaderTestIds.nextButton
+    );
+    fireEvent.press(nextButton);
+
+    const groupNameInput = await component.findByTestId(
+      `${GroupNameDescriptionStepTestIds.groupNameInput}-container`
+    );
+
+    expect(groupNameInput).toHaveTextContent(
+      "This Group Name has already been used."
     );
   });
 });

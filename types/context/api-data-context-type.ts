@@ -1,17 +1,23 @@
 import * as React from "react";
 
+import { MediaFile } from "../media-file-types";
+
 export type UserData = {
   userId?: number;
   username?: string;
   email?: string;
   fullName?: string;
+  image?: MediaFile;
+};
+
+export type Token = {
+  token: string;
+  expiryDate: Date;
 };
 
 export type UserTokenPair = {
-  token: string;
-  tokenExpiryDate: Date;
-  refreshToken: string;
-  refreshTokenExpiryDate: Date;
+  accessToken?: Token;
+  refreshToken?: Token;
 };
 
 export type ApiDataContextType = {

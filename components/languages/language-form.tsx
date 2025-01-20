@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Text } from "react-native-paper";
 import { Button, Snackbar } from "react-native-paper";
@@ -24,7 +25,11 @@ export const LanguageForm: React.FC = () => {
 
   return (
     <>
-      <AuthContainer classNames="w-full px-3 mt-8" containerClassNames="h-1/3">
+      <StatusBar translucent />
+      <AuthContainer
+        classNames="w-full px-3 mt-8"
+        containerClassNames="h-4/5 portrait:h-1/3"
+      >
         <Text variant="titleMedium" className="mb-3">
           {translate("language.chooseLanguage.text")}
         </Text>
@@ -36,7 +41,11 @@ export const LanguageForm: React.FC = () => {
             await setLanguage(value);
           }}
         />
-        <Button mode="contained" className="mt-8" onPress={onClick}>
+        <Button
+          mode="contained"
+          className="mt-20 portrait:mt-8"
+          onPress={onClick}
+        >
           {translate("common.actions.save")}
         </Button>
       </AuthContainer>

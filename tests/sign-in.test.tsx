@@ -17,6 +17,7 @@ import { mountComponent } from "./utils/test-utils";
 let component: RenderResult;
 
 const mockPostSignin = jest.fn();
+const mockRouterPush = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
   ...jest.requireActual(
@@ -26,6 +27,12 @@ jest.mock("@react-native-async-storage/async-storage", () => ({
 
 jest.mock("../api/post-signin", () => ({
   postSignin: () => mockPostSignin(),
+}));
+
+jest.mock("expo-router", () => ({
+  router: {
+    push: (path: string) => mockRouterPush(path),
+  },
 }));
 
 const addInputToSignInForm = (

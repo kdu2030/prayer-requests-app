@@ -1,7 +1,15 @@
-export const chineseTranslations = {
+import { TranslationKey } from "../types/languages";
+
+type Translations = {
+  [key in TranslationKey]: string;
+};
+
+export const chineseTranslations: Translations = {
   "common.appName": "祷告事项软件",
   "common.actions.select": "选择",
   "common.actions.save": "保存",
+  "common.preview": "预览",
+  "common.actions.cancel": "取消",
 
   "loading.userData.text": "如载用户数据",
   "loading.userData.label": "用户数据",
@@ -39,5 +47,28 @@ export const chineseTranslations = {
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "如载{{item}}失败",
-  "oaster.failed.genericFailure": "{{item}}失败",
+  "toaster.failed.genericFailure": "{{item}}失败",
+
+  "navigation.drawer.screen.home": "主页",
+  "navigation.drawer.screen.createPrayerGroup": "创建新祷告小组",
+
+  "wizard.stepCount": "第{{step}}步、共{{total}}步",
+  "wizard.next": "下一步",
+
+  "createPrayerGroup.groupNameDescription.title": "介绍你的祷告小组",
+  "createPrayerGroup.groupNameDescription.groupName": "小组名字",
+  "createPrayerGroup.groupNameDescription.description": "描述",
+  "createPrayerGroup.groupNameDescription.validateGroupFailed":
+    "小组名字验证失败",
+  "createPrayerGroup.rules.title": "为您的小组添加内容规则",
+  "createPrayerGroup.rules.stepDescription":
+    "让您的小组成员知道可以发布什么内容。",
+  "createPrayerGroup.rules.label": "规则",
+  "createPrayerGroup.groupImageColorStep.title": "为您的小组添加样式",
+  "createPrayerGroup.groupImageColorStep.description":
+    "小组图片和颜色可以让您的小组更突出。",
+  "createPrayerGroup.groupImageColorStep.color": "颜色",
+  "createPrayerGroup.groupImageColorStep.selectColor": "选颜色",
+  "createPrayerGroup.groupImageColorStep.image": "图片",
+  "createPrayerGroup.groupImageColorStep.selectImage": "选图片",
 };

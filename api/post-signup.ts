@@ -9,7 +9,7 @@ export type RawUserTokenPair = {
 };
 
 export type ApiAuthResponse = {
-  userId?: number;
+  id?: number;
   username?: string;
   emailAddress?: string;
   fullName?: string;

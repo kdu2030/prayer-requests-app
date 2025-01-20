@@ -2,6 +2,8 @@ export const englishTranslations = {
   "common.appName": "Prayer Requests App",
   "common.actions.select": "Select",
   "common.actions.save": "Save",
+  "common.preview": "Preview",
+  "common.actions.cancel": "Cancel",
 
   "loading.userData.text": "Loading user data",
   "loading.userData.label": "User Data",
@@ -43,4 +45,28 @@ export const englishTranslations = {
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",
   "toaster.failed.genericFailure": "{{item}} failed",
+
+  "navigation.drawer.screen.home": "Home",
+  "navigation.drawer.screen.createPrayerGroup": "Create Prayer Group",
+
+  "wizard.stepCount": "{{step}} of {{total}}",
+  "wizard.next": "Next",
+
+  "createPrayerGroup.groupNameDescription.title":
+    "Tell Us About Your Prayer Group",
+  "createPrayerGroup.groupNameDescription.groupName": "Group Name",
+  "createPrayerGroup.groupNameDescription.description": "Description",
+  "createPrayerGroup.groupNameDescription.validateGroupFailed":
+    "Unable to validate group name",
+  "createPrayerGroup.rules.title": "Add Content Rules for Your Group",
+  "createPrayerGroup.rules.stepDescription":
+    "Let your group members know what can be posted.",
+  "createPrayerGroup.rules.label": "Rules",
+  "createPrayerGroup.groupImageColorStep.title": "Style your Prayer Group",
+  "createPrayerGroup.groupImageColorStep.description":
+    "A group image and color help your group stand out.",
+  "createPrayerGroup.groupImageColorStep.color": "Color",
+  "createPrayerGroup.groupImageColorStep.selectColor": "Select Color",
+  "createPrayerGroup.groupImageColorStep.image": "Image",
+  "createPrayerGroup.groupImageColorStep.selectImage": "Select Image",
 };

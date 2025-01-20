@@ -1,5 +1,11 @@
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import { router } from "expo-router";
 import * as React from "react";
 
+import { getUserTokenPair } from "../api/get-user-token-pair";
+import { decodeJwtToken } from "../components/authentication/auth-helpers";
+import { BEARER_PREFIX } from "../constants/auth-constants";
+import { isTokenValid } from "../helpers/api-helpers";
 import {
   ApiDataContextType,
   UserData,
@@ -7,7 +13,7 @@ import {
 } from "../types/context/api-data-context-type";
 
 const defaultApiData: ApiDataContextType = {
-  baseUrl: "https://prayer-app-api.onrender.com",
+  baseUrl: "https://prayerappservices.onrender.com",
   setUserData: () => {},
   setUserTokens: () => {},
 };
@@ -19,7 +25,7 @@ type Props = {
 };
 
 export const ApiDataContextProvider: React.FC<Props> = ({ children }) => {
-  const baseURL = process.env.EXPO_PUBLIC_API_URL ?? "";
+  const baseUrl = process.env.EXPO_PUBLIC_API_URL ?? "";
   const [userData, setUserData] = React.useState<UserData>({});
   const [userTokens, setUserTokens] = React.useState<
     UserTokenPair | undefined
@@ -28,7 +34,7 @@ export const ApiDataContextProvider: React.FC<Props> = ({ children }) => {
   return (
     <ApiDataContext.Provider
       value={{
-        baseUrl: baseURL,
+        baseUrl,
         userData,
         setUserData,
         userTokens,
@@ -40,4 +46,75 @@ export const ApiDataContextProvider: React.FC<Props> = ({ children }) => {
   );
 };
 
-export const useApiDataContext = () => React.useContext(ApiDataContext);
+export const useApiDataContext = () => {
+  const apiDataContext = React.useContext(ApiDataContext);
+  const fetchRef = React.useRef<AxiosInstance>(axios.create());
+
+  const refreshTokens = async () => {
+    const { baseUrl, userTokens, setUserTokens } = apiDataContext;
+    const response = await getUserTokenPair(
+      baseUrl,
+      userTokens?.refreshToken?.token ?? ""
+    );
+
+    if (response.isError) {
+      router.push("/auth/welcome");
+      throw new Error("Unable to fetch user tokens.");
+    }
+
+    const updatedAccessToken = decodeJwtToken(
+      response.value?.accessToken ?? ""
+    );
+    const updatedRefreshToken = decodeJwtToken(
+      response.value?.refreshToken ?? ""
+    );
+
+    const newUserTokens = {
+      accessToken: updatedAccessToken,
+      refreshToken: updatedRefreshToken,
+    };
+
+    setUserTokens(newUserTokens);
+    return newUserTokens;
+  };
+
+  const addAuthorizationHeader = React.useCallback(
+    async (config: InternalAxiosRequestConfig) => {
+      const { userTokens } = apiDataContext;
+      let tokensToUse = userTokens;
+
+      if (!isTokenValid(userTokens?.refreshToken)) {
+        router.push("/auth/welcome");
+        throw new Error("Refresh token is expired.");
+      }
+
+      if (!isTokenValid(userTokens?.accessToken)) {
+        tokensToUse = await refreshTokens();
+      }
+
+      config.headers.setAuthorization(
+        `${BEARER_PREFIX} ${tokensToUse?.accessToken?.token}`
+      );
+
+      return config;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  React.useEffect(() => {
+    const fetch = fetchRef.current;
+    const interceptorId = fetch.interceptors.request.use(
+      addAuthorizationHeader
+    );
+
+    return () => {
+      fetch.interceptors.request.eject(interceptorId);
+    };
+  }, [addAuthorizationHeader]);
+
+  return {
+    ...apiDataContext,
+    fetch: fetchRef.current,
+  };
+};

@@ -7,6 +7,7 @@ export enum JwtTokenFields {
 
 export const USER_TOKEN_STORAGE_KEY = "prayerRequestsApp.userToken";
 export const REFRESH_TOKEN_STORAGE_KEY = "prayerRequestsApp.refreshToken";
+export const USER_ID_STORAGE_KEY = "prayerRequestsApp.userId";
 
 export const SignupTestIds = {
   usernameInput: "signup-username-input",

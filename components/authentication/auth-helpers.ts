@@ -1,35 +1,28 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { decode } from "base-64";
-import _ from "lodash";
 
+import { ApiAuthResponse } from "../../api/post-signup";
 import {
-  JwtTokenFields,
-  REFRESH_TOKEN_STORAGE_KEY,
-  USER_TOKEN_STORAGE_KEY,
-} from "./auth-constants";
-import { ApiResponse } from "../../types/api-response-types";
-import {
+  Token,
   UserData,
   UserTokenPair,
 } from "../../types/context/api-data-context-type";
-import { ApiAuthResponse } from "../../api/post-signup";
+import {
+  JwtTokenFields,
+  REFRESH_TOKEN_STORAGE_KEY,
+  USER_ID_STORAGE_KEY,
+  USER_TOKEN_STORAGE_KEY,
+} from "./auth-constants";
 
-export type DecodeData = {
-  token: string;
-  tokenExpiryDate: Date;
-};
-
-export const decodeJwtToken = (token: string): DecodeData => {
+export const decodeJwtToken = (token: string): Token => {
   const tokenParts = token.split(".");
   const payload = JSON.parse(decode(tokenParts[1]));
   // exp field is in seconds since Jan 1, 1970. Date constructor expects ms since 1970
-  const tokenExpiryDate = new Date(
-    payload[JwtTokenFields.ExpiryDateSecs] * 1000
-  );
+  const expiryDate = new Date(payload[JwtTokenFields.ExpiryDateSecs] * 1000);
 
   return {
     token,
-    tokenExpiryDate,
+    expiryDate,
   };
 };
 
@@ -38,21 +31,19 @@ export const handleSuccessfulAuthentication = (
   setUserData: (userData: UserData) => void,
   setUserTokens: (userTokenPair: UserTokenPair) => void
 ) => {
-  const { userId, username, emailAddress, fullName } = apiAuthResponse;
+  const { id: userId, username, emailAddress, fullName } = apiAuthResponse;
   const { refreshToken, accessToken } = apiAuthResponse?.tokens ?? {};
 
   if (!refreshToken || !accessToken) {
     return;
   }
 
-  const userTokenDecodeData = decodeJwtToken(accessToken);
-  const refreshTokenDecodeData = decodeJwtToken(refreshToken);
+  const accessTokenData = decodeJwtToken(accessToken);
+  const refreshTokenData = decodeJwtToken(refreshToken);
 
   const userTokenPair: UserTokenPair = {
-    token: userTokenDecodeData.token,
-    tokenExpiryDate: userTokenDecodeData.tokenExpiryDate,
-    refreshToken: refreshTokenDecodeData.token,
-    refreshTokenExpiryDate: userTokenDecodeData.tokenExpiryDate,
+    accessToken: accessTokenData,
+    refreshToken: refreshTokenData,
   };
 
   const userData: UserData = {
@@ -65,6 +56,13 @@ export const handleSuccessfulAuthentication = (
   setUserData(userData);
   setUserTokens(userTokenPair);
 
-  AsyncStorage.setItem(USER_TOKEN_STORAGE_KEY, userTokenPair.token);
-  AsyncStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, userTokenPair.refreshToken);
+  AsyncStorage.setItem(
+    USER_TOKEN_STORAGE_KEY,
+    userTokenPair.accessToken?.token ?? ""
+  );
+  AsyncStorage.setItem(
+    REFRESH_TOKEN_STORAGE_KEY,
+    userTokenPair.refreshToken?.token ?? ""
+  );
+  AsyncStorage.setItem(USER_ID_STORAGE_KEY, (userId ?? "").toString());
 };

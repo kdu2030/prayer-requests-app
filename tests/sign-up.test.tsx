@@ -6,8 +6,8 @@ import {
 import * as React from "react";
 
 import { ApiAuthResponse } from "../api/post-signup";
-import Signup from "../components/authentication/sign-up";
 import { SignupTestIds } from "../components/authentication/auth-constants";
+import Signup from "../components/authentication/sign-up";
 import { ApiResponse } from "../types/api-response-types";
 import { SignupForm } from "../types/forms/auth-forms";
 import { SupportedLanguages } from "../types/languages";
@@ -15,6 +15,7 @@ import { mockUserSummary } from "./mock-data/mock-tokens";
 import { mountComponent } from "./utils/test-utils";
 
 const mockPostSignup = jest.fn();
+const mockRouterPush = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
   ...jest.requireActual(
@@ -24,6 +25,12 @@ jest.mock("@react-native-async-storage/async-storage", () => ({
 
 jest.mock("../api/post-signup", () => ({
   postSignup: () => mockPostSignup(),
+}));
+
+jest.mock("expo-router", () => ({
+  router: {
+    push: (path: string) => mockRouterPush(path),
+  },
 }));
 
 let component: RenderResult;

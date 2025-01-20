@@ -89,6 +89,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
             mode="outlined"
             className="w-1/2"
             onPress={() => setIsColorPickerOpen(true)}
+            testID={GroupImageColorStepTestIds.selectColorButton}
           >
             {translate("createPrayerGroup.groupImageColorStep.selectColor")}
           </Button>

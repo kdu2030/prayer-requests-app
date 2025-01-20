@@ -39,6 +39,7 @@ export const ColorPickerModal: React.FC<Props> = ({
                 onPress={() => {
                   setColor(colorOption);
                 }}
+                key={colorOption}
               />
             </View>
           ))}

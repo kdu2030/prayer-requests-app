@@ -6,6 +6,7 @@ import { Button, Text, useTheme } from "react-native-paper";
 import { formatNumber } from "../../helpers/formatting-helpers";
 import { useI18N } from "../../hooks/use-i18n";
 import { SupportedLanguages } from "../../types/languages";
+import { CreatePrayerGroupWizardHeaderTestIds } from "./tests/test-ids";
 
 type Props = {
   stepNumber: number;
@@ -31,7 +32,11 @@ export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
     <View className="flex flex-row items-center justify-between">
       <View className="flex flex-row items-center">
         {showBackButton && (
-          <TouchableOpacity className="mr-3" onPress={onBack}>
+          <TouchableOpacity
+            className="mr-3"
+            onPress={onBack}
+            testID={CreatePrayerGroupWizardHeaderTestIds.backButton}
+          >
             <Ionicons name="arrow-back" size={24} />
           </TouchableOpacity>
         )}
@@ -55,7 +60,12 @@ export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
           </Text>
         </View>
       </View>
-      <Button mode="outlined" onPress={onNext} loading={isLoading}>
+      <Button
+        mode="outlined"
+        onPress={onNext}
+        loading={isLoading}
+        testID={CreatePrayerGroupWizardHeaderTestIds.nextButton}
+      >
         {translate("wizard.next")}
       </Button>
     </View>

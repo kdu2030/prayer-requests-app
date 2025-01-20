@@ -10,6 +10,7 @@ import {
   NUM_CREATE_PRAYER_GROUP_STEPS,
 } from "./create-prayer-group-constants";
 import { CreatePrayerGroupWizardHeader } from "./create-prayer-group-wizard-header";
+import { GroupNameDescriptionStepTestIds } from "./tests/test-ids";
 import { usePrayerGroupDescriptionStep } from "./use-group-name-description-step";
 
 type Props = {
@@ -46,6 +47,7 @@ export const GroupNameDescriptionStep: React.FC<Props> = ({
           label={translate("createPrayerGroup.groupNameDescription.groupName")}
           maxLength={TEXT_INPUT_MAX_LENGTH}
           required
+          testID={GroupNameDescriptionStepTestIds.groupNameInput}
         />
 
         <TextInput
@@ -56,6 +58,7 @@ export const GroupNameDescriptionStep: React.FC<Props> = ({
           multiline
           numberOfLines={5}
           required
+          testID={GroupNameDescriptionStepTestIds.descriptionInput}
         />
 
         <Snackbar

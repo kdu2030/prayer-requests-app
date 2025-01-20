@@ -23,6 +23,7 @@ export const TextInput: React.FC<Props> = ({
   inputClassNames = "",
   containerClassNames = "",
   onBlur = () => {},
+  testID,
   ...props
 }) => {
   const [field, meta, helpers] = useField(name);
@@ -30,7 +31,7 @@ export const TextInput: React.FC<Props> = ({
   const theme = useTheme();
 
   return (
-    <View className={containerClassNames}>
+    <View className={containerClassNames} testID={`${testID}-container`}>
       <PaperTextInput
         label={required ? `${label} *` : label}
         value={field.value}
@@ -44,6 +45,7 @@ export const TextInput: React.FC<Props> = ({
         }}
         error={!!isError}
         textColor={isError ? theme.colors.error : undefined}
+        testID={testID}
         {...props}
       />
       {isError && <HelperText type="error">{meta.error}</HelperText>}

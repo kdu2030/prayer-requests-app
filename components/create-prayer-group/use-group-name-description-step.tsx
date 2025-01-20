@@ -26,7 +26,7 @@ export const usePrayerGroupDescriptionStep = (
     touched,
     setTouched,
     setFieldTouched,
-    errors,
+    setFieldError,
     setErrors,
   } = useFormikContext<CreatePrayerGroupForm>();
   const getPrayerGroupNameValidation = useGetPrayerGroupNameValidation();
@@ -53,13 +53,15 @@ export const usePrayerGroupDescriptionStep = (
 
     const prayerGroupErrors = response.value.errors ?? [];
     if (prayerGroupErrors.includes(PRAYER_GROUP_NAME_EXISTS)) {
-      setErrors({
-        ...errors,
-        groupName: translate("form.validation.unique.error", {
+      setFieldError(
+        "groupName",
+        translate("form.validation.unique.error", {
           field: translate("createPrayerGroup.groupNameDescription.groupName"),
-        }),
-      });
-      setFieldTouched("groupName", true);
+        })
+      );
+
+      // We don't want to validate group name again since the error is not part of the validation schema
+      setFieldTouched("groupName", true, false);
     }
 
     return prayerGroupErrors.length === 0;

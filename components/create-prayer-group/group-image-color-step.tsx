@@ -25,7 +25,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
   const theme = useTheme();
   const { values, setFieldValue, setFieldTouched } =
     useFormikContext<CreatePrayerGroupForm>();
-  const { isColorPickerModalOpen, setIsColorPickerOpen } =
+  const { isColorPickerModalOpen, setIsColorPickerOpen, selectImage } =
     useGroupImageColorStep();
 
   return (
@@ -91,7 +91,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
           <Text variant="bodyLarge" className="w-1/2">
             {translate("createPrayerGroup.groupImageColorStep.image")}
           </Text>
-          <Button mode="outlined" className="w-1/2" onPress={() => {}}>
+          <Button mode="outlined" className="w-1/2" onPress={selectImage}>
             {translate("createPrayerGroup.groupImageColorStep.selectImage")}
           </Button>
         </View>

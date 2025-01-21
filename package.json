@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "yarn eslint ."
+    "lint": "eslint ."
   },
   "jest": {
     "preset": "jest-expo"
@@ -69,9 +69,6 @@
     "typescript": "^5.3.3"
   },
   "overrides": {
-    "react-refresh": "~0.14.0"
-  },
-  "resolutions": {
     "react-refresh": "~0.14.0"
   },
   "private": true

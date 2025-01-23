@@ -1,3 +1,4 @@
+import { getInfoAsync } from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import * as React from "react";
 
@@ -14,7 +15,13 @@ export const useGroupImageColorStep = () => {
         aspect: [1, 1],
         quality: 1,
       });
-      console.log(result);
+      const imageResult = result.assets ? result.assets[0] : undefined;
+      if (!imageResult) {
+        throw new Error("Unable to select image");
+      }
+
+      const imageInfo = await getInfoAsync(imageResult.uri);
+      console.log(imageInfo);
     } catch (error) {
       console.log(error);
     }

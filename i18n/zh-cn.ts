@@ -45,6 +45,7 @@ export const chineseTranslations: Translations = {
   "form.validation.emailNotFound.error": "我们找不到使用该电子邮件地址的用户。",
   "form.validation.incorrectPassword.error": "你的密码不正确",
   "form.validation.fileSize": "文件大小必须小于{{size}}。",
+  "form.validation.imageFileType": "图片格式必须是 JPG、JPEG 或 PNG。",
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "如载{{item}}失败",

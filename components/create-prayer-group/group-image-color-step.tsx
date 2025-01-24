@@ -1,6 +1,7 @@
+import { EvilIcons } from "@expo/vector-icons";
 import { useFormikContext } from "formik";
 import * as React from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
@@ -50,7 +51,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
           {translate("common.preview")}
         </Text>
 
-        <View className="rounded-lg border border-gray-200 flex flex-grow-0">
+        <View className="rounded-lg border border-gray-400 flex flex-grow-0">
           <View
             className="h-16 rounded-t-lg"
             style={{ backgroundColor: values.color ?? theme.colors.primary }}
@@ -103,6 +104,19 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
             {translate("createPrayerGroup.groupImageColorStep.selectImage")}
           </Button>
         </View>
+
+        {values.image && (
+          <View className="rounded-lg border border-gray-400 p-4 mt-4">
+            <View className="flex flex-row items-center gap-x-4">
+              <Text numberOfLines={1} ellipsizeMode="tail">
+                {values.image.fileName}
+              </Text>
+              <TouchableOpacity>
+                <EvilIcons name="trash" size={28} color={theme.colors.error} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
       </View>
 
       <ColorPickerModal

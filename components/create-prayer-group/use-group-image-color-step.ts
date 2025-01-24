@@ -8,12 +8,8 @@ import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 export const useGroupImageColorStep = () => {
   const [isColorPickerModalOpen, setIsColorPickerOpen] =
     React.useState<boolean>(false);
-  const { values, setFieldValue, setFieldTouched, errors } =
+  const { values, setFieldValue, setFieldTouched } =
     useFormikContext<CreatePrayerGroupForm>();
-
-  React.useEffect(() => {
-    console.log(errors);
-  }, [errors]);
 
   const selectImage = async () => {
     try {

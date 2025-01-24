@@ -1,4 +1,3 @@
-import { getInfoAsync } from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import { useFormikContext } from "formik";
 import * as React from "react";
@@ -9,7 +8,8 @@ import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 export const useGroupImageColorStep = () => {
   const [isColorPickerModalOpen, setIsColorPickerOpen] =
     React.useState<boolean>(false);
-  const { values, setFieldValue } = useFormikContext<CreatePrayerGroupForm>();
+  const { values, setFieldValue, setFieldTouched } =
+    useFormikContext<CreatePrayerGroupForm>();
 
   const selectImage = async () => {
     try {
@@ -26,10 +26,7 @@ export const useGroupImageColorStep = () => {
       }
 
       setFieldValue("image", mapMediaFileFromImagePickerAsset(imageResult));
-
-      // TODO: Move this to validation schema?
-      const imageInfo = await getInfoAsync(imageResult.uri);
-      console.log(imageInfo);
+      setFieldTouched("image", true);
     } catch (error) {
       return;
     }

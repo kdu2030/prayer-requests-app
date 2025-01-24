@@ -1,11 +1,12 @@
-import { EvilIcons } from "@expo/vector-icons";
 import { useFormikContext } from "formik";
+import { get } from "lodash";
 import * as React from "react";
-import { TouchableOpacity, View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { View } from "react-native";
+import { Button, HelperText, Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
+import { SelectedImageCard } from "../layouts/selected-image-card";
 import { ColorPickerModal } from "./color-picker-modal";
 import {
   CreatePrayerGroupWizardStep,
@@ -25,7 +26,7 @@ type Props = {
 export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
   const theme = useTheme();
-  const { values, setFieldValue, setFieldTouched } =
+  const { values, setFieldValue, setFieldTouched, errors } =
     useFormikContext<CreatePrayerGroupForm>();
   const {
     isColorPickerModalOpen,
@@ -33,6 +34,8 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
     selectImage,
     onRemoveSelectedImage,
   } = useGroupImageColorStep();
+
+  const imageError = get(errors, "image.filePath");
 
   return (
     <>
@@ -110,16 +113,13 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
         </View>
 
         {values.image && (
-          <View className="rounded-lg border border-gray-400 p-4 mt-4">
-            <View className="flex flex-row items-center justify-between">
-              <Text numberOfLines={1} ellipsizeMode="tail">
-                {values.image.fileName}
-              </Text>
-              <TouchableOpacity onPress={onRemoveSelectedImage}>
-                <EvilIcons name="trash" size={28} color={theme.colors.error} />
-              </TouchableOpacity>
-            </View>
-          </View>
+          <>
+            <SelectedImageCard
+              onRemoveImage={onRemoveSelectedImage}
+              fileName={values.image.fileName ?? ""}
+            />
+            {imageError && <HelperText type="error">{imageError}</HelperText>}
+          </>
         )}
       </View>
 

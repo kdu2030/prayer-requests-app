@@ -4,13 +4,14 @@ import { validateFileSizeFromFilePath } from "../../helpers/file-helpers";
 import { formatNumber } from "../../helpers/formatting-helpers";
 import { SupportedLanguages, TranslationKey } from "../../types/languages";
 import {
+  ACCEPTED_FILE_TYPES,
   MAX_GROUP_IMAGE_SIZE,
   MAX_GROUP_IMAGE_SIZE_MB,
 } from "./create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 
 export const groupImageColorValidationSchema = (
-  translate: (key: TranslationKey, params: object) => string,
+  translate: (key: TranslationKey, params?: object) => string,
   cultureCode: SupportedLanguages
 ): Yup.ObjectSchema<CreatePrayerGroupForm> => {
   const maxFileSize = `${formatNumber(
@@ -21,11 +22,18 @@ export const groupImageColorValidationSchema = (
     size: maxFileSize,
   });
 
+  const fileTypeError = translate("form.validation.imageFileType");
+
   return Yup.object().shape({
     image: Yup.object()
       .shape({
         filePath: Yup.string()
           .nullable()
+          .test(
+            "fileType",
+            fileTypeError,
+            (value) => value == null || ACCEPTED_FILE_TYPES.includes(value)
+          )
           .test("fileSize", maxFileSizeError, async (value) => {
             return await validateFileSizeFromFilePath(
               value ?? undefined,

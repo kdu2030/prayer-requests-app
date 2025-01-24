@@ -28,4 +28,4 @@ export const AVAILABLE_PRAYER_GROUP_COLORS = [
 export const MAX_GROUP_IMAGE_SIZE_MB = 5;
 export const MAX_GROUP_IMAGE_SIZE = MAX_GROUP_IMAGE_SIZE_MB * 1024 * 1024;
 
-export const ACCEPTED_FILE_TYPES = ["JPG", "PNG", "JPEG"];
+export const ACCEPTED_FILE_TYPES = ["JPG", "PNG"];

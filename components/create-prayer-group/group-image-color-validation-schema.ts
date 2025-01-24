@@ -22,15 +22,17 @@ export const groupImageColorValidationSchema = (
   });
 
   return Yup.object().shape({
-    image: Yup.object().shape({
-      filePath: Yup.string()
-        .nullable()
-        .test("fileSize", maxFileSizeError, async (value) => {
-          return await validateFileSizeFromFilePath(
-            value ?? undefined,
-            MAX_GROUP_IMAGE_SIZE
-          );
-        }),
-    }),
+    image: Yup.object()
+      .shape({
+        filePath: Yup.string()
+          .nullable()
+          .test("fileSize", maxFileSizeError, async (value) => {
+            return await validateFileSizeFromFilePath(
+              value ?? undefined,
+              MAX_GROUP_IMAGE_SIZE
+            );
+          }),
+      })
+      .nullable(),
   }) as Yup.ObjectSchema<CreatePrayerGroupForm>;
 };

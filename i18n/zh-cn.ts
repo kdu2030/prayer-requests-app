@@ -44,6 +44,7 @@ export const chineseTranslations: Translations = {
   "form.validation.unique.error": "此{{field}}已被使用。",
   "form.validation.emailNotFound.error": "我们找不到使用该电子邮件地址的用户。",
   "form.validation.incorrectPassword.error": "你的密码不正确",
+  "form.validation.fileSize": "文件大小必须小于{{size}}。",
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "如载{{item}}失败",

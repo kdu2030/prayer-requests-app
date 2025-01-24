@@ -10,6 +10,7 @@ export const mapMediaFileFromImagePickerAsset = (
   return {
     fileName,
     url: asset.uri,
+    filePath: asset.uri,
     fileType: FileType.Image,
   };
 };

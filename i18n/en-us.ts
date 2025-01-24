@@ -41,6 +41,7 @@ export const englishTranslations = {
   "form.validation.emailNotFound.error":
     "We couldn't find a user with this email.",
   "form.validation.incorrectPassword.error": "Your password is incorrect",
+  "form.validation.fileSize": "File size must be less than {{size}}.",
 
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",

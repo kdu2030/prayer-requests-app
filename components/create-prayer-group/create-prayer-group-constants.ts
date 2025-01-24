@@ -25,4 +25,5 @@ export const AVAILABLE_PRAYER_GROUP_COLORS = [
   "#ffffff", // white
 ];
 
-export const MAX_GROUP_IMAGE_SIZE = 5 * 1024 * 1024;
+export const MAX_GROUP_IMAGE_SIZE_MB = 5;
+export const MAX_GROUP_IMAGE_SIZE = MAX_GROUP_IMAGE_SIZE_MB * 1024 * 1024;

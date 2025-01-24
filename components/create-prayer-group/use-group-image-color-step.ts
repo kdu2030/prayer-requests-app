@@ -41,7 +41,6 @@ export const useGroupImageColorStep = () => {
       return;
     }
     setFieldValue("image", undefined);
-    setFieldTouched("image", true);
   };
 
   return {

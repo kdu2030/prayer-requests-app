@@ -43,6 +43,8 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
         stepNumber={3}
         totalNumberOfSteps={NUM_CREATE_PRAYER_GROUP_STEPS}
         onBack={() => setWizardStep(CreatePrayerGroupWizardStep.RulesStep)}
+        showNextButton={false}
+        showSaveButton
       />
 
       <View className="mt-4">

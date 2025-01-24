@@ -5,7 +5,8 @@ export enum GroupNameDescriptionStepTestIds {
 
 export enum CreatePrayerGroupWizardHeaderTestIds {
   nextButton = "create-prayer-group-wizard-header-next-button",
-  backButton = "create-prayer-group-wizard-header-button",
+  backButton = "create-prayer-group-wizard-header-back-button",
+  saveButton = "create-prayer-group-wizard-header-save-button",
 }
 
 export enum GroupImageColorStepTestIds {

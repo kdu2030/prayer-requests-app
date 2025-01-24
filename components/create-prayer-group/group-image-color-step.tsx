@@ -111,7 +111,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
 
         {values.image && (
           <View className="rounded-lg border border-gray-400 p-4 mt-4">
-            <View className="flex flex-row items-center gap-x-4">
+            <View className="flex flex-row items-center justify-between">
               <Text numberOfLines={1} ellipsizeMode="tail">
                 {values.image.fileName}
               </Text>

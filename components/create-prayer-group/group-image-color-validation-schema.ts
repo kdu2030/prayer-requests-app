@@ -29,11 +29,15 @@ export const groupImageColorValidationSchema = (
       .shape({
         filePath: Yup.string()
           .nullable()
-          .test(
-            "fileType",
-            fileTypeError,
-            (value) => value == null || ACCEPTED_FILE_TYPES.includes(value)
-          )
+          .test("fileType", fileTypeError, (value) => {
+            const normalizedValue = value?.toUpperCase();
+            return (
+              normalizedValue == null ||
+              !!ACCEPTED_FILE_TYPES.find((fileType) =>
+                normalizedValue.includes(fileType)
+              )
+            );
+          })
           .test("fileSize", maxFileSizeError, async (value) => {
             return await validateFileSizeFromFilePath(
               value ?? undefined,

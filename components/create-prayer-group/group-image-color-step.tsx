@@ -27,8 +27,12 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
   const theme = useTheme();
   const { values, setFieldValue, setFieldTouched } =
     useFormikContext<CreatePrayerGroupForm>();
-  const { isColorPickerModalOpen, setIsColorPickerOpen, selectImage } =
-    useGroupImageColorStep();
+  const {
+    isColorPickerModalOpen,
+    setIsColorPickerOpen,
+    selectImage,
+    onRemoveSelectedImage,
+  } = useGroupImageColorStep();
 
   return (
     <>
@@ -111,7 +115,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
               <Text numberOfLines={1} ellipsizeMode="tail">
                 {values.image.fileName}
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={onRemoveSelectedImage}>
                 <EvilIcons name="trash" size={28} color={theme.colors.error} />
               </TouchableOpacity>
             </View>

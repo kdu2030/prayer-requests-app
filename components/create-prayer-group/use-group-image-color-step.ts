@@ -9,7 +9,7 @@ import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 export const useGroupImageColorStep = () => {
   const [isColorPickerModalOpen, setIsColorPickerOpen] =
     React.useState<boolean>(false);
-  const { setFieldValue } = useFormikContext<CreatePrayerGroupForm>();
+  const { values, setFieldValue } = useFormikContext<CreatePrayerGroupForm>();
 
   const selectImage = async () => {
     try {
@@ -22,7 +22,7 @@ export const useGroupImageColorStep = () => {
       });
       const imageResult = result.assets ? result.assets[0] : undefined;
       if (!imageResult) {
-        throw new Error("Unable to select image");
+        return;
       }
 
       setFieldValue("image", mapMediaFileFromImagePickerAsset(imageResult));
@@ -31,13 +31,21 @@ export const useGroupImageColorStep = () => {
       const imageInfo = await getInfoAsync(imageResult.uri);
       console.log(imageInfo);
     } catch (error) {
-      console.log(error);
+      return;
     }
+  };
+
+  const onRemoveSelectedImage = () => {
+    if (!values.image) {
+      return;
+    }
+    setFieldValue("image", undefined);
   };
 
   return {
     isColorPickerModalOpen,
     setIsColorPickerOpen,
     selectImage,
+    onRemoveSelectedImage,
   };
 };

@@ -1,6 +1,6 @@
-import { FileInfo, getInfoAsync } from "expo-file-system";
 import * as Yup from "yup";
 
+import { validateFileSizeFromFilePath } from "../../helpers/file-helpers";
 import { formatNumber } from "../../helpers/formatting-helpers";
 import { SupportedLanguages, TranslationKey } from "../../types/languages";
 import {
@@ -26,15 +26,10 @@ export const groupImageColorValidationSchema = (
       filePath: Yup.string()
         .nullable()
         .test("fileSize", maxFileSizeError, async (value) => {
-          if (!value) {
-            return true;
-          }
-          const fileInfo: FileInfo = await getInfoAsync(value);
-
-          if (!fileInfo.exists) {
-            return true;
-          }
-          return fileInfo.size < MAX_GROUP_IMAGE_SIZE;
+          return await validateFileSizeFromFilePath(
+            value ?? undefined,
+            MAX_GROUP_IMAGE_SIZE
+          );
         }),
     }),
   }) as Yup.ObjectSchema<CreatePrayerGroupForm>;

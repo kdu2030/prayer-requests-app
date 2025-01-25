@@ -1,5 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
-import { useFormikContext } from "formik";
+import { setNestedObjectValues, useFormikContext } from "formik";
+import { isEmpty } from "lodash";
 import * as React from "react";
 
 import { mapMediaFileFromImagePickerAsset } from "../../mappers/map-media-file";
@@ -8,8 +9,15 @@ import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 export const useGroupImageColorStep = () => {
   const [isColorPickerModalOpen, setIsColorPickerOpen] =
     React.useState<boolean>(false);
-  const { values, setFieldValue, setFieldTouched } =
-    useFormikContext<CreatePrayerGroupForm>();
+  const {
+    values,
+    setFieldValue,
+    setFieldTouched,
+    validateForm,
+    touched,
+    setTouched,
+    setErrors,
+  } = useFormikContext<CreatePrayerGroupForm>();
 
   const selectImage = async () => {
     try {
@@ -39,10 +47,21 @@ export const useGroupImageColorStep = () => {
     setFieldValue("image", undefined);
   };
 
+  const savePrayerGroup = async () => {
+    const errors = await validateForm();
+
+    if (!isEmpty(errors)) {
+      setErrors(errors);
+      setTouched(setNestedObjectValues({ ...errors, ...touched }, true));
+      return;
+    }
+  };
+
   return {
     isColorPickerModalOpen,
     setIsColorPickerOpen,
     selectImage,
     onRemoveSelectedImage,
+    savePrayerGroup,
   };
 };

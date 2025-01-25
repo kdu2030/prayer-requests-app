@@ -33,6 +33,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
     setIsColorPickerOpen,
     selectImage,
     onRemoveSelectedImage,
+    savePrayerGroup,
   } = useGroupImageColorStep();
 
   const imageError = get(errors, "image.filePath");
@@ -43,6 +44,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
         stepNumber={3}
         totalNumberOfSteps={NUM_CREATE_PRAYER_GROUP_STEPS}
         onBack={() => setWizardStep(CreatePrayerGroupWizardStep.RulesStep)}
+        onSave={savePrayerGroup}
         showNextButton={false}
         showSaveButton
       />

@@ -3,12 +3,17 @@ import { setNestedObjectValues, useFormikContext } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
 
+import { usePostFile } from "../../api/post-file";
 import { mapMediaFileFromImagePickerAsset } from "../../mappers/map-media-file";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 
 export const useGroupImageColorStep = () => {
   const [isColorPickerModalOpen, setIsColorPickerOpen] =
     React.useState<boolean>(false);
+  const [snackbarError, setSnackbarError] = React.useState<
+    string | undefined
+  >();
+
   const {
     values,
     setFieldValue,
@@ -18,6 +23,8 @@ export const useGroupImageColorStep = () => {
     setTouched,
     setErrors,
   } = useFormikContext<CreatePrayerGroupForm>();
+
+  const postFile = usePostFile();
 
   const selectImage = async () => {
     try {
@@ -63,5 +70,7 @@ export const useGroupImageColorStep = () => {
     selectImage,
     onRemoveSelectedImage,
     savePrayerGroup,
+    snackbarError,
+    setSnackbarError,
   };
 };

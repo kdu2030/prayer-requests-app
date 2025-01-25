@@ -5,6 +5,7 @@ import { View } from "react-native";
 import { Button, HelperText, Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { ErrorSnackbar } from "../layouts/error-snackbar";
 import { ProfilePicture } from "../layouts/profile-picture";
 import { SelectedImageCard } from "../layouts/selected-image-card";
 import { ColorPickerModal } from "./color-picker-modal";
@@ -34,6 +35,8 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
     selectImage,
     onRemoveSelectedImage,
     savePrayerGroup,
+    snackbarError,
+    setSnackbarError,
   } = useGroupImageColorStep();
 
   const imageError = get(errors, "image.filePath");
@@ -136,6 +139,11 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
           setIsColorPickerOpen(false);
         }}
         initialColor={values.color}
+      />
+
+      <ErrorSnackbar
+        snackbarError={snackbarError}
+        setSnackbarError={setSnackbarError}
       />
     </>
   );

@@ -17,11 +17,10 @@ const postFile = async (
     const formData = new FormData();
     formData.append("file", fileBuffer);
 
-    const response = await fetch.post<RawMediaFile>(url, {
+    const response = await fetch.post<RawMediaFile>(url, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
-      data: formData,
     });
 
     return { isError: false, value: response.data };

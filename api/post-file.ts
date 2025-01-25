@@ -13,9 +13,13 @@ const postFile = async (
 ): Promise<ManagedErrorResponse<RawMediaFile>> => {
   try {
     const url = `${baseUrl}/api/v1/file`;
+    const formData = new FormData();
+    formData.append("file", file as any);
 
-    const response = await fetch.postForm<RawMediaFile>(url, {
-      file,
+    const response = await fetch.post<RawMediaFile>(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
 
     return { isError: false, value: response.data };

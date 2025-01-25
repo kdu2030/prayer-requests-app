@@ -1,3 +1,4 @@
+import { EncodingType, readAsStringAsync } from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import { setNestedObjectValues, useFormikContext } from "formik";
 import { isEmpty } from "lodash";
@@ -52,6 +53,16 @@ export const useGroupImageColorStep = () => {
       return;
     }
     setFieldValue("image", undefined);
+  };
+
+  const uploadPrayerGroupImage = async () => {
+    if (!values.image?.filePath) {
+      return;
+    }
+
+    const imageContent = readAsStringAsync(values.image.filePath, {
+      encoding: EncodingType.Base64,
+    });
   };
 
   const savePrayerGroup = async () => {

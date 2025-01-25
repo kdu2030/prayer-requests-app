@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { Blob } from "buffer";
 import * as React from "react";
 
 import { handleApiErrors } from "../helpers/api-helpers";
@@ -12,15 +13,12 @@ const postFile = async (
   fileBuffer: Blob
 ): Promise<ManagedErrorResponse<RawMediaFile>> => {
   try {
+    // TODO: Fix this, Expo does not support Blobs
+    // See this: https://stackoverflow.com/questions/66372873/react-native-expo-post-blob
     const url = `${baseUrl}/api/v1/file`;
 
-    const formData = new FormData();
-    formData.append("file", fileBuffer);
-
-    const response = await fetch.post<RawMediaFile>(url, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+    const response = await fetch.postForm<RawMediaFile>(url, {
+      file: fileBuffer,
     });
 
     return { isError: false, value: response.data };

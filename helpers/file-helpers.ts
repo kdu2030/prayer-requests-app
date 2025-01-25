@@ -51,5 +51,7 @@ export const getBlobFromFilePath = async (
     type: contentType,
   });
 
+  console.log(fileBlob);
+
   return fileBlob;
 };

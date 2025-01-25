@@ -1,14 +1,10 @@
-import { EncodingType, readAsStringAsync } from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import { setNestedObjectValues, useFormikContext } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
 
 import { usePostFile } from "../../api/post-file";
-import {
-  getBlobFromFilePath,
-  getContentTypeFromFilePath,
-} from "../../helpers/file-helpers";
+import { mapFileToUpload } from "../../helpers/file-helpers";
 import { mapMediaFileFromImagePickerAsset } from "../../mappers/map-media-file";
 import {
   BaseManagedErrorResponse,
@@ -69,16 +65,15 @@ export const useGroupImageColorStep = () => {
   const uploadPrayerGroupImage = async (): Promise<
     ManagedErrorResponse<RawMediaFile> | BaseManagedErrorResponse
   > => {
-    const filePath = values.image?.filePath;
+    const image = values.image;
 
-    if (!filePath) {
+    if (!image) {
       return { isError: false };
     }
 
-    const imageContentType = getContentTypeFromFilePath(filePath);
-    const imageContent = await getBlobFromFilePath(filePath, imageContentType);
+    const fileToUpload = mapFileToUpload(image);
 
-    const response = await postFile(imageContent);
+    const response = await postFile(fileToUpload);
     return response;
   };
 

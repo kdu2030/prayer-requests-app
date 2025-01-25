@@ -5,9 +5,10 @@ import {
   getInfoAsync,
   readAsStringAsync,
 } from "expo-file-system";
-import path from "path-browserify";
+import path, { PathObject } from "path-browserify";
 
 import { ContentType } from "../constants/file-constants";
+import { FileToUpload, MediaFile } from "../types/media-file-types";
 
 export const validateFileSizeFromFilePath = async (
   value: string | undefined,
@@ -24,8 +25,7 @@ export const validateFileSizeFromFilePath = async (
   return fileInfo.size < maxFileSizeBytes;
 };
 
-export const getContentTypeFromFilePath = (filePath: string): ContentType => {
-  const fileInfo = path.parse(filePath);
+export const getContentType = (fileInfo: PathObject): ContentType => {
   const normalizedExtension = fileInfo.ext.toLocaleUpperCase().replace(".", "");
 
   switch (normalizedExtension) {
@@ -39,19 +39,12 @@ export const getContentTypeFromFilePath = (filePath: string): ContentType => {
   }
 };
 
-export const getBlobFromFilePath = async (
-  filePath: string,
-  contentType: ContentType
-): Promise<Blob> => {
-  const fileContent = await readAsStringAsync(filePath, {
-    encoding: EncodingType.Base64,
-  });
-
-  const fileBlob = new Blob([Buffer.from(fileContent, "base64")], {
+export const mapFileToUpload = (image: MediaFile): FileToUpload => {
+  const fileInfo = path.parse(image.fileName ?? "");
+  const contentType = getContentType(fileInfo);
+  return {
+    uri: image.filePath ?? "",
     type: contentType,
-  });
-
-  console.log(fileBlob);
-
-  return fileBlob;
+    name: image.fileName ?? "",
+  };
 };

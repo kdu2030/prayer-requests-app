@@ -1,3 +1,5 @@
+import { ContentType } from "../constants/file-constants";
+
 export type RawMediaFile = {
   id?: number;
   fileName?: string;
@@ -18,3 +20,9 @@ export enum FileType {
   Unknown = 0,
   Image = 1,
 }
+
+export type FileToUpload = {
+  uri: string;
+  type: ContentType;
+  name: string;
+};

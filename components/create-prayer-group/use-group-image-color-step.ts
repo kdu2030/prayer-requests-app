@@ -5,7 +5,16 @@ import { isEmpty } from "lodash";
 import * as React from "react";
 
 import { usePostFile } from "../../api/post-file";
+import {
+  getBlobFromFilePath,
+  getContentTypeFromFilePath,
+} from "../../helpers/file-helpers";
 import { mapMediaFileFromImagePickerAsset } from "../../mappers/map-media-file";
+import {
+  BaseManagedErrorResponse,
+  ManagedErrorResponse,
+} from "../../types/error-handling";
+import { RawMediaFile } from "../../types/media-file-types";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 
 export const useGroupImageColorStep = () => {
@@ -14,6 +23,8 @@ export const useGroupImageColorStep = () => {
   const [snackbarError, setSnackbarError] = React.useState<
     string | undefined
   >();
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const {
     values,
@@ -55,14 +66,20 @@ export const useGroupImageColorStep = () => {
     setFieldValue("image", undefined);
   };
 
-  const uploadPrayerGroupImage = async () => {
-    if (!values.image?.filePath) {
-      return;
+  const uploadPrayerGroupImage = async (): Promise<
+    ManagedErrorResponse<RawMediaFile> | BaseManagedErrorResponse
+  > => {
+    const filePath = values.image?.filePath;
+
+    if (!filePath) {
+      return { isError: false };
     }
 
-    const imageContent = readAsStringAsync(values.image.filePath, {
-      encoding: EncodingType.Base64,
-    });
+    const imageContentType = getContentTypeFromFilePath(filePath);
+    const imageContent = await getBlobFromFilePath(filePath, imageContentType);
+
+    const response = await postFile(imageContent);
+    return response;
   };
 
   const savePrayerGroup = async () => {
@@ -73,6 +90,12 @@ export const useGroupImageColorStep = () => {
       setTouched(setNestedObjectValues({ ...errors, ...touched }, true));
       return;
     }
+
+    setIsLoading(true);
+    const response = await uploadPrayerGroupImage();
+    setIsLoading(false);
+
+    console.log(response);
   };
 
   return {
@@ -83,5 +106,7 @@ export const useGroupImageColorStep = () => {
     savePrayerGroup,
     snackbarError,
     setSnackbarError,
+    isLoading,
+    setIsLoading,
   };
 };

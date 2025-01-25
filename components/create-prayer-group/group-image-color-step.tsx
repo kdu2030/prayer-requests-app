@@ -37,6 +37,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
     savePrayerGroup,
     snackbarError,
     setSnackbarError,
+    isLoading,
   } = useGroupImageColorStep();
 
   const imageError = get(errors, "image.filePath");
@@ -50,6 +51,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
         onSave={savePrayerGroup}
         showNextButton={false}
         showSaveButton
+        isLoading={isLoading}
       />
 
       <View className="mt-4">

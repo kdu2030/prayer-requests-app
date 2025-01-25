@@ -1,3 +1,4 @@
+import { Buffer } from "buffer";
 import {
   EncodingType,
   FileInfo,
@@ -25,7 +26,7 @@ export const validateFileSizeFromFilePath = async (
 
 export const getContentTypeFromFilePath = (filePath: string): ContentType => {
   const fileInfo = path.parse(filePath);
-  const normalizedExtension = fileInfo.ext.toLocaleUpperCase();
+  const normalizedExtension = fileInfo.ext.toLocaleUpperCase().replace(".", "");
 
   switch (normalizedExtension) {
     case "JPG":

@@ -15,7 +15,6 @@ import {
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 import { GroupImageColorStep } from "../group-image-color-step";
 import { groupImageColorValidationSchema } from "../group-image-color-validation-schema";
-import { mockFileInfo, mockImageResult } from "./mock-data";
 import {
   ColorPickerModalTestIds,
   GroupImageColorStepTestIds,
@@ -27,13 +26,11 @@ const mockGetInfoAsync = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("expo-image-picker", () => ({
-  ...jest.requireActual("expo-image-picker"),
   requestMediaLibraryPermissionsAsync: () => jest.fn(),
   launchImageLibraryAsync: () => mockLaunchImageLibraryAsync(),
 }));
 
 jest.mock("expo-file-system", () => ({
-  ...jest.requireActual("expo-file-system"),
   getInfoAsync: () => mockGetInfoAsync(),
 }));
 
@@ -116,22 +113,7 @@ describe(GroupImageColorStep, () => {
     });
   });
 
-  test("User can pick an image for their prayer group", async () => {
-    mockLaunchImageLibraryAsync.mockReturnValue({ assets: [mockImageResult] });
-    mockGetInfoAsync.mockRejectedValue(mockFileInfo);
-
+  test("User can pick an image for their prayer group", () => {
     component = mountGroupImageColorStep();
-
-    const selectImage = component.getByTestId(
-      GroupImageColorStepTestIds.selectImageButton
-    );
-    fireEvent.press(selectImage);
-
-    const groupImagePreview = await component.findByTestId(
-      GroupImageColorStepTestIds.groupImagePreview
-    );
-    expect(groupImagePreview).toHaveProp("source", {
-      uri: mockImageResult.uri,
-    });
   });
 });

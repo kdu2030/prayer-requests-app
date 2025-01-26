@@ -2,7 +2,7 @@ export const englishTranslations = {
   "common.appName": "Prayer Requests App",
   "common.actions.select": "Select",
   "common.actions.save": "Save",
-  "common.preview": "Preview",
+  "common.actions.preview": "Preview",
   "common.actions.cancel": "Cancel",
 
   "loading.userData.text": "Loading user data",

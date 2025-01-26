@@ -64,7 +64,7 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
         </Text>
 
         <Text variant="bodyLarge" className="font-bold mb-2">
-          {translate("common.preview")}
+          {translate("common.actions.preview")}
         </Text>
 
         <View className="rounded-lg border border-gray-400 flex flex-grow-0">

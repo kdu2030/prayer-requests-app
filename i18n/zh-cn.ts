@@ -6,9 +6,10 @@ type Translations = {
 
 export const chineseTranslations: Translations = {
   "common.appName": "祷告事项软件",
+
   "common.actions.select": "选择",
   "common.actions.save": "保存",
-  "common.preview": "预览",
+  "common.actions.preview": "预览",
   "common.actions.cancel": "取消",
 
   "loading.userData.text": "如载用户数据",

@@ -1,14 +1,7 @@
-import { Buffer } from "buffer";
-import {
-  EncodingType,
-  FileInfo,
-  getInfoAsync,
-  readAsStringAsync,
-} from "expo-file-system";
-import path, { PathObject } from "path-browserify";
+import { FileInfo, getInfoAsync } from "expo-file-system";
+import { PathObject } from "path-browserify";
 
 import { ContentType } from "../constants/file-constants";
-import { FileToUpload, MediaFile } from "../types/media-file-types";
 
 export const validateFileSizeFromFilePath = async (
   value: string | undefined,
@@ -37,14 +30,4 @@ export const getContentType = (fileInfo: PathObject): ContentType => {
     default:
       return ContentType.ApplicationText;
   }
-};
-
-export const mapFileToUpload = (image: MediaFile): FileToUpload => {
-  const fileInfo = path.parse(image.fileName ?? "");
-  const contentType = getContentType(fileInfo);
-  return {
-    uri: image.filePath ?? "",
-    type: contentType,
-    name: image.fileName ?? "",
-  };
 };

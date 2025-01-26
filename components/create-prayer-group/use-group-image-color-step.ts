@@ -4,16 +4,17 @@ import { isEmpty } from "lodash";
 import * as React from "react";
 
 import { usePostFile } from "../../api/post-file";
-import { mapFileToUpload } from "../../helpers/file-helpers";
+import { usePostPrayerGroup } from "../../api/post-prayer-group";
+import { useI18N } from "../../hooks/use-i18n";
+import { mapFileToUpload } from "../../mappers/map-media-file";
 import { mapMediaFileFromImagePickerAsset } from "../../mappers/map-media-file";
-import {
-  BaseManagedErrorResponse,
-  ManagedErrorResponse,
-} from "../../types/error-handling";
+import { ManagedErrorResponse } from "../../types/error-handling";
 import { RawMediaFile } from "../../types/media-file-types";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 
 export const useGroupImageColorStep = () => {
+  const { translate } = useI18N();
+
   const [isColorPickerModalOpen, setIsColorPickerOpen] =
     React.useState<boolean>(false);
   const [snackbarError, setSnackbarError] = React.useState<
@@ -33,6 +34,7 @@ export const useGroupImageColorStep = () => {
   } = useFormikContext<CreatePrayerGroupForm>();
 
   const postFile = usePostFile();
+  const postPrayerGroup = usePostPrayerGroup();
 
   const selectImage = async () => {
     try {
@@ -63,12 +65,12 @@ export const useGroupImageColorStep = () => {
   };
 
   const uploadPrayerGroupImage = async (): Promise<
-    ManagedErrorResponse<RawMediaFile> | BaseManagedErrorResponse
+    ManagedErrorResponse<RawMediaFile | undefined>
   > => {
     const image = values.image;
 
     if (!image) {
-      return { isError: false };
+      return { isError: false, value: undefined };
     }
 
     const fileToUpload = mapFileToUpload(image);
@@ -87,10 +89,19 @@ export const useGroupImageColorStep = () => {
     }
 
     setIsLoading(true);
-    const response = await uploadPrayerGroupImage();
+    const imageUploadResponse = await uploadPrayerGroupImage();
     setIsLoading(false);
 
-    console.log(response);
+    if (imageUploadResponse.isError) {
+      setSnackbarError(
+        translate("toaster.failed.saveFailure", {
+          item: translate("createPrayerGroup.groupImageColorStep.image"),
+        })
+      );
+      return;
+    }
+
+    const imageId = imageUploadResponse.value?.id;
   };
 
   return {

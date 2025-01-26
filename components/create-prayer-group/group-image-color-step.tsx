@@ -81,7 +81,12 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
             style={{ backgroundColor: theme.colors.background }}
           >
             <View className="flex flex-row items-center">
-              <ProfilePicture url={values.image?.url} width={48} height={48} />
+              <ProfilePicture
+                url={values.image?.url}
+                width={48}
+                height={48}
+                testID={GroupImageColorStepTestIds.groupImagePreview}
+              />
               <Text
                 variant="titleMedium"
                 className="ml-4 font-bold w-4/5"

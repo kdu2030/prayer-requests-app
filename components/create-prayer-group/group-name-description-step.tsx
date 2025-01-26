@@ -1,10 +1,11 @@
 import * as React from "react";
 import { View } from "react-native";
-import { Snackbar, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 
 import { TEXT_INPUT_MAX_LENGTH } from "../../constants/input-constants";
 import { useI18N } from "../../hooks/use-i18n";
 import { TextInput } from "../inputs/text-input";
+import { ErrorSnackbar } from "../layouts/error-snackbar";
 import {
   CreatePrayerGroupWizardStep,
   NUM_CREATE_PRAYER_GROUP_STEPS,
@@ -23,7 +24,7 @@ export const GroupNameDescriptionStep: React.FC<Props> = ({
   setWizardStep,
 }) => {
   const { translate } = useI18N();
-  const { isLoading, isErrorVisible, setIsErrorVisible, onNext } =
+  const { isLoading, snackbarError, setSnackbarError, onNext } =
     usePrayerGroupDescriptionStep(setWizardStep);
 
   return (
@@ -61,19 +62,10 @@ export const GroupNameDescriptionStep: React.FC<Props> = ({
           testID={GroupNameDescriptionStepTestIds.descriptionInput}
         />
 
-        <Snackbar
-          className="bg-red-700"
-          duration={3000}
-          visible={isErrorVisible}
-          onDismiss={() => {
-            setIsErrorVisible(false);
-          }}
-          onIconPress={() => setIsErrorVisible(false)}
-        >
-          {translate(
-            "createPrayerGroup.groupNameDescription.validateGroupFailed"
-          )}
-        </Snackbar>
+        <ErrorSnackbar
+          snackbarError={snackbarError}
+          setSnackbarError={setSnackbarError}
+        />
       </View>
     </>
   );

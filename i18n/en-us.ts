@@ -2,7 +2,7 @@ export const englishTranslations = {
   "common.appName": "Prayer Requests App",
   "common.actions.select": "Select",
   "common.actions.save": "Save",
-  "common.preview": "Preview",
+  "common.actions.preview": "Preview",
   "common.actions.cancel": "Cancel",
 
   "loading.userData.text": "Loading user data",
@@ -41,6 +41,8 @@ export const englishTranslations = {
   "form.validation.emailNotFound.error":
     "We couldn't find a user with this email.",
   "form.validation.incorrectPassword.error": "Your password is incorrect",
+  "form.validation.fileSize": "File size must be less than {{size}}.",
+  "form.validation.imageFileType": "Image file type must be JPG, JPEG, or PNG.",
 
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",
@@ -51,6 +53,8 @@ export const englishTranslations = {
 
   "wizard.stepCount": "{{step}} of {{total}}",
   "wizard.next": "Next",
+
+  "prayerGroup.label": "Prayer Group",
 
   "createPrayerGroup.groupNameDescription.title":
     "Tell Us About Your Prayer Group",

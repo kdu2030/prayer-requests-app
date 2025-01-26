@@ -6,9 +6,10 @@ type Translations = {
 
 export const chineseTranslations: Translations = {
   "common.appName": "祷告事项软件",
+
   "common.actions.select": "选择",
   "common.actions.save": "保存",
-  "common.preview": "预览",
+  "common.actions.preview": "预览",
   "common.actions.cancel": "取消",
 
   "loading.userData.text": "如载用户数据",
@@ -44,6 +45,8 @@ export const chineseTranslations: Translations = {
   "form.validation.unique.error": "此{{field}}已被使用。",
   "form.validation.emailNotFound.error": "我们找不到使用该电子邮件地址的用户。",
   "form.validation.incorrectPassword.error": "你的密码不正确",
+  "form.validation.fileSize": "文件大小必须小于{{size}}。",
+  "form.validation.imageFileType": "图片格式必须是 JPG、JPEG 或 PNG。",
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "如载{{item}}失败",
@@ -54,6 +57,8 @@ export const chineseTranslations: Translations = {
 
   "wizard.stepCount": "第{{step}}步、共{{total}}步",
   "wizard.next": "下一步",
+
+  "prayerGroup.label": "祷告小组",
 
   "createPrayerGroup.groupNameDescription.title": "介绍你的祷告小组",
   "createPrayerGroup.groupNameDescription.groupName": "小组名字",

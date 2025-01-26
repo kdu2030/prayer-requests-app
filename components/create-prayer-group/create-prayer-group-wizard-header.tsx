@@ -14,16 +14,22 @@ type Props = {
   isLoading?: boolean;
   onNext?: () => void;
   onBack?: () => void;
+  onSave?: () => void;
   showBackButton?: boolean;
+  showNextButton?: boolean;
+  showSaveButton?: boolean;
 };
 
 export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
   isLoading,
   onNext,
   onBack,
+  onSave,
   stepNumber,
   totalNumberOfSteps,
   showBackButton = true,
+  showNextButton = true,
+  showSaveButton = false,
 }) => {
   const theme = useTheme();
   const { translate, i18n } = useI18N();
@@ -60,14 +66,28 @@ export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
           </Text>
         </View>
       </View>
-      <Button
-        mode="outlined"
-        onPress={onNext}
-        loading={isLoading}
-        testID={CreatePrayerGroupWizardHeaderTestIds.nextButton}
-      >
-        {translate("wizard.next")}
-      </Button>
+
+      {showNextButton && (
+        <Button
+          mode="outlined"
+          onPress={onNext}
+          loading={isLoading}
+          testID={CreatePrayerGroupWizardHeaderTestIds.nextButton}
+        >
+          {translate("wizard.next")}
+        </Button>
+      )}
+
+      {showSaveButton && (
+        <Button
+          mode="contained"
+          onPress={onSave}
+          loading={isLoading}
+          testID={CreatePrayerGroupWizardHeaderTestIds.saveButton}
+        >
+          {translate("common.actions.save")}
+        </Button>
+      )}
     </View>
   );
 };

@@ -5,7 +5,8 @@ export enum GroupNameDescriptionStepTestIds {
 
 export enum CreatePrayerGroupWizardHeaderTestIds {
   nextButton = "create-prayer-group-wizard-header-next-button",
-  backButton = "create-prayer-group-wizard-header-button",
+  backButton = "create-prayer-group-wizard-header-back-button",
+  saveButton = "create-prayer-group-wizard-header-save-button",
 }
 
 export enum GroupImageColorStepTestIds {
@@ -13,6 +14,7 @@ export enum GroupImageColorStepTestIds {
   descriptionPreview = "group-image-color-step-description-preview",
   selectColorButton = "group-image-color-step-select-color-button",
   backgroundColorPreview = "group-image-color-step-background-color-preview",
+  selectImageButton = "group-image-color-step-select-image-button",
 }
 
 export enum ColorPickerModalTestIds {

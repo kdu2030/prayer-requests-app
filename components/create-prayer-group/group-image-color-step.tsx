@@ -1,10 +1,13 @@
 import { useFormikContext } from "formik";
+import { get } from "lodash";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Button, HelperText, Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { ErrorSnackbar } from "../layouts/error-snackbar";
 import { ProfilePicture } from "../layouts/profile-picture";
+import { SelectedImageCard } from "../layouts/selected-image-card";
 import { ColorPickerModal } from "./color-picker-modal";
 import {
   CreatePrayerGroupWizardStep,
@@ -24,10 +27,20 @@ type Props = {
 export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
   const theme = useTheme();
-  const { values, setFieldValue, setFieldTouched } =
+  const { values, setFieldValue, setFieldTouched, errors } =
     useFormikContext<CreatePrayerGroupForm>();
-  const { isColorPickerModalOpen, setIsColorPickerOpen } =
-    useGroupImageColorStep();
+  const {
+    isColorPickerModalOpen,
+    setIsColorPickerOpen,
+    selectImage,
+    onRemoveSelectedImage,
+    savePrayerGroup,
+    snackbarError,
+    setSnackbarError,
+    isLoading,
+  } = useGroupImageColorStep();
+
+  const imageError = get(errors, "image.filePath");
 
   return (
     <>
@@ -35,6 +48,10 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
         stepNumber={3}
         totalNumberOfSteps={NUM_CREATE_PRAYER_GROUP_STEPS}
         onBack={() => setWizardStep(CreatePrayerGroupWizardStep.RulesStep)}
+        onSave={savePrayerGroup}
+        showNextButton={false}
+        showSaveButton
+        isLoading={isLoading}
       />
 
       <View className="mt-4">
@@ -47,12 +64,15 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
         </Text>
 
         <Text variant="bodyLarge" className="font-bold mb-2">
-          {translate("common.preview")}
+          {translate("common.actions.preview")}
         </Text>
 
-        <View className="rounded-lg border border-gray-200 flex flex-grow-0">
+        <View
+          className="rounded-lg border  flex flex-grow-0 overflow-hidden"
+          style={{ borderColor: theme.colors.outline }}
+        >
           <View
-            className="h-16 rounded-t-lg"
+            className="h-16"
             style={{ backgroundColor: values.color ?? theme.colors.primary }}
             testID={GroupImageColorStepTestIds.backgroundColorPreview}
           />
@@ -99,10 +119,25 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
           <Text variant="bodyLarge" className="w-1/2">
             {translate("createPrayerGroup.groupImageColorStep.image")}
           </Text>
-          <Button mode="outlined" className="w-1/2" onPress={() => {}}>
+          <Button
+            mode="outlined"
+            className="w-1/2"
+            onPress={selectImage}
+            testID={GroupImageColorStepTestIds.selectImageButton}
+          >
             {translate("createPrayerGroup.groupImageColorStep.selectImage")}
           </Button>
         </View>
+
+        {values.image && (
+          <>
+            <SelectedImageCard
+              onRemoveImage={onRemoveSelectedImage}
+              fileName={values.image.fileName ?? ""}
+            />
+            {imageError && <HelperText type="error">{imageError}</HelperText>}
+          </>
+        )}
       </View>
 
       <ColorPickerModal
@@ -114,6 +149,11 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
           setIsColorPickerOpen(false);
         }}
         initialColor={values.color}
+      />
+
+      <ErrorSnackbar
+        snackbarError={snackbarError}
+        setSnackbarError={setSnackbarError}
       />
     </>
   );

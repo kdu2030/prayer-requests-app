@@ -16,7 +16,9 @@ export const usePrayerGroupDescriptionStep = (
   >
 ) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
+  const [snackbarError, setSnackbarError] = React.useState<
+    string | undefined
+  >();
 
   const { translate } = useI18N();
 
@@ -47,7 +49,9 @@ export const usePrayerGroupDescriptionStep = (
     setIsLoading(false);
 
     if (response.isError) {
-      setIsErrorVisible(true);
+      setSnackbarError(
+        translate("createPrayerGroup.groupNameDescription.validateGroupFailed")
+      );
       return false;
     }
 
@@ -83,8 +87,8 @@ export const usePrayerGroupDescriptionStep = (
 
   return {
     isLoading,
-    isErrorVisible,
-    setIsErrorVisible,
     onNext,
+    snackbarError,
+    setSnackbarError,
   };
 };

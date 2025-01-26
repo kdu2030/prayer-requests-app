@@ -33,14 +33,13 @@ export const ColorPickerModal: React.FC<Props> = ({
       <>
         <View className="flex flex-row flex-wrap self-center">
           {AVAILABLE_PRAYER_GROUP_COLORS.map((colorOption, i) => (
-            <View className="mr-4 mb-4">
+            <View className="mr-4 mb-4" key={colorOption}>
               <ColorButton
                 color={colorOption}
                 isChecked={colorOption === color}
                 onPress={() => {
                   setColor(colorOption);
                 }}
-                key={colorOption}
                 testID={`${ColorPickerModalTestIds.colorButton}[${i}]`}
               />
             </View>

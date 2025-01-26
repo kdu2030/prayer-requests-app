@@ -20,7 +20,7 @@ const postPrayerGroup = async (
   createPrayerGroupRequest: PostCreatePrayerGroupRequest
 ): Promise<ManagedErrorResponse<RawPrayerGroupDetails>> => {
   try {
-    const url = `${baseUrl}/api/prayergroup`;
+    const url = `${baseUrl}/api/v1/prayergroup`;
 
     const response = await fetch.post<RawPrayerGroupDetails>(
       url,

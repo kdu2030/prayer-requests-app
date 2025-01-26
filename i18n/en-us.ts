@@ -54,6 +54,8 @@ export const englishTranslations = {
   "wizard.stepCount": "{{step}} of {{total}}",
   "wizard.next": "Next",
 
+  "prayerGroup.label": "Prayer Group",
+
   "createPrayerGroup.groupNameDescription.title":
     "Tell Us About Your Prayer Group",
   "createPrayerGroup.groupNameDescription.groupName": "Group Name",

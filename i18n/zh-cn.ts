@@ -58,6 +58,8 @@ export const chineseTranslations: Translations = {
   "wizard.stepCount": "第{{step}}步、共{{total}}步",
   "wizard.next": "下一步",
 
+  "prayerGroup.label": "祷告小组",
+
   "createPrayerGroup.groupNameDescription.title": "介绍你的祷告小组",
   "createPrayerGroup.groupNameDescription.groupName": "小组名字",
   "createPrayerGroup.groupNameDescription.description": "描述",

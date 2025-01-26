@@ -3,8 +3,9 @@ import { StatusBar } from "expo-status-bar";
 import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Button, Snackbar, Text, useTheme } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { postSignin } from "../../api/post-signin";
 import { TextInput } from "../../components/inputs/text-input";

@@ -7,32 +7,18 @@ import { Formik } from "formik";
 import * as React from "react";
 
 import { mountComponent } from "../../../tests/utils/test-utils";
-import { SupportedLanguages } from "../../../types/languages";
 import {
   AVAILABLE_PRAYER_GROUP_COLORS,
   DEFAULT_COLOR,
 } from "../create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 import { GroupImageColorStep } from "../group-image-color-step";
-import { groupImageColorValidationSchema } from "../group-image-color-validation-schema";
 import {
   ColorPickerModalTestIds,
   GroupImageColorStepTestIds,
 } from "./test-ids";
 
-const mockTranslate = jest.fn();
-const mockLaunchImageLibraryAsync = jest.fn();
-const mockGetInfoAsync = jest.fn();
-
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
-jest.mock("expo-image-picker", () => ({
-  requestMediaLibraryPermissionsAsync: () => jest.fn(),
-  launchImageLibraryAsync: () => mockLaunchImageLibraryAsync(),
-}));
-
-jest.mock("expo-file-system", () => ({
-  getInfoAsync: () => mockGetInfoAsync(),
-}));
 
 let component: RenderResult;
 
@@ -40,14 +26,7 @@ export const mountGroupImageColorStep = (
   initialValues: CreatePrayerGroupForm = {}
 ): RenderResult => {
   return mountComponent(
-    <Formik
-      initialValues={initialValues}
-      validationSchema={groupImageColorValidationSchema(
-        mockTranslate,
-        SupportedLanguages.English
-      )}
-      onSubmit={() => {}}
-    >
+    <Formik initialValues={initialValues} onSubmit={() => {}}>
       <GroupImageColorStep setWizardStep={() => {}} />
     </Formik>
   );
@@ -111,9 +90,5 @@ describe(GroupImageColorStep, () => {
     expect(backgroundPreview).toHaveStyle({
       backgroundColor: AVAILABLE_PRAYER_GROUP_COLORS[0],
     });
-  });
-
-  test("User can pick an image for their prayer group", () => {
-    component = mountGroupImageColorStep();
   });
 });

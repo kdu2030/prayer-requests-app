@@ -15,7 +15,10 @@ export const SelectedImageCard: React.FC<Props> = ({
   const theme = useTheme();
 
   return (
-    <View className="rounded-lg border border-gray-400 p-4 mt-4">
+    <View
+      className="rounded-lg border p-4 mt-4"
+      style={{ borderColor: theme.colors.outline }}
+    >
       <View className="flex flex-row items-center justify-between">
         <Text numberOfLines={1} ellipsizeMode="tail">
           {fileName}

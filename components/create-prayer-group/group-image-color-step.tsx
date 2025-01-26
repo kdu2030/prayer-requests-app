@@ -67,9 +67,12 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
           {translate("common.actions.preview")}
         </Text>
 
-        <View className="rounded-lg border border-gray-400 flex flex-grow-0">
+        <View
+          className="rounded-lg border  flex flex-grow-0 overflow-hidden"
+          style={{ borderColor: theme.colors.outline }}
+        >
           <View
-            className="h-16 rounded-t-lg"
+            className="h-16"
             style={{ backgroundColor: values.color ?? theme.colors.primary }}
             testID={GroupImageColorStepTestIds.backgroundColorPreview}
           />
@@ -116,7 +119,12 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
           <Text variant="bodyLarge" className="w-1/2">
             {translate("createPrayerGroup.groupImageColorStep.image")}
           </Text>
-          <Button mode="outlined" className="w-1/2" onPress={selectImage}>
+          <Button
+            mode="outlined"
+            className="w-1/2"
+            onPress={selectImage}
+            testID={GroupImageColorStepTestIds.selectImageButton}
+          >
             {translate("createPrayerGroup.groupImageColorStep.selectImage")}
           </Button>
         </View>

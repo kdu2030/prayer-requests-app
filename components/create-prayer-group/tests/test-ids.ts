@@ -14,6 +14,7 @@ export enum GroupImageColorStepTestIds {
   descriptionPreview = "group-image-color-step-description-preview",
   selectColorButton = "group-image-color-step-select-color-button",
   backgroundColorPreview = "group-image-color-step-background-color-preview",
+  selectImageButton = "group-image-color-step-select-image-button",
 }
 
 export enum ColorPickerModalTestIds {

@@ -12,7 +12,7 @@ import {
 } from "../../../mappers/map-media-file";
 import { mapCreatePrayerGroupRequest } from "../../../mappers/map-prayer-group";
 import { ManagedErrorResponse } from "../../../types/error-handling";
-import { RawMediaFile } from "../../../types/media-file-types";
+import { MediaFile, RawMediaFile } from "../../../types/media-file-types";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 
 export const useGroupImageColorStep = () => {
@@ -65,11 +65,9 @@ export const useGroupImageColorStep = () => {
     setFieldValue(fieldName, undefined);
   };
 
-  const uploadPrayerGroupImage = async (): Promise<
-    ManagedErrorResponse<RawMediaFile | undefined>
-  > => {
-    const image = values.image;
-
+  const uploadPrayerGroupImage = async (
+    image: MediaFile | undefined
+  ): Promise<ManagedErrorResponse<RawMediaFile | undefined>> => {
     if (!image) {
       return { isError: false, value: undefined };
     }
@@ -90,9 +88,13 @@ export const useGroupImageColorStep = () => {
     }
 
     setIsLoading(true);
-    const imageUploadResponse = await uploadPrayerGroupImage();
 
-    if (imageUploadResponse.isError) {
+    const [imageUploadResponse, bannerImageUploadResponse] = await Promise.all([
+      uploadPrayerGroupImage(values.image),
+      uploadPrayerGroupImage(values.bannerImage),
+    ]);
+
+    if (imageUploadResponse.isError || bannerImageUploadResponse.isError) {
       setSnackbarError(
         translate("toaster.failed.saveFailure", {
           item: translate("createPrayerGroup.groupImageColorStep.image"),
@@ -103,9 +105,12 @@ export const useGroupImageColorStep = () => {
     }
 
     const imageId = imageUploadResponse.value?.id;
+    const bannerImageId = bannerImageUploadResponse.value?.id;
+
     const createPrayerGroupRequest = mapCreatePrayerGroupRequest(
       values,
-      imageId
+      imageId,
+      bannerImageId
     );
 
     const createPrayerGroupResponse = await postPrayerGroup(

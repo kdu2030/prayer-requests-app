@@ -3,7 +3,8 @@ import { CreatePrayerGroupForm } from "../components/create-prayer-group/create-
 
 export const mapCreatePrayerGroupRequest = (
   createPrayerGroupForm: CreatePrayerGroupForm,
-  imageId: number | undefined
+  imageId: number | undefined,
+  bannerImageId: number | undefined
 ): PostCreatePrayerGroupRequest => {
   return {
     groupName: createPrayerGroupForm.groupName,
@@ -11,5 +12,6 @@ export const mapCreatePrayerGroupRequest = (
     rules: createPrayerGroupForm.rules,
     color: createPrayerGroupForm.color,
     imageFileId: imageId,
+    bannerImageFileId: bannerImageId,
   };
 };

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View } from "react-native";
+import { Image } from "react-native";
 import { useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
 
@@ -9,6 +10,7 @@ type Props = {
   groupName: string;
   description: string;
   profilePictureUri?: string;
+  bannerUri?: string;
   backgroundColor?: string;
   bannerTestID?: string;
   groupNameTestID?: string;
@@ -19,6 +21,7 @@ export const GroupPreview: React.FC<Props> = ({
   groupName,
   description,
   profilePictureUri,
+  bannerUri,
   bannerTestID,
   groupNameTestID,
   descriptionTestID,
@@ -31,11 +34,9 @@ export const GroupPreview: React.FC<Props> = ({
       className="rounded-lg border  flex flex-grow-0 overflow-hidden"
       style={{ borderColor: theme.colors.outline }}
     >
-      <View
-        className="h-16"
-        style={{ backgroundColor }}
-        testID={bannerTestID}
-      />
+      <View className="h-16" style={{ backgroundColor }} testID={bannerTestID}>
+        <Image source={{ uri: bannerUri }} className="h-full" />
+      </View>
       <View
         className="p-4"
         style={{ backgroundColor: theme.colors.background }}

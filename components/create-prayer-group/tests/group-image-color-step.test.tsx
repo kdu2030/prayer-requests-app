@@ -12,7 +12,7 @@ import {
   DEFAULT_COLOR,
 } from "../create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
-import { GroupImageColorStep } from "../group-image-step/group-image-color-step";
+import { GroupImageStep } from "../group-image-step/group-image-color-step";
 import {
   ColorPickerModalTestIds,
   GroupImageColorStepTestIds,
@@ -27,12 +27,12 @@ export const mountGroupImageColorStep = (
 ): RenderResult => {
   return mountComponent(
     <Formik initialValues={initialValues} onSubmit={() => {}}>
-      <GroupImageColorStep setWizardStep={() => {}} />
+      <GroupImageStep setWizardStep={() => {}} />
     </Formik>
   );
 };
 
-describe(GroupImageColorStep, () => {
+describe(GroupImageStep, () => {
   afterEach(() => {
     component?.unmount();
   });

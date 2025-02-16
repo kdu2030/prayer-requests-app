@@ -24,7 +24,7 @@ type Props = {
   >;
 };
 
-export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
+export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
   const { values, setFieldValue, setFieldTouched, errors } =
     useFormikContext<CreatePrayerGroupForm>();

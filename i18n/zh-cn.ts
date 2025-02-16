@@ -71,9 +71,10 @@ export const chineseTranslations: Translations = {
   "createPrayerGroup.rules.label": "规则",
   "createPrayerGroup.groupImageColorStep.title": "为您的小组添加样式",
   "createPrayerGroup.groupImageColorStep.description":
-    "小组图片和颜色可以让您的小组更突出。",
+    "小组头像和横幅图片可以让您的小组更突出。",
   "createPrayerGroup.groupImageColorStep.color": "颜色",
   "createPrayerGroup.groupImageColorStep.selectColor": "选颜色",
   "createPrayerGroup.groupImageColorStep.image": "头像",
   "createPrayerGroup.groupImageColorStep.selectImage": "选图片",
+  "createPrayerGroup.groupImageColorStep.banner": "横幅图片",
 };

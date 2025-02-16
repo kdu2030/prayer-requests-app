@@ -101,6 +101,20 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
         )}
       </View>
 
+      <View className="mt-4 flex flex-row items-center">
+        <Text variant="bodyLarge" className="w-1/2">
+          {translate("createPrayerGroup.groupImageColorStep.banner")}
+        </Text>
+        <Button
+          mode="outlined"
+          className="w-1/2"
+          onPress={selectImage}
+          testID={GroupImageColorStepTestIds.selectImageButton}
+        >
+          {translate("createPrayerGroup.groupImageColorStep.selectImage")}
+        </Button>
+      </View>
+
       <ColorPickerModal
         isOpen={isColorPickerModalOpen}
         onCancel={() => setIsColorPickerOpen(false)}

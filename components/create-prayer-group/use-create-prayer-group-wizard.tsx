@@ -5,8 +5,8 @@ import { useI18N } from "../../hooks/use-i18n";
 import { SupportedLanguages } from "../../types/languages";
 import { CreatePrayerGroupWizardStep } from "./create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
-import { GroupImageStep } from "./group-image-step/group-image-color-step";
-import { groupImageColorValidationSchema } from "./group-image-step/group-image-color-validation-schema";
+import { GroupImageStep } from "./group-image-step/group-image-step";
+import { groupImageValidationSchema } from "./group-image-step/group-image-validation-schema";
 import { GroupNameDescriptionStep } from "./group-name-description-step";
 import { groupNameValidationSchema } from "./group-name-validation-schema";
 import { PrayerGroupRulesStep } from "./prayer-group-rules-step";
@@ -36,7 +36,7 @@ export const useCreatePrayerGroupWizard = () => {
       case CreatePrayerGroupWizardStep.NameDescriptionStep:
         return groupNameValidationSchema(translate);
       case CreatePrayerGroupWizardStep.ImageStep:
-        return groupImageColorValidationSchema(
+        return groupImageValidationSchema(
           translate,
           i18n.language as SupportedLanguages
         );

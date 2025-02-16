@@ -2,11 +2,11 @@ import { useFormikContext } from "formik";
 import { get } from "lodash";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, HelperText, Text, useTheme } from "react-native-paper";
+import { Button, HelperText, Text } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { ErrorSnackbar } from "../layouts/error-snackbar";
-import { ProfilePicture } from "../layouts/profile-picture";
+import { GroupPreview } from "../layouts/group-preview";
 import { SelectedImageCard } from "../layouts/selected-image-card";
 import { ColorPickerModal } from "./color-picker-modal";
 import {
@@ -26,7 +26,6 @@ type Props = {
 
 export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
-  const theme = useTheme();
   const { values, setFieldValue, setFieldTouched, errors } =
     useFormikContext<CreatePrayerGroupForm>();
   const {
@@ -67,53 +66,15 @@ export const GroupImageColorStep: React.FC<Props> = ({ setWizardStep }) => {
           {translate("common.actions.preview")}
         </Text>
 
-        <View
-          className="rounded-lg border  flex flex-grow-0 overflow-hidden"
-          style={{ borderColor: theme.colors.outline }}
-        >
-          <View
-            className="h-16"
-            style={{ backgroundColor: values.color ?? theme.colors.primary }}
-            testID={GroupImageColorStepTestIds.backgroundColorPreview}
-          />
-          <View
-            className="p-4"
-            style={{ backgroundColor: theme.colors.background }}
-          >
-            <View className="flex flex-row items-center">
-              <ProfilePicture url={values.image?.url} width={48} height={48} />
-              <Text
-                variant="titleMedium"
-                className="ml-4 font-bold w-4/5"
-                numberOfLines={1}
-                ellipsizeMode="tail"
-                testID={GroupImageColorStepTestIds.groupNamePreview}
-              >
-                {values.groupName}
-              </Text>
-            </View>
-            <Text
-              className="mt-3"
-              variant="bodyLarge"
-              testID={GroupImageColorStepTestIds.descriptionPreview}
-            >
-              {values.description}
-            </Text>
-          </View>
-        </View>
-        <View className="mt-4 flex flex-row items-center">
-          <Text variant="bodyLarge" className="w-1/2">
-            {translate("createPrayerGroup.groupImageColorStep.color")}
-          </Text>
-          <Button
-            mode="outlined"
-            className="w-1/2"
-            onPress={() => setIsColorPickerOpen(true)}
-            testID={GroupImageColorStepTestIds.selectColorButton}
-          >
-            {translate("createPrayerGroup.groupImageColorStep.selectColor")}
-          </Button>
-        </View>
+        <GroupPreview
+          groupName={values.groupName ?? ""}
+          description={values.description ?? ""}
+          profilePictureUri={values.image?.url}
+          backgroundColor={values.color}
+          bannerTestID={GroupImageColorStepTestIds.backgroundColorPreview}
+          groupNameTestID={GroupImageColorStepTestIds.groupNamePreview}
+          descriptionTestID={GroupImageColorStepTestIds.descriptionPreview}
+        />
 
         <View className="mt-4 flex flex-row items-center">
           <Text variant="bodyLarge" className="w-1/2">

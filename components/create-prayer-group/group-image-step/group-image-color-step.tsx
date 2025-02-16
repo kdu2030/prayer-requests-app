@@ -8,7 +8,6 @@ import { useI18N } from "../../../hooks/use-i18n";
 import { ErrorSnackbar } from "../../layouts/error-snackbar";
 import { GroupPreview } from "../../layouts/group-preview";
 import { SelectedImageCard } from "../../layouts/selected-image-card";
-import { ColorPickerModal } from "../color-picker-modal";
 import {
   CreatePrayerGroupWizardStep,
   NUM_CREATE_PRAYER_GROUP_STEPS,
@@ -26,11 +25,8 @@ type Props = {
 
 export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
-  const { values, setFieldValue, setFieldTouched, errors } =
-    useFormikContext<CreatePrayerGroupForm>();
+  const { values, errors } = useFormikContext<CreatePrayerGroupForm>();
   const {
-    isColorPickerModalOpen,
-    setIsColorPickerOpen,
     selectImage,
     onRemoveSelectedImage,
     savePrayerGroup,
@@ -40,6 +36,7 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
   } = useGroupImageColorStep();
 
   const imageError = get(errors, "image.filePath");
+  const bannerImageError = get(errors, "bannerImage.filePath");
 
   return (
     <>
@@ -83,7 +80,7 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
           <Button
             mode="outlined"
             className="w-1/2"
-            onPress={selectImage}
+            onPress={() => selectImage("image", [1, 1])}
             testID={GroupImageColorStepTestIds.selectImageButton}
           >
             {translate("createPrayerGroup.groupImageColorStep.selectImage")}
@@ -93,7 +90,7 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
         {values.image && (
           <>
             <SelectedImageCard
-              onRemoveImage={onRemoveSelectedImage}
+              onRemoveImage={() => onRemoveSelectedImage("image")}
               fileName={values.image.fileName ?? ""}
             />
             {imageError && <HelperText type="error">{imageError}</HelperText>}
@@ -108,23 +105,24 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
         <Button
           mode="outlined"
           className="w-1/2"
-          onPress={selectImage}
+          onPress={() => selectImage("bannerImage", [10, 3])}
           testID={GroupImageColorStepTestIds.selectImageButton}
         >
           {translate("createPrayerGroup.groupImageColorStep.selectImage")}
         </Button>
       </View>
 
-      <ColorPickerModal
-        isOpen={isColorPickerModalOpen}
-        onCancel={() => setIsColorPickerOpen(false)}
-        onSave={(color) => {
-          setFieldValue("color", color);
-          setFieldTouched("color", true);
-          setIsColorPickerOpen(false);
-        }}
-        initialColor={values.color}
-      />
+      {values.bannerImage && (
+        <>
+          <SelectedImageCard
+            onRemoveImage={() => onRemoveSelectedImage("bannerImage")}
+            fileName={values.bannerImage.fileName ?? ""}
+          />
+          {bannerImageError && (
+            <HelperText type="error">{bannerImageError}</HelperText>
+          )}
+        </>
+      )}
 
       <ErrorSnackbar
         snackbarError={snackbarError}

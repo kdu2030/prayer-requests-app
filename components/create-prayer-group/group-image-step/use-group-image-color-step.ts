@@ -1,6 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import { setNestedObjectValues, useFormikContext } from "formik";
-import { isEmpty } from "lodash";
+import { get, isEmpty } from "lodash";
 import * as React from "react";
 
 import { usePostFile } from "../../../api/post-file";
@@ -18,8 +18,6 @@ import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 export const useGroupImageColorStep = () => {
   const { translate } = useI18N();
 
-  const [isColorPickerModalOpen, setIsColorPickerOpen] =
-    React.useState<boolean>(false);
   const [snackbarError, setSnackbarError] = React.useState<
     string | undefined
   >();
@@ -39,13 +37,13 @@ export const useGroupImageColorStep = () => {
   const postFile = usePostFile();
   const postPrayerGroup = usePostPrayerGroup();
 
-  const selectImage = async () => {
+  const selectImage = async (fieldName: string, aspect: [number, number]) => {
     try {
       await ImagePicker.requestMediaLibraryPermissionsAsync();
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [1, 1],
+        aspect,
         quality: 1,
       });
       const imageResult = result.assets ? result.assets[0] : undefined;
@@ -53,18 +51,18 @@ export const useGroupImageColorStep = () => {
         return;
       }
 
-      setFieldValue("image", mapMediaFileFromImagePickerAsset(imageResult));
-      setFieldTouched("image", true);
+      setFieldValue(fieldName, mapMediaFileFromImagePickerAsset(imageResult));
+      setFieldTouched(fieldName, true);
     } catch (error) {
       return;
     }
   };
 
-  const onRemoveSelectedImage = () => {
-    if (!values.image) {
+  const onRemoveSelectedImage = (fieldName: string) => {
+    if (!get(values, fieldName)) {
       return;
     }
-    setFieldValue("image", undefined);
+    setFieldValue(fieldName, undefined);
   };
 
   const uploadPrayerGroupImage = async (): Promise<
@@ -130,8 +128,6 @@ export const useGroupImageColorStep = () => {
   };
 
   return {
-    isColorPickerModalOpen,
-    setIsColorPickerOpen,
     selectImage,
     onRemoveSelectedImage,
     savePrayerGroup,

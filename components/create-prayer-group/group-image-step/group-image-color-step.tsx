@@ -4,18 +4,18 @@ import * as React from "react";
 import { View } from "react-native";
 import { Button, HelperText, Text } from "react-native-paper";
 
-import { useI18N } from "../../hooks/use-i18n";
-import { ErrorSnackbar } from "../layouts/error-snackbar";
-import { GroupPreview } from "../layouts/group-preview";
-import { SelectedImageCard } from "../layouts/selected-image-card";
-import { ColorPickerModal } from "./color-picker-modal";
+import { useI18N } from "../../../hooks/use-i18n";
+import { ErrorSnackbar } from "../../layouts/error-snackbar";
+import { GroupPreview } from "../../layouts/group-preview";
+import { SelectedImageCard } from "../../layouts/selected-image-card";
+import { ColorPickerModal } from "../color-picker-modal";
 import {
   CreatePrayerGroupWizardStep,
   NUM_CREATE_PRAYER_GROUP_STEPS,
-} from "./create-prayer-group-constants";
-import { CreatePrayerGroupForm } from "./create-prayer-group-types";
-import { CreatePrayerGroupWizardHeader } from "./create-prayer-group-wizard-header";
-import { GroupImageColorStepTestIds } from "./tests/test-ids";
+} from "../create-prayer-group-constants";
+import { CreatePrayerGroupForm } from "../create-prayer-group-types";
+import { CreatePrayerGroupWizardHeader } from "../create-prayer-group-wizard-header";
+import { GroupImageColorStepTestIds } from "../tests/test-ids";
 import { useGroupImageColorStep } from "./use-group-image-color-step";
 
 type Props = {

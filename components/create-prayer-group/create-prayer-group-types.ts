@@ -6,4 +6,5 @@ export type CreatePrayerGroupForm = {
   rules?: string;
   image?: MediaFile;
   color?: string;
+  bannerImage?: MediaFile;
 };

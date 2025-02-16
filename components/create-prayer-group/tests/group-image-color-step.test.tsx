@@ -12,7 +12,7 @@ import {
   DEFAULT_COLOR,
 } from "../create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
-import { GroupImageColorStep } from "../group-image-color-step";
+import { GroupImageColorStep } from "../group-image-step/group-image-color-step";
 import {
   ColorPickerModalTestIds,
   GroupImageColorStepTestIds,

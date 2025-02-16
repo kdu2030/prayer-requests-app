@@ -5,7 +5,7 @@ import { useI18N } from "../../hooks/use-i18n";
 import { SupportedLanguages } from "../../types/languages";
 import { CreatePrayerGroupWizardStep } from "./create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
-import { GroupImageColorStep } from "./group-image-color-step";
+import { GroupImageColorStep } from "./group-image-step/group-image-color-step";
 import { groupImageColorValidationSchema } from "./group-image-color-validation-schema";
 import { GroupNameDescriptionStep } from "./group-name-description-step";
 import { groupNameValidationSchema } from "./group-name-validation-schema";

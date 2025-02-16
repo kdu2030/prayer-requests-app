@@ -6,7 +6,7 @@ import { SupportedLanguages } from "../../types/languages";
 import { CreatePrayerGroupWizardStep } from "./create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 import { GroupImageColorStep } from "./group-image-step/group-image-color-step";
-import { groupImageColorValidationSchema } from "./group-image-color-validation-schema";
+import { groupImageColorValidationSchema } from "./group-image-step/group-image-color-validation-schema";
 import { GroupNameDescriptionStep } from "./group-name-description-step";
 import { groupNameValidationSchema } from "./group-name-validation-schema";
 import { PrayerGroupRulesStep } from "./prayer-group-rules-step";

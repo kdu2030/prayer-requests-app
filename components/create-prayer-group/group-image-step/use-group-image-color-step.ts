@@ -3,15 +3,17 @@ import { setNestedObjectValues, useFormikContext } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
 
-import { usePostFile } from "../../api/post-file";
-import { usePostPrayerGroup } from "../../api/post-prayer-group";
-import { useI18N } from "../../hooks/use-i18n";
-import { mapFileToUpload } from "../../mappers/map-media-file";
-import { mapMediaFileFromImagePickerAsset } from "../../mappers/map-media-file";
-import { mapCreatePrayerGroupRequest } from "../../mappers/map-prayer-group";
-import { ManagedErrorResponse } from "../../types/error-handling";
-import { RawMediaFile } from "../../types/media-file-types";
-import { CreatePrayerGroupForm } from "./create-prayer-group-types";
+import { usePostFile } from "../../../api/post-file";
+import { usePostPrayerGroup } from "../../../api/post-prayer-group";
+import { useI18N } from "../../../hooks/use-i18n";
+import {
+  mapFileToUpload,
+  mapMediaFileFromImagePickerAsset,
+} from "../../../mappers/map-media-file";
+import { mapCreatePrayerGroupRequest } from "../../../mappers/map-prayer-group";
+import { ManagedErrorResponse } from "../../../types/error-handling";
+import { RawMediaFile } from "../../../types/media-file-types";
+import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 
 export const useGroupImageColorStep = () => {
   const { translate } = useI18N();

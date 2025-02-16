@@ -1,14 +1,14 @@
 import * as Yup from "yup";
 
-import { validateFileSizeFromFilePath } from "../../helpers/file-helpers";
-import { formatNumber } from "../../helpers/formatting-helpers";
-import { SupportedLanguages, TranslationKey } from "../../types/languages";
+import { validateFileSizeFromFilePath } from "../../../helpers/file-helpers";
+import { formatNumber } from "../../../helpers/formatting-helpers";
+import { SupportedLanguages, TranslationKey } from "../../../types/languages";
 import {
   ACCEPTED_FILE_TYPES,
   MAX_GROUP_IMAGE_SIZE,
   MAX_GROUP_IMAGE_SIZE_MB,
-} from "./create-prayer-group-constants";
-import { CreatePrayerGroupForm } from "./create-prayer-group-types";
+} from "../create-prayer-group-constants";
+import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 
 export const groupImageColorValidationSchema = (
   translate: (key: TranslationKey, params?: object) => string,

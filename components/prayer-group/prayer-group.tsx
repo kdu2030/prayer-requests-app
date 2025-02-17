@@ -38,12 +38,12 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         >
           <View className="px-4 py-4 flex-row justify-between items-center">
             <PrayerGroupHeaderButtons onPress={() => router.back()}>
-              <Ionicons name="arrow-back-sharp" size={24} color={"white"} />
+              <Ionicons name="arrow-back-sharp" size={28} color={"white"} />
             </PrayerGroupHeaderButtons>
             <View className="flex flex-row justify-self-end">
               <View className="mr-2">
                 <PrayerGroupHeaderButtons onPress={() => {}}>
-                  <Feather name="plus" size={24} color={"white"} />
+                  <Feather name="plus" size={28} color={"white"} />
                 </PrayerGroupHeaderButtons>
               </View>
               <PrayerGroupHeaderButtons onPress={() => {}}>
@@ -51,7 +51,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                   <SimpleLineIcons
                     className=""
                     name="options-vertical"
-                    size={24}
+                    size={28}
                     color={"white"}
                   />
                 </View>

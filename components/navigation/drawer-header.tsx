@@ -33,7 +33,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
             onPress={() => navigation.openDrawer()}
             className="mr-2"
           >
-            <Ionicons name="menu" size={24} color="white" />
+            <Ionicons name="menu" size={28} color="white" />
           </TouchableOpacity>
           <Text variant="titleLarge" className="font-bold text-white">
             {translate("common.appName")}
@@ -42,7 +42,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
 
         <View className="flex flex-row items-center">
           <TouchableOpacity onPress={() => {}} className="mr-4">
-            <Ionicons name="search" size={24} color="white" />
+            <Ionicons name="search" size={28} color="white" />
           </TouchableOpacity>
 
           <ProfilePicture url={userData?.image?.url} width={36} height={36} />

@@ -19,7 +19,12 @@ const DrawerLayout: React.FC = () => {
         drawerContent={(props: DrawerContentComponentProps) => (
           <DrawerContent {...props} />
         )}
-      />
+      >
+        <Drawer.Screen
+          name="prayergroup/[id]"
+          options={{ headerShown: false }}
+        />
+      </Drawer>
     </GestureHandlerRootView>
   );
 };

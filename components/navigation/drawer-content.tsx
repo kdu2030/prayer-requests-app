@@ -85,6 +85,7 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                       onPress={() =>
                         router.push(`/prayergroup/${group.prayerGroupId}`)
                       }
+                      key={group.prayerGroupId}
                     />
                   );
                 })}

@@ -24,6 +24,8 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
   const insets = useSafeAreaInsets();
   const drawerStatus = useDrawerStatus();
   const { translate } = useI18N();
+  const [showPrayerGroups, setShowPrayerGroups] =
+    React.useState<boolean>(false);
 
   return (
     <>
@@ -60,23 +62,29 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                 icon="account-multiple"
                 label={translate("navigation.drawer.screen.yourPrayerGroups")}
                 right={({ color }) => (
-                  <FontAwesome name="angle-right" size={24} color={color} />
-                )}
-              />
-              {userData.prayerGroups.map((group) => {
-                return (
-                  <PrefixDrawerItem
-                    left={
-                      <ProfilePicture
-                        url={group.imageFile?.url}
-                        width={24}
-                        height={24}
-                      />
-                    }
-                    label={group.groupName ?? ""}
+                  <FontAwesome
+                    name={showPrayerGroups ? "angle-down" : "angle-right"}
+                    size={24}
+                    color={color}
                   />
-                );
-              })}
+                )}
+                onPress={() => setShowPrayerGroups(!showPrayerGroups)}
+              />
+              {showPrayerGroups &&
+                userData.prayerGroups.map((group) => {
+                  return (
+                    <PrefixDrawerItem
+                      left={
+                        <ProfilePicture
+                          url={group.imageFile?.url}
+                          width={24}
+                          height={24}
+                        />
+                      }
+                      label={group.groupName ?? ""}
+                    />
+                  );
+                })}
             </>
           )}
         </View>

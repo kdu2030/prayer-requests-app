@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
-import { PrayerGroupHeader } from "./header/prayer-group-header";
+import { PrayerGroupSimpleHeader } from "./header/prayer-group-simple-header";
 import { usePrayerGroup } from "./use-prayer-group";
 
 type Props = {
@@ -28,7 +28,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           paddingBottom: bottom,
         }}
       >
-        <PrayerGroupHeader prayerGroupDetails={prayerGroupDetails} />
+        <PrayerGroupSimpleHeader prayerGroupDetails={prayerGroupDetails} />
 
         <View className="pt-4 px-4 flex-row items-center justify-between">
           <View className="flex-row w-2/3 items-center">

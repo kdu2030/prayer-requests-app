@@ -21,10 +21,7 @@ const DrawerLayout: React.FC = () => {
         )}
         backBehavior="history"
       >
-        <Drawer.Screen
-          name="prayergroup/[id]"
-          options={{ headerShown: false }}
-        />
+        <Drawer.Screen name="prayergroup/[id]" />
       </Drawer>
     </GestureHandlerRootView>
   );

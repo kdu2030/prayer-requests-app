@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
+import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerGroupSimpleHeader } from "./header/prayer-group-simple-header";
 import { usePrayerGroup } from "./use-prayer-group";
 
@@ -14,8 +15,15 @@ type Props = {
 
 export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
   const { left, right, bottom } = useSafeAreaInsets();
-  const { prayerGroupDetails } = usePrayerGroup(prayerGroupId);
   const { translate } = useI18N();
+
+  const { isLoading, prayerGroupDetails } = usePrayerGroup(prayerGroupId);
+
+  if (isLoading) {
+    return (
+      <SpinnerScreen loadingLabel={translate("loading.prayerGroup.text")} />
+    );
+  }
 
   return (
     <>

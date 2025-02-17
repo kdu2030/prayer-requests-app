@@ -14,6 +14,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const loadPrayerGroup = React.useCallback(async () => {
     setPrayerGroupDetails(undefined);
     setIsLoading(true);
+
+    // Adds a delay so prayer group rendering doesn't slow down drawer
+    await new Promise<void>((resolve) => setTimeout(resolve, 100));
+
     const response = await getPrayerGroup(prayerGroupId);
     setIsLoading(false);
 

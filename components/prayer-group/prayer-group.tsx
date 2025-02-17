@@ -1,14 +1,10 @@
-import { Feather, Ionicons, Octicons } from "@expo/vector-icons";
-import { router, useSegments } from "expo-router";
+import { Feather, Ionicons, SimpleLineIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Text, useTheme } from "react-native-paper";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { useTheme } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { PrayerGroupHeaderButtons } from "./header/prayer-group-header-buttons";
 
@@ -41,13 +37,25 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           <PrayerGroupHeaderButtons onPress={() => router.back()}>
             <Ionicons name="arrow-back-sharp" size={24} color={"white"} />
           </PrayerGroupHeaderButtons>
-          <View className="justify-self-end">
+          <View className="flex flex-row justify-self-end">
+            <View className="mr-2">
+              <PrayerGroupHeaderButtons onPress={() => {}}>
+                <Feather name="plus" size={24} color={"white"} />
+              </PrayerGroupHeaderButtons>
+            </View>
             <PrayerGroupHeaderButtons onPress={() => {}}>
-              <Feather name="plus" size={24} color={"white"} />
+              <View className="px-0">
+                <SimpleLineIcons
+                  className=""
+                  name="options-vertical"
+                  size={24}
+                  color={"white"}
+                />
+              </View>
             </PrayerGroupHeaderButtons>
           </View>
         </View>
-        {/**TODO: Figure out safe area insets since we need content in the banner*/}
+
         {/** Note: Add spinner instead of skeleton */}
       </View>
     </>

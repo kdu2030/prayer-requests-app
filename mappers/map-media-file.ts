@@ -2,7 +2,12 @@ import { ImagePickerAsset } from "expo-image-picker";
 import path from "path-browserify";
 
 import { getContentType } from "../helpers/file-helpers";
-import { FileToUpload, FileType, MediaFile } from "../types/media-file-types";
+import {
+  FileToUpload,
+  FileType,
+  MediaFile,
+  RawMediaFile,
+} from "../types/media-file-types";
 
 export const mapMediaFileFromImagePickerAsset = (
   asset: ImagePickerAsset
@@ -23,5 +28,18 @@ export const mapFileToUpload = (image: MediaFile): FileToUpload => {
     uri: image.filePath ?? "",
     type: contentType,
     name: image.fileName ?? "",
+  };
+};
+
+export const mapMediaFile = (
+  rawMediaFile: RawMediaFile | undefined
+): MediaFile | undefined => {
+  if (!rawMediaFile) {
+    return undefined;
+  }
+
+  return {
+    ...rawMediaFile,
+    mediaFileId: rawMediaFile.id,
   };
 };

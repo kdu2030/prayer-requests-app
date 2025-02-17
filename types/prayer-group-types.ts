@@ -1,5 +1,5 @@
 import { PrayerGroupRole } from "../constants/prayer-group-constants";
-import { RawMediaFile } from "./media-file-types";
+import { MediaFile, RawMediaFile } from "./media-file-types";
 
 export type PrayerGroupAdminSummary = {
   id?: number;
@@ -16,4 +16,14 @@ export type RawPrayerGroupDetails = {
   isUserJoined?: boolean;
   userRole?: PrayerGroupRole;
   admins?: PrayerGroupAdminSummary[];
+};
+
+export type RawPrayerGroupSummary = {
+  id?: number;
+  groupName?: number;
+  imageFile?: RawMediaFile;
+};
+
+export type PrayerGroupSummary = Omit<RawPrayerGroupSummary, "id"> & {
+  prayerGroupId?: number;
 };

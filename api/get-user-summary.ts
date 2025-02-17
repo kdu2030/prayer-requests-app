@@ -6,6 +6,7 @@ import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
 import { RawMediaFile } from "../types/media-file-types";
+import { RawPrayerGroupSummary } from "../types/prayer-group-types";
 import { RawUserTokenPair } from "./post-signup";
 
 export type GetUserSummaryResponse = {
@@ -15,6 +16,7 @@ export type GetUserSummaryResponse = {
   fullName?: string;
   tokens?: RawUserTokenPair;
   image?: RawMediaFile;
+  prayerGroups?: RawPrayerGroupSummary[];
 };
 
 const getUserSummary = async (

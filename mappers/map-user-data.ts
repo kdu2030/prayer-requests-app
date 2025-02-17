@@ -1,13 +1,20 @@
+import { compact } from "lodash";
+
 import { GetUserSummaryResponse } from "../api/get-user-summary";
 import { decodeJwtToken } from "../components/authentication/auth-helpers";
 import {
   UserData,
   UserTokenPair,
 } from "../types/context/api-data-context-type";
+import { mapPrayerGroupSummary } from "./map-prayer-group";
 
 export const mapUserData = (
   userSummaryResponse: GetUserSummaryResponse
 ): UserData => {
+  const prayerGroups = userSummaryResponse.prayerGroups?.map((summary) =>
+    mapPrayerGroupSummary(summary)
+  );
+
   return {
     userId: userSummaryResponse.id,
     fullName: userSummaryResponse.fullName,
@@ -17,6 +24,7 @@ export const mapUserData = (
       ...userSummaryResponse.image,
       mediaFileId: userSummaryResponse.id,
     },
+    prayerGroups: compact(prayerGroups),
   };
 };
 

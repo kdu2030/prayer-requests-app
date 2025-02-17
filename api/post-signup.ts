@@ -2,6 +2,8 @@ import axios, { AxiosError } from "axios";
 
 import { ApiErrorResponse, ApiResponse } from "../types/api-response-types";
 import { SignupForm } from "../types/forms/auth-forms";
+import { RawMediaFile } from "../types/media-file-types";
+import { RawPrayerGroupSummary } from "../types/prayer-group-types";
 
 export type RawUserTokenPair = {
   accessToken?: string;
@@ -14,6 +16,8 @@ export type ApiAuthResponse = {
   emailAddress?: string;
   fullName?: string;
   tokens?: RawUserTokenPair;
+  image?: RawMediaFile;
+  prayerGroups?: RawPrayerGroupSummary[];
 };
 
 export const postSignup = async (

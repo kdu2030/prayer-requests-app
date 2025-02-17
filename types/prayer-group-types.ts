@@ -20,7 +20,7 @@ export type RawPrayerGroupDetails = {
 
 export type RawPrayerGroupSummary = {
   id?: number;
-  groupName?: number;
+  groupName?: string;
   imageFile?: RawMediaFile;
 };
 

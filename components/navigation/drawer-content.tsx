@@ -1,3 +1,4 @@
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
@@ -7,7 +8,7 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { View } from "react-native";
-import { useTheme } from "react-native-paper";
+import { Icon, useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
 import { Drawer } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -15,6 +16,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
+import { PrefixDrawerItem } from "./prefix-drawer-item";
 
 export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
   const { userData } = useApiDataContext();
@@ -52,6 +54,17 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
             icon="plus"
             onPress={() => router.push("/create-prayer-group")}
           />
+          <Drawer.Item
+            icon="account-multiple"
+            label={translate("navigation.drawer.screen.yourPrayerGroups")}
+            right={({ color }) => (
+              <FontAwesome name="angle-right" size={24} color={color} />
+            )}
+          />
+          {userData?.prayerGroups &&
+            userData.prayerGroups.map((group) => {
+              return <PrefixDrawerItem label={group.groupName ?? ""} />;
+            })}
         </View>
       </DrawerContentScrollView>
     </>

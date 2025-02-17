@@ -50,6 +50,7 @@ export const englishTranslations = {
 
   "navigation.drawer.screen.home": "Home",
   "navigation.drawer.screen.createPrayerGroup": "Create Prayer Group",
+  "navigation.drawer.screen.yourPrayerGroups": "Your Prayer Groups",
 
   "wizard.stepCount": "{{step}} of {{total}}",
   "wizard.next": "Next",

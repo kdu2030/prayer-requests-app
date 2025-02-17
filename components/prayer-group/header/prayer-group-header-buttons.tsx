@@ -17,7 +17,7 @@ export const PrayerGroupHeaderButtons: React.FC<Props> = ({
     <TouchableOpacity
       className={classNames("rounded-full p-1 self-start", className)}
       style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-      onPress={() => onPress}
+      onPress={onPress}
     >
       {children}
     </TouchableOpacity>

@@ -3,21 +3,17 @@ import { Image } from "react-native";
 import { useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { PrayerGroupDetails } from "../../../types/prayer-group-types";
-
 type Props = {
-  prayerGroupDetails: PrayerGroupDetails | undefined;
+  uri: string | undefined;
 };
 
-export const PrayerGroupSimpleHeader: React.FC<Props> = ({
-  prayerGroupDetails,
-}) => {
+export const PrayerGroupBanner: React.FC<Props> = ({ uri }) => {
   const theme = useTheme();
   const { top } = useSafeAreaInsets();
 
   return (
     <Image
-      source={{ uri: prayerGroupDetails?.bannerImageFile?.url }}
+      source={{ uri }}
       style={{
         backgroundColor: theme.colors.secondaryContainer,
         paddingTop: top,

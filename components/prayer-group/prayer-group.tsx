@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { View } from "react-native";
 import { Button, Text } from "react-native-paper";
@@ -20,7 +19,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
 
   return (
     <>
-      <StatusBar translucent style="light" />
       <View
         style={{
           paddingLeft: left,

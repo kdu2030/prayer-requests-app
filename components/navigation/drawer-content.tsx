@@ -82,6 +82,9 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                         />
                       }
                       label={group.groupName ?? ""}
+                      onPress={() =>
+                        router.push(`/prayergroup/${group.prayerGroupId}`)
+                      }
                     />
                   );
                 })}

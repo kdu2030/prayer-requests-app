@@ -37,7 +37,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         <PrayerGroupSimpleHeader prayerGroupDetails={prayerGroupDetails} />
 
         <View className="pt-4 px-4 flex-row items-center justify-between">
-          <View className="flex-row w-2/3 items-center">
+          <View className="w-2/3 self-start flex-row items-center">
             <View className="mr-4">
               <ProfilePicture
                 width={52}
@@ -57,6 +57,11 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           </View>
 
           <Button
+            icon={
+              prayerGroupDetails?.isUserJoined
+                ? "check"
+                : "account-multiple-plus"
+            }
             className="justify-self-end"
             mode={prayerGroupDetails?.isUserJoined ? "outlined" : "contained"}
           >
@@ -65,12 +70,21 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
               : translate("prayerGroup.actions.join")}
           </Button>
         </View>
-      </View>
 
-      <View className="pt-2 px-4">
-        <Text variant="bodyMedium" numberOfLines={2}>
-          {prayerGroupDetails?.description ?? ""}
-        </Text>
+        <View className="mt-2 px-4">
+          <Text variant="bodyMedium" numberOfLines={2}>
+            {prayerGroupDetails?.description ?? ""}
+          </Text>
+
+          <View className="flex-row gap-x-4 mt-4">
+            <Button icon="plus" className="flex-1" mode={"contained"}>
+              {translate("prayerGroup.actions.addPrayerRequest")}
+            </Button>
+            <Button icon="dots-horizontal" className="flex-1" mode={"outlined"}>
+              {translate("prayerGroup.actions.groupOptions")}
+            </Button>
+          </View>
+        </View>
       </View>
 
       {/** Note: Add spinner instead of skeleton */}

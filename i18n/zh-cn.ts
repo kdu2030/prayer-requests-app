@@ -83,4 +83,6 @@ export const chineseTranslations: Translations = {
 
   "prayerGroup.actions.join": "加入",
   "prayerGroup.actions.joined": "加入了",
+  "prayerGroup.actions.addPrayerRequest": "添加祷告事项",
+  "prayerGroup.actions.groupOptions": "选项",
 };

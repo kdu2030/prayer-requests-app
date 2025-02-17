@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { View } from "react-native";
@@ -17,6 +17,11 @@ type Props = {
 export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
   const theme = useTheme();
   const { left, right, top, bottom } = useSafeAreaInsets();
+  const segments = useSegments();
+
+  React.useEffect(() => {
+    console.log(segments);
+  }, [segments]);
 
   return (
     <>

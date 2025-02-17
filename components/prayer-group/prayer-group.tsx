@@ -1,6 +1,5 @@
 import { Feather, Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { ImageBackground, View } from "react-native";
 import { useTheme } from "react-native-paper";
@@ -20,7 +19,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
 
   return (
     <>
-      <StatusBar translucent />
       <View
         style={{
           paddingLeft: left,

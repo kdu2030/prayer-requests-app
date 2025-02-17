@@ -19,7 +19,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar translucent />
+      <StatusBar translucent style="light" />
 
       <View
         className="flex flex-row items-center justify-between w-full px-4 pb-4 pt-6 grow"

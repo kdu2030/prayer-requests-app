@@ -13,12 +13,16 @@ export const SpinnerScreen: React.FC<Props> = ({ loadingLabel }) => {
   return (
     <>
       <StatusBar backgroundColor={theme.colors.background} />
-      <SafeAreaView>
+      <SafeAreaView className="flex-1">
         <View
           className="flex items-center justify-center flex-1"
           style={{ backgroundColor: theme.colors.background }}
         >
-          <ActivityIndicator animating={true} size={70} />
+          <ActivityIndicator
+            animating={true}
+            size={70}
+            color={theme.colors.primary}
+          />
           <Text className="mt-5" variant="titleMedium">
             {loadingLabel}
           </Text>

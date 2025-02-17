@@ -12,7 +12,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const getPrayerGroup = useGetPrayerGroup();
 
   const loadPrayerGroup = React.useCallback(async () => {
-    console.log("Running!");
     setIsLoading(true);
     const response = await getPrayerGroup(prayerGroupId);
     setIsLoading(false);

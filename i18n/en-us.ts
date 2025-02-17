@@ -78,4 +78,7 @@ export const englishTranslations = {
   "createPrayerGroup.groupImageColorStep.banner": "Banner",
   "createPrayerGroup.groupImageColorStep.unableToSelectImage":
     "Unable to select image.",
+
+  "prayerGroup.actions.join": "Join",
+  "prayerGroup.actions.joined": "Joined",
 };

@@ -80,4 +80,7 @@ export const chineseTranslations: Translations = {
   "createPrayerGroup.groupImageColorStep.selectImage": "选图片",
   "createPrayerGroup.groupImageColorStep.banner": "横幅图片",
   "createPrayerGroup.groupImageColorStep.unableToSelectImage": "无法选择图片",
+
+  "prayerGroup.actions.join": "加入",
+  "prayerGroup.actions.joined": "加入了",
 };

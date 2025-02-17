@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons, Octicons } from "@expo/vector-icons";
 import { router, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
@@ -10,6 +10,8 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 
+import { PrayerGroupHeaderButtons } from "./header/prayer-group-header-buttons";
+
 type Props = {
   prayerGroupId: number;
 };
@@ -17,11 +19,6 @@ type Props = {
 export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
   const theme = useTheme();
   const { left, right, top, bottom } = useSafeAreaInsets();
-  const segments = useSegments();
-
-  React.useEffect(() => {
-    console.log(segments);
-  }, [segments]);
 
   return (
     <>
@@ -34,20 +31,21 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         }}
       >
         <View
-          className="w-full px-4 justify-center"
+          className="w-full px-4 py-2 flex-row justify-between items-center"
           style={{
-            height: 100,
+            minHeight: 100,
             backgroundColor: theme.colors.primary,
             paddingTop: top,
           }}
         >
-          <TouchableOpacity
-            className="rounded-full p-1 self-start"
-            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-            onPress={() => router.back()}
-          >
+          <PrayerGroupHeaderButtons onPress={() => router.back()}>
             <Ionicons name="arrow-back-sharp" size={24} color={"white"} />
-          </TouchableOpacity>
+          </PrayerGroupHeaderButtons>
+          <View className="justify-self-end">
+            <PrayerGroupHeaderButtons onPress={() => {}}>
+              <Feather name="plus" size={24} color={"white"} />
+            </PrayerGroupHeaderButtons>
+          </View>
         </View>
         {/**TODO: Figure out safe area insets since we need content in the banner*/}
         {/** Note: Add spinner instead of skeleton */}

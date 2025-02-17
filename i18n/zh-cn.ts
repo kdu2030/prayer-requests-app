@@ -77,4 +77,5 @@ export const chineseTranslations: Translations = {
   "createPrayerGroup.groupImageColorStep.image": "头像",
   "createPrayerGroup.groupImageColorStep.selectImage": "选图片",
   "createPrayerGroup.groupImageColorStep.banner": "横幅图片",
+  "createPrayerGroup.groupImageColorStep.unableToSelectImage": "无法选择图片",
 };

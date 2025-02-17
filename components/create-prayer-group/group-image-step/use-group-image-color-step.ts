@@ -54,7 +54,9 @@ export const useGroupImageColorStep = () => {
       setFieldValue(fieldName, mapMediaFileFromImagePickerAsset(imageResult));
       setFieldTouched(fieldName, true);
     } catch (error) {
-      return;
+      setSnackbarError(
+        translate("createPrayerGroup.groupImageColorStep.unableToSelectImage")
+      );
     }
   };
 

@@ -74,4 +74,6 @@ export const englishTranslations = {
   "createPrayerGroup.groupImageColorStep.image": "Avatar",
   "createPrayerGroup.groupImageColorStep.selectImage": "Select Image",
   "createPrayerGroup.groupImageColorStep.banner": "Banner",
+  "createPrayerGroup.groupImageColorStep.unableToSelectImage":
+    "Unable to select image.",
 };

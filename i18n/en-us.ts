@@ -7,6 +7,7 @@ export const englishTranslations = {
 
   "loading.userData.text": "Loading user data",
   "loading.userData.label": "User Data",
+  "loading.prayerGroup.text": "Loading prayer group",
 
   "language.chooseLanguage.text": "Choose your language",
   "language.chooseLanguage.label": "Language",

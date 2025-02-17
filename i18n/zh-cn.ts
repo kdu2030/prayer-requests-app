@@ -14,6 +14,7 @@ export const chineseTranslations: Translations = {
 
   "loading.userData.text": "如载用户数据",
   "loading.userData.label": "用户数据",
+  "loading.prayerGroup.text": "如载祷告小组",
 
   "language.chooseLanguage.text": "选你的语言",
   "language.chooseLanguage.label": "语言",

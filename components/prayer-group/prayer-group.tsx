@@ -36,7 +36,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
               <ProfilePicture
                 width={52}
                 height={52}
-                url={prayerGroupDetails?.bannerImageFile?.url}
+                url={prayerGroupDetails?.imageFile?.url}
               />
             </View>
 

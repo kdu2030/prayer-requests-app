@@ -1,5 +1,7 @@
 export const englishTranslations = {
   "common.appName": "Prayer Requests App",
+  "common.user": "User",
+
   "common.actions.select": "Select",
   "common.actions.save": "Save",
   "common.actions.preview": "Preview",
@@ -48,6 +50,7 @@ export const englishTranslations = {
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",
   "toaster.failed.genericFailure": "{{item}} failed",
+  "toaster.failed.removeFailure": "Failed to remove {{item}}",
 
   "navigation.drawer.screen.home": "Home",
   "navigation.drawer.screen.createPrayerGroup": "Create Prayer Group",

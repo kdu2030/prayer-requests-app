@@ -6,6 +6,7 @@ type Translations = {
 
 export const chineseTranslations: Translations = {
   "common.appName": "祷告事项软件",
+  "common.user": "用户",
 
   "common.actions.select": "选择",
   "common.actions.save": "保存",
@@ -52,6 +53,7 @@ export const chineseTranslations: Translations = {
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "如载{{item}}失败",
   "toaster.failed.genericFailure": "{{item}}失败",
+  "toaster.failed.removeFailure": "无法删除{{item}}",
 
   "navigation.drawer.screen.home": "主页",
   "navigation.drawer.screen.createPrayerGroup": "创建新祷告小组",

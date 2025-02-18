@@ -4,6 +4,7 @@ import { Button, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { ErrorSnackbar } from "../layouts/error-snackbar";
 import { ProfilePicture } from "../layouts/profile-picture";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerGroupBanner } from "./header/prayer-group-banner";
@@ -17,7 +18,14 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
   const { left, right, bottom } = useSafeAreaInsets();
   const { translate } = useI18N();
 
-  const { isLoading, prayerGroupDetails } = usePrayerGroup(prayerGroupId);
+  const {
+    isLoading,
+    prayerGroupDetails,
+    snackbarError,
+    setSnackbarError,
+    isRemoveUserLoading,
+    onRemoveUser,
+  } = usePrayerGroup(prayerGroupId);
 
   if (isLoading) {
     return (
@@ -61,6 +69,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
               icon={"check"}
               className="justify-self-end"
               mode={"outlined"}
+              onPress={onRemoveUser}
+              loading={isRemoveUserLoading}
             >
               {translate("prayerGroup.actions.joined")}
             </Button>
@@ -91,6 +101,11 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
             </Button>
           </View>
         </View>
+
+        <ErrorSnackbar
+          snackbarError={snackbarError}
+          setSnackbarError={setSnackbarError}
+        />
       </View>
 
       {/** Note: Add spinner instead of skeleton */}

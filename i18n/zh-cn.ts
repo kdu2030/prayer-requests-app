@@ -54,6 +54,7 @@ export const chineseTranslations: Translations = {
   "toaster.failed.loadFailure": "如载{{item}}失败",
   "toaster.failed.genericFailure": "{{item}}失败",
   "toaster.failed.removeFailure": "无法删除{{item}}",
+  "toaster.failed.addUserFailure": "用户加入失败",
 
   "navigation.drawer.screen.home": "主页",
   "navigation.drawer.screen.createPrayerGroup": "创建新祷告小组",

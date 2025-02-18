@@ -25,6 +25,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     setSnackbarError,
     isRemoveUserLoading,
     onRemoveUser,
+    onAddUser,
+    isAddUserLoading,
   } = usePrayerGroup(prayerGroupId);
 
   if (isLoading) {
@@ -81,6 +83,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
               icon={"account-multiple-plus"}
               className="justify-self-end"
               mode={"contained"}
+              onPress={onAddUser}
+              loading={isAddUserLoading}
             >
               {translate("prayerGroup.actions.join")}
             </Button>

@@ -51,6 +51,7 @@ export const englishTranslations = {
   "toaster.failed.loadFailure": "Failed to load {{item}}",
   "toaster.failed.genericFailure": "{{item}} failed",
   "toaster.failed.removeFailure": "Failed to remove {{item}}",
+  "toaster.failed.addUserFailure": "Failed to add user",
 
   "navigation.drawer.screen.home": "Home",
   "navigation.drawer.screen.createPrayerGroup": "Create Prayer Group",

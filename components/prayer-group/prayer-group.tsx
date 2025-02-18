@@ -56,19 +56,25 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
             </Text>
           </View>
 
-          <Button
-            icon={
-              prayerGroupDetails?.isUserJoined
-                ? "check"
-                : "account-multiple-plus"
-            }
-            className="justify-self-end"
-            mode={prayerGroupDetails?.isUserJoined ? "outlined" : "contained"}
-          >
-            {prayerGroupDetails?.isUserJoined
-              ? translate("prayerGroup.actions.joined")
-              : translate("prayerGroup.actions.join")}
-          </Button>
+          {prayerGroupDetails?.isUserJoined && (
+            <Button
+              icon={"check"}
+              className="justify-self-end"
+              mode={"outlined"}
+            >
+              {translate("prayerGroup.actions.joined")}
+            </Button>
+          )}
+
+          {!prayerGroupDetails?.isUserJoined && (
+            <Button
+              icon={"account-multiple-plus"}
+              className="justify-self-end"
+              mode={"contained"}
+            >
+              {translate("prayerGroup.actions.join")}
+            </Button>
+          )}
         </View>
 
         <View className="mt-2 px-4">

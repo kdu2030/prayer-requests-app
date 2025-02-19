@@ -1,26 +1,35 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
-import { Image } from "react-native";
-import { useTheme } from "react-native-paper";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Image, View } from "react-native";
+import { Text } from "react-native-paper";
+
+import { useI18N } from "../../../hooks/use-i18n";
 
 type Props = {
   uri: string | undefined;
 };
 
 export const PrayerGroupBanner: React.FC<Props> = ({ uri }) => {
-  const theme = useTheme();
-  const { top } = useSafeAreaInsets();
+  const { translate } = useI18N();
 
   return (
-    <Image
-      source={{ uri }}
-      style={{
-        backgroundColor: theme.colors.secondaryContainer,
-        paddingTop: top,
-        width: "100%",
-        height: 80,
-        resizeMode: "cover",
-      }}
-    />
+    <View className="bg-gray-300">
+      {uri ? (
+        <Image
+          className="w-full h-20"
+          source={{ uri }}
+          style={{
+            resizeMode: "cover",
+          }}
+        />
+      ) : (
+        <View className="w-full h-20 justify-center items-center">
+          <MaterialIcons name="image" size={36} color="#1f2937" />
+          <Text variant="bodyMedium" className="text-gray-800 mt-1">
+            {translate("image.missing.label")}
+          </Text>
+        </View>
+      )}
+    </View>
   );
 };

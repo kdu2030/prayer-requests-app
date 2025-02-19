@@ -89,4 +89,6 @@ export const englishTranslations = {
   "prayerGroup.actions.joined": "Joined",
   "prayerGroup.actions.addPrayerRequest": "Add Prayer Request",
   "prayerGroup.actions.groupOptions": "Group Options",
+
+  "image.missing.label": "No Image",
 };

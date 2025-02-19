@@ -90,4 +90,6 @@ export const chineseTranslations: Translations = {
   "prayerGroup.actions.joined": "加入了",
   "prayerGroup.actions.addPrayerRequest": "添加祷告事项",
   "prayerGroup.actions.groupOptions": "选项",
+
+  "image.missing.label": "没有图片",
 };

@@ -32,7 +32,7 @@ export const GroupPreview: React.FC<Props> = ({
 
   return (
     <View
-      className="rounded-lg border  flex flex-grow-0 overflow-hidden"
+      className="rounded-lg border flex flex-grow-0 overflow-hidden"
       style={{ borderColor: theme.colors.outline }}
     >
       <View className="h-20 bg-gray-300" testID={bannerTestID}>

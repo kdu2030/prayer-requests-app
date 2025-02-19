@@ -12,10 +12,12 @@ export const chineseTranslations: Translations = {
   "common.actions.save": "保存",
   "common.actions.preview": "预览",
   "common.actions.cancel": "取消",
+  "common.actions.retry": "重试",
 
-  "loading.userData.text": "如载用户数据",
+  "loading.userData.text": "加载用户数据",
   "loading.userData.label": "用户数据",
-  "loading.prayerGroup.text": "如载祷告小组",
+  "loading.prayerGroup.text": "加载祷告小组",
+  "loading.prayerGroup.error": "无法加载祷告小组。请再试一次。",
 
   "language.chooseLanguage.text": "选你的语言",
   "language.chooseLanguage.label": "语言",
@@ -51,7 +53,7 @@ export const chineseTranslations: Translations = {
   "form.validation.imageFileType": "图片格式必须是 JPG、JPEG 或 PNG。",
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
-  "toaster.failed.loadFailure": "如载{{item}}失败",
+  "toaster.failed.loadFailure": "加载{{item}}失败",
   "toaster.failed.genericFailure": "{{item}}失败",
   "toaster.failed.removeFailure": "无法删除{{item}}",
   "toaster.failed.addUserFailure": "用户加入失败",

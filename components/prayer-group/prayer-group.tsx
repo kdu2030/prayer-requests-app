@@ -4,6 +4,7 @@ import { Button, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { ErrorScreen } from "../layouts/error-screen";
 import { ErrorSnackbar } from "../layouts/error-snackbar";
 import { ProfilePicture } from "../layouts/profile-picture";
 import { SpinnerScreen } from "../layouts/spinner-screen";
@@ -27,11 +28,22 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     onRemoveUser,
     onAddUser,
     isAddUserLoading,
+    showErrorScreen,
+    onRetry,
   } = usePrayerGroup(prayerGroupId);
 
   if (isLoading) {
     return (
       <SpinnerScreen loadingLabel={translate("loading.prayerGroup.text")} />
+    );
+  }
+
+  if (showErrorScreen) {
+    return (
+      <ErrorScreen
+        errorLabel={translate("loading.prayerGroup.error")}
+        onRetry={onRetry}
+      />
     );
   }
 

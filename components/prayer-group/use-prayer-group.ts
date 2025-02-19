@@ -17,6 +17,7 @@ import {
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [showErrorScreen, setShowErrorScreen] = React.useState<boolean>(false);
 
   const [prayerGroupDetails, setPrayerGroupDetails] =
     React.useState<PrayerGroupDetails>();
@@ -48,7 +49,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setIsLoading(false);
 
     if (response.isError) {
-      // TODO: Figure out how to handle this
+      setShowErrorScreen(true);
       return;
     }
 
@@ -134,6 +135,11 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setUserData({ ...userData, prayerGroups });
   };
 
+  const onRetry = () => {
+    setShowErrorScreen(false);
+    loadPrayerGroup();
+  };
+
   return {
     isLoading,
     setIsLoading,
@@ -144,5 +150,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     isRemoveUserLoading,
     onAddUser,
     isAddUserLoading,
+    showErrorScreen,
+    setShowErrorScreen,
+    onRetry,
   };
 };

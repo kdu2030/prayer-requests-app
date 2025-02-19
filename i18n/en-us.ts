@@ -6,10 +6,12 @@ export const englishTranslations = {
   "common.actions.save": "Save",
   "common.actions.preview": "Preview",
   "common.actions.cancel": "Cancel",
+  "common.actions.retry": "Retry",
 
   "loading.userData.text": "Loading user data",
   "loading.userData.label": "User Data",
   "loading.prayerGroup.text": "Loading prayer group",
+  "loading.prayerGroup.error": "Unable to load prayer group. Please try again.",
 
   "language.chooseLanguage.text": "Choose your language",
   "language.chooseLanguage.label": "Language",

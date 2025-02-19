@@ -1,9 +1,11 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
 import { View } from "react-native";
 import { Image } from "react-native";
 import { useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
 
+import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "./profile-picture";
 
 type Props = {
@@ -11,7 +13,6 @@ type Props = {
   description: string;
   profilePictureUri?: string;
   bannerUri?: string;
-  backgroundColor?: string;
   bannerTestID?: string;
   groupNameTestID?: string;
   descriptionTestID?: string;
@@ -25,17 +26,26 @@ export const GroupPreview: React.FC<Props> = ({
   bannerTestID,
   groupNameTestID,
   descriptionTestID,
-  backgroundColor,
 }) => {
   const theme = useTheme();
+  const { translate } = useI18N();
 
   return (
     <View
       className="rounded-lg border  flex flex-grow-0 overflow-hidden"
       style={{ borderColor: theme.colors.outline }}
     >
-      <View className="h-16" style={{ backgroundColor }} testID={bannerTestID}>
-        <Image source={{ uri: bannerUri }} className="h-full" />
+      <View className="h-20 bg-gray-300" testID={bannerTestID}>
+        {bannerUri ? (
+          <Image source={{ uri: bannerUri }} className="h-full" />
+        ) : (
+          <View className="w-full h-20 justify-center items-center">
+            <MaterialIcons name="image" size={28} color="#1f2937" />
+            <Text variant="bodySmall" className="text-gray-800 mt-1">
+              {translate("image.missing.label")}
+            </Text>
+          </View>
+        )}
       </View>
       <View
         className="p-4"

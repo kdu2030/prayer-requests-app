@@ -9,7 +9,7 @@ import { useCreatePrayerGroupWizard } from "./use-create-prayer-group-wizard";
 
 export const CreatePrayerGroupWizard: React.FC = () => {
   const theme = useTheme();
-  const { getWizardContent, getValidationSchema } =
+  const { getWizardContent, getValidationSchema, formikRef } =
     useCreatePrayerGroupWizard();
   const insets = useSafeAreaInsets();
 
@@ -18,6 +18,7 @@ export const CreatePrayerGroupWizard: React.FC = () => {
       initialValues={{ color: DEFAULT_COLOR }}
       onSubmit={() => {}}
       validationSchema={getValidationSchema()}
+      innerRef={formikRef}
     >
       <ScrollView
         contentContainerStyle={{

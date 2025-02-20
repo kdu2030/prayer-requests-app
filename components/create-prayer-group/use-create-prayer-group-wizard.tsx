@@ -1,3 +1,5 @@
+import { usePathname } from "expo-router";
+import { FormikProps } from "formik";
 import * as React from "react";
 import { ObjectSchema } from "yup";
 
@@ -17,6 +19,13 @@ export const useCreatePrayerGroupWizard = () => {
       CreatePrayerGroupWizardStep.NameDescriptionStep
     );
   const { translate, i18n } = useI18N();
+  const pathname = usePathname();
+  const formikRef = React.useRef<FormikProps<CreatePrayerGroupForm>>(null);
+
+  React.useEffect(() => {
+    formikRef.current?.resetForm();
+    setWizardStep(CreatePrayerGroupWizardStep.NameDescriptionStep);
+  }, [pathname]);
 
   const getWizardContent = (): React.ReactNode => {
     switch (wizardStep) {
@@ -48,5 +57,6 @@ export const useCreatePrayerGroupWizard = () => {
     setWizardStep,
     getWizardContent,
     getValidationSchema,
+    formikRef,
   };
 };

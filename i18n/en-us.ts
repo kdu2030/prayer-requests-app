@@ -93,4 +93,6 @@ export const englishTranslations = {
   "image.missing.label": "No Image",
 
   "prayerGroup.options.about": "About Prayer Group",
+
+  "prayerGroup.about.header": "About {{groupName}}",
 };

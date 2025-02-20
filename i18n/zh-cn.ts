@@ -92,4 +92,6 @@ export const chineseTranslations: Translations = {
   "prayerGroup.actions.groupOptions": "小组选项",
 
   "image.missing.label": "没有图片",
+
+  "prayerGroup.options.about": "关于祷告小组",
 };

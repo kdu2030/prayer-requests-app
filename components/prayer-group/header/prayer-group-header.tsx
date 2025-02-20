@@ -13,6 +13,7 @@ type Props = {
   isRemoveUserLoading: boolean;
   onAddUser: () => void;
   isAddUserLoading: boolean;
+  onOpenOptions: () => void;
 };
 
 export const PrayerGroupHeader: React.FC<Props> = ({
@@ -21,6 +22,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
   isRemoveUserLoading,
   onAddUser,
   isAddUserLoading,
+  onOpenOptions,
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
@@ -84,7 +86,12 @@ export const PrayerGroupHeader: React.FC<Props> = ({
           <Button icon="plus" className="flex-1" mode={"contained"}>
             {translate("prayerGroup.actions.addPrayerRequest")}
           </Button>
-          <Button icon="dots-horizontal" className="flex-1" mode={"outlined"}>
+          <Button
+            icon="dots-horizontal"
+            className="flex-1"
+            mode={"outlined"}
+            onPress={onOpenOptions}
+          >
             {translate("prayerGroup.actions.groupOptions")}
           </Button>
         </View>

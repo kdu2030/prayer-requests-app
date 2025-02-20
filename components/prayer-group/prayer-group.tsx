@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
@@ -7,6 +8,7 @@ import { ErrorScreen } from "../layouts/error-screen";
 import { ErrorSnackbar } from "../layouts/error-snackbar";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
+import { PrayerGroupOptions } from "./options/prayer-group-options";
 import { usePrayerGroupContext } from "./prayer-group-context";
 import { usePrayerGroup } from "./use-prayer-group";
 
@@ -30,6 +32,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     isAddUserLoading,
     showErrorScreen,
     onRetry,
+    prayerGroupOptionsRef,
+    onOpenOptions,
   } = usePrayerGroup(prayerGroupId);
 
   if (isLoading) {
@@ -50,6 +54,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
   return (
     <>
       <View
+        className="flex-1"
         style={{
           paddingLeft: left,
           paddingRight: right,
@@ -62,7 +67,10 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           isRemoveUserLoading={isRemoveUserLoading}
           onAddUser={onAddUser}
           onRemoveUser={onRemoveUser}
+          onOpenOptions={onOpenOptions}
         />
+
+        <PrayerGroupOptions bottomSheetRef={prayerGroupOptionsRef} />
 
         <ErrorSnackbar
           snackbarError={snackbarError}

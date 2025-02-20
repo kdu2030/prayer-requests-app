@@ -1,3 +1,5 @@
+import { BottomSheetProps } from "@gorhom/bottom-sheet";
+import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
 
 import { useDeletePrayerGroupUsers } from "../../api/delete-prayer-group-users";
@@ -27,6 +29,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const [snackbarError, setSnackbarError] = React.useState<string | undefined>(
     undefined
   );
+
+  const prayerGroupOptionsRef = React.useRef<
+    BottomSheetProps & BottomSheetMethods
+  >(null);
 
   const { userData, setUserData } = useApiDataContext();
 
@@ -137,6 +143,14 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     loadPrayerGroup();
   };
 
+  const onOpenOptions = () => {
+    if (!prayerGroupOptionsRef.current) {
+      return;
+    }
+
+    prayerGroupOptionsRef.current.snapToIndex(0);
+  };
+
   return {
     isLoading,
     setIsLoading,
@@ -149,5 +163,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     showErrorScreen,
     setShowErrorScreen,
     onRetry,
+    prayerGroupOptionsRef,
+    onOpenOptions,
   };
 };

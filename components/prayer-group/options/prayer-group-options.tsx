@@ -6,17 +6,23 @@ import BottomSheet, {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+import { router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
 import { Text, TouchableRipple, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
+import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 
 type Props = {
+  prayerGroupDetails?: PrayerGroupDetails;
   bottomSheetRef: React.RefObject<BottomSheetProps & BottomSheetMethods>;
 };
 
-export const PrayerGroupOptions: React.FC<Props> = ({ bottomSheetRef }) => {
+export const PrayerGroupOptions: React.FC<Props> = ({
+  prayerGroupDetails,
+  bottomSheetRef,
+}) => {
   const { translate } = useI18N();
   const theme = useTheme();
 
@@ -44,7 +50,13 @@ export const PrayerGroupOptions: React.FC<Props> = ({ bottomSheetRef }) => {
         <View className="px-4">
           <TouchableRipple
             rippleColor={"rgba(0, 0, 0, 0.12)"}
-            onPress={() => console.log("Pressed")}
+            onPress={() =>
+              prayerGroupDetails?.prayerGroupId &&
+              router.push({
+                pathname: "/(drawer)/prayergroup/[id]/about",
+                params: { id: prayerGroupDetails?.prayerGroupId },
+              })
+            }
             style={{ borderRadius: 8 }}
             borderless
           >

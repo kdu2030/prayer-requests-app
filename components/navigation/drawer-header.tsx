@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { DrawerHeaderProps } from "@react-navigation/drawer";
+import { usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -16,6 +17,12 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const { userData } = useApiDataContext();
   const theme = useTheme();
   const insets = useSafeAreaInsets();
+
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/prayergroup") && pathname.includes("about")) {
+    return null;
+  }
 
   return (
     <>

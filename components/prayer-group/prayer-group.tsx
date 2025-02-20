@@ -72,7 +72,10 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           onOpenOptions={onOpenOptions}
         />
 
-        <PrayerGroupOptions bottomSheetRef={prayerGroupOptionsRef} />
+        <PrayerGroupOptions
+          prayerGroupDetails={prayerGroupDetails}
+          bottomSheetRef={prayerGroupOptionsRef}
+        />
 
         <ErrorSnackbar
           snackbarError={snackbarError}

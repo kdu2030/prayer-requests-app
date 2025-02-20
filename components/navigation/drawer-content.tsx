@@ -4,7 +4,7 @@ import {
   DrawerContentScrollView,
   useDrawerStatus,
 } from "@react-navigation/drawer";
-import { router } from "expo-router";
+import { Href, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { View } from "react-native";
@@ -83,7 +83,9 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                       }
                       label={group.groupName ?? ""}
                       onPress={() =>
-                        router.push(`/prayergroup/${group.prayerGroupId}`)
+                        router.push(
+                          `/prayergroup/${group.prayerGroupId}` as Href<string>
+                        )
                       }
                       key={group.prayerGroupId}
                     />

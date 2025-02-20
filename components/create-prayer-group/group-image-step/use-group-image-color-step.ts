@@ -1,16 +1,21 @@
 import * as ImagePicker from "expo-image-picker";
+import { Href, router } from "expo-router";
 import { setNestedObjectValues, useFormikContext } from "formik";
 import { get, isEmpty } from "lodash";
 import * as React from "react";
 
 import { usePostFile } from "../../../api/post-file";
 import { usePostPrayerGroup } from "../../../api/post-prayer-group";
+import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import {
   mapFileToUpload,
   mapMediaFileFromImagePickerAsset,
 } from "../../../mappers/map-media-file";
-import { mapCreatePrayerGroupRequest } from "../../../mappers/map-prayer-group";
+import {
+  mapCreatePrayerGroupRequest,
+  mapPrayerGroupSummaryFromPrayerGroupDetails,
+} from "../../../mappers/map-prayer-group";
 import { ManagedErrorResponse } from "../../../types/error-handling";
 import { MediaFile, RawMediaFile } from "../../../types/media-file-types";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
@@ -33,6 +38,8 @@ export const useGroupImageColorStep = () => {
     setTouched,
     setErrors,
   } = useFormikContext<CreatePrayerGroupForm>();
+
+  const { userData, setUserData } = useApiDataContext();
 
   const postFile = usePostFile();
   const postPrayerGroup = usePostPrayerGroup();
@@ -120,8 +127,6 @@ export const useGroupImageColorStep = () => {
     );
     setIsLoading(false);
 
-    console.log(createPrayerGroupResponse);
-
     if (createPrayerGroupResponse.isError) {
       setSnackbarError(
         translate("toaster.failed.saveFailure", {
@@ -132,6 +137,28 @@ export const useGroupImageColorStep = () => {
     }
 
     // TODO: Redirect to new prayer group
+    const prayerGroupId = createPrayerGroupResponse.value.id;
+
+    const prayerGroupSummary = mapPrayerGroupSummaryFromPrayerGroupDetails(
+      createPrayerGroupResponse.value
+    );
+
+    const prayerGroups = [
+      ...(userData?.prayerGroups ?? []),
+      prayerGroupSummary,
+    ];
+
+    prayerGroups.sort(
+      (groupA, groupB) =>
+        (groupA.prayerGroupId ?? -1) - (groupB.prayerGroupId ?? -1)
+    );
+
+    setUserData({ ...userData, prayerGroups });
+    prayerGroupId &&
+      router.push({
+        pathname: "/prayergroup/[id]",
+        params: { id: prayerGroupId },
+      } as Href<any>);
   };
 
   return {

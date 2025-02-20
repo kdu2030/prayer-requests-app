@@ -69,3 +69,13 @@ export const mapPrayerGroupDetails = (
     bannerImageFile: mapMediaFile(rawPrayerGroupDetails.bannerImageFile),
   };
 };
+
+export const mapPrayerGroupSummaryFromPrayerGroupDetails = (
+  prayerGroupDetails: RawPrayerGroupDetails
+): PrayerGroupSummary => {
+  return {
+    prayerGroupId: prayerGroupDetails.id,
+    groupName: prayerGroupDetails.groupName,
+    imageFile: mapMediaFile(prayerGroupDetails.imageFile),
+  };
+};

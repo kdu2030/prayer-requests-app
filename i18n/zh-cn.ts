@@ -96,4 +96,5 @@ export const chineseTranslations: Translations = {
   "prayerGroup.options.about": "关于祷告小组",
 
   "prayerGroup.about.header": "关于{{groupName}}",
+  "prayerGroup.about.admins": "管理员",
 };

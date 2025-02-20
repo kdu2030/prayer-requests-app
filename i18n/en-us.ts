@@ -95,4 +95,5 @@ export const englishTranslations = {
   "prayerGroup.options.about": "About Prayer Group",
 
   "prayerGroup.about.header": "About {{groupName}}",
+  "prayerGroup.about.admins": "Admins",
 };

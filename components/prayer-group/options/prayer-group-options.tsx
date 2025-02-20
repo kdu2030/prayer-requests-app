@@ -60,7 +60,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
             style={{ borderRadius: 8 }}
             borderless
           >
-            <View className="flex-row gap-x-4 items-center py-4 px-2">
+            <View className="flex-row gap-x-3 items-center py-4 px-2">
               <MaterialCommunityIcons name="information" size={24} />
               <Text variant="bodyMedium">
                 {translate("prayerGroup.options.about")}

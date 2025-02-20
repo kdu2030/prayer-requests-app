@@ -1,5 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
   BottomSheetProps,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
@@ -18,6 +20,17 @@ export const PrayerGroupOptions: React.FC<Props> = ({ bottomSheetRef }) => {
   const { translate } = useI18N();
   const theme = useTheme();
 
+  const renderBackdrop = React.useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...props}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+      />
+    ),
+    []
+  );
+
   return (
     <BottomSheet
       snapPoints={["50%"]}
@@ -25,6 +38,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({ bottomSheetRef }) => {
       enablePanDownToClose
       ref={bottomSheetRef}
       backgroundStyle={{ backgroundColor: theme.colors.background }}
+      backdropComponent={renderBackdrop}
     >
       <BottomSheetView>
         <View className="px-4">

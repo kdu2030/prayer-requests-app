@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import Drawer from "expo-router/drawer";
 import * as React from "react";
 
 import { PrayerGroupContextProvider } from "../../../../components/prayer-group/prayer-group-context";
@@ -6,7 +6,7 @@ import { PrayerGroupContextProvider } from "../../../../components/prayer-group/
 const PrayerGroupLayout: React.FC = () => {
   return (
     <PrayerGroupContextProvider>
-      <Stack screenOptions={{ headerShown: false }} />
+      <Drawer screenOptions={{ headerShown: false }} />
     </PrayerGroupContextProvider>
   );
 };

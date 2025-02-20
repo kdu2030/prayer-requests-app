@@ -63,7 +63,13 @@ export const GroupPreview: React.FC<Props> = ({
             {groupName}
           </Text>
         </View>
-        <Text className="mt-3" variant="bodyLarge" testID={descriptionTestID}>
+        <Text
+          className="mt-3"
+          variant="bodyLarge"
+          numberOfLines={2}
+          ellipsizeMode="tail"
+          testID={descriptionTestID}
+        >
           {description}
         </Text>
       </View>

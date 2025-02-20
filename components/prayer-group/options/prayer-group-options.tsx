@@ -67,6 +67,26 @@ export const PrayerGroupOptions: React.FC<Props> = ({
               </Text>
             </View>
           </TouchableRipple>
+
+          <TouchableRipple
+            rippleColor={"rgba(0, 0, 0, 0.12)"}
+            onPress={() =>
+              prayerGroupDetails?.prayerGroupId &&
+              router.push({
+                pathname: "/(drawer)/prayergroup/[id]/about",
+                params: { id: prayerGroupDetails?.prayerGroupId },
+              })
+            }
+            style={{ borderRadius: 8 }}
+            borderless
+          >
+            <View className="flex-row gap-x-3 items-center py-4 px-2">
+              <MaterialCommunityIcons name="pencil" size={24} />
+              <Text variant="bodyMedium">
+                {translate("prayerGroup.options.editPrayerGroup")}
+              </Text>
+            </View>
+          </TouchableRipple>
         </View>
       </BottomSheetView>
     </BottomSheet>

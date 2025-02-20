@@ -94,6 +94,7 @@ export const chineseTranslations: Translations = {
   "image.missing.label": "没有图片",
 
   "prayerGroup.options.about": "关于祷告小组",
+  "prayerGroup.options.editPrayerGroup": "编辑祷告小组",
 
   "prayerGroup.about.header": "关于{{groupName}}",
   "prayerGroup.about.admins": "管理员",

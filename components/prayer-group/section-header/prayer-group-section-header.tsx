@@ -24,7 +24,11 @@ export const PrayerGroupSectionHeader: React.FC<Props> = ({ title }) => {
           <MaterialCommunityIcons name="close" size={28} color="white" />
         </TouchableOpacity>
 
-        <Text variant="titleLarge" className="ml-2 text-white font-bold">
+        <Text
+          variant="titleLarge"
+          className="ml-2 text-white font-bold"
+          numberOfLines={1}
+        >
           {title}
         </Text>
       </View>

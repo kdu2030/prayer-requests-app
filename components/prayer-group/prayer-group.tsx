@@ -7,7 +7,6 @@ import { ErrorScreen } from "../layouts/error-screen";
 import { ErrorSnackbar } from "../layouts/error-snackbar";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
-import { usePrayerGroupContext } from "./prayer-group-context";
 import { usePrayerGroup } from "./use-prayer-group";
 
 type Props = {
@@ -18,10 +17,9 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
   const { left, right, bottom } = useSafeAreaInsets();
   const { translate } = useI18N();
 
-  const { prayerGroupDetails } = usePrayerGroupContext();
-
   const {
     isLoading,
+    prayerGroupDetails,
     snackbarError,
     setSnackbarError,
     isRemoveUserLoading,
@@ -69,6 +67,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           setSnackbarError={setSnackbarError}
         />
       </View>
+
+      {/** Note: Add spinner instead of skeleton */}
     </>
   );
 };

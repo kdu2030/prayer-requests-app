@@ -10,14 +10,17 @@ import { PrayerGroupRole } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { mapPrayerGroupDetails } from "../../mappers/map-prayer-group";
-import { PrayerGroupSummary } from "../../types/prayer-group-types";
-import { usePrayerGroupContext } from "./prayer-group-context";
+import {
+  PrayerGroupDetails,
+  PrayerGroupSummary,
+} from "../../types/prayer-group-types";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [showErrorScreen, setShowErrorScreen] = React.useState<boolean>(false);
 
-  const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
+  const [prayerGroupDetails, setPrayerGroupDetails] =
+    React.useState<PrayerGroupDetails>();
 
   const [isRemoveUserLoading, setIsRemoveUserLoading] =
     React.useState<boolean>(false);
@@ -52,7 +55,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     const loadedPrayerGroupDetails = mapPrayerGroupDetails(response.value);
     setPrayerGroupDetails(loadedPrayerGroupDetails);
-  }, [getPrayerGroup, prayerGroupId, setPrayerGroupDetails]);
+  }, [getPrayerGroup, prayerGroupId]);
 
   React.useEffect(() => {
     loadPrayerGroup();
@@ -140,6 +143,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   return {
     isLoading,
     setIsLoading,
+    prayerGroupDetails,
     snackbarError,
     setSnackbarError,
     onRemoveUser,

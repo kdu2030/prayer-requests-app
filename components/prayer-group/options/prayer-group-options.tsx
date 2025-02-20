@@ -6,7 +6,7 @@ import BottomSheet, {
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
 import { View } from "react-native";
-import { Text } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
 
@@ -16,6 +16,7 @@ type Props = {
 
 export const PrayerGroupOptions: React.FC<Props> = ({ bottomSheetRef }) => {
   const { translate } = useI18N();
+  const theme = useTheme();
 
   return (
     <BottomSheet
@@ -23,6 +24,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({ bottomSheetRef }) => {
       index={-1}
       enablePanDownToClose
       ref={bottomSheetRef}
+      backgroundStyle={{ backgroundColor: theme.colors.background }}
     >
       <BottomSheetView>
         {/* <TouchableRipple

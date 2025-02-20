@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
@@ -19,6 +19,7 @@ type Props = {
 export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
   const { left, right, bottom } = useSafeAreaInsets();
   const { translate } = useI18N();
+  const theme = useTheme();
 
   const { prayerGroupDetails } = usePrayerGroupContext();
 
@@ -59,6 +60,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           paddingLeft: left,
           paddingRight: right,
           paddingBottom: bottom,
+          backgroundColor: theme.colors.background,
         }}
       >
         <PrayerGroupHeader

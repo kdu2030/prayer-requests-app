@@ -6,7 +6,7 @@ import BottomSheet, {
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
 import { View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { Text, TouchableRipple, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
 
@@ -27,17 +27,21 @@ export const PrayerGroupOptions: React.FC<Props> = ({ bottomSheetRef }) => {
       backgroundStyle={{ backgroundColor: theme.colors.background }}
     >
       <BottomSheetView>
-        {/* <TouchableRipple
-          rippleColor={"rgba(0, 0, 0, 0.5)"}
-          className="flex gap-x-4"
-        > */}
-        <View>
-          <MaterialCommunityIcons name="information" size={24} />
-          <Text variant="bodyMedium">
-            {translate("prayerGroup.options.about")}
-          </Text>
+        <View className="px-4">
+          <TouchableRipple
+            rippleColor={"rgba(0, 0, 0, 0.12)"}
+            onPress={() => console.log("Pressed")}
+            style={{ borderRadius: 8 }}
+            borderless
+          >
+            <View className="flex-row gap-x-4 items-center py-4 px-2">
+              <MaterialCommunityIcons name="information" size={24} />
+              <Text variant="bodyMedium">
+                {translate("prayerGroup.options.about")}
+              </Text>
+            </View>
+          </TouchableRipple>
         </View>
-        {/* </TouchableRipple> */}
       </BottomSheetView>
     </BottomSheet>
   );

@@ -1,13 +1,9 @@
 import * as React from "react";
-import { Text } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
+
+import { PrayerGroupAbout } from "../../../../components/prayer-group/about/prayer-group-about";
 
 const PrayerGroupAboutContainer: React.FC = () => {
-  return (
-    <SafeAreaView>
-      <Text>Prayer Group About</Text>
-    </SafeAreaView>
-  );
+  return <PrayerGroupAbout />;
 };
 
 export default PrayerGroupAboutContainer;

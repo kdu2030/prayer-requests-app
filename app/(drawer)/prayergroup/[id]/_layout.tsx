@@ -6,7 +6,7 @@ import { PrayerGroupContextProvider } from "../../../../components/prayer-group/
 const PrayerGroupLayout: React.FC = () => {
   return (
     <PrayerGroupContextProvider>
-      <Drawer screenOptions={{ headerShown: false }} />
+      <Drawer screenOptions={{ headerShown: false }} backBehavior="history" />
     </PrayerGroupContextProvider>
   );
 };

@@ -51,7 +51,7 @@ export const PrayerGroupAbout: React.FC = () => {
             <View>
               {prayerGroupDetails?.admins?.map((admin) => {
                 return (
-                  <View className="flex-row items-center">
+                  <View className="flex-row items-center" key={admin.userId}>
                     <ProfilePicture
                       url={admin.image?.url}
                       width={28}

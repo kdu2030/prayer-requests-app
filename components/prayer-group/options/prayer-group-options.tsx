@@ -73,7 +73,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
             onPress={() =>
               prayerGroupDetails?.prayerGroupId &&
               router.push({
-                pathname: "/(drawer)/prayergroup/[id]/about",
+                pathname: "/(drawer)/prayergroup/[id]/edit",
                 params: { id: prayerGroupDetails?.prayerGroupId },
               })
             }

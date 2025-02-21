@@ -20,7 +20,10 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
 
   const pathname = usePathname();
 
-  if (pathname.startsWith("/prayergroup") && pathname.includes("about")) {
+  if (
+    pathname.startsWith("/prayergroup") &&
+    (pathname.includes("about") || pathname.includes("edit"))
+  ) {
     return null;
   }
 

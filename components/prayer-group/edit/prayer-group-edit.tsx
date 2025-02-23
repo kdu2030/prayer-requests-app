@@ -2,13 +2,14 @@ import { Formik } from "formik";
 import * as React from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { Button, useTheme } from "react-native-paper";
+import { Button, HelperText, useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../../hooks/use-i18n";
 import { TextInput } from "../../inputs/text-input";
 import { GroupPreview } from "../../layouts/group-preview";
+import { SelectedImageCard } from "../../layouts/selected-image-card";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
 
@@ -36,7 +37,7 @@ export const PrayerGroupEdit: React.FC = () => {
             validateOnBlur
             validateOnChange={false}
           >
-            {({ values }) => (
+            {({ values, errors }) => (
               <>
                 <Button mode="contained" className="self-end">
                   {translate("common.actions.save")}
@@ -100,6 +101,43 @@ export const PrayerGroupEdit: React.FC = () => {
                     )}
                   </Button>
                 </View>
+
+                {values.imageFile && (
+                  <>
+                    <SelectedImageCard
+                      onRemoveImage={() => {}}
+                      fileName={values.imageFile.fileName ?? ""}
+                    />
+                    {errors.imageFile && (
+                      <HelperText type="error">{errors.imageFile}</HelperText>
+                    )}
+                  </>
+                )}
+
+                <View className="mt-6 flex flex-row items-center">
+                  <Text variant="bodyLarge" className="w-1/2">
+                    {translate("createPrayerGroup.groupImageColorStep.banner")}
+                  </Text>
+                  <Button mode="outlined" className="w-1/2" onPress={() => {}}>
+                    {translate(
+                      "createPrayerGroup.groupImageColorStep.selectImage"
+                    )}
+                  </Button>
+                </View>
+
+                {values.bannerImageFile && (
+                  <>
+                    <SelectedImageCard
+                      onRemoveImage={() => {}}
+                      fileName={values.bannerImageFile.fileName ?? ""}
+                    />
+                    {errors.bannerImageFile && (
+                      <HelperText type="error">
+                        {errors.bannerImageFile}
+                      </HelperText>
+                    )}
+                  </>
+                )}
               </>
             )}
           </Formik>

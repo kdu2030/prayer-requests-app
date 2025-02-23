@@ -59,7 +59,7 @@ export const useGroupImageColorStep = () => {
       }
 
       setFieldValue(fieldName, mapMediaFileFromImagePickerAsset(imageResult));
-      setFieldTouched(fieldName, true);
+      setTimeout(() => setFieldTouched(fieldName, true), 0);
     } catch (error) {
       setSnackbarError(
         translate("createPrayerGroup.groupImageColorStep.unableToSelectImage")
@@ -71,7 +71,8 @@ export const useGroupImageColorStep = () => {
     if (!get(values, fieldName)) {
       return;
     }
-    setFieldValue(fieldName, undefined);
+
+    setFieldValue(fieldName, undefined, true);
   };
 
   const uploadPrayerGroupImage = async (

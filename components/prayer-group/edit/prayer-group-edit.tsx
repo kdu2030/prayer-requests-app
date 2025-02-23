@@ -6,7 +6,9 @@ import { Button, HelperText, useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { TEXT_INPUT_MAX_LENGTH } from "../../../constants/input-constants";
 import { useI18N } from "../../../hooks/use-i18n";
+import { SupportedLanguages } from "../../../types/languages";
 import { TextInput } from "../../inputs/text-input";
 import { ErrorSnackbar } from "../../layouts/error-snackbar";
 import { GroupPreview } from "../../layouts/group-preview";
@@ -18,7 +20,7 @@ import { usePrayerGroupEdit } from "./use-prayer-group-edit";
 
 export const PrayerGroupEdit: React.FC = () => {
   const theme = useTheme();
-  const { translate } = useI18N();
+  const { translate, i18n } = useI18N();
   const { prayerGroupDetails } = usePrayerGroupContext();
 
   const {
@@ -44,7 +46,10 @@ export const PrayerGroupEdit: React.FC = () => {
         <View className="p-4">
           <Formik
             initialValues={prayerGroupDetails ?? {}}
-            validationSchema={prayerGroupDetailsValidationSchema(translate)}
+            validationSchema={prayerGroupDetailsValidationSchema(
+              translate,
+              i18n.language as SupportedLanguages
+            )}
             onSubmit={() => {}}
             validateOnBlur
             validateOnChange={false}
@@ -77,6 +82,7 @@ export const PrayerGroupEdit: React.FC = () => {
                   label={translate(
                     "createPrayerGroup.groupNameDescription.groupName"
                   )}
+                  maxLength={TEXT_INPUT_MAX_LENGTH}
                   required
                 />
 

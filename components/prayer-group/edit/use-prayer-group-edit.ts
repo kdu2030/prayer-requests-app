@@ -45,7 +45,7 @@ export const usePrayerGroupEdit = () => {
       }
 
       setFieldValue(fieldName, mapMediaFileFromImagePickerAsset(imageResult));
-      setFieldTouched(fieldName, true);
+      setTimeout(() => setFieldTouched(fieldName, true), 0);
     } catch (error) {
       setSnackbarError(
         translate("createPrayerGroup.groupImageColorStep.unableToSelectImage")
@@ -61,7 +61,7 @@ export const usePrayerGroupEdit = () => {
     const { setFieldValue, setFieldTouched } = formikRef.current;
 
     setFieldValue(fieldName, undefined);
-    setFieldTouched(fieldName, true);
+    setTimeout(() => setFieldTouched(fieldName, true), 0);
   };
 
   return {

@@ -15,6 +15,7 @@ export const validateFileSizeFromFilePath = async (
   if (!fileInfo.exists) {
     return true;
   }
+
   return fileInfo.size < maxFileSizeBytes;
 };
 

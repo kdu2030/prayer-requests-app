@@ -53,10 +53,22 @@ export const usePrayerGroupEdit = () => {
     }
   };
 
+  const clearField = (fieldName: string) => {
+    if (!formikRef.current) {
+      return;
+    }
+
+    const { setFieldValue, setFieldTouched } = formikRef.current;
+
+    setFieldValue(fieldName, undefined);
+    setFieldTouched(fieldName, true);
+  };
+
   return {
     formikRef,
     snackbarError,
     setSnackbarError,
     selectImage,
+    clearField,
   };
 };

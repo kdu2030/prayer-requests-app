@@ -21,8 +21,13 @@ export const PrayerGroupEdit: React.FC = () => {
   const { translate } = useI18N();
   const { prayerGroupDetails } = usePrayerGroupContext();
 
-  const { formikRef, snackbarError, setSnackbarError, selectImage } =
-    usePrayerGroupEdit();
+  const {
+    formikRef,
+    snackbarError,
+    setSnackbarError,
+    selectImage,
+    clearField,
+  } = usePrayerGroupEdit();
 
   return (
     <SafeAreaView
@@ -116,7 +121,7 @@ export const PrayerGroupEdit: React.FC = () => {
                 {values.imageFile && (
                   <>
                     <SelectedImageCard
-                      onRemoveImage={() => {}}
+                      onRemoveImage={() => clearField("imageFile")}
                       fileName={values.imageFile.fileName ?? ""}
                     />
                     {errors.imageFile && (
@@ -143,7 +148,7 @@ export const PrayerGroupEdit: React.FC = () => {
                 {values.bannerImageFile && (
                   <>
                     <SelectedImageCard
-                      onRemoveImage={() => {}}
+                      onRemoveImage={() => clearField("bannerImageFile")}
                       fileName={values.bannerImageFile.fileName ?? ""}
                     />
                     {errors.bannerImageFile && (

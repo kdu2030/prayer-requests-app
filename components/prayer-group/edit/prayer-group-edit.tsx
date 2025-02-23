@@ -12,11 +12,14 @@ import { GroupPreview } from "../../layouts/group-preview";
 import { SelectedImageCard } from "../../layouts/selected-image-card";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
+import { usePrayerGroupEdit } from "./use-prayer-group-edit";
 
 export const PrayerGroupEdit: React.FC = () => {
   const theme = useTheme();
   const { translate } = useI18N();
   const { prayerGroupDetails } = usePrayerGroupContext();
+
+  const { formikRef } = usePrayerGroupEdit();
 
   return (
     <SafeAreaView
@@ -36,6 +39,7 @@ export const PrayerGroupEdit: React.FC = () => {
             onSubmit={() => {}}
             validateOnBlur
             validateOnChange={false}
+            innerRef={formikRef}
           >
             {({ values, errors }) => (
               <>

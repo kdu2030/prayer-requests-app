@@ -99,4 +99,5 @@ export const englishTranslations = {
   "prayerGroup.about.admins": "Admins",
 
   "prayerGroup.edit.header": "Edit {{groupName}}",
+  "prayerGroup.edit.images": "Images",
 };

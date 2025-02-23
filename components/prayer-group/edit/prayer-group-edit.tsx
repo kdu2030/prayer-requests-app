@@ -29,6 +29,8 @@ export const PrayerGroupEdit: React.FC = () => {
     setSnackbarError,
     selectImage,
     clearField,
+    isLoading,
+    savePrayerGroupEdit,
   } = usePrayerGroupEdit();
 
   return (
@@ -50,14 +52,19 @@ export const PrayerGroupEdit: React.FC = () => {
               translate,
               i18n.language as SupportedLanguages
             )}
-            onSubmit={() => {}}
+            onSubmit={savePrayerGroupEdit}
             validateOnBlur
             validateOnChange={false}
             innerRef={formikRef}
           >
-            {({ values, errors }) => (
+            {({ values, errors, submitForm }) => (
               <>
-                <Button mode="contained" className="self-end">
+                <Button
+                  mode="contained"
+                  className="self-end"
+                  loading={isLoading}
+                  onPress={submitForm}
+                >
                   {translate("common.actions.save")}
                 </Button>
 

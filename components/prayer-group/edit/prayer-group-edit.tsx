@@ -61,7 +61,7 @@ export const PrayerGroupEdit: React.FC = () => {
                   {translate("common.actions.save")}
                 </Button>
 
-                <Text className="font-bold mb-2" variant="bodyLarge">
+                <Text className="font-bold mb-3" variant="bodyLarge">
                   {translate("common.actions.preview")}
                 </Text>
 
@@ -72,13 +72,13 @@ export const PrayerGroupEdit: React.FC = () => {
                   description={values?.description ?? ""}
                 />
 
-                <Text className="font-bold mt-4" variant="bodyLarge">
+                <Text className="font-bold mt-5" variant="bodyLarge">
                   {translate("prayerGroup.options.about")}
                 </Text>
 
                 <TextInput
                   name="groupName"
-                  className="mt-2"
+                  className="mt-3"
                   label={translate(
                     "createPrayerGroup.groupNameDescription.groupName"
                   )}
@@ -88,7 +88,7 @@ export const PrayerGroupEdit: React.FC = () => {
 
                 <TextInput
                   name="description"
-                  className="mt-4"
+                  className="mt-5"
                   label={translate(
                     "createPrayerGroup.groupNameDescription.description"
                   )}
@@ -99,17 +99,17 @@ export const PrayerGroupEdit: React.FC = () => {
 
                 <TextInput
                   name="rules"
-                  className="mt-4"
+                  className="mt-5"
                   label={translate("createPrayerGroup.rules.label")}
                   multiline
                   numberOfLines={5}
                 />
 
-                <Text variant="bodyLarge" className="font-bold mt-4">
+                <Text variant="bodyLarge" className="font-bold mt-5">
                   {translate("prayerGroup.edit.images")}
                 </Text>
 
-                <View className="mt-4 flex flex-row items-center">
+                <View className="mt-5 flex flex-row items-center">
                   <Text variant="bodyLarge" className="w-1/2">
                     {translate("createPrayerGroup.groupImageColorStep.image")}
                   </Text>

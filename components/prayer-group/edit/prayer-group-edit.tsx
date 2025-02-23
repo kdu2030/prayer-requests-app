@@ -12,6 +12,7 @@ import { GroupPreview } from "../../layouts/group-preview";
 import { SelectedImageCard } from "../../layouts/selected-image-card";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
+import { prayerGroupDetailsValidationSchema } from "./prayer-group-details-validation-schema";
 import { usePrayerGroupEdit } from "./use-prayer-group-edit";
 
 export const PrayerGroupEdit: React.FC = () => {
@@ -36,6 +37,7 @@ export const PrayerGroupEdit: React.FC = () => {
         <View className="p-4">
           <Formik
             initialValues={prayerGroupDetails ?? {}}
+            validationSchema={prayerGroupDetailsValidationSchema(translate)}
             onSubmit={() => {}}
             validateOnBlur
             validateOnChange={false}
@@ -88,7 +90,6 @@ export const PrayerGroupEdit: React.FC = () => {
                   label={translate("createPrayerGroup.rules.label")}
                   multiline
                   numberOfLines={5}
-                  required
                 />
 
                 <Text variant="bodyLarge" className="font-bold mt-4">

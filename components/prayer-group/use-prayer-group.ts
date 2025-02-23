@@ -97,10 +97,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     };
 
     const prayerGroups = [...(userData.prayerGroups ?? []), prayerGroupSummary];
-    prayerGroups.sort(
-      (groupA, groupB) =>
-        (groupA.prayerGroupId ?? -1) - (groupB.prayerGroupId ?? -1)
-    );
 
     setPrayerGroupDetails({
       ...prayerGroupDetails,

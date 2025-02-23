@@ -148,11 +148,6 @@ export const useGroupImageColorStep = () => {
       prayerGroupSummary,
     ];
 
-    prayerGroups.sort(
-      (groupA, groupB) =>
-        (groupA.prayerGroupId ?? -1) - (groupB.prayerGroupId ?? -1)
-    );
-
     setUserData({ ...userData, prayerGroups });
     prayerGroupId &&
       router.push({

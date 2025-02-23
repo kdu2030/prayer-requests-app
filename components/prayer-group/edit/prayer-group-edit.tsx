@@ -8,6 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../../hooks/use-i18n";
 import { TextInput } from "../../inputs/text-input";
+import { ErrorSnackbar } from "../../layouts/error-snackbar";
 import { GroupPreview } from "../../layouts/group-preview";
 import { SelectedImageCard } from "../../layouts/selected-image-card";
 import { usePrayerGroupContext } from "../prayer-group-context";
@@ -20,7 +21,8 @@ export const PrayerGroupEdit: React.FC = () => {
   const { translate } = useI18N();
   const { prayerGroupDetails } = usePrayerGroupContext();
 
-  const { formikRef } = usePrayerGroupEdit();
+  const { formikRef, snackbarError, setSnackbarError, selectImage } =
+    usePrayerGroupEdit();
 
   return (
     <SafeAreaView
@@ -100,7 +102,11 @@ export const PrayerGroupEdit: React.FC = () => {
                   <Text variant="bodyLarge" className="w-1/2">
                     {translate("createPrayerGroup.groupImageColorStep.image")}
                   </Text>
-                  <Button mode="outlined" className="w-1/2">
+                  <Button
+                    mode="outlined"
+                    className="w-1/2"
+                    onPress={() => selectImage("imageFile", [1, 1])}
+                  >
                     {translate(
                       "createPrayerGroup.groupImageColorStep.selectImage"
                     )}
@@ -123,7 +129,11 @@ export const PrayerGroupEdit: React.FC = () => {
                   <Text variant="bodyLarge" className="w-1/2">
                     {translate("createPrayerGroup.groupImageColorStep.banner")}
                   </Text>
-                  <Button mode="outlined" className="w-1/2" onPress={() => {}}>
+                  <Button
+                    mode="outlined"
+                    className="w-1/2"
+                    onPress={() => selectImage("bannerImageFile", [10, 3])}
+                  >
                     {translate(
                       "createPrayerGroup.groupImageColorStep.selectImage"
                     )}
@@ -146,6 +156,11 @@ export const PrayerGroupEdit: React.FC = () => {
               </>
             )}
           </Formik>
+
+          <ErrorSnackbar
+            snackbarError={snackbarError}
+            setSnackbarError={setSnackbarError}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

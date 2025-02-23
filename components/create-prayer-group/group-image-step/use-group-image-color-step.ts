@@ -136,7 +136,6 @@ export const useGroupImageColorStep = () => {
       return;
     }
 
-    // TODO: Redirect to new prayer group
     const prayerGroupId = createPrayerGroupResponse.value.id;
 
     const prayerGroupSummary = mapPrayerGroupSummaryFromPrayerGroupDetails(

@@ -1,6 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import { usePathname } from "expo-router";
-import { FormikProps } from "formik";
+import { FormikHelpers, FormikProps } from "formik";
 import * as React from "react";
 
 import { useI18N } from "../../../hooks/use-i18n";
@@ -63,6 +63,11 @@ export const usePrayerGroupEdit = () => {
     setFieldValue(fieldName, undefined);
     setTimeout(() => setFieldTouched(fieldName, true), 0);
   };
+
+  const savePrayerGroupEdit = (
+    values: PrayerGroupDetails,
+    formikHelpers: FormikHelpers<PrayerGroupDetails>
+  ) => {};
 
   return {
     formikRef,

@@ -1,4 +1,5 @@
 import { PostCreatePrayerGroupRequest } from "../api/post-prayer-group";
+import { PutPrayerGroupRequest } from "../api/put-prayer-group";
 import { CreatePrayerGroupForm } from "../components/create-prayer-group/create-prayer-group-types";
 import {
   PrayerGroupAdminSummary,
@@ -77,5 +78,17 @@ export const mapPrayerGroupSummaryFromPrayerGroupDetails = (
     prayerGroupId: prayerGroupDetails.id,
     groupName: prayerGroupDetails.groupName,
     imageFile: mapMediaFile(prayerGroupDetails.imageFile),
+  };
+};
+
+export const mapPrayerGroupToPutPrayerGroupRequest = (
+  prayerGroupDetails: PrayerGroupDetails
+): PutPrayerGroupRequest => {
+  return {
+    groupName: prayerGroupDetails.groupName,
+    description: prayerGroupDetails.description,
+    rules: prayerGroupDetails.rules,
+    imageFileId: prayerGroupDetails.imageFile?.mediaFileId,
+    bannerImageFileId: prayerGroupDetails.bannerImageFile?.mediaFileId,
   };
 };

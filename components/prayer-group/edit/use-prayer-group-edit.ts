@@ -4,14 +4,17 @@ import { FormikHelpers, FormikProps } from "formik";
 import * as React from "react";
 
 import { usePostFile } from "../../../api/post-file";
+import { usePutPrayerGroup } from "../../../api/put-prayer-group";
 import { useI18N } from "../../../hooks/use-i18n";
 import {
   mapFileToUpload,
   mapMediaFile,
   mapMediaFileFromImagePickerAsset,
 } from "../../../mappers/map-media-file";
+import { mapPrayerGroupToPutPrayerGroupRequest } from "../../../mappers/map-prayer-group";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { usePrayerGroupContext } from "../prayer-group-context";
+import { UNIQUE_GROUP_NAME_ERROR } from "./edit-prayer-group-constants";
 
 export const usePrayerGroupEdit = () => {
   const { translate } = useI18N();
@@ -21,6 +24,7 @@ export const usePrayerGroupEdit = () => {
   const pathname = usePathname();
 
   const postFile = usePostFile();
+  const putPrayerGroup = usePutPrayerGroup();
 
   const [snackbarError, setSnackbarError] = React.useState<
     string | undefined
@@ -72,8 +76,12 @@ export const usePrayerGroupEdit = () => {
     setTimeout(() => setFieldTouched(fieldName, true), 0);
   };
 
-  const savePrayerGroupEdit = async (values: PrayerGroupDetails) => {
+  const savePrayerGroupEdit = async (
+    values: PrayerGroupDetails,
+    formikHelpers: FormikHelpers<PrayerGroupDetails>
+  ) => {
     const valuesToSubmit: PrayerGroupDetails = { ...values };
+    const { setFieldError } = formikHelpers;
 
     setIsLoading(true);
     let imageFilePromise;
@@ -98,6 +106,7 @@ export const usePrayerGroupEdit = () => {
           item: translate("createPrayerGroup.groupImageColorStep.image"),
         })
       );
+      setIsLoading(false);
       return;
     }
 
@@ -109,9 +118,36 @@ export const usePrayerGroupEdit = () => {
       valuesToSubmit.bannerImageFile = mapMediaFile(bannerImageResponse.value);
     }
 
+    const putPrayerGroupResponse = await putPrayerGroup(
+      valuesToSubmit.prayerGroupId ?? -1,
+      mapPrayerGroupToPutPrayerGroupRequest(valuesToSubmit)
+    );
     setIsLoading(false);
 
-    console.log(valuesToSubmit);
+    if (
+      putPrayerGroupResponse.isError &&
+      putPrayerGroupResponse.error?.dataValidationErrors.includes(
+        UNIQUE_GROUP_NAME_ERROR
+      )
+    ) {
+      setFieldError(
+        "groupName",
+        translate("form.validation.unique.error", {
+          field: translate(
+            "createPrayerGroup.groupNameDescription.groupName"
+          ).toLocaleLowerCase(),
+        })
+      );
+      return;
+    }
+
+    if (putPrayerGroupResponse.isError) {
+      setSnackbarError(
+        translate("toaster.failed.updateFailure", {
+          item: translate("prayerGroup.label"),
+        })
+      );
+    }
   };
 
   return {

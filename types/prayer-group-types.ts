@@ -1,16 +1,18 @@
 import { PrayerGroupRole } from "../constants/prayer-group-constants";
 import { MediaFile, RawMediaFile } from "./media-file-types";
 
-export type RawPrayerGroupAdminSummary = {
+export type RawPrayerGroupUserSummary = {
   id?: number;
   fullName?: string;
   image?: RawMediaFile;
+  role?: PrayerGroupRole;
 };
 
-export type PrayerGroupAdminSummary = {
+export type PrayerGroupUserSummary = {
   userId?: number;
   fullName?: string;
   image?: MediaFile;
+  role?: PrayerGroupRole;
 };
 
 export type RawPrayerGroupDetails = {
@@ -21,7 +23,7 @@ export type RawPrayerGroupDetails = {
   color?: string;
   isUserJoined?: boolean;
   userRole?: PrayerGroupRole;
-  admins?: RawPrayerGroupAdminSummary[];
+  admins?: RawPrayerGroupUserSummary[];
   imageFile?: RawMediaFile;
   bannerImageFile?: RawMediaFile;
 };
@@ -34,7 +36,7 @@ export type PrayerGroupDetails = {
   color?: string;
   isUserJoined?: boolean;
   userRole?: PrayerGroupRole;
-  admins?: PrayerGroupAdminSummary[];
+  admins?: PrayerGroupUserSummary[];
   imageFile?: MediaFile;
   bannerImageFile?: MediaFile;
 };

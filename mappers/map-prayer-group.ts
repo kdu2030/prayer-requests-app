@@ -2,12 +2,12 @@ import { PostCreatePrayerGroupRequest } from "../api/post-prayer-group";
 import { PutPrayerGroupRequest } from "../api/put-prayer-group";
 import { CreatePrayerGroupForm } from "../components/create-prayer-group/create-prayer-group-types";
 import {
-  PrayerGroupAdminSummary,
   PrayerGroupDetails,
   PrayerGroupSummary,
-  RawPrayerGroupAdminSummary,
+  PrayerGroupUserSummary,
   RawPrayerGroupDetails,
   RawPrayerGroupSummary,
+  RawPrayerGroupUserSummary,
 } from "../types/prayer-group-types";
 import { mapMediaFile } from "./map-media-file";
 
@@ -41,12 +41,13 @@ export const mapPrayerGroupSummary = (
 };
 
 export const mapPrayerGroupAdmin = (
-  rawPrayerGroupAdmin: RawPrayerGroupAdminSummary
-): PrayerGroupAdminSummary => {
+  rawPrayerGroupAdmin: RawPrayerGroupUserSummary
+): PrayerGroupUserSummary => {
   return {
     userId: rawPrayerGroupAdmin.id,
     image: mapMediaFile(rawPrayerGroupAdmin.image),
     fullName: rawPrayerGroupAdmin.fullName,
+    role: rawPrayerGroupAdmin.role,
   };
 };
 

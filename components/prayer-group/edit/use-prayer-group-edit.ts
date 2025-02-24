@@ -202,6 +202,9 @@ export const usePrayerGroupEdit = () => {
     const updatedPrayerGroupDetails: PrayerGroupDetails = {
       ...prayerGroupDetails,
       ...responsePrayerGroupDetails,
+      isUserJoined: prayerGroupDetails?.isUserJoined,
+      userRole: prayerGroupDetails?.userRole,
+      admins: prayerGroupDetails?.admins,
     };
 
     const prayerGroupSummary = mapPrayerGroupSummaryFromPrayerGroupDetails(

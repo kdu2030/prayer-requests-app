@@ -3,6 +3,7 @@ import { Href, router, usePathname } from "expo-router";
 import { FormikHelpers, FormikProps } from "formik";
 import * as React from "react";
 
+import { useDeleteFile } from "../../../api/delete-file";
 import { usePostFile } from "../../../api/post-file";
 import { usePutPrayerGroup } from "../../../api/put-prayer-group";
 import { useApiDataContext } from "../../../hooks/use-api-data";
@@ -32,6 +33,7 @@ export const usePrayerGroupEdit = () => {
 
   const postFile = usePostFile();
   const putPrayerGroup = usePutPrayerGroup();
+  const deleteFile = useDeleteFile();
 
   const [snackbarError, setSnackbarError] = React.useState<
     string | undefined
@@ -81,6 +83,39 @@ export const usePrayerGroupEdit = () => {
 
     setFieldValue(fieldName, undefined);
     setTimeout(() => setFieldTouched(fieldName, true), 0);
+  };
+
+  const removeUnusedPrayerGroupFiles = async (
+    originalPrayerGroup: PrayerGroupDetails,
+    updatedPrayerGroupDetails: PrayerGroupDetails
+  ) => {
+    let deleteAvatarPromise;
+    let deleteBannerPromise;
+
+    const originalAvatarImageId = originalPrayerGroup.imageFile?.mediaFileId;
+    const updatedAvatarImageId =
+      updatedPrayerGroupDetails.imageFile?.mediaFileId;
+
+    const originalBannerImageId =
+      originalPrayerGroup.bannerImageFile?.mediaFileId;
+    const updatedBannerImageId =
+      updatedPrayerGroupDetails.bannerImageFile?.mediaFileId;
+
+    if (
+      originalAvatarImageId &&
+      originalAvatarImageId !== updatedAvatarImageId
+    ) {
+      deleteAvatarPromise = deleteFile(originalAvatarImageId);
+    }
+
+    if (
+      originalBannerImageId &&
+      originalBannerImageId !== updatedBannerImageId
+    ) {
+      deleteBannerPromise = deleteFile(originalBannerImageId);
+    }
+
+    await Promise.all([deleteAvatarPromise, deleteBannerPromise]);
   };
 
   const savePrayerGroupEdit = async (
@@ -133,7 +168,7 @@ export const usePrayerGroupEdit = () => {
 
     if (
       putPrayerGroupResponse.isError &&
-      putPrayerGroupResponse.error?.dataValidationErrors.includes(
+      putPrayerGroupResponse.error?.dataValidationErrors?.includes(
         UNIQUE_GROUP_NAME_ERROR
       )
     ) {
@@ -156,6 +191,9 @@ export const usePrayerGroupEdit = () => {
       );
       return;
     }
+
+    prayerGroupDetails &&
+      removeUnusedPrayerGroupFiles(prayerGroupDetails, valuesToSubmit);
 
     const responsePrayerGroupDetails = mapPrayerGroupDetails(
       putPrayerGroupResponse.value

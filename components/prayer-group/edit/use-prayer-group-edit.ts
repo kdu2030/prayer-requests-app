@@ -1,17 +1,22 @@
 import * as ImagePicker from "expo-image-picker";
-import { usePathname } from "expo-router";
+import { Href, router, usePathname } from "expo-router";
 import { FormikHelpers, FormikProps } from "formik";
 import * as React from "react";
 
 import { usePostFile } from "../../../api/post-file";
 import { usePutPrayerGroup } from "../../../api/put-prayer-group";
+import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import {
   mapFileToUpload,
   mapMediaFile,
   mapMediaFileFromImagePickerAsset,
 } from "../../../mappers/map-media-file";
-import { mapPrayerGroupToPutPrayerGroupRequest } from "../../../mappers/map-prayer-group";
+import {
+  mapPrayerGroupDetails,
+  mapPrayerGroupSummaryFromPrayerGroupDetails,
+  mapPrayerGroupToPutPrayerGroupRequest,
+} from "../../../mappers/map-prayer-group";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { UNIQUE_GROUP_NAME_ERROR } from "./edit-prayer-group-constants";
@@ -20,7 +25,9 @@ export const usePrayerGroupEdit = () => {
   const { translate } = useI18N();
 
   const formikRef = React.useRef<FormikProps<PrayerGroupDetails>>(null);
-  const { prayerGroupDetails } = usePrayerGroupContext();
+  const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
+  const { userData, setUserData } = useApiDataContext();
+
   const pathname = usePathname();
 
   const postFile = usePostFile();
@@ -147,7 +154,37 @@ export const usePrayerGroupEdit = () => {
           item: translate("prayerGroup.label"),
         })
       );
+      return;
     }
+
+    const responsePrayerGroupDetails = mapPrayerGroupDetails(
+      putPrayerGroupResponse.value
+    );
+
+    const updatedPrayerGroupDetails: PrayerGroupDetails = {
+      ...prayerGroupDetails,
+      ...responsePrayerGroupDetails,
+    };
+
+    const prayerGroupSummary = mapPrayerGroupSummaryFromPrayerGroupDetails(
+      putPrayerGroupResponse.value
+    );
+
+    const prayerGroupSummaries = [...(userData?.prayerGroups ?? [])];
+
+    const summaryIndex = prayerGroupSummaries.findIndex(
+      (summary) => summary.prayerGroupId === prayerGroupSummary.prayerGroupId
+    );
+
+    prayerGroupSummaries[summaryIndex] = prayerGroupSummary;
+
+    setPrayerGroupDetails(updatedPrayerGroupDetails);
+    setUserData({ ...userData, prayerGroups: prayerGroupSummaries });
+
+    router.push({
+      pathname: "/(drawer)/prayergroup/[id]",
+      params: { id: updatedPrayerGroupDetails.prayerGroupId },
+    } as Href<any>);
   };
 
   return {

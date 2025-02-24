@@ -40,14 +40,14 @@ export const mapPrayerGroupSummary = (
   };
 };
 
-export const mapPrayerGroupAdmin = (
-  rawPrayerGroupAdmin: RawPrayerGroupUserSummary
+export const mapPrayerGroupUser = (
+  rawPrayerGroupUser: RawPrayerGroupUserSummary
 ): PrayerGroupUserSummary => {
   return {
-    userId: rawPrayerGroupAdmin.id,
-    image: mapMediaFile(rawPrayerGroupAdmin.image),
-    fullName: rawPrayerGroupAdmin.fullName,
-    role: rawPrayerGroupAdmin.role,
+    userId: rawPrayerGroupUser.id,
+    image: mapMediaFile(rawPrayerGroupUser.image),
+    fullName: rawPrayerGroupUser.fullName,
+    role: rawPrayerGroupUser.role,
   };
 };
 
@@ -55,7 +55,7 @@ export const mapPrayerGroupDetails = (
   rawPrayerGroupDetails: RawPrayerGroupDetails
 ): PrayerGroupDetails => {
   const admins = rawPrayerGroupDetails.admins?.map((admin) =>
-    mapPrayerGroupAdmin(admin)
+    mapPrayerGroupUser(admin)
   );
 
   return {

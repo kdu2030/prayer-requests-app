@@ -2,8 +2,8 @@ import * as React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../../hooks/use-i18n";
-import { SpinnerScreen } from "../../layouts/spinner-screen";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
+import { PrayerGroupUsersError } from "./prayer-group-users-error";
 import { PrayerGroupUsersSpinner } from "./prayer-group-users-spinner";
 import { usePrayerGroupUsers } from "./use-prayer-group-users";
 
@@ -17,6 +17,10 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
 
   if (isLoading) {
     return <PrayerGroupUsersSpinner />;
+  }
+
+  if (isError) {
+    return <PrayerGroupUsersError onRetry={() => {}} />;
   }
 
   return (

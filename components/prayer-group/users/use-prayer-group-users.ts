@@ -8,8 +8,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     PrayerGroupUserSummary[]
   >([]);
 
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [isError, setIsError] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isError, setIsError] = React.useState<boolean>(true);
 
   return { isLoading, setIsLoading, isError };
 };

@@ -103,4 +103,6 @@ export const englishTranslations = {
   "prayerGroup.edit.images": "Images",
 
   "prayerGroup.manageUsers.label": "Manage Users",
+  "prayerGroup.manageUsers.loading": "Loading prayer group users",
+  "prayerGroup.manageUsers.unableToLoad": "Unable to load prayer group users",
 };

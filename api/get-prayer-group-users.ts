@@ -32,7 +32,7 @@ const getPrayerGroupUsers = async (
   }
 };
 
-export const usePrayerGroupUsers = () => {
+export const useGetPrayerGroupUsers = () => {
   const { fetch, baseUrl } = useApiDataContext();
 
   return React.useCallback(

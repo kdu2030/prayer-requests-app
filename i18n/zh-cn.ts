@@ -104,4 +104,6 @@ export const chineseTranslations: Translations = {
   "prayerGroup.edit.images": "图片",
 
   "prayerGroup.manageUsers.label": "管理用户",
+  "prayerGroup.manageUsers.loading": "加载祷告小组用户",
+  "prayerGroup.manageUsers.unableToLoad": "无法加载小组用户",
 };

@@ -87,6 +87,26 @@ export const PrayerGroupOptions: React.FC<Props> = ({
               </Text>
             </View>
           </TouchableRipple>
+
+          <TouchableRipple
+            rippleColor={"rgba(0, 0, 0, 0.12)"}
+            onPress={() =>
+              prayerGroupDetails?.prayerGroupId &&
+              router.push({
+                pathname: "/(drawer)/prayergroup/[id]/users",
+                params: { id: prayerGroupDetails?.prayerGroupId },
+              })
+            }
+            style={{ borderRadius: 8 }}
+            borderless
+          >
+            <View className="flex-row gap-x-3 items-center py-4 px-2">
+              <MaterialCommunityIcons name="account" size={24} />
+              <Text variant="bodyMedium">
+                {translate("prayerGroup.manageUsers.label")}
+              </Text>
+            </View>
+          </TouchableRipple>
         </View>
       </BottomSheetView>
     </BottomSheet>

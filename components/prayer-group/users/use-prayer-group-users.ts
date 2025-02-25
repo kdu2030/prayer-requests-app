@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { useGetPrayerGroupUsers } from "../../../api/get-prayer-group-users";
 import { PrayerGroupUserSummary } from "../../../types/prayer-group-types";
 
 export const usePrayerGroupUsers = (prayerGroupId: number) => {

@@ -101,4 +101,6 @@ export const englishTranslations = {
 
   "prayerGroup.edit.header": "Edit {{groupName}}",
   "prayerGroup.edit.images": "Images",
+
+  "prayerGroup.manageUsers.label": "Manage Users",
 };

@@ -101,6 +101,7 @@ export const chineseTranslations: Translations = {
   "prayerGroup.about.admins": "管理员",
 
   "prayerGroup.edit.header": "编辑{{groupName}}",
-
   "prayerGroup.edit.images": "图片",
+
+  "prayerGroup.manageUsers.label": "管理用户",
 };

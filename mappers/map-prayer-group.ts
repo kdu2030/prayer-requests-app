@@ -47,6 +47,7 @@ export const mapPrayerGroupUser = (
     userId: rawPrayerGroupUser.id,
     image: mapMediaFile(rawPrayerGroupUser.image),
     fullName: rawPrayerGroupUser.fullName,
+    username: rawPrayerGroupUser.username,
     role: rawPrayerGroupUser.role,
   };
 };

@@ -4,6 +4,7 @@ import { MediaFile, RawMediaFile } from "./media-file-types";
 export type RawPrayerGroupUserSummary = {
   id?: number;
   fullName?: string;
+  username?: string;
   image?: RawMediaFile;
   role?: PrayerGroupRole;
 };
@@ -11,6 +12,7 @@ export type RawPrayerGroupUserSummary = {
 export type PrayerGroupUserSummary = {
   userId?: number;
   fullName?: string;
+  username?: string;
   image?: MediaFile;
   role?: PrayerGroupRole;
 };

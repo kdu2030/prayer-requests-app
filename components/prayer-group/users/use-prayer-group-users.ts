@@ -9,6 +9,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const [prayerGroupUsers, setPrayerGroupUsers] = React.useState<
     PrayerGroupUserSummary[]
   >([]);
+  const [userQuery, setUserQuery] = React.useState<string>("");
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isError, setIsError] = React.useState<boolean>(false);
@@ -39,5 +40,12 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     loadPrayerGroupUsers();
   }, [loadPrayerGroupUsers]);
 
-  return { isLoading, setIsLoading, isError, prayerGroupUsers };
+  return {
+    isLoading,
+    setIsLoading,
+    isError,
+    prayerGroupUsers,
+    userQuery,
+    setUserQuery,
+  };
 };

@@ -105,4 +105,7 @@ export const englishTranslations = {
   "prayerGroup.manageUsers.label": "Manage Users",
   "prayerGroup.manageUsers.loading": "Loading prayer group users",
   "prayerGroup.manageUsers.unableToLoad": "Unable to load prayer group users",
+  "prayerGroup.manageUsers.searchForUsers": "Search for users",
+  "prayerGroup.manageUsers.searchPlaceholder": "Name or Username",
+  "prayerGroup.manageUsers.admin": "Admin",
 };

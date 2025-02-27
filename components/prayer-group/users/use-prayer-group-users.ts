@@ -5,6 +5,7 @@ import { useGetPrayerGroupUsers } from "../../../api/get-prayer-group-users";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { mapPrayerGroupUser } from "../../../mappers/map-prayer-group";
 import { PrayerGroupUserSummary } from "../../../types/prayer-group-types";
+import { normalizeText } from "./prayer-group-user-helpers";
 
 export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const [prayerGroupUsers, setPrayerGroupUsers] = React.useState<
@@ -47,12 +48,12 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
   }, [loadPrayerGroupUsers]);
 
   const filterUsers = (query: string) => {
-    const normalizedQuery = query.toLocaleLowerCase();
+    const normalizedQuery = query.toLocaleLowerCase().replace(/( |@)/g, "");
 
     const newFilteredUsers = prayerGroupUsers.filter(
       (user) =>
-        (user.fullName?.toLocaleLowerCase() ?? "").includes(normalizedQuery) ||
-        (user.username?.toLocaleLowerCase() ?? "").includes(normalizedQuery)
+        normalizeText(user.fullName).includes(normalizedQuery) ||
+        normalizeText(user.username).includes(normalizedQuery)
     );
 
     setFilteredUsers(newFilteredUsers);

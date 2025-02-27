@@ -1,3 +1,4 @@
+import { debounce } from "lodash";
 import * as React from "react";
 
 import { useGetPrayerGroupUsers } from "../../../api/get-prayer-group-users";
@@ -9,6 +10,10 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const [prayerGroupUsers, setPrayerGroupUsers] = React.useState<
     PrayerGroupUserSummary[]
   >([]);
+  const [filteredUsers, setFilteredUsers] = React.useState<
+    PrayerGroupUserSummary[]
+  >([]);
+
   const [userQuery, setUserQuery] = React.useState<string>("");
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -32,13 +37,32 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     const responseUsers = response.value.users.map((user) =>
       mapPrayerGroupUser(user)
     );
+
     setPrayerGroupUsers(responseUsers);
-    console.log(responseUsers);
+    setFilteredUsers(responseUsers);
   }, [getPrayerGroupUsers, prayerGroupId]);
 
   React.useEffect(() => {
     loadPrayerGroupUsers();
   }, [loadPrayerGroupUsers]);
+
+  const filterUsers = (query: string) => {
+    const normalizedQuery = query.toLocaleLowerCase();
+
+    const newFilteredUsers = prayerGroupUsers.filter(
+      (user) =>
+        (user.fullName?.toLocaleLowerCase() ?? "").includes(normalizedQuery) ||
+        (user.username?.toLocaleLowerCase() ?? "").includes(normalizedQuery)
+    );
+
+    setFilteredUsers(newFilteredUsers);
+  };
+
+  const onQueryChange = (query: string) => {
+    setUserQuery(query);
+    const debouncedFilter = debounce(() => filterUsers(query), 200);
+    debouncedFilter();
+  };
 
   return {
     isLoading,
@@ -47,5 +71,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     prayerGroupUsers,
     userQuery,
     setUserQuery,
+    onQueryChange,
+    filteredUsers,
   };
 };

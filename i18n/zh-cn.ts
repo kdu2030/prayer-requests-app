@@ -108,4 +108,5 @@ export const chineseTranslations: Translations = {
   "prayerGroup.manageUsers.unableToLoad": "无法加载小组用户",
   "prayerGroup.manageUsers.searchForUsers": "搜索用户",
   "prayerGroup.manageUsers.searchPlaceholder": "名字或用户名",
+  "prayerGroup.manageUsers.admin": "管理员",
 };

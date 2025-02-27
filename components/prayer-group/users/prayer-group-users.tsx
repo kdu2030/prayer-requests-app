@@ -1,7 +1,7 @@
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as React from "react";
-import { TouchableOpacity, View } from "react-native";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
+import { View } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 import {
   Button,
   Text,
@@ -25,7 +25,7 @@ type Props = {
 export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
   const { translate } = useI18N();
   const theme = useTheme();
-  const { isLoading, isError, userQuery, setUserQuery, prayerGroupUsers } =
+  const { isLoading, isError, userQuery, filteredUsers, onQueryChange } =
     usePrayerGroupUsers(prayerGroupId);
 
   if (isLoading) {
@@ -53,7 +53,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
           <TextInput
             mode="outlined"
             value={userQuery}
-            onChangeText={setUserQuery}
+            onChangeText={onQueryChange}
             left={<TextInput.Icon icon="magnify" size={24} />}
             label={translate("prayerGroup.manageUsers.searchForUsers")}
             placeholder={translate("prayerGroup.manageUsers.searchPlaceholder")}
@@ -61,7 +61,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
         </View>
 
         <FlatList
-          data={prayerGroupUsers}
+          data={filteredUsers}
           className="flex-1"
           renderItem={({ item }) => (
             <View

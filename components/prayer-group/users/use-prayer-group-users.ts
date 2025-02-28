@@ -31,6 +31,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
   const loadPrayerGroupUsers = React.useCallback(async () => {
     setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 10));
+
     const response = await getPrayerGroupUsers(prayerGroupId, [
       PrayerGroupRole.Member,
       PrayerGroupRole.Admin,

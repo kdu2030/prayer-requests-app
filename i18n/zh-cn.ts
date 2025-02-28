@@ -109,4 +109,9 @@ export const chineseTranslations: Translations = {
   "prayerGroup.manageUsers.searchForUsers": "搜索用户",
   "prayerGroup.manageUsers.searchPlaceholder": "名字或用户名",
   "prayerGroup.manageUsers.admin": "管理员",
+
+  "prayerGroup.kickUser.header": "踢出用户？",
+  "prayerGroup.kickUser.warning":
+    "你确定要踢出{{fullName}}吗？此操作无法撤销。",
+  "prayerGroup.kickUser.label": "踢出",
 };

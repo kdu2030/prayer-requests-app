@@ -4,21 +4,28 @@ import * as React from "react";
 import { useGetPrayerGroupUsers } from "../../../api/get-prayer-group-users";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { mapPrayerGroupUser } from "../../../mappers/map-prayer-group";
-import { PrayerGroupUserSummary } from "../../../types/prayer-group-types";
+import { DeletablePrayerGroupUser } from "../../../types/prayer-group-types";
 import { normalizeText } from "./prayer-group-user-helpers";
 
 export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const [prayerGroupUsers, setPrayerGroupUsers] = React.useState<
-    PrayerGroupUserSummary[]
+    DeletablePrayerGroupUser[]
   >([]);
   const [filteredUsers, setFilteredUsers] = React.useState<
-    PrayerGroupUserSummary[]
+    DeletablePrayerGroupUser[]
   >([]);
 
   const [userQuery, setUserQuery] = React.useState<string>("");
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isError, setIsError] = React.useState<boolean>(false);
+
+  const [userToDeleteIndex, setUserToDeleteIndex] = React.useState<
+    number | undefined
+  >();
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] =
+    React.useState<boolean>(false);
 
   const getPrayerGroupUsers = useGetPrayerGroupUsers();
 
@@ -65,6 +72,11 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     debouncedFilter();
   };
 
+  const onDeletePress = (index: number) => {
+    setUserToDeleteIndex(index);
+    setIsDeleteModalOpen(true);
+  };
+
   return {
     isLoading,
     setIsLoading,
@@ -74,5 +86,9 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     setUserQuery,
     onQueryChange,
     filteredUsers,
+    isDeleteModalOpen,
+    onDeletePress,
+    setIsDeleteModalOpen,
+    userToDeleteIndex,
   };
 };

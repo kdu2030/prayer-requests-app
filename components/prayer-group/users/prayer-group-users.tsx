@@ -14,6 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useI18N } from "../../../hooks/use-i18n";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
+import { DeleteUserConfirmationModal } from "./delete-user-confirmation-modal";
 import { PrayerGroupUsersError } from "./prayer-group-users-error";
 import { PrayerGroupUsersSpinner } from "./prayer-group-users-spinner";
 import { usePrayerGroupUsers } from "./use-prayer-group-users";
@@ -25,8 +26,17 @@ type Props = {
 export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
   const { translate } = useI18N();
   const theme = useTheme();
-  const { isLoading, isError, userQuery, filteredUsers, onQueryChange } =
-    usePrayerGroupUsers(prayerGroupId);
+  const {
+    isLoading,
+    isError,
+    userQuery,
+    filteredUsers,
+    onQueryChange,
+    onDeletePress,
+    isDeleteModalOpen,
+    setIsDeleteModalOpen,
+    userToDeleteIndex,
+  } = usePrayerGroupUsers(prayerGroupId);
 
   if (isLoading) {
     return <PrayerGroupUsersSpinner />;
@@ -63,7 +73,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
         <FlatList
           data={filteredUsers}
           className="flex-1"
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <View
               className="p-4 border-b flex-row justify-between"
               style={{ borderBottomColor: theme.colors.outline }}
@@ -99,7 +109,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
                 <TouchableRipple
                   style={{ borderRadius: 9999 }}
                   borderless
-                  onPress={() => console.log("remove")}
+                  onPress={() => onDeletePress(index)}
                   rippleColor={theme.colors.errorContainer}
                 >
                   <MaterialCommunityIcons
@@ -120,6 +130,18 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
           <Button mode="contained">{translate("common.actions.save")}</Button>
         </View>
       </View>
+
+      {isDeleteModalOpen && (
+        <DeleteUserConfirmationModal
+          onCancel={() => setIsDeleteModalOpen(false)}
+          onDelete={() => setIsDeleteModalOpen(false)}
+          userToDeleteName={
+            userToDeleteIndex != null
+              ? filteredUsers[userToDeleteIndex]?.fullName
+              : undefined
+          }
+        />
+      )}
     </SafeAreaView>
   );
 };

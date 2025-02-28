@@ -109,6 +109,7 @@ export const chineseTranslations: Translations = {
   "prayerGroup.manageUsers.searchForUsers": "搜索用户",
   "prayerGroup.manageUsers.searchPlaceholder": "名字或用户名",
   "prayerGroup.manageUsers.admin": "管理员",
+  "prayerGroup.manageUsers.member": "成员",
 
   "prayerGroup.kickUser.header": "踢出用户？",
   "prayerGroup.kickUser.warning":

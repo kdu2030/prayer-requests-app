@@ -11,6 +11,7 @@ import {
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
@@ -37,6 +38,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
     setIsDeleteModalOpen,
     userToDeleteIndex,
     onDelete,
+    onRoleChange,
   } = usePrayerGroupUsers(prayerGroupId);
 
   if (isLoading) {
@@ -108,16 +110,34 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
                   </View>
                 </View>
 
-                <View className="flex flex-row items-center gap-x-2">
-                  <Button
-                    mode="text"
-                    icon={"crown"}
-                    onPress={() => console.log("Admin")}
-                  >
-                    {translate("prayerGroup.manageUsers.admin")}
-                  </Button>
+                <View className="flex flex-row items-center justify-between gap-x-2">
+                  <View className="">
+                    {item.role === PrayerGroupRole.Admin ? (
+                      <Button
+                        mode="text"
+                        icon={"crown"}
+                        onPress={() =>
+                          onRoleChange(index, PrayerGroupRole.Member)
+                        }
+                      >
+                        {translate("prayerGroup.manageUsers.admin")}
+                      </Button>
+                    ) : (
+                      <Button
+                        mode="text"
+                        icon={"account"}
+                        onPress={() =>
+                          onRoleChange(index, PrayerGroupRole.Admin)
+                        }
+                      >
+                        {translate("prayerGroup.manageUsers.member")}
+                      </Button>
+                    )}
+                  </View>
                   <TouchableRipple
-                    style={{ borderRadius: 9999 }}
+                    style={{
+                      borderRadius: 9999,
+                    }}
                     borderless
                     onPress={() => onDeletePress(index)}
                     rippleColor={theme.colors.errorContainer}

@@ -95,8 +95,25 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
     setPrayerGroupUsers(updatedPrayerGroupUsers);
     setFilteredUsers(updatedPrayerGroupUsers);
+    setUserQuery("");
 
     setIsDeleteModalOpen(false);
+  };
+
+  const onRoleChange = (index: number, role: PrayerGroupRole) => {
+    const userToChange = filteredUsers[index];
+    const prayerGroupUsersIndex = prayerGroupUsers.findIndex(
+      (user) => user.userId === userToChange.userId
+    );
+
+    const updatedFilteredUsers = [...filteredUsers];
+    const updatedUsers = [...prayerGroupUsers];
+
+    updatedFilteredUsers[index].role = role;
+    updatedUsers[prayerGroupUsersIndex].role = role;
+
+    setPrayerGroupUsers(updatedUsers);
+    setFilteredUsers(updatedFilteredUsers);
   };
 
   return {
@@ -113,5 +130,6 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     setIsDeleteModalOpen,
     userToDeleteIndex,
     onDelete,
+    onRoleChange,
   };
 };

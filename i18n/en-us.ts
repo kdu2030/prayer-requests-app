@@ -108,6 +108,7 @@ export const englishTranslations = {
   "prayerGroup.manageUsers.searchForUsers": "Search for users",
   "prayerGroup.manageUsers.searchPlaceholder": "Name or Username",
   "prayerGroup.manageUsers.admin": "Admin",
+  "prayerGroup.manageUsers.member": "Member",
 
   "prayerGroup.kickUser.header": "Kick User?",
   "prayerGroup.kickUser.warning":

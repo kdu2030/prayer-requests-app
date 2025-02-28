@@ -77,6 +77,28 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     setIsDeleteModalOpen(true);
   };
 
+  const onDelete = () => {
+    if (userToDeleteIndex == null) {
+      throw new Error("Cannot delete without a user to delete index.");
+    }
+
+    const updatedPrayerGroupUsers = [...prayerGroupUsers];
+
+    const userToDelete = { ...filteredUsers[userToDeleteIndex] };
+    const prayerGroupUsersIndex = prayerGroupUsers.findIndex(
+      (user) => user.userId === userToDelete.userId
+    );
+
+    userToDelete.isDeleted = true;
+
+    updatedPrayerGroupUsers[prayerGroupUsersIndex] = userToDelete;
+
+    setPrayerGroupUsers(updatedPrayerGroupUsers);
+    setFilteredUsers(updatedPrayerGroupUsers);
+
+    setIsDeleteModalOpen(false);
+  };
+
   return {
     isLoading,
     setIsLoading,
@@ -90,5 +112,6 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     onDeletePress,
     setIsDeleteModalOpen,
     userToDeleteIndex,
+    onDelete,
   };
 };

@@ -36,6 +36,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
     isDeleteModalOpen,
     setIsDeleteModalOpen,
     userToDeleteIndex,
+    onDelete,
   } = usePrayerGroupUsers(prayerGroupId);
 
   if (isLoading) {
@@ -73,54 +74,64 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
         <FlatList
           data={filteredUsers}
           className="flex-1"
-          renderItem={({ item, index }) => (
-            <View
-              className="p-4 border-b flex-row justify-between"
-              style={{ borderBottomColor: theme.colors.outline }}
-            >
-              <View className="flex-row items-center w-1/2">
-                <ProfilePicture url={item.image?.url} width={40} height={40} />
-                <View className="ml-4">
-                  <Text
-                    variant="bodyLarge"
-                    ellipsizeMode="tail"
-                    numberOfLines={1}
+          renderItem={({ item, index }) => {
+            if (item.isDeleted) {
+              return null;
+            }
+
+            return (
+              <View
+                className="p-4 border-b flex-row justify-between"
+                style={{ borderBottomColor: theme.colors.outline }}
+              >
+                <View className="flex-row items-center w-1/2">
+                  <ProfilePicture
+                    url={item.image?.url}
+                    width={40}
+                    height={40}
+                  />
+                  <View className="ml-4">
+                    <Text
+                      variant="bodyLarge"
+                      ellipsizeMode="tail"
+                      numberOfLines={1}
+                    >
+                      {item.fullName}
+                    </Text>
+                    <Text
+                      variant="bodySmall"
+                      ellipsizeMode="tail"
+                      numberOfLines={1}
+                    >
+                      @ {item.username}
+                    </Text>
+                  </View>
+                </View>
+
+                <View className="flex flex-row items-center gap-x-2">
+                  <Button
+                    mode="text"
+                    icon={"crown"}
+                    onPress={() => console.log("Admin")}
                   >
-                    {item.fullName}
-                  </Text>
-                  <Text
-                    variant="bodySmall"
-                    ellipsizeMode="tail"
-                    numberOfLines={1}
+                    {translate("prayerGroup.manageUsers.admin")}
+                  </Button>
+                  <TouchableRipple
+                    style={{ borderRadius: 9999 }}
+                    borderless
+                    onPress={() => onDeletePress(index)}
+                    rippleColor={theme.colors.errorContainer}
                   >
-                    @ {item.username}
-                  </Text>
+                    <MaterialCommunityIcons
+                      name="minus"
+                      size={36}
+                      color={theme.colors.error}
+                    />
+                  </TouchableRipple>
                 </View>
               </View>
-
-              <View className="flex flex-row items-center gap-x-2">
-                <Button
-                  mode="text"
-                  icon={"crown"}
-                  onPress={() => console.log("Admin")}
-                >
-                  {translate("prayerGroup.manageUsers.admin")}
-                </Button>
-                <TouchableRipple
-                  style={{ borderRadius: 9999 }}
-                  borderless
-                  onPress={() => onDeletePress(index)}
-                  rippleColor={theme.colors.errorContainer}
-                >
-                  <MaterialCommunityIcons
-                    name="minus"
-                    size={36}
-                    color={theme.colors.error}
-                  />
-                </TouchableRipple>
-              </View>
-            </View>
-          )}
+            );
+          }}
         />
 
         <View
@@ -134,7 +145,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
       {isDeleteModalOpen && (
         <DeleteUserConfirmationModal
           onCancel={() => setIsDeleteModalOpen(false)}
-          onDelete={() => setIsDeleteModalOpen(false)}
+          onDelete={onDelete}
           userToDeleteName={
             userToDeleteIndex != null
               ? filteredUsers[userToDeleteIndex]?.fullName

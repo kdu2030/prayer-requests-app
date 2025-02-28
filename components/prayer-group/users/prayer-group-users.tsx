@@ -86,7 +86,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
                 className="p-4 border-b flex-row justify-between"
                 style={{ borderBottomColor: theme.colors.outline }}
               >
-                <View className="flex-row items-center w-1/2">
+                <View className="flex-row items-center w-3/5">
                   <ProfilePicture
                     url={item.image?.url}
                     width={40}
@@ -110,9 +110,9 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
                   </View>
                 </View>
 
-                <View className="flex flex-row items-center justify-between gap-x-2">
-                  <View className="">
-                    {item.role === PrayerGroupRole.Admin ? (
+                <View className="flex flex-row items-center justify-between gap-x-2 grow">
+                  {item.role === PrayerGroupRole.Admin ? (
+                    <View className="justify-self-start">
                       <Button
                         mode="text"
                         icon={"crown"}
@@ -122,18 +122,17 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
                       >
                         {translate("prayerGroup.manageUsers.admin")}
                       </Button>
-                    ) : (
-                      <Button
-                        mode="text"
-                        icon={"account"}
-                        onPress={() =>
-                          onRoleChange(index, PrayerGroupRole.Admin)
-                        }
-                      >
-                        {translate("prayerGroup.manageUsers.member")}
-                      </Button>
-                    )}
-                  </View>
+                    </View>
+                  ) : (
+                    <Button
+                      mode="text"
+                      icon={"account"}
+                      onPress={() => onRoleChange(index, PrayerGroupRole.Admin)}
+                    >
+                      {translate("prayerGroup.manageUsers.member")}
+                    </Button>
+                  )}
+
                   <TouchableRipple
                     style={{
                       borderRadius: 9999,

@@ -1,4 +1,3 @@
-import { usePathname } from "expo-router";
 import { debounce } from "lodash";
 import * as React from "react";
 
@@ -6,7 +5,6 @@ import { useGetPrayerGroupUsers } from "../../../api/get-prayer-group-users";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { mapPrayerGroupUser } from "../../../mappers/map-prayer-group";
 import { DeletablePrayerGroupUser } from "../../../types/prayer-group-types";
-import { usePrayerGroupContext } from "../prayer-group-context";
 import { normalizeText } from "./prayer-group-user-helpers";
 
 export const usePrayerGroupUsers = (prayerGroupId: number) => {
@@ -28,9 +26,6 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] =
     React.useState<boolean>(false);
-
-  const { prayerGroupDetails } = usePrayerGroupContext();
-  const pathname = usePathname();
 
   const getPrayerGroupUsers = useGetPrayerGroupUsers();
 

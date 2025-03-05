@@ -1,3 +1,4 @@
+import { usePathname } from "expo-router";
 import { debounce } from "lodash";
 import * as React from "react";
 
@@ -5,6 +6,7 @@ import { useGetPrayerGroupUsers } from "../../../api/get-prayer-group-users";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { mapPrayerGroupUser } from "../../../mappers/map-prayer-group";
 import { DeletablePrayerGroupUser } from "../../../types/prayer-group-types";
+import { usePrayerGroupContext } from "../prayer-group-context";
 import { normalizeText } from "./prayer-group-user-helpers";
 
 export const usePrayerGroupUsers = (prayerGroupId: number) => {
@@ -26,6 +28,9 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] =
     React.useState<boolean>(false);
+
+  const { prayerGroupDetails } = usePrayerGroupContext();
+  const pathname = usePathname();
 
   const getPrayerGroupUsers = useGetPrayerGroupUsers();
 
@@ -55,6 +60,40 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
   React.useEffect(() => {
     loadPrayerGroupUsers();
   }, [loadPrayerGroupUsers]);
+
+  const resetPrayerGroupUsers = React.useCallback(() => {
+    const prayerGroupAdminsSet = new Set<number>();
+    prayerGroupDetails?.admins?.forEach((admin) => {
+      admin.userId && prayerGroupAdminsSet.add(admin.userId);
+    });
+
+    const resetPrayerGroupUsers = [...prayerGroupUsers].reduce(
+      (prayerGroupUsers: DeletablePrayerGroupUser[], user) => {
+        if (!user.userId) {
+          return prayerGroupUsers;
+        }
+
+        const isAdmin = prayerGroupAdminsSet.has(user.userId);
+
+        prayerGroupUsers.push({
+          ...user,
+          isDeleted: false,
+          role: isAdmin ? PrayerGroupRole.Admin : PrayerGroupRole.Member,
+        });
+
+        return prayerGroupUsers;
+      },
+      []
+    );
+
+    setPrayerGroupUsers(resetPrayerGroupUsers);
+    setFilteredUsers(resetPrayerGroupUsers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prayerGroupDetails?.admins]);
+
+  React.useEffect(() => {
+    resetPrayerGroupUsers();
+  }, [resetPrayerGroupUsers, pathname]);
 
   const filterUsers = (query: string) => {
     const normalizedQuery = query.toLocaleLowerCase().replace(/( |@)/g, "");

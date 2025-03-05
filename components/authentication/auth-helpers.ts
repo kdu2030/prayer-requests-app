@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { decode } from "base-64";
 
 import { ApiAuthResponse } from "../../api/post-signup";
+import { mapUserData } from "../../mappers/map-user-data";
 import {
   Token,
   UserData,
@@ -31,7 +32,7 @@ export const handleSuccessfulAuthentication = (
   setUserData: (userData: UserData) => void,
   setUserTokens: (userTokenPair: UserTokenPair) => void
 ) => {
-  const { id: userId, username, emailAddress, fullName } = apiAuthResponse;
+  const { id: userId } = apiAuthResponse;
   const { refreshToken, accessToken } = apiAuthResponse?.tokens ?? {};
 
   if (!refreshToken || !accessToken) {
@@ -46,14 +47,7 @@ export const handleSuccessfulAuthentication = (
     refreshToken: refreshTokenData,
   };
 
-  const userData: UserData = {
-    userId,
-    username,
-    fullName,
-    email: emailAddress,
-  };
-
-  setUserData(userData);
+  setUserData(mapUserData(apiAuthResponse));
   setUserTokens(userTokenPair);
 
   AsyncStorage.setItem(

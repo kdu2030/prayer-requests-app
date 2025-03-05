@@ -13,11 +13,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
+import { ErrorScreen } from "../../layouts/error-screen";
 import { ProfilePicture } from "../../layouts/profile-picture";
+import { SpinnerScreen } from "../../layouts/spinner-screen";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
 import { DeleteUserConfirmationModal } from "./delete-user-confirmation-modal";
-import { PrayerGroupUsersError } from "./prayer-group-users-error";
-import { PrayerGroupUsersSpinner } from "./prayer-group-users-spinner";
 import { usePrayerGroupUsers } from "./use-prayer-group-users";
 
 type Props = {
@@ -39,15 +39,8 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
     userToDeleteIndex,
     onDelete,
     onRoleChange,
+    loadPrayerGroupUsers,
   } = usePrayerGroupUsers(prayerGroupId);
-
-  if (isLoading) {
-    return <PrayerGroupUsersSpinner />;
-  }
-
-  if (isError) {
-    return <PrayerGroupUsersError onRetry={() => {}} />;
-  }
 
   return (
     <SafeAreaView className="flex-1">
@@ -55,111 +48,130 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
         title={translate("prayerGroup.manageUsers.label")}
       />
 
-      <View
-        className="flex-1"
-        style={{ backgroundColor: theme.colors.background }}
-      >
+      {isLoading && (
+        <SpinnerScreen
+          loadingLabel={translate("prayerGroup.manageUsers.loading")}
+        />
+      )}
+
+      {isError && (
+        <ErrorScreen
+          errorLabel={translate("prayerGroup.manageUsers.unableToLoad")}
+          onRetry={loadPrayerGroupUsers}
+        />
+      )}
+
+      {!isLoading && (
         <View
-          className="p-4 border-b"
-          style={{ borderBottomColor: theme.colors.outline }}
-        >
-          <TextInput
-            mode="outlined"
-            value={userQuery}
-            onChangeText={onQueryChange}
-            left={<TextInput.Icon icon="magnify" size={24} />}
-            label={translate("prayerGroup.manageUsers.searchForUsers")}
-            placeholder={translate("prayerGroup.manageUsers.searchPlaceholder")}
-          />
-        </View>
-
-        <FlatList
-          data={filteredUsers}
           className="flex-1"
-          renderItem={({ item, index }) => {
-            if (item.isDeleted) {
-              return null;
-            }
+          style={{ backgroundColor: theme.colors.background }}
+        >
+          <View
+            className="p-4 border-b"
+            style={{ borderBottomColor: theme.colors.outline }}
+          >
+            <TextInput
+              mode="outlined"
+              value={userQuery}
+              onChangeText={onQueryChange}
+              left={<TextInput.Icon icon="magnify" size={24} />}
+              label={translate("prayerGroup.manageUsers.searchForUsers")}
+              placeholder={translate(
+                "prayerGroup.manageUsers.searchPlaceholder"
+              )}
+            />
+          </View>
 
-            return (
-              <View
-                className="p-4 border-b flex-row justify-between"
-                style={{ borderBottomColor: theme.colors.outline }}
-              >
-                <View className="flex-row items-center w-3/5">
-                  <ProfilePicture
-                    url={item.image?.url}
-                    width={40}
-                    height={40}
-                  />
-                  <View className="ml-4">
-                    <Text
-                      variant="bodyLarge"
-                      ellipsizeMode="tail"
-                      numberOfLines={1}
-                    >
-                      {item.fullName}
-                    </Text>
-                    <Text
-                      variant="bodySmall"
-                      ellipsizeMode="tail"
-                      numberOfLines={1}
-                    >
-                      @ {item.username}
-                    </Text>
+          <FlatList
+            data={filteredUsers}
+            className="flex-1"
+            renderItem={({ item, index }) => {
+              if (item.isDeleted) {
+                return null;
+              }
+
+              return (
+                <View
+                  className="p-4 border-b flex-row justify-between"
+                  style={{ borderBottomColor: theme.colors.outline }}
+                >
+                  <View className="flex-row items-center w-3/5">
+                    <ProfilePicture
+                      url={item.image?.url}
+                      width={40}
+                      height={40}
+                    />
+                    <View className="ml-4">
+                      <Text
+                        variant="bodyLarge"
+                        ellipsizeMode="tail"
+                        numberOfLines={1}
+                      >
+                        {item.fullName}
+                      </Text>
+                      <Text
+                        variant="bodySmall"
+                        ellipsizeMode="tail"
+                        numberOfLines={1}
+                      >
+                        @ {item.username}
+                      </Text>
+                    </View>
                   </View>
-                </View>
 
-                <View className="flex flex-row items-center justify-between gap-x-2 grow">
-                  {item.role === PrayerGroupRole.Admin ? (
-                    <View className="justify-self-start">
+                  <View className="flex flex-row items-center justify-between gap-x-2 grow">
+                    {item.role === PrayerGroupRole.Admin ? (
+                      <View className="justify-self-start">
+                        <Button
+                          mode="text"
+                          icon={"crown"}
+                          onPress={() =>
+                            onRoleChange(index, PrayerGroupRole.Member)
+                          }
+                        >
+                          {translate("prayerGroup.manageUsers.admin")}
+                        </Button>
+                      </View>
+                    ) : (
                       <Button
                         mode="text"
-                        icon={"crown"}
+                        icon={"account"}
                         onPress={() =>
-                          onRoleChange(index, PrayerGroupRole.Member)
+                          onRoleChange(index, PrayerGroupRole.Admin)
                         }
                       >
-                        {translate("prayerGroup.manageUsers.admin")}
+                        {translate("prayerGroup.manageUsers.member")}
                       </Button>
-                    </View>
-                  ) : (
-                    <Button
-                      mode="text"
-                      icon={"account"}
-                      onPress={() => onRoleChange(index, PrayerGroupRole.Admin)}
+                    )}
+
+                    <TouchableRipple
+                      style={{
+                        borderRadius: 9999,
+                      }}
+                      borderless
+                      onPress={() => onDeletePress(index)}
+                      rippleColor={theme.colors.errorContainer}
                     >
-                      {translate("prayerGroup.manageUsers.member")}
-                    </Button>
-                  )}
-
-                  <TouchableRipple
-                    style={{
-                      borderRadius: 9999,
-                    }}
-                    borderless
-                    onPress={() => onDeletePress(index)}
-                    rippleColor={theme.colors.errorContainer}
-                  >
-                    <MaterialCommunityIcons
-                      name="minus"
-                      size={36}
-                      color={theme.colors.error}
-                    />
-                  </TouchableRipple>
+                      <MaterialCommunityIcons
+                        name="minus"
+                        size={36}
+                        color={theme.colors.error}
+                      />
+                    </TouchableRipple>
+                  </View>
                 </View>
-              </View>
-            );
-          }}
-        />
+              );
+            }}
+          />
 
-        <View
-          className="p-4 border-t"
-          style={{ borderTopColor: theme.colors.outline }}
-        >
-          <Button mode="contained">{translate("common.actions.save")}</Button>
+          <View
+            className="p-4 border-t"
+            style={{ borderTopColor: theme.colors.outline }}
+          >
+            <Button mode="contained">{translate("common.actions.save")}</Button>
+          </View>
         </View>
-      </View>
+      )}
 
       {isDeleteModalOpen && (
         <DeleteUserConfirmationModal

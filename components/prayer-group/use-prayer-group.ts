@@ -1,6 +1,5 @@
 import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
-import { usePathname } from "expo-router";
 import * as React from "react";
 
 import { useDeletePrayerGroupUsers } from "../../api/delete-prayer-group-users";
@@ -41,8 +40,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const deletePrayerGroupUsers = useDeletePrayerGroupUsers();
   const postPrayerGroupUsers = usePostPrayerGroupUsers();
 
-  const pathname = usePathname();
-
   const { translate } = useI18N();
 
   const loadPrayerGroup = React.useCallback(async () => {
@@ -66,10 +63,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   React.useEffect(() => {
     loadPrayerGroup();
   }, [loadPrayerGroup]);
-
-  React.useEffect(() => {
-    prayerGroupOptionsRef.current?.close();
-  }, [pathname]);
 
   const onAddUser = async () => {
     if (!userData?.userId) {

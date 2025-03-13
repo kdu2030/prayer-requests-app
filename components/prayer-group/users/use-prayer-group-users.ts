@@ -9,10 +9,7 @@ import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import { mapPrayerGroupUser } from "../../../mappers/map-prayer-group";
-import {
-  DeletablePrayerGroupUser,
-  PrayerGroupUserSummary,
-} from "../../../types/prayer-group-types";
+import { DeletablePrayerGroupUser } from "../../../types/prayer-group-types";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { normalizeText } from "./prayer-group-user-helpers";
 
@@ -178,24 +175,10 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     const deletedUserIdsSet = new Set<number>(userIdsToDelete);
     const adminUserIdsSet = new Set<number>(adminUserIds);
 
-    const updatedAdmins = prayerGroupDetails?.admins?.reduce(
-      (admins: PrayerGroupUserSummary[], admin) => {
-        if (!admin.userId) {
-          return admins;
-        }
-
-        if (deletedUserIdsSet.has(admin.userId)) {
-          return admins;
-        }
-
-        if (!adminUserIdsSet.has(admin.userId)) {
-          return admins;
-        }
-
-        admins.push(admin);
-        return admins;
-      },
-      []
+    const updatedAdmins = prayerGroupDetails?.admins?.filter(
+      (admin) =>
+        !deletedUserIdsSet.has(admin.userId ?? -1) &&
+        adminUserIdsSet.has(admin.userId ?? -1)
     );
 
     const userDeletedThemselves = deletedUserIdsSet.has(userData?.userId ?? -1);
@@ -213,12 +196,9 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     });
 
     if (userDeletedThemselves) {
-      const updatedPrayerGroups = [...(userData?.prayerGroups ?? [])];
-      const prayerGroupIndex = updatedPrayerGroups.findIndex(
-        (group) => group.prayerGroupId === prayerGroupDetails?.prayerGroupId
+      const updatedPrayerGroups = [...(userData?.prayerGroups ?? [])].filter(
+        (group) => group.prayerGroupId !== prayerGroupDetails?.prayerGroupId
       );
-
-      updatedPrayerGroups.splice(prayerGroupIndex, 1);
       setUserData({ ...userData, prayerGroups: updatedPrayerGroups });
     }
 
@@ -227,10 +207,16 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
         pathname: "/prayergroup/[id]",
         params: { id: prayerGroupId },
       } as Href<any>);
+      return;
     }
 
-    // TODO: We need to clean up deleted users here since the user could still be on the manage users page
-    // If we don't perform the clean up step, we could attempt to delete a user twice.
+    const updatedPrayerGroupUsers = prayerGroupUsers.filter(
+      (user) => !user.isDeleted
+    );
+
+    setPrayerGroupUsers(updatedPrayerGroupUsers);
+    setFilteredUsers(updatedPrayerGroupUsers);
+    setUserQuery("");
   };
 
   return {

@@ -228,6 +228,9 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
         params: { id: prayerGroupId },
       } as Href<any>);
     }
+
+    // TODO: We need to clean up deleted users here since the user could still be on the manage users page
+    // If we don't perform the clean up step, we could attempt to delete a user twice.
   };
 
   return {

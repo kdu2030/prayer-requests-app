@@ -14,6 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { ErrorScreen } from "../../layouts/error-screen";
+import { ErrorSnackbar } from "../../layouts/error-snackbar";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { SpinnerScreen } from "../../layouts/spinner-screen";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
@@ -27,6 +28,7 @@ type Props = {
 export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
   const { translate } = useI18N();
   const theme = useTheme();
+
   const {
     isLoading,
     isError,
@@ -40,6 +42,10 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
     onDelete,
     onRoleChange,
     loadPrayerGroupUsers,
+    isSaveLoading,
+    setSaveError,
+    saveError,
+    onSavePrayerGroupUsers,
   } = usePrayerGroupUsers(prayerGroupId);
 
   return (
@@ -168,7 +174,13 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
             className="p-4 border-t"
             style={{ borderTopColor: theme.colors.outline }}
           >
-            <Button mode="contained">{translate("common.actions.save")}</Button>
+            <Button
+              mode="contained"
+              loading={isSaveLoading}
+              onPress={onSavePrayerGroupUsers}
+            >
+              {translate("common.actions.save")}
+            </Button>
           </View>
         </View>
       )}
@@ -182,6 +194,13 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
               ? filteredUsers[userToDeleteIndex]?.fullName
               : undefined
           }
+        />
+      )}
+
+      {!!saveError && (
+        <ErrorSnackbar
+          snackbarError={saveError}
+          setSnackbarError={setSaveError}
         />
       )}
     </SafeAreaView>

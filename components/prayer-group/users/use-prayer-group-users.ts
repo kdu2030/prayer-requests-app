@@ -1,3 +1,4 @@
+import { Href, router } from "expo-router";
 import { debounce } from "lodash";
 import * as React from "react";
 
@@ -5,13 +6,21 @@ import { useDeletePrayerGroupUsers } from "../../../api/delete-prayer-group-user
 import { useGetPrayerGroupUsers } from "../../../api/get-prayer-group-users";
 import { usePutPrayerGroupAdmins } from "../../../api/put-prayer-group-admins";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
+import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import { mapPrayerGroupUser } from "../../../mappers/map-prayer-group";
-import { DeletablePrayerGroupUser } from "../../../types/prayer-group-types";
+import {
+  DeletablePrayerGroupUser,
+  PrayerGroupUserSummary,
+} from "../../../types/prayer-group-types";
+import { usePrayerGroupContext } from "../prayer-group-context";
 import { normalizeText } from "./prayer-group-user-helpers";
 
 export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const { translate } = useI18N();
+
+  const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
+  const { userData, setUserData } = useApiDataContext();
 
   const [prayerGroupUsers, setPrayerGroupUsers] = React.useState<
     DeletablePrayerGroupUser[]
@@ -146,7 +155,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       }
     });
 
-    setIsLoading(true);
+    setIsSaveLoading(true);
     const deleteUserPromise =
       userIdsToDelete.length > 0
         ? deletePrayerGroupUsers(prayerGroupId, userIdsToDelete)
@@ -155,7 +164,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       deleteUserPromise,
       putPrayerGroupAdmins(prayerGroupId, adminUserIds),
     ]);
-    setIsLoading(false);
+    setIsSaveLoading(false);
 
     if (deleteUserResponse.isError || updateAdminsResponse.isError) {
       setSaveError(
@@ -168,6 +177,57 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
     const deletedUserIdsSet = new Set<number>(userIdsToDelete);
     const adminUserIdsSet = new Set<number>(adminUserIds);
+
+    const updatedAdmins = prayerGroupDetails?.admins?.reduce(
+      (admins: PrayerGroupUserSummary[], admin) => {
+        if (!admin.userId) {
+          return admins;
+        }
+
+        if (deletedUserIdsSet.has(admin.userId)) {
+          return admins;
+        }
+
+        if (!adminUserIdsSet.has(admin.userId)) {
+          return admins;
+        }
+
+        admins.push(admin);
+        return admins;
+      },
+      []
+    );
+
+    const userDeletedThemselves = deletedUserIdsSet.has(userData?.userId ?? -1);
+    const userSelfAdminRemoval = !adminUserIdsSet.has(userData?.userId ?? -1);
+
+    const updatedUserRole = userSelfAdminRemoval
+      ? PrayerGroupRole.Member
+      : prayerGroupDetails?.userRole;
+
+    setPrayerGroupDetails({
+      ...prayerGroupDetails,
+      admins: updatedAdmins,
+      isUserJoined: !userDeletedThemselves,
+      userRole: userDeletedThemselves ? undefined : updatedUserRole,
+    });
+
+    if (userDeletedThemselves) {
+      const updatedPrayerGroups = [...(userData?.prayerGroups ?? [])];
+      const prayerGroupIndex = updatedPrayerGroups.findIndex(
+        (group) => group.prayerGroupId === prayerGroupDetails?.prayerGroupId
+      );
+
+      updatedPrayerGroups.splice(prayerGroupIndex, 1);
+      setUserData({ ...userData, prayerGroups: updatedPrayerGroups });
+    }
+
+    if (userDeletedThemselves || userSelfAdminRemoval) {
+      router.push({
+        pathname: "/prayergroup/[id]",
+        params: { id: prayerGroupId },
+      } as Href<any>);
+    }
   };
 
   return {

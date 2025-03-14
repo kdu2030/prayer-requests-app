@@ -56,6 +56,11 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       return;
     }
 
+    if (response.value.id !== prayerGroupId) {
+      // This could happen if the user switches prayer groups in the middle of loading
+      return;
+    }
+
     const loadedPrayerGroupDetails = mapPrayerGroupDetails(response.value);
     setPrayerGroupDetails(loadedPrayerGroupDetails);
   }, [getPrayerGroup, prayerGroupId, setPrayerGroupDetails]);

@@ -24,9 +24,9 @@ export const UserActions: React.FC<Props> = ({
 
   return (
     <>
-      <View className="flex flex-row items-center justify-between gap-x-2 grow">
+      <View className="flex flex-row items-center justify-between gap-x-2">
         {role === PrayerGroupRole.Admin ? (
-          <View className="justify-self-start">
+          <View className="justify-content-start">
             <Button
               mode="text"
               icon={"crown"}
@@ -45,20 +45,22 @@ export const UserActions: React.FC<Props> = ({
           </Button>
         )}
 
-        <TouchableRipple
-          style={{
-            borderRadius: 9999,
-          }}
-          borderless
-          onPress={() => onDeletePress(index)}
-          rippleColor={theme.colors.errorContainer}
-        >
-          <MaterialCommunityIcons
-            name="minus"
-            size={36}
-            color={theme.colors.error}
-          />
-        </TouchableRipple>
+        <View className="justify-content-end">
+          <TouchableRipple
+            style={{
+              borderRadius: 9999,
+            }}
+            borderless
+            onPress={() => onDeletePress(index)}
+            rippleColor={theme.colors.errorContainer}
+          >
+            <MaterialCommunityIcons
+              name="minus"
+              size={36}
+              color={theme.colors.error}
+            />
+          </TouchableRipple>
+        </View>
       </View>
     </>
   );

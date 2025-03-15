@@ -118,12 +118,14 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
                     </View>
                   </View>
 
-                  <UserActions
-                    role={item.role}
-                    index={index}
-                    onDeletePress={onDeletePress}
-                    onRoleChange={onRoleChange}
-                  />
+                  <View className="flex-1">
+                    <UserActions
+                      role={item.role}
+                      index={index}
+                      onDeletePress={onDeletePress}
+                      onRoleChange={onRoleChange}
+                    />
+                  </View>
                 </View>
               );
             }}

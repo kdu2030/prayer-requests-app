@@ -1,17 +1,9 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as React from "react";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import {
-  Button,
-  Text,
-  TextInput,
-  TouchableRipple,
-  useTheme,
-} from "react-native-paper";
+import { Button, Text, TextInput, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { ErrorScreen } from "../../layouts/error-screen";
 import { ErrorSnackbar } from "../../layouts/error-snackbar";
@@ -20,6 +12,7 @@ import { SpinnerScreen } from "../../layouts/spinner-screen";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
 import { DeleteUserConfirmationModal } from "./delete-user-confirmation-modal";
 import { usePrayerGroupUsers } from "./use-prayer-group-users";
+import { UserActions } from "./user-actions";
 
 type Props = {
   prayerGroupId: number;
@@ -125,46 +118,12 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
                     </View>
                   </View>
 
-                  <View className="flex flex-row items-center justify-between gap-x-2 grow">
-                    {item.role === PrayerGroupRole.Admin ? (
-                      <View className="justify-self-start">
-                        <Button
-                          mode="text"
-                          icon={"crown"}
-                          onPress={() =>
-                            onRoleChange(index, PrayerGroupRole.Member)
-                          }
-                        >
-                          {translate("prayerGroup.manageUsers.admin")}
-                        </Button>
-                      </View>
-                    ) : (
-                      <Button
-                        mode="text"
-                        icon={"account"}
-                        onPress={() =>
-                          onRoleChange(index, PrayerGroupRole.Admin)
-                        }
-                      >
-                        {translate("prayerGroup.manageUsers.member")}
-                      </Button>
-                    )}
-
-                    <TouchableRipple
-                      style={{
-                        borderRadius: 9999,
-                      }}
-                      borderless
-                      onPress={() => onDeletePress(index)}
-                      rippleColor={theme.colors.errorContainer}
-                    >
-                      <MaterialCommunityIcons
-                        name="minus"
-                        size={36}
-                        color={theme.colors.error}
-                      />
-                    </TouchableRipple>
-                  </View>
+                  <UserActions
+                    role={item.role}
+                    index={index}
+                    onDeletePress={onDeletePress}
+                    onRoleChange={onRoleChange}
+                  />
                 </View>
               );
             }}

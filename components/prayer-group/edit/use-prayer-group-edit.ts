@@ -142,10 +142,20 @@ export const usePrayerGroupEdit = () => {
       bannerImagePromise,
     ]);
 
-    if (imageFileResponse?.isError || bannerImageResponse?.isError) {
+    if (imageFileResponse?.isError) {
       setSnackbarError(
         translate("toaster.failed.saveFailure", {
           item: translate("createPrayerGroup.groupImageColorStep.image"),
+        })
+      );
+      setIsLoading(false);
+      return;
+    }
+
+    if (bannerImageResponse?.isError) {
+      setSnackbarError(
+        translate("toaster.failed.saveFailure", {
+          item: translate("createPrayerGroup.groupImageColorStep.banner"),
         })
       );
       setIsLoading(false);

@@ -24,9 +24,9 @@ export const UserActions: React.FC<Props> = ({
 
   return (
     <>
-      <View className="flex flex-row items-center justify-between gap-x-2">
-        {role === PrayerGroupRole.Admin ? (
-          <View className="justify-content-start">
+      <View className="flex flex-row items-center gap-x-2  flex-1">
+        <View className="flex-1">
+          {role === PrayerGroupRole.Admin ? (
             <Button
               mode="text"
               icon={"crown"}
@@ -34,18 +34,18 @@ export const UserActions: React.FC<Props> = ({
             >
               {translate("prayerGroup.manageUsers.admin")}
             </Button>
-          </View>
-        ) : (
-          <Button
-            mode="text"
-            icon={"account"}
-            onPress={() => onRoleChange(index, PrayerGroupRole.Admin)}
-          >
-            {translate("prayerGroup.manageUsers.member")}
-          </Button>
-        )}
+          ) : (
+            <Button
+              mode="text"
+              icon={"account"}
+              onPress={() => onRoleChange(index, PrayerGroupRole.Admin)}
+            >
+              {translate("prayerGroup.manageUsers.member")}
+            </Button>
+          )}
+        </View>
 
-        <View className="justify-content-end">
+        <View>
           <TouchableRipple
             style={{
               borderRadius: 9999,

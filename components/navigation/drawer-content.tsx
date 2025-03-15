@@ -82,11 +82,12 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                         />
                       }
                       label={group.groupName ?? ""}
-                      onPress={() =>
+                      onPress={() => {
                         router.push(
                           `/prayergroup/${group.prayerGroupId}` as Href<string>
-                        )
-                      }
+                        );
+                        props.navigation.closeDrawer();
+                      }}
                       key={group.prayerGroupId}
                     />
                   );

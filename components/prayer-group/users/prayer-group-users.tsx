@@ -57,6 +57,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
         <ErrorScreen
           errorLabel={translate("prayerGroup.manageUsers.unableToLoad")}
           onRetry={loadPrayerGroupUsers}
+          showSafeArea={false}
         />
       )}
 

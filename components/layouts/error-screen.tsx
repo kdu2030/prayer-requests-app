@@ -9,13 +9,22 @@ import { useI18N } from "../../hooks/use-i18n";
 type Props = {
   errorLabel: string;
   onRetry: () => void;
+  showSafeArea?: boolean;
 };
 
-export const ErrorScreen: React.FC<Props> = ({ errorLabel, onRetry }) => {
+export const ErrorScreen: React.FC<Props> = ({
+  errorLabel,
+  onRetry,
+  showSafeArea = true,
+}) => {
   const theme = useTheme();
   const { left, right, bottom } = useSafeAreaInsets();
 
   const { translate } = useI18N();
+
+  const safeAreaStyles = showSafeArea
+    ? { paddingLeft: left, paddingRight: right, paddingBottom: bottom }
+    : undefined;
 
   return (
     <>
@@ -23,9 +32,7 @@ export const ErrorScreen: React.FC<Props> = ({ errorLabel, onRetry }) => {
         className="flex items-center justify-center flex-1"
         style={{
           backgroundColor: theme.colors.background,
-          paddingLeft: left,
-          paddingRight: right,
-          paddingBottom: bottom,
+          ...safeAreaStyles,
         }}
       >
         <MaterialIcons name="warning" size={70} color={theme.colors.error} />

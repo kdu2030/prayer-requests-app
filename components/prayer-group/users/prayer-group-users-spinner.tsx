@@ -15,6 +15,7 @@ export const PrayerGroupUsersSpinner: React.FC = () => {
       />
       <SpinnerScreen
         loadingLabel={translate("prayerGroup.manageUsers.loading")}
+        showSafeArea={false}
       />
     </SafeAreaView>
   );

@@ -5,11 +5,19 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Props = {
   loadingLabel: string;
+  showSafeArea?: boolean;
 };
 
-export const SpinnerScreen: React.FC<Props> = ({ loadingLabel }) => {
+export const SpinnerScreen: React.FC<Props> = ({
+  loadingLabel,
+  showSafeArea,
+}) => {
   const theme = useTheme();
   const { left, right, bottom } = useSafeAreaInsets();
+
+  const safeAreaStyles = showSafeArea
+    ? { paddingLeft: left, paddingRight: right, paddingBottom: bottom }
+    : undefined;
 
   return (
     <>
@@ -17,9 +25,7 @@ export const SpinnerScreen: React.FC<Props> = ({ loadingLabel }) => {
         className="flex items-center justify-center flex-1"
         style={{
           backgroundColor: theme.colors.background,
-          paddingLeft: left,
-          paddingRight: right,
-          paddingBottom: bottom,
+          ...safeAreaStyles,
         }}
       >
         <ActivityIndicator

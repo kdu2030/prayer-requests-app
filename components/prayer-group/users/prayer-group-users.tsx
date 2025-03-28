@@ -50,6 +50,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
       {isLoading && (
         <SpinnerScreen
           loadingLabel={translate("prayerGroup.manageUsers.loading")}
+          showSafeArea={false}
         />
       )}
 

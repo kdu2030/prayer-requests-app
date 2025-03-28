@@ -11,6 +11,7 @@ import * as React from "react";
 import { View } from "react-native";
 import { Text, TouchableRipple, useTheme } from "react-native-paper";
 
+import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 
@@ -25,6 +26,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
+  const isAdmin = prayerGroupDetails?.userRole === PrayerGroupRole.Admin;
 
   const renderBackdrop = React.useCallback(
     (props: BottomSheetBackdropProps) => (
@@ -68,45 +70,49 @@ export const PrayerGroupOptions: React.FC<Props> = ({
             </View>
           </TouchableRipple>
 
-          <TouchableRipple
-            rippleColor={"rgba(0, 0, 0, 0.12)"}
-            onPress={() =>
-              prayerGroupDetails?.prayerGroupId &&
-              router.push({
-                pathname: "/(drawer)/prayergroup/[id]/edit",
-                params: { id: prayerGroupDetails?.prayerGroupId },
-              })
-            }
-            style={{ borderRadius: 8 }}
-            borderless
-          >
-            <View className="flex-row gap-x-3 items-center py-4 px-2">
-              <MaterialCommunityIcons name="pencil" size={24} />
-              <Text variant="bodyMedium">
-                {translate("prayerGroup.options.editPrayerGroup")}
-              </Text>
-            </View>
-          </TouchableRipple>
+          {isAdmin && (
+            <>
+              <TouchableRipple
+                rippleColor={"rgba(0, 0, 0, 0.12)"}
+                onPress={() =>
+                  prayerGroupDetails?.prayerGroupId &&
+                  router.push({
+                    pathname: "/(drawer)/prayergroup/[id]/edit",
+                    params: { id: prayerGroupDetails?.prayerGroupId },
+                  })
+                }
+                style={{ borderRadius: 8 }}
+                borderless
+              >
+                <View className="flex-row gap-x-3 items-center py-4 px-2">
+                  <MaterialCommunityIcons name="pencil" size={24} />
+                  <Text variant="bodyMedium">
+                    {translate("prayerGroup.options.editPrayerGroup")}
+                  </Text>
+                </View>
+              </TouchableRipple>
 
-          <TouchableRipple
-            rippleColor={"rgba(0, 0, 0, 0.12)"}
-            onPress={() =>
-              prayerGroupDetails?.prayerGroupId &&
-              router.push({
-                pathname: "/(drawer)/prayergroup/[id]/users",
-                params: { id: prayerGroupDetails?.prayerGroupId },
-              })
-            }
-            style={{ borderRadius: 8 }}
-            borderless
-          >
-            <View className="flex-row gap-x-3 items-center py-4 px-2">
-              <MaterialCommunityIcons name="account" size={24} />
-              <Text variant="bodyMedium">
-                {translate("prayerGroup.manageUsers.label")}
-              </Text>
-            </View>
-          </TouchableRipple>
+              <TouchableRipple
+                rippleColor={"rgba(0, 0, 0, 0.12)"}
+                onPress={() =>
+                  prayerGroupDetails?.prayerGroupId &&
+                  router.push({
+                    pathname: "/(drawer)/prayergroup/[id]/users",
+                    params: { id: prayerGroupDetails?.prayerGroupId },
+                  })
+                }
+                style={{ borderRadius: 8 }}
+                borderless
+              >
+                <View className="flex-row gap-x-3 items-center py-4 px-2">
+                  <MaterialCommunityIcons name="account" size={24} />
+                  <Text variant="bodyMedium">
+                    {translate("prayerGroup.manageUsers.label")}
+                  </Text>
+                </View>
+              </TouchableRipple>
+            </>
+          )}
         </View>
       </BottomSheetView>
     </BottomSheet>

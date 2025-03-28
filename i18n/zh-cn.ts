@@ -116,4 +116,8 @@ export const chineseTranslations: Translations = {
   "prayerGroup.kickUser.warning":
     "你确定要踢出{{fullName}}吗？此操作无法撤销。",
   "prayerGroup.kickUser.label": "踢出",
+
+  "prayerGroup.permissionError.header": "权限错误",
+  "prayerGroup.permissionError.message": "您没有足够的权限访问此页面",
+  "prayerGroup.permissionError.goBackToGroup": "回到祷告小组",
 };

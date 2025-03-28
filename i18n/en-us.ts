@@ -115,4 +115,9 @@ export const englishTranslations = {
   "prayerGroup.kickUser.warning":
     "Are you sure you want to kick {{fullName}}? This cannot be undone.",
   "prayerGroup.kickUser.label": "Kick User",
+
+  "prayerGroup.permissionError.header": "Permission Error",
+  "prayerGroup.permissionError.message":
+    "You do not have sufficient permissions to access this page.",
+  "prayerGroup.permissionError.goBackToGroup": "Go back to Prayer Group.",
 };

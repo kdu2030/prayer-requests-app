@@ -83,9 +83,15 @@ export const PrayerGroupHeader: React.FC<Props> = ({
         </Text>
 
         <View className="flex-row gap-x-4 mt-4">
-          <Button icon="plus" className="flex-1" mode={"contained"}>
-            {translate("prayerGroup.actions.addPrayerRequest")}
-          </Button>
+          {prayerGroupDetails?.isUserJoined ? (
+            <Button icon="plus" className="flex-1" mode={"contained"}>
+              {translate("prayerGroup.actions.addPrayerRequest")}
+            </Button>
+          ) : (
+            <Button icon="information" className="flex-1" mode="contained">
+              {translate("prayerGroup.options.about")}
+            </Button>
+          )}
           <Button
             icon="dots-horizontal"
             className="flex-1"

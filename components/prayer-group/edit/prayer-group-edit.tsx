@@ -7,12 +7,14 @@ import { Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { TEXT_INPUT_MAX_LENGTH } from "../../../constants/input-constants";
+import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { SupportedLanguages } from "../../../types/languages";
 import { TextInput } from "../../inputs/text-input";
 import { ErrorSnackbar } from "../../layouts/error-snackbar";
 import { GroupPreview } from "../../layouts/group-preview";
 import { SelectedImageCard } from "../../layouts/selected-image-card";
+import { PrayerGroupPermissionError } from "../error-screens/user-permission-error";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
 import { prayerGroupDetailsValidationSchema } from "./prayer-group-details-validation-schema";
@@ -32,6 +34,10 @@ export const PrayerGroupEdit: React.FC = () => {
     isLoading,
     savePrayerGroupEdit,
   } = usePrayerGroupEdit();
+
+  if (prayerGroupDetails?.userRole !== PrayerGroupRole.Admin) {
+    return <PrayerGroupPermissionError />;
+  }
 
   return (
     <SafeAreaView

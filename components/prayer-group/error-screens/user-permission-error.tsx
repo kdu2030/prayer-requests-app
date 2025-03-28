@@ -10,7 +10,7 @@ import { useI18N } from "../../../hooks/use-i18n";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
 
-export const PrayerGroupUsersError: React.FC = () => {
+export const PrayerGroupPermissionError: React.FC = () => {
   const { translate } = useI18N();
   const theme = useTheme();
   const { prayerGroupDetails } = usePrayerGroupContext();
@@ -32,7 +32,7 @@ export const PrayerGroupUsersError: React.FC = () => {
         title={translate("prayerGroup.permissionError.header")}
       />
       <View
-        className="flex items-center justify-center flex-1"
+        className="flex items-center justify-center flex-1 px-6"
         style={{
           backgroundColor: theme.colors.background,
         }}

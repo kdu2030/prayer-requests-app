@@ -119,5 +119,5 @@ export const englishTranslations = {
   "prayerGroup.permissionError.header": "Permission Error",
   "prayerGroup.permissionError.message":
     "You do not have sufficient permissions to access this page.",
-  "prayerGroup.permissionError.goBackToGroup": "Go back to Prayer Group.",
+  "prayerGroup.permissionError.goBackToGroup": "Go back to prayer group",
 };

@@ -10,13 +10,18 @@ import {
 import { PutPrayerGroupRequest } from "../../../../api/put-prayer-group";
 import { mapPrayerGroupDetails } from "../../../../mappers/map-prayer-group";
 import { mountComponent } from "../../../../tests/utils/test-utils";
+import { UserData } from "../../../../types/context/api-data-context-type";
 import { ManagedErrorResponse } from "../../../../types/error-handling";
 import { FileToUpload, RawMediaFile } from "../../../../types/media-file-types";
 import {
   PrayerGroupDetails,
   RawPrayerGroupDetails,
 } from "../../../../types/prayer-group-types";
-import { mockRawPrayerGroupDetails, mockUserData } from "../../tests/mock-data";
+import {
+  mockMediaFile,
+  mockRawPrayerGroupDetails,
+  mockUserData,
+} from "../../tests/mock-data";
 import { UNIQUE_GROUP_NAME_ERROR } from "../edit-prayer-group-constants";
 import { PrayerGroupEdit } from "../prayer-group-edit";
 import { PrayerGroupEditTestIds } from "./test-ids";
@@ -24,6 +29,8 @@ import { PrayerGroupEditTestIds } from "./test-ids";
 let component: RenderResult;
 
 const mockUsePrayerGroupContext = jest.fn();
+const mockSetUserData = jest.fn();
+
 const mockPostFile = jest.fn();
 const mockDeleteFile = jest.fn();
 const mockPutPrayerGroup = jest.fn();
@@ -34,7 +41,10 @@ jest.mock("../../prayer-group-context", () => ({
 
 jest.mock("../../../../hooks/use-api-data", () => ({
   ...jest.requireActual("../../../../hooks/use-api-data"),
-  useApiDataContext: () => ({ userData: mockUserData, setUserData: jest.fn() }),
+  useApiDataContext: () => ({
+    userData: mockUserData,
+    setUserData: mockSetUserData,
+  }),
 }));
 
 jest.mock("expo-router", () => ({
@@ -170,6 +180,58 @@ describe(PrayerGroupEdit, () => {
 
     await waitFor(() => {
       expect(mockPostFile).toHaveBeenCalled();
+    });
+  });
+
+  test("Avatar image in user data gets updated in user data upon save", async () => {
+    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+      ...mockRawPrayerGroupDetails,
+      imageFile: {
+        ...mockRawPrayerGroupDetails.imageFile,
+        id: undefined,
+      },
+    };
+
+    component = mountPrayerGroupEdit(
+      mapPrayerGroupDetails(rawPrayerGroupDetails)
+    );
+
+    const saveButton = await component.findByTestId(
+      PrayerGroupEditTestIds.saveButton
+    );
+    fireEvent.press(saveButton);
+
+    const mockPostFileResponse: ManagedErrorResponse<RawMediaFile> = {
+      isError: false,
+      value: mockRawPrayerGroupDetails.imageFile!,
+    };
+
+    const mockPutPrayerGroupResponse: ManagedErrorResponse<RawPrayerGroupDetails> =
+      {
+        isError: false,
+        value: {
+          ...mockRawPrayerGroupDetails,
+          imageFile: { ...mockMediaFile, id: 4 },
+        },
+      };
+
+    mockPostFile.mockReturnValue(mockPostFileResponse);
+    mockPutPrayerGroup.mockReturnValue(mockPutPrayerGroupResponse);
+
+    await waitFor(() => {
+      const updatedUserData: UserData = {
+        ...mockUserData,
+        prayerGroups: [
+          mockUserData.prayerGroups![0],
+          {
+            prayerGroupId: 2,
+            imageFile: { ...mockMediaFile, id: 4 },
+            groupName: "Prayer Group 2",
+          },
+        ],
+      };
+
+      expect(mockSetUserData).toHaveBeenCalledWith(updatedUserData);
     });
   });
 });

@@ -1,4 +1,5 @@
 import { UserData } from "../../../types/context/api-data-context-type";
+import { MediaFile } from "../../../types/media-file-types";
 import { RawPrayerGroupDetails } from "../../../types/prayer-group-types";
 
 export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
@@ -33,4 +34,11 @@ export const mockUserData: UserData = {
   ],
   userId: 1,
   username: "jhalpert",
+};
+
+export const mockMediaFile: MediaFile = {
+  fileName: "80762286-809b-4c1c-8919-c74cc3a140e0.jpeg",
+  fileType: 1,
+  mediaFileId: 4,
+  url: "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
 };

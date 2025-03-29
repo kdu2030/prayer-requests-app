@@ -18,6 +18,7 @@ import { PrayerGroupPermissionError } from "../error-screens/user-permission-err
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
 import { prayerGroupDetailsValidationSchema } from "./prayer-group-details-validation-schema";
+import { PrayerGroupEditTestIds } from "./tests/test-ids";
 import { usePrayerGroupEdit } from "./use-prayer-group-edit";
 
 export const PrayerGroupEdit: React.FC = () => {
@@ -83,6 +84,11 @@ export const PrayerGroupEdit: React.FC = () => {
                   bannerUri={values?.bannerImageFile?.url}
                   groupName={values?.groupName ?? ""}
                   description={values?.description ?? ""}
+                  bannerTestID={PrayerGroupEditTestIds.groupPreviewBanner}
+                  groupNameTestID={PrayerGroupEditTestIds.groupPreviewName}
+                  descriptionTestID={
+                    PrayerGroupEditTestIds.groupPreviewDescription
+                  }
                 />
 
                 <Text className="font-bold mt-5" variant="bodyLarge">
@@ -97,6 +103,7 @@ export const PrayerGroupEdit: React.FC = () => {
                   )}
                   maxLength={TEXT_INPUT_MAX_LENGTH}
                   required
+                  testID={PrayerGroupEditTestIds.groupNameInput}
                 />
 
                 <TextInput
@@ -108,6 +115,7 @@ export const PrayerGroupEdit: React.FC = () => {
                   multiline
                   numberOfLines={5}
                   required
+                  testID={PrayerGroupEditTestIds.descriptionInput}
                 />
 
                 <TextInput

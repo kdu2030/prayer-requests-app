@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
@@ -101,6 +102,13 @@ export const PrayerGroupHeader: React.FC<Props> = ({
               className="flex-1"
               mode="contained"
               testID={PrayerGroupHeaderTestIds.aboutGroupButton}
+              onPress={() => {
+                prayerGroupDetails?.prayerGroupId &&
+                  router.push({
+                    pathname: "/(drawer)/prayergroup/[id]/about",
+                    params: { id: prayerGroupDetails?.prayerGroupId },
+                  });
+              }}
             >
               {translate("prayerGroup.options.about")}
             </Button>

@@ -1,3 +1,4 @@
+import { UserData } from "../../../types/context/api-data-context-type";
 import { RawPrayerGroupDetails } from "../../../types/prayer-group-types";
 
 export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
@@ -20,4 +21,16 @@ export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
   },
   isUserJoined: true,
   userRole: 1,
+};
+
+export const mockUserData: UserData = {
+  email: "jhalpert@dundermifflin.com",
+  fullName: "Jim Halpert",
+  image: undefined,
+  prayerGroups: [
+    { groupName: "Prayer Group 1", prayerGroupId: 1 },
+    { groupName: "Prayer Group 2", prayerGroupId: 2 },
+  ],
+  userId: 1,
+  username: "jhalpert",
 };

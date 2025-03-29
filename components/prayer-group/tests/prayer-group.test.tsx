@@ -2,19 +2,22 @@ import "@testing-library/jest-native/extend-expect";
 import "@testing-library/jest-native";
 
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
-import { RenderResult } from "@testing-library/react-native";
+import { fireEvent, RenderResult } from "@testing-library/react-native";
 
+import { PrayerGroupUserToAdd } from "../../../api/post-prayer-group-users";
+import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { ManagedErrorResponse } from "../../../types/error-handling";
 import { RawPrayerGroupDetails } from "../../../types/prayer-group-types";
 import { PrayerGroupHeaderTestIds } from "../header/tests/test-ids";
 import { PrayerGroup } from "../prayer-group";
 import { PrayerGroupContextProvider } from "../prayer-group-context";
-import { mockRawPrayerGroupDetails } from "./mock-data";
+import { mockRawPrayerGroupDetails, mockUserData } from "./mock-data";
 
 let component: RenderResult;
 
 const mockGetPrayerGroup = jest.fn();
+const mockPostPrayerGroupUsers = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
@@ -25,6 +28,17 @@ jest.mock("@gorhom/bottom-sheet", () => ({
 
 jest.mock("../../../api/get-prayer-group", () => ({
   useGetPrayerGroup: () => () => mockGetPrayerGroup(),
+}));
+
+jest.mock("../../../api/post-prayer-group-users", () => ({
+  usePostPrayerGroupUsers:
+    () => (id: number, usersToAdd: PrayerGroupUserToAdd[]) =>
+      mockPostPrayerGroupUsers(id, usersToAdd),
+}));
+
+jest.mock("../../../hooks/use-api-data", () => ({
+  ...jest.requireActual("../../../hooks/use-api-data"),
+  useApiDataContext: () => ({ userData: mockUserData, setUserData: jest.fn() }),
 }));
 
 const mountPrayerGroup = (rawPrayerGroupDetails: RawPrayerGroupDetails) => {
@@ -107,5 +121,32 @@ describe(PrayerGroup, () => {
 
     expect(joinPrayerGroupButton).toBeTruthy();
     expect(aboutGroupButton).toBeTruthy();
+  });
+
+  test("Post prayer group users gets called when the user presses the join button", async () => {
+    mockPostPrayerGroupUsers.mockReturnValue({ isError: false });
+
+    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+      ...mockRawPrayerGroupDetails,
+      userRole: undefined,
+      isUserJoined: false,
+    };
+
+    component = mountPrayerGroup(rawPrayerGroupDetails);
+
+    const joinPrayerGroupButton = await component.findByTestId(
+      PrayerGroupHeaderTestIds.joinGroupButton
+    );
+
+    fireEvent.press(joinPrayerGroupButton);
+
+    const prayerGroupUserToAdd = {
+      id: 1,
+      role: PrayerGroupRole.Member,
+    };
+
+    expect(mockPostPrayerGroupUsers).toHaveBeenCalledWith(2, [
+      prayerGroupUserToAdd,
+    ]);
   });
 });

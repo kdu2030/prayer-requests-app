@@ -6,6 +6,7 @@ import { useDeletePrayerGroupUsers } from "../../../api/delete-prayer-group-user
 import { useGetPrayerGroupUsers } from "../../../api/get-prayer-group-users";
 import { usePutPrayerGroupAdmins } from "../../../api/put-prayer-group-admins";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
+import { sleep } from "../../../helpers/utils";
 import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import { mapPrayerGroupUser } from "../../../mappers/map-prayer-group";
@@ -32,7 +33,11 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const [isError, setIsError] = React.useState<boolean>(false);
 
   const [isSaveLoading, setIsSaveLoading] = React.useState<boolean>(false);
+
   const [saveError, setSaveError] = React.useState<string | undefined>();
+  const [successMessage, setSuccessMessage] = React.useState<
+    string | undefined
+  >();
 
   const [userToDeleteIndex, setUserToDeleteIndex] = React.useState<
     number | undefined
@@ -178,6 +183,9 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       return;
     }
 
+    setSuccessMessage(translate("prayerGroup.manageUsers.updateSuccess"));
+    await sleep(1000);
+
     const deletedUserIdsSet = new Set<number>(userIdsToDelete);
     const adminUserIdsSet = new Set<number>(adminUserIds);
 
@@ -243,6 +251,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     loadPrayerGroupUsers,
     saveError,
     setSaveError,
+    successMessage,
+    setSuccessMessage,
     isSaveLoading,
     onSavePrayerGroupUsers,
   };

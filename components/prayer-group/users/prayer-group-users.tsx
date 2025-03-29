@@ -10,6 +10,7 @@ import { ErrorScreen } from "../../layouts/error-screen";
 import { ErrorSnackbar } from "../../layouts/error-snackbar";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { SpinnerScreen } from "../../layouts/spinner-screen";
+import { SuccessSnackbar } from "../../layouts/success-snackbar";
 import { PrayerGroupPermissionError } from "../error-screens/user-permission-error";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
@@ -44,6 +45,8 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
     setSaveError,
     saveError,
     onSavePrayerGroupUsers,
+    successMessage,
+    setSuccessMessage,
   } = usePrayerGroupUsers(prayerGroupId);
 
   if (prayerGroupDetails?.userRole !== PrayerGroupRole.Admin) {
@@ -178,6 +181,13 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
         <ErrorSnackbar
           snackbarError={saveError}
           setSnackbarError={setSaveError}
+        />
+      )}
+
+      {!!successMessage && (
+        <SuccessSnackbar
+          successMessage={successMessage}
+          setSuccessMessage={setSuccessMessage}
         />
       )}
     </SafeAreaView>

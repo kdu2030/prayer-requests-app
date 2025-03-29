@@ -76,12 +76,17 @@ describe(PrayerGroup, () => {
     expect(bannerPlaceholder).toBeTruthy();
   });
 
-  test("Leave prayer group button displays if user is a member", async () => {
+  test("Correct buttons display if user is a member", async () => {
     component = mountPrayerGroup(mockRawPrayerGroupDetails);
-    const bannerPlaceholder = await component.findByTestId(
+    const leaveGroupButton = await component.findByTestId(
       PrayerGroupHeaderTestIds.leaveGroupButton
     );
-    expect(bannerPlaceholder).toBeTruthy();
+    const addPrayerRequestButton = await component.findByTestId(
+      PrayerGroupHeaderTestIds.addPrayerRequestButton
+    );
+
+    expect(leaveGroupButton).toBeTruthy();
+    expect(addPrayerRequestButton).toBeTruthy();
   });
 
   test("Join prayer group button displays if user is not a member", async () => {

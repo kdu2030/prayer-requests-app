@@ -126,4 +126,21 @@ describe(PrayerGroupUsers, () => {
       mockRawPrayerGroupUsers[1].fullName ?? ""
     );
   });
+
+  test("Prayer group role gets updated when role change button is pressed", async () => {
+    component = mountPrayerGroupUsers(
+      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockRawPrayerGroupUsers
+    );
+
+    const roleChangeButton = await component.findByTestId(
+      `${PrayerGroupUsersTestIds.roleChangeButton}[1]`
+    );
+    fireEvent.press(roleChangeButton);
+
+    const adminRoleChangeButton = await component.findByTestId(
+      `${PrayerGroupUsersTestIds.roleChangeButton}[1]`
+    );
+    expect(adminRoleChangeButton).toHaveTextContent("Admin");
+  });
 });

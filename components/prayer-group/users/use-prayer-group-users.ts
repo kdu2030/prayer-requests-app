@@ -66,7 +66,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
     setPrayerGroupUsers(responseUsers);
     setFilteredUsers(responseUsers);
-  }, [getPrayerGroupUsers, prayerGroupId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prayerGroupId]);
 
   React.useEffect(() => {
     loadPrayerGroupUsers();

@@ -1,6 +1,7 @@
 import "@testing-library/jest-native/extend-expect";
 import "@testing-library/jest-native";
 
+import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import {
   fireEvent,
   RenderResult,
@@ -34,6 +35,8 @@ const mockSetUserData = jest.fn();
 const mockPostFile = jest.fn();
 const mockDeleteFile = jest.fn();
 const mockPutPrayerGroup = jest.fn();
+
+jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
 jest.mock("../../prayer-group-context", () => ({
   usePrayerGroupContext: () => mockUsePrayerGroupContext(),

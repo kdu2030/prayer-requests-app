@@ -72,9 +72,11 @@ describe(PrayerGroup, () => {
     jest.resetAllMocks();
   });
 
-  test("Mount test", () => {
+  test("Mount test", async () => {
     component = mountPrayerGroup(mockRawPrayerGroupDetails);
-    expect(component).toBeTruthy();
+    await waitFor(() => {
+      expect(component).toBeTruthy();
+    });
   });
 
   test("Prayer group banner displays if not null", async () => {

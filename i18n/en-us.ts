@@ -1,12 +1,17 @@
 export const englishTranslations = {
   "common.appName": "Prayer Requests App",
+  "common.user": "User",
+
   "common.actions.select": "Select",
   "common.actions.save": "Save",
   "common.actions.preview": "Preview",
   "common.actions.cancel": "Cancel",
+  "common.actions.retry": "Retry",
 
   "loading.userData.text": "Loading user data",
   "loading.userData.label": "User Data",
+  "loading.prayerGroup.text": "Loading prayer group",
+  "loading.prayerGroup.error": "Unable to load prayer group. Please try again.",
 
   "language.chooseLanguage.text": "Choose your language",
   "language.chooseLanguage.label": "Language",
@@ -47,9 +52,13 @@ export const englishTranslations = {
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",
   "toaster.failed.genericFailure": "{{item}} failed",
+  "toaster.failed.removeFailure": "Failed to remove {{item}}",
+  "toaster.failed.addUserFailure": "Failed to add user",
+  "toaster.failed.updateFailure": "Failed to update {{item}}",
 
   "navigation.drawer.screen.home": "Home",
   "navigation.drawer.screen.createPrayerGroup": "Create Prayer Group",
+  "navigation.drawer.screen.yourPrayerGroups": "Your Prayer Groups",
 
   "wizard.stepCount": "{{step}} of {{total}}",
   "wizard.next": "Next",
@@ -68,9 +77,48 @@ export const englishTranslations = {
   "createPrayerGroup.rules.label": "Rules",
   "createPrayerGroup.groupImageColorStep.title": "Style your Prayer Group",
   "createPrayerGroup.groupImageColorStep.description":
-    "A group image and color help your group stand out.",
+    "An avatar and a banner image help your group stand out.",
   "createPrayerGroup.groupImageColorStep.color": "Color",
   "createPrayerGroup.groupImageColorStep.selectColor": "Select Color",
-  "createPrayerGroup.groupImageColorStep.image": "Image",
+  "createPrayerGroup.groupImageColorStep.image": "Avatar",
   "createPrayerGroup.groupImageColorStep.selectImage": "Select Image",
+  "createPrayerGroup.groupImageColorStep.banner": "Banner",
+  "createPrayerGroup.groupImageColorStep.unableToSelectImage":
+    "Unable to select image.",
+
+  "prayerGroup.actions.join": "Join",
+  "prayerGroup.actions.joined": "Joined",
+  "prayerGroup.actions.addPrayerRequest": "Add Prayer Request",
+  "prayerGroup.actions.groupOptions": "Group Options",
+
+  "image.missing.label": "No Image",
+
+  "prayerGroup.options.about": "About Prayer Group",
+  "prayerGroup.options.editPrayerGroup": "Edit Prayer Group",
+
+  "prayerGroup.about.header": "About {{groupName}}",
+  "prayerGroup.about.admins": "Admins",
+
+  "prayerGroup.edit.header": "Edit {{groupName}}",
+  "prayerGroup.edit.images": "Images",
+
+  "prayerGroup.manageUsers.label": "Manage Users",
+  "prayerGroup.manageUsers.loading": "Loading prayer group users",
+  "prayerGroup.manageUsers.unableToLoad": "Unable to load prayer group users",
+  "prayerGroup.manageUsers.searchForUsers": "Search for users",
+  "prayerGroup.manageUsers.searchPlaceholder": "Name or Username",
+  "prayerGroup.manageUsers.admin": "Admin",
+  "prayerGroup.manageUsers.member": "Member",
+  "prayerGroup.manageUsers.usersLabel": "prayer group users",
+  "prayerGroup.manageUsers.updateSuccess": "Updated prayer group users",
+
+  "prayerGroup.kickUser.header": "Kick User?",
+  "prayerGroup.kickUser.warning":
+    "Are you sure you want to kick {{fullName}}? This cannot be undone.",
+  "prayerGroup.kickUser.label": "Kick User",
+
+  "prayerGroup.permissionError.header": "Permission Error",
+  "prayerGroup.permissionError.message":
+    "You do not have sufficient permissions to access this page.",
+  "prayerGroup.permissionError.goBackToGroup": "Go back to prayer group",
 };

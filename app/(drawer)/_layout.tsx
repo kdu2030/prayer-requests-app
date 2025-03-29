@@ -19,7 +19,13 @@ const DrawerLayout: React.FC = () => {
         drawerContent={(props: DrawerContentComponentProps) => (
           <DrawerContent {...props} />
         )}
-      />
+        backBehavior="history"
+      >
+        <Drawer.Screen
+          name="prayergroup/[id]"
+          options={{ unmountOnBlur: true }}
+        />
+      </Drawer>
     </GestureHandlerRootView>
   );
 };

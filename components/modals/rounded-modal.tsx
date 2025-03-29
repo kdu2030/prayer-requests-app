@@ -26,12 +26,11 @@ export const RoundedModal: React.FC<Props> = ({
         style={{ padding: 8 }}
         contentContainerStyle={{
           backgroundColor: theme.colors.background,
-          padding: 20,
           borderRadius: 8,
         }}
       >
         <View
-          className="flex flex-row justify-between items-center border-gray-600 pb-4 mb-6"
+          className="flex flex-row justify-between items-center border-gray-600 pb-4 p-5"
           style={{ borderBottomWidth: 0.5 }}
         >
           <Text variant="titleLarge" className="font-bold">
@@ -42,7 +41,8 @@ export const RoundedModal: React.FC<Props> = ({
             <Ionicons name="close" size={28} />
           </TouchableOpacity>
         </View>
-        {children}
+
+        <View className="p-5">{children}</View>
       </Modal>
     </Portal>
   );

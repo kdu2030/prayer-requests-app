@@ -1,3 +1,5 @@
+import { usePathname } from "expo-router";
+import { FormikProps } from "formik";
 import * as React from "react";
 import { ObjectSchema } from "yup";
 
@@ -5,8 +7,8 @@ import { useI18N } from "../../hooks/use-i18n";
 import { SupportedLanguages } from "../../types/languages";
 import { CreatePrayerGroupWizardStep } from "./create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
-import { GroupImageColorStep } from "./group-image-color-step";
-import { groupImageColorValidationSchema } from "./group-image-color-validation-schema";
+import { GroupImageStep } from "./group-image-step/group-image-step";
+import { groupImageValidationSchema } from "./group-image-step/group-image-validation-schema";
 import { GroupNameDescriptionStep } from "./group-name-description-step";
 import { groupNameValidationSchema } from "./group-name-validation-schema";
 import { PrayerGroupRulesStep } from "./prayer-group-rules-step";
@@ -17,6 +19,13 @@ export const useCreatePrayerGroupWizard = () => {
       CreatePrayerGroupWizardStep.NameDescriptionStep
     );
   const { translate, i18n } = useI18N();
+  const pathname = usePathname();
+  const formikRef = React.useRef<FormikProps<CreatePrayerGroupForm>>(null);
+
+  React.useEffect(() => {
+    formikRef.current?.resetForm();
+    setWizardStep(CreatePrayerGroupWizardStep.NameDescriptionStep);
+  }, [pathname]);
 
   const getWizardContent = (): React.ReactNode => {
     switch (wizardStep) {
@@ -24,8 +33,8 @@ export const useCreatePrayerGroupWizard = () => {
         return <GroupNameDescriptionStep setWizardStep={setWizardStep} />;
       case CreatePrayerGroupWizardStep.RulesStep:
         return <PrayerGroupRulesStep setWizardStep={setWizardStep} />;
-      case CreatePrayerGroupWizardStep.ImageColorStep:
-        return <GroupImageColorStep setWizardStep={setWizardStep} />;
+      case CreatePrayerGroupWizardStep.ImageStep:
+        return <GroupImageStep setWizardStep={setWizardStep} />;
     }
   };
 
@@ -35,8 +44,8 @@ export const useCreatePrayerGroupWizard = () => {
     switch (wizardStep) {
       case CreatePrayerGroupWizardStep.NameDescriptionStep:
         return groupNameValidationSchema(translate);
-      case CreatePrayerGroupWizardStep.ImageColorStep:
-        return groupImageColorValidationSchema(
+      case CreatePrayerGroupWizardStep.ImageStep:
+        return groupImageValidationSchema(
           translate,
           i18n.language as SupportedLanguages
         );
@@ -48,5 +57,6 @@ export const useCreatePrayerGroupWizard = () => {
     setWizardStep,
     getWizardContent,
     getValidationSchema,
+    formikRef,
   };
 };

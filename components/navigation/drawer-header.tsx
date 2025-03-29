@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { DrawerHeaderProps } from "@react-navigation/drawer";
+import { usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -17,6 +18,17 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
 
+  const pathname = usePathname();
+
+  if (
+    pathname.startsWith("/prayergroup") &&
+    (pathname.includes("about") ||
+      pathname.includes("edit") ||
+      pathname.includes("users"))
+  ) {
+    return null;
+  }
+
   return (
     <>
       <StatusBar backgroundColor={theme.colors.primary} />
@@ -33,7 +45,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
             onPress={() => navigation.openDrawer()}
             className="mr-2"
           >
-            <Ionicons name="menu" size={24} color="white" />
+            <Ionicons name="menu" size={28} color="white" />
           </TouchableOpacity>
           <Text variant="titleLarge" className="font-bold text-white">
             {translate("common.appName")}
@@ -42,7 +54,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
 
         <View className="flex flex-row items-center">
           <TouchableOpacity onPress={() => {}} className="mr-4">
-            <Ionicons name="search" size={24} color="white" />
+            <Ionicons name="search" size={28} color="white" />
           </TouchableOpacity>
 
           <ProfilePicture url={userData?.image?.url} width={36} height={36} />

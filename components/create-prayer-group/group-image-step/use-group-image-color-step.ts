@@ -1,23 +1,28 @@
 import * as ImagePicker from "expo-image-picker";
+import { Href, router } from "expo-router";
 import { setNestedObjectValues, useFormikContext } from "formik";
-import { isEmpty } from "lodash";
+import { get, isEmpty } from "lodash";
 import * as React from "react";
 
-import { usePostFile } from "../../api/post-file";
-import { usePostPrayerGroup } from "../../api/post-prayer-group";
-import { useI18N } from "../../hooks/use-i18n";
-import { mapFileToUpload } from "../../mappers/map-media-file";
-import { mapMediaFileFromImagePickerAsset } from "../../mappers/map-media-file";
-import { mapCreatePrayerGroupRequest } from "../../mappers/map-prayer-group";
-import { ManagedErrorResponse } from "../../types/error-handling";
-import { RawMediaFile } from "../../types/media-file-types";
-import { CreatePrayerGroupForm } from "./create-prayer-group-types";
+import { usePostFile } from "../../../api/post-file";
+import { usePostPrayerGroup } from "../../../api/post-prayer-group";
+import { useApiDataContext } from "../../../hooks/use-api-data";
+import { useI18N } from "../../../hooks/use-i18n";
+import {
+  mapFileToUpload,
+  mapMediaFileFromImagePickerAsset,
+} from "../../../mappers/map-media-file";
+import {
+  mapCreatePrayerGroupRequest,
+  mapPrayerGroupSummaryFromPrayerGroupDetails,
+} from "../../../mappers/map-prayer-group";
+import { ManagedErrorResponse } from "../../../types/error-handling";
+import { MediaFile, RawMediaFile } from "../../../types/media-file-types";
+import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 
 export const useGroupImageColorStep = () => {
   const { translate } = useI18N();
 
-  const [isColorPickerModalOpen, setIsColorPickerOpen] =
-    React.useState<boolean>(false);
   const [snackbarError, setSnackbarError] = React.useState<
     string | undefined
   >();
@@ -34,16 +39,18 @@ export const useGroupImageColorStep = () => {
     setErrors,
   } = useFormikContext<CreatePrayerGroupForm>();
 
+  const { userData, setUserData } = useApiDataContext();
+
   const postFile = usePostFile();
   const postPrayerGroup = usePostPrayerGroup();
 
-  const selectImage = async () => {
+  const selectImage = async (fieldName: string, aspect: [number, number]) => {
     try {
       await ImagePicker.requestMediaLibraryPermissionsAsync();
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [1, 1],
+        aspect,
         quality: 1,
       });
       const imageResult = result.assets ? result.assets[0] : undefined;
@@ -51,25 +58,26 @@ export const useGroupImageColorStep = () => {
         return;
       }
 
-      setFieldValue("image", mapMediaFileFromImagePickerAsset(imageResult));
-      setFieldTouched("image", true);
+      setFieldValue(fieldName, mapMediaFileFromImagePickerAsset(imageResult));
+      setTimeout(() => setFieldTouched(fieldName, true), 0);
     } catch (error) {
-      return;
+      setSnackbarError(
+        translate("createPrayerGroup.groupImageColorStep.unableToSelectImage")
+      );
     }
   };
 
-  const onRemoveSelectedImage = () => {
-    if (!values.image) {
+  const onRemoveSelectedImage = (fieldName: string) => {
+    if (!get(values, fieldName)) {
       return;
     }
-    setFieldValue("image", undefined);
+
+    setFieldValue(fieldName, undefined, true);
   };
 
-  const uploadPrayerGroupImage = async (): Promise<
-    ManagedErrorResponse<RawMediaFile | undefined>
-  > => {
-    const image = values.image;
-
+  const uploadPrayerGroupImage = async (
+    image: MediaFile | undefined
+  ): Promise<ManagedErrorResponse<RawMediaFile | undefined>> => {
     if (!image) {
       return { isError: false, value: undefined };
     }
@@ -90,9 +98,13 @@ export const useGroupImageColorStep = () => {
     }
 
     setIsLoading(true);
-    const imageUploadResponse = await uploadPrayerGroupImage();
 
-    if (imageUploadResponse.isError) {
+    const [imageUploadResponse, bannerImageUploadResponse] = await Promise.all([
+      uploadPrayerGroupImage(values.image),
+      uploadPrayerGroupImage(values.bannerImage),
+    ]);
+
+    if (imageUploadResponse.isError || bannerImageUploadResponse.isError) {
       setSnackbarError(
         translate("toaster.failed.saveFailure", {
           item: translate("createPrayerGroup.groupImageColorStep.image"),
@@ -103,17 +115,18 @@ export const useGroupImageColorStep = () => {
     }
 
     const imageId = imageUploadResponse.value?.id;
+    const bannerImageId = bannerImageUploadResponse.value?.id;
+
     const createPrayerGroupRequest = mapCreatePrayerGroupRequest(
       values,
-      imageId
+      imageId,
+      bannerImageId
     );
 
     const createPrayerGroupResponse = await postPrayerGroup(
       createPrayerGroupRequest
     );
     setIsLoading(false);
-
-    console.log(createPrayerGroupResponse);
 
     if (createPrayerGroupResponse.isError) {
       setSnackbarError(
@@ -124,12 +137,26 @@ export const useGroupImageColorStep = () => {
       return;
     }
 
-    // TODO: Redirect to new prayer group
+    const prayerGroupId = createPrayerGroupResponse.value.id;
+
+    const prayerGroupSummary = mapPrayerGroupSummaryFromPrayerGroupDetails(
+      createPrayerGroupResponse.value
+    );
+
+    const prayerGroups = [
+      ...(userData?.prayerGroups ?? []),
+      prayerGroupSummary,
+    ];
+
+    setUserData({ ...userData, prayerGroups });
+    prayerGroupId &&
+      router.push({
+        pathname: "/prayergroup/[id]",
+        params: { id: prayerGroupId },
+      } as Href<any>);
   };
 
   return {
-    isColorPickerModalOpen,
-    setIsColorPickerOpen,
     selectImage,
     onRemoveSelectedImage,
     savePrayerGroup,

@@ -1,11 +1,25 @@
 import { PrayerGroupRole } from "../constants/prayer-group-constants";
-import { RawMediaFile } from "./media-file-types";
+import { MediaFile, RawMediaFile } from "./media-file-types";
 
-export type PrayerGroupAdminSummary = {
+export type RawPrayerGroupUserSummary = {
   id?: number;
   fullName?: string;
+  username?: string;
   image?: RawMediaFile;
+  role?: PrayerGroupRole;
 };
+
+export type PrayerGroupUserSummary = {
+  userId?: number;
+  fullName?: string;
+  username?: string;
+  image?: MediaFile;
+  role?: PrayerGroupRole;
+};
+
+export interface DeletablePrayerGroupUser extends PrayerGroupUserSummary {
+  isDeleted?: boolean;
+}
 
 export type RawPrayerGroupDetails = {
   id?: number;
@@ -15,5 +29,30 @@ export type RawPrayerGroupDetails = {
   color?: string;
   isUserJoined?: boolean;
   userRole?: PrayerGroupRole;
-  admins?: PrayerGroupAdminSummary[];
+  admins?: RawPrayerGroupUserSummary[];
+  imageFile?: RawMediaFile;
+  bannerImageFile?: RawMediaFile;
+};
+
+export type PrayerGroupDetails = {
+  prayerGroupId?: number;
+  groupName?: string;
+  description?: string;
+  rules?: string;
+  color?: string;
+  isUserJoined?: boolean;
+  userRole?: PrayerGroupRole;
+  admins?: PrayerGroupUserSummary[];
+  imageFile?: MediaFile;
+  bannerImageFile?: MediaFile;
+};
+
+export type RawPrayerGroupSummary = {
+  id?: number;
+  groupName?: string;
+  imageFile?: RawMediaFile;
+};
+
+export type PrayerGroupSummary = Omit<RawPrayerGroupSummary, "id"> & {
+  prayerGroupId?: number;
 };

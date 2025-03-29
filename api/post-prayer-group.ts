@@ -12,6 +12,7 @@ export type PostCreatePrayerGroupRequest = {
   rules?: string;
   color?: string;
   imageFileId?: number;
+  bannerImageFileId?: number;
 };
 
 const postPrayerGroup = async (

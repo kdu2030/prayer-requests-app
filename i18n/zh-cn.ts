@@ -6,14 +6,18 @@ type Translations = {
 
 export const chineseTranslations: Translations = {
   "common.appName": "祷告事项软件",
+  "common.user": "用户",
 
   "common.actions.select": "选择",
   "common.actions.save": "保存",
   "common.actions.preview": "预览",
   "common.actions.cancel": "取消",
+  "common.actions.retry": "重试",
 
-  "loading.userData.text": "如载用户数据",
+  "loading.userData.text": "加载用户数据",
   "loading.userData.label": "用户数据",
+  "loading.prayerGroup.text": "加载祷告小组",
+  "loading.prayerGroup.error": "无法加载祷告小组。请再试一次。",
 
   "language.chooseLanguage.text": "选你的语言",
   "language.chooseLanguage.label": "语言",
@@ -49,11 +53,15 @@ export const chineseTranslations: Translations = {
   "form.validation.imageFileType": "图片格式必须是 JPG、JPEG 或 PNG。",
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
-  "toaster.failed.loadFailure": "如载{{item}}失败",
+  "toaster.failed.loadFailure": "加载{{item}}失败",
   "toaster.failed.genericFailure": "{{item}}失败",
+  "toaster.failed.removeFailure": "无法删除{{item}}",
+  "toaster.failed.addUserFailure": "用户加入失败",
+  "toaster.failed.updateFailure": "无法编辑{{item}}",
 
   "navigation.drawer.screen.home": "主页",
   "navigation.drawer.screen.createPrayerGroup": "创建新祷告小组",
+  "navigation.drawer.screen.yourPrayerGroups": "您的祷告小组",
 
   "wizard.stepCount": "第{{step}}步、共{{total}}步",
   "wizard.next": "下一步",
@@ -71,9 +79,46 @@ export const chineseTranslations: Translations = {
   "createPrayerGroup.rules.label": "规则",
   "createPrayerGroup.groupImageColorStep.title": "为您的小组添加样式",
   "createPrayerGroup.groupImageColorStep.description":
-    "小组图片和颜色可以让您的小组更突出。",
+    "小组头像和横幅图片可以让您的小组更突出。",
   "createPrayerGroup.groupImageColorStep.color": "颜色",
   "createPrayerGroup.groupImageColorStep.selectColor": "选颜色",
-  "createPrayerGroup.groupImageColorStep.image": "图片",
+  "createPrayerGroup.groupImageColorStep.image": "头像",
   "createPrayerGroup.groupImageColorStep.selectImage": "选图片",
+  "createPrayerGroup.groupImageColorStep.banner": "横幅图片",
+  "createPrayerGroup.groupImageColorStep.unableToSelectImage": "无法选择图片",
+
+  "prayerGroup.actions.join": "加入",
+  "prayerGroup.actions.joined": "加入了",
+  "prayerGroup.actions.addPrayerRequest": "添加祷告事项",
+  "prayerGroup.actions.groupOptions": "小组选项",
+
+  "image.missing.label": "没有图片",
+
+  "prayerGroup.options.about": "关于祷告小组",
+  "prayerGroup.options.editPrayerGroup": "编辑祷告小组",
+
+  "prayerGroup.about.header": "关于{{groupName}}",
+  "prayerGroup.about.admins": "管理员",
+
+  "prayerGroup.edit.header": "编辑{{groupName}}",
+  "prayerGroup.edit.images": "图片",
+
+  "prayerGroup.manageUsers.label": "管理用户",
+  "prayerGroup.manageUsers.loading": "加载祷告小组用户",
+  "prayerGroup.manageUsers.unableToLoad": "无法加载小组用户",
+  "prayerGroup.manageUsers.searchForUsers": "搜索用户",
+  "prayerGroup.manageUsers.searchPlaceholder": "名字或用户名",
+  "prayerGroup.manageUsers.admin": "管理员",
+  "prayerGroup.manageUsers.member": "成员",
+  "prayerGroup.manageUsers.usersLabel": "小组用户",
+  "prayerGroup.manageUsers.updateSuccess": "编辑了小组用户",
+
+  "prayerGroup.kickUser.header": "踢出用户？",
+  "prayerGroup.kickUser.warning":
+    "你确定要踢出{{fullName}}吗？此操作无法撤销。",
+  "prayerGroup.kickUser.label": "踢出",
+
+  "prayerGroup.permissionError.header": "权限错误",
+  "prayerGroup.permissionError.message": "您没有足够的权限访问此页面",
+  "prayerGroup.permissionError.goBackToGroup": "回到祷告小组",
 };

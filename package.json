@@ -15,11 +15,13 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
+    "@gorhom/bottom-sheet": "^4.6.4",
     "@react-native-async-storage/async-storage": "1.21.0",
     "@react-navigation/drawer": "^6.7.2",
     "axios": "^1.6.7",
     "base-64": "^1.0.0",
     "classnames": "^2.5.1",
+    "color": "^3.2.1",
     "expo": "^50.0.20",
     "expo-file-system": "~16.0.9",
     "expo-font": "~11.10.3",
@@ -55,6 +57,7 @@
     "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^12.4.2",
     "@types/base-64": "^1.0.2",
+    "@types/color": "^4.2.0",
     "@types/jest": "^29.5.11",
     "@types/lodash": "^4.14.202",
     "@types/path-browserify": "^1.0.3",
@@ -71,7 +74,7 @@
     "tailwindcss": "3.3.2",
     "typescript": "^5.3.3"
   },
-  "overrides": {
+  "resolutions": {
     "react-refresh": "~0.14.0"
   },
   "private": true

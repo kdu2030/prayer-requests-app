@@ -3,17 +3,11 @@ import "expo-router/entry";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { registerRootComponent } from "expo";
 import { router } from "expo-router";
-import * as ScreenOrientation from "expo-screen-orientation";
 import { StatusBar } from "expo-status-bar";
 import { NativeWindStyleSheet } from "nativewind";
 import * as React from "react";
 import { View } from "react-native";
-import {
-  ActivityIndicator,
-  Snackbar,
-  Text,
-  useTheme,
-} from "react-native-paper";
+import { ActivityIndicator, Text, useTheme } from "react-native-paper";
 
 import { getUserSummaryRaw } from "../api/get-user-summary";
 import {
@@ -21,6 +15,8 @@ import {
   USER_ID_STORAGE_KEY,
 } from "../components/authentication/auth-constants";
 import { decodeJwtToken } from "../components/authentication/auth-helpers";
+import { ErrorSnackbar } from "../components/layouts/error-snackbar";
+import { sleep } from "../helpers/utils";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { useI18N } from "../hooks/use-i18n";
 import { mapUserData, mapUserTokens } from "../mappers/map-user-data";
@@ -33,7 +29,9 @@ type StoredUserData = {
 
 const AppContainer: React.FC = () => {
   const { loadLanguage, translate } = useI18N();
-  const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
+  const [snackbarError, setSnackbarError] = React.useState<
+    string | undefined
+  >();
   const { setUserTokens, userTokens, baseUrl, setUserData } =
     useApiDataContext();
   const theme = useTheme();
@@ -74,7 +72,12 @@ const AppContainer: React.FC = () => {
   const loadUserData = async () => {
     const response = await loadLanguage();
     if (response.isError) {
-      setIsErrorVisible(true);
+      setSnackbarError(
+        translate("toaster.failed.loadFailure", {
+          item: translate("loading.userData.label").toLocaleLowerCase(),
+        })
+      );
+      await sleep(1000);
     }
 
     if (response.isError || response.value == null) {
@@ -96,8 +99,12 @@ const AppContainer: React.FC = () => {
     );
 
     if (userSummaryResponse.isError) {
-      setIsErrorVisible(true);
-      router.push("/auth/welcome");
+      setSnackbarError(
+        translate("toaster.failed.loadFailure", {
+          item: translate("loading.userData.label").toLocaleLowerCase(),
+        })
+      );
+      setTimeout(() => router.push("/auth/welcome"), 1000);
       return;
     }
 
@@ -111,7 +118,6 @@ const AppContainer: React.FC = () => {
   };
 
   React.useEffect(() => {
-    ScreenOrientation.unlockAsync();
     loadUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -129,19 +135,10 @@ const AppContainer: React.FC = () => {
         </Text>
       </View>
 
-      <Snackbar
-        className="bg-red-700"
-        duration={3000}
-        visible={isErrorVisible}
-        onDismiss={() => {
-          setIsErrorVisible(false);
-        }}
-        onIconPress={() => setIsErrorVisible(false)}
-      >
-        {translate("toaster.failed.loadFailure", {
-          item: translate("loading.userData.label").toLocaleLowerCase(),
-        })}
-      </Snackbar>
+      <ErrorSnackbar
+        snackbarError={snackbarError}
+        setSnackbarError={setSnackbarError}
+      />
     </>
   );
 };

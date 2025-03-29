@@ -1,3 +1,4 @@
+import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import { render } from "@testing-library/react-native";
 import * as React from "react";
 import { PaperProvider } from "react-native-paper";
@@ -6,6 +7,8 @@ import { LIGHT_THEME } from "../../constants/theme/theme";
 import { ApiDataContextProvider } from "../../hooks/use-api-data";
 import i18n from "../../i18n/i18n";
 import { SupportedLanguages } from "../../types/languages";
+
+jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
 export const mountComponent = (
   component: React.ReactNode,

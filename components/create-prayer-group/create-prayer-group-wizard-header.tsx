@@ -43,7 +43,7 @@ export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
             onPress={onBack}
             testID={CreatePrayerGroupWizardHeaderTestIds.backButton}
           >
-            <Ionicons name="arrow-back" size={24} />
+            <Ionicons name="arrow-back" size={28} />
           </TouchableOpacity>
         )}
         <View

@@ -34,7 +34,7 @@ export const TextInput: React.FC<Props> = ({
     <View className={containerClassNames} testID={`${testID}-container`}>
       <PaperTextInput
         label={required ? `${label} *` : label}
-        value={field.value}
+        value={field.value ?? ""}
         className={`${inputClassNames} ${isError ? "bg-red-200" : ""}`}
         onChangeText={(text: string) => {
           helpers.setValue(text);

@@ -1,7 +1,7 @@
 export enum CreatePrayerGroupWizardStep {
   NameDescriptionStep = 1,
   RulesStep = 2,
-  ImageColorStep = 3,
+  ImageStep = 3,
 }
 
 export const PRAYER_GROUP_NAME_EXISTS =
@@ -27,5 +27,8 @@ export const AVAILABLE_PRAYER_GROUP_COLORS = [
 
 export const MAX_GROUP_IMAGE_SIZE_MB = 5;
 export const MAX_GROUP_IMAGE_SIZE = MAX_GROUP_IMAGE_SIZE_MB * 1024 * 1024;
+
+export const MAX_GROUP_BANNER_SIZE_MB = 10;
+export const MAX_GROUP_BANNER_SIZE = MAX_GROUP_BANNER_SIZE_MB * 1024 * 1024;
 
 export const ACCEPTED_FILE_TYPES = ["JPG", "JPEG", "PNG"];

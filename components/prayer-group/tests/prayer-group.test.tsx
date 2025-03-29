@@ -83,4 +83,18 @@ describe(PrayerGroup, () => {
     );
     expect(bannerPlaceholder).toBeTruthy();
   });
+
+  test("Join prayer group button displays if user is not a member", async () => {
+    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+      ...mockRawPrayerGroupDetails,
+      userRole: undefined,
+      isUserJoined: false,
+    };
+
+    component = mountPrayerGroup(rawPrayerGroupDetails);
+    const joinPrayerGroupButton = await component.findByTestId(
+      PrayerGroupHeaderTestIds.joinGroupButton
+    );
+    expect(joinPrayerGroupButton).toBeTruthy();
+  });
 });

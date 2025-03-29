@@ -1,5 +1,7 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
-import { Portal, Snackbar } from "react-native-paper";
+import { View } from "react-native";
+import { Portal, Snackbar, Text, useTheme } from "react-native-paper";
 
 type Props = {
   snackbarError: string | undefined;
@@ -10,10 +12,12 @@ export const ErrorSnackbar: React.FC<Props> = ({
   snackbarError,
   setSnackbarError,
 }) => {
+  const theme = useTheme();
+
   return (
     <Portal>
       <Snackbar
-        className="bg-red-700"
+        style={{ backgroundColor: theme.colors.error }}
         duration={3000}
         visible={!!snackbarError}
         onDismiss={() => {
@@ -21,7 +25,10 @@ export const ErrorSnackbar: React.FC<Props> = ({
         }}
         onIconPress={() => setSnackbarError(undefined)}
       >
-        {snackbarError}
+        <View className="flex flex-row items-center">
+          <MaterialIcons size={24} name="warning" color={"white"} />
+          <Text className="ml-2 text-white">{snackbarError}</Text>
+        </View>
       </Snackbar>
     </Portal>
   );

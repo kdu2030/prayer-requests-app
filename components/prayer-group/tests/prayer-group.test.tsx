@@ -62,4 +62,17 @@ describe(PrayerGroup, () => {
       uri: mockRawPrayerGroupDetails.bannerImageFile?.url,
     });
   });
+
+  test("Prayer group banner placeholder displays if banner is null", async () => {
+    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+      ...mockRawPrayerGroupDetails,
+      bannerImageFile: undefined,
+    };
+
+    component = mountPrayerGroup(rawPrayerGroupDetails);
+    const bannerPlaceholder = await component.findByTestId(
+      PrayerGroupHeaderTestIds.bannerPlaceholder
+    );
+    expect(bannerPlaceholder).toBeTruthy();
+  });
 });

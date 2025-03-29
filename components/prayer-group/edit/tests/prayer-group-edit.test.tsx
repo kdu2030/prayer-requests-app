@@ -3,8 +3,10 @@ import "@testing-library/jest-native";
 
 import { fireEvent, RenderResult } from "@testing-library/react-native";
 
+import { PutPrayerGroupRequest } from "../../../../api/put-prayer-group";
 import { mapPrayerGroupDetails } from "../../../../mappers/map-prayer-group";
 import { mountComponent } from "../../../../tests/utils/test-utils";
+import { FileToUpload } from "../../../../types/media-file-types";
 import { PrayerGroupDetails } from "../../../../types/prayer-group-types";
 import { mockRawPrayerGroupDetails, mockUserData } from "../../tests/mock-data";
 import { PrayerGroupEdit } from "../prayer-group-edit";
@@ -13,6 +15,9 @@ import { PrayerGroupEditTestIds } from "./test-ids";
 let component: RenderResult;
 
 const mockUsePrayerGroupContext = jest.fn();
+const mockPostFile = jest.fn();
+const mockDeleteFile = jest.fn();
+const mockPutPrayerGroup = jest.fn();
 
 jest.mock("../../prayer-group-context", () => ({
   usePrayerGroupContext: () => mockUsePrayerGroupContext(),
@@ -28,6 +33,20 @@ jest.mock("expo-router", () => ({
   router: {
     push: jest.fn(),
   },
+}));
+
+jest.mock("../../../../api/post-file", () => ({
+  usePostFile: () => (file: FileToUpload) => mockPostFile(file),
+}));
+
+jest.mock("../../../../api/delete-file", () => ({
+  useDeleteFile: () => (fileId: number) => mockDeleteFile(fileId),
+}));
+
+jest.mock("../../../../api/put-prayer-group", () => ({
+  usePutPrayerGroup:
+    () => (prayerGroupId: number, request: PutPrayerGroupRequest) =>
+      mockPutPrayerGroup(prayerGroupId, request),
 }));
 
 const mountPrayerGroupEdit = (prayerGroupDetails: PrayerGroupDetails) => {

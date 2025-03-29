@@ -43,7 +43,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const { translate } = useI18N();
 
   const loadPrayerGroup = React.useCallback(async () => {
-    console.log("Load Prayer Group Called!");
     setPrayerGroupDetails(undefined);
     setIsLoading(true);
 

@@ -1,7 +1,11 @@
 import "@testing-library/jest-native/extend-expect";
 import "@testing-library/jest-native";
 
-import { RenderResult, waitFor } from "@testing-library/react-native";
+import {
+  fireEvent,
+  RenderResult,
+  waitFor,
+} from "@testing-library/react-native";
 import * as React from "react";
 
 import { GetPrayerGroupUsersResponse } from "../../../../api/get-prayer-group-users";
@@ -16,6 +20,7 @@ import {
 import { mockRawPrayerGroupDetails, mockUserData } from "../../tests/mock-data";
 import { PrayerGroupUsers } from "../prayer-group-users";
 import { mockRawPrayerGroupUsers } from "./mock-data";
+import { PrayerGroupUsersTestIds } from "./test-ids";
 
 let component: RenderResult;
 
@@ -65,6 +70,7 @@ const mountPrayerGroupUsers = (
 describe(PrayerGroupUsers, () => {
   afterEach(() => {
     component?.unmount();
+    jest.resetAllMocks();
   });
 
   test("Mount test", async () => {
@@ -76,5 +82,24 @@ describe(PrayerGroupUsers, () => {
     await waitFor(() => {
       expect(component).toBeTruthy();
     });
+  });
+
+  test("User can be searched by display name", async () => {
+    component = mountPrayerGroupUsers(
+      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockRawPrayerGroupUsers
+    );
+
+    const searchBar = await component.findByTestId(
+      PrayerGroupUsersTestIds.searchBar
+    );
+    fireEvent.changeText(searchBar, "Halpert");
+
+    const userResultDisplayName = await component.findByTestId(
+      `${PrayerGroupUsersTestIds.userDisplayName}[0]`
+    );
+    expect(userResultDisplayName).toHaveTextContent(
+      mockRawPrayerGroupUsers[0].fullName ?? ""
+    );
   });
 });

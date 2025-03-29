@@ -5,4 +5,5 @@ export enum PrayerGroupUsersTestIds {
   deleteUserButton = "prayer-group-users-delete-user-button",
   deleteConfirmButton = "prayer-group-users-delete-confirm-button",
   deleteCancelButton = "prayer-group-users-delete-cancel-button",
+  saveButton = "prayer-group-users-save-button",
 }

@@ -154,6 +154,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
               mode="contained"
               loading={isSaveLoading}
               onPress={onSavePrayerGroupUsers}
+              testID={PrayerGroupUsersTestIds.saveButton}
             >
               {translate("common.actions.save")}
             </Button>

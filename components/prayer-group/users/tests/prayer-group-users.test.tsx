@@ -27,6 +27,7 @@ let component: RenderResult;
 
 const mockUsePrayerGroupContext = jest.fn();
 const mockGetPrayerGroupUsers = jest.fn();
+const mockPutPrayerGroupAdmins = jest.fn();
 
 jest.mock("../../prayer-group-context", () => ({
   usePrayerGroupContext: () => mockUsePrayerGroupContext(),
@@ -43,6 +44,11 @@ jest.mock("../../../../hooks/use-api-data", () => ({
 jest.mock("../../../../api/get-prayer-group-users", () => ({
   useGetPrayerGroupUsers: () => (id: number, roles: PrayerGroupRole[]) =>
     mockGetPrayerGroupUsers(id, roles),
+}));
+
+jest.mock("../../../../api/put-prayer-group-admins", () => ({
+  usePutPrayerGroupAdmins: () => (id: number, userIds: number[]) =>
+    mockPutPrayerGroupAdmins(id, userIds),
 }));
 
 const mountPrayerGroupUsers = (
@@ -165,6 +171,29 @@ describe(PrayerGroupUsers, () => {
         mockRawPrayerGroupUsers[1].username ?? ""
       );
       expect(deletedUser).toBeFalsy();
+    });
+  });
+
+  test("Role change gets saved properly", async () => {
+    mockPutPrayerGroupAdmins.mockReturnValue({ isError: false });
+
+    component = mountPrayerGroupUsers(
+      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockRawPrayerGroupUsers
+    );
+
+    const roleChangeButton = await component.findByTestId(
+      `${PrayerGroupUsersTestIds.roleChangeButton}[2]`
+    );
+    fireEvent.press(roleChangeButton);
+
+    const saveButton = await component.findByTestId(
+      PrayerGroupUsersTestIds.saveButton
+    );
+    fireEvent.press(saveButton);
+
+    await waitFor(() => {
+      expect(mockPutPrayerGroupAdmins).toHaveBeenCalledWith(2, [1, 3]);
     });
   });
 });

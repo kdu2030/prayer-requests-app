@@ -4,7 +4,7 @@ import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
-import { Button, Snackbar, Text, useTheme } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { postSignin } from "../../api/post-signin";
@@ -12,6 +12,7 @@ import { TextInput } from "../../components/inputs/text-input";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SigninForm } from "../../types/forms/auth-forms";
+import { ErrorSnackbar } from "../layouts/error-snackbar";
 import { SigninErrors, SigninTestIds } from "./auth-constants";
 import { handleSuccessfulAuthentication } from "./auth-helpers";
 import { signinValidationSchema } from "./signin-validation-schema";
@@ -20,7 +21,9 @@ export const Signin: React.FC = () => {
   const theme = useTheme();
   const { translate } = useI18N();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isErrorVisible, setIsErrorVisible] = React.useState<boolean>(false);
+  const [snackbarError, setSnackbarError] = React.useState<
+    string | undefined
+  >();
   const { baseUrl, setUserData, setUserTokens } = useApiDataContext();
 
   const handleSubmit = async (formProps: FormikProps<SigninForm>) => {
@@ -62,7 +65,11 @@ export const Signin: React.FC = () => {
       );
       return;
     } else if (signinResponse.isError) {
-      setIsErrorVisible(true);
+      setSnackbarError(
+        translate("toaster.failed.genericFailure", {
+          item: translate("authScreen.signin.action"),
+        })
+      );
       return;
     }
 
@@ -159,19 +166,10 @@ export const Signin: React.FC = () => {
             </View>
           </View>
 
-          <Snackbar
-            className="bg-red-700"
-            duration={3000}
-            visible={isErrorVisible}
-            onDismiss={() => {
-              setIsErrorVisible(false);
-            }}
-            onIconPress={() => setIsErrorVisible(false)}
-          >
-            {translate("toaster.failed.genericFailure", {
-              item: translate("authScreen.signin.action"),
-            })}
-          </Snackbar>
+          <ErrorSnackbar
+            snackbarError={snackbarError}
+            setSnackbarError={setSnackbarError}
+          />
         </ScrollView>
       </SafeAreaView>
     </>

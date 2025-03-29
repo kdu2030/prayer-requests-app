@@ -73,17 +73,20 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     loadPrayerGroupUsers();
   }, [loadPrayerGroupUsers]);
 
-  const filterUsers = (query: string) => {
-    const normalizedQuery = query.toLocaleLowerCase().replace(/( |@)/g, "");
+  const filterUsers = React.useCallback(
+    (query: string) => {
+      const normalizedQuery = query.toLocaleLowerCase().replace(/( |@)/g, "");
 
-    const newFilteredUsers = prayerGroupUsers.filter(
-      (user) =>
-        normalizeText(user.fullName).includes(normalizedQuery) ||
-        normalizeText(user.username).includes(normalizedQuery)
-    );
+      const newFilteredUsers = prayerGroupUsers.filter(
+        (user) =>
+          normalizeText(user.fullName).includes(normalizedQuery) ||
+          normalizeText(user.username).includes(normalizedQuery)
+      );
 
-    setFilteredUsers(newFilteredUsers);
-  };
+      setFilteredUsers(newFilteredUsers);
+    },
+    [prayerGroupUsers]
+  );
 
   const onQueryChange = (query: string) => {
     setUserQuery(query);

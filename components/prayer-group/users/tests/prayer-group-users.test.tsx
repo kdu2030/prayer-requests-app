@@ -2,6 +2,7 @@ import "@testing-library/jest-native/extend-expect";
 import "@testing-library/jest-native";
 
 import {
+  act,
   fireEvent,
   RenderResult,
   waitFor,
@@ -95,11 +96,34 @@ describe(PrayerGroupUsers, () => {
     );
     fireEvent.changeText(searchBar, "Halpert");
 
+    act(() => jest.advanceTimersByTime(200));
+
     const userResultDisplayName = await component.findByTestId(
       `${PrayerGroupUsersTestIds.userDisplayName}[0]`
     );
     expect(userResultDisplayName).toHaveTextContent(
       mockRawPrayerGroupUsers[0].fullName ?? ""
+    );
+  });
+
+  test("User can be searched by username", async () => {
+    component = mountPrayerGroupUsers(
+      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockRawPrayerGroupUsers
+    );
+
+    const searchBar = await component.findByTestId(
+      PrayerGroupUsersTestIds.searchBar
+    );
+    fireEvent.changeText(searchBar, "dschrute");
+
+    act(() => jest.advanceTimersByTime(200));
+
+    const userResultDisplayName = await component.findByTestId(
+      `${PrayerGroupUsersTestIds.userDisplayName}[0]`
+    );
+    expect(userResultDisplayName).toHaveTextContent(
+      mockRawPrayerGroupUsers[1].fullName ?? ""
     );
   });
 });

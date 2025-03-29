@@ -14,6 +14,7 @@ import { PrayerGroupPermissionError } from "../error-screens/user-permission-err
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
 import { DeleteUserConfirmationModal } from "./delete-user-confirmation-modal";
+import { PrayerGroupUsersTestIds } from "./tests/test-ids";
 import { usePrayerGroupUsers } from "./use-prayer-group-users";
 import { UserActions } from "./user-actions";
 
@@ -88,6 +89,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
               placeholder={translate(
                 "prayerGroup.manageUsers.searchPlaceholder"
               )}
+              testID={PrayerGroupUsersTestIds.searchBar}
             />
           </View>
 
@@ -115,6 +117,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
                         variant="bodyLarge"
                         ellipsizeMode="tail"
                         numberOfLines={1}
+                        testID={`${PrayerGroupUsersTestIds.userDisplayName}[${index}]`}
                       >
                         {item.fullName}
                       </Text>
@@ -134,6 +137,8 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
                       index={index}
                       onDeletePress={onDeletePress}
                       onRoleChange={onRoleChange}
+                      roleChangeTestID={`${PrayerGroupUsersTestIds.roleChangeButton}[${index}]`}
+                      deleteUserTestID={`${PrayerGroupUsersTestIds.deleteUserButton}[${index}]`}
                     />
                   </View>
                 </View>

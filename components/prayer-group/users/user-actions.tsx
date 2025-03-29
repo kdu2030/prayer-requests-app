@@ -11,6 +11,8 @@ type Props = {
   index: number;
   onRoleChange: (index: number, role: PrayerGroupRole) => void;
   onDeletePress: (index: number) => void;
+  roleChangeTestID?: string;
+  deleteUserTestID?: string;
 };
 
 export const UserActions: React.FC<Props> = ({
@@ -18,6 +20,8 @@ export const UserActions: React.FC<Props> = ({
   index,
   onRoleChange,
   onDeletePress,
+  roleChangeTestID,
+  deleteUserTestID,
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
@@ -31,6 +35,7 @@ export const UserActions: React.FC<Props> = ({
               mode="text"
               icon={"crown"}
               onPress={() => onRoleChange(index, PrayerGroupRole.Member)}
+              testID={roleChangeTestID}
             >
               {translate("prayerGroup.manageUsers.admin")}
             </Button>
@@ -39,6 +44,7 @@ export const UserActions: React.FC<Props> = ({
               mode="text"
               icon={"account"}
               onPress={() => onRoleChange(index, PrayerGroupRole.Admin)}
+              testID={roleChangeTestID}
             >
               {translate("prayerGroup.manageUsers.member")}
             </Button>
@@ -53,6 +59,7 @@ export const UserActions: React.FC<Props> = ({
             borderless
             onPress={() => onDeletePress(index)}
             rippleColor={theme.colors.errorContainer}
+            testID={deleteUserTestID}
           >
             <MaterialCommunityIcons
               name="minus"

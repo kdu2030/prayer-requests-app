@@ -1,13 +1,17 @@
 import "@testing-library/jest-native/extend-expect";
 import "@testing-library/jest-native";
 
-import { fireEvent, RenderResult } from "@testing-library/react-native";
+import {
+  fireEvent,
+  RenderResult,
+  waitFor,
+} from "@testing-library/react-native";
 
 import { PutPrayerGroupRequest } from "../../../../api/put-prayer-group";
 import { mapPrayerGroupDetails } from "../../../../mappers/map-prayer-group";
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import { ManagedErrorResponse } from "../../../../types/error-handling";
-import { FileToUpload } from "../../../../types/media-file-types";
+import { FileToUpload, RawMediaFile } from "../../../../types/media-file-types";
 import {
   PrayerGroupDetails,
   RawPrayerGroupDetails,
@@ -130,5 +134,42 @@ describe(PrayerGroupEdit, () => {
     expect(groupNameContainer).toHaveTextContent(
       "This group name has already been used."
     );
+  });
+
+  test("Post file gets called if banner image is not uploaded", async () => {
+    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+      ...mockRawPrayerGroupDetails,
+      bannerImageFile: {
+        ...mockRawPrayerGroupDetails.bannerImageFile,
+        id: undefined,
+      },
+    };
+
+    component = mountPrayerGroupEdit(
+      mapPrayerGroupDetails(rawPrayerGroupDetails)
+    );
+
+    const saveButton = await component.findByTestId(
+      PrayerGroupEditTestIds.saveButton
+    );
+    fireEvent.press(saveButton);
+
+    const mockPostFileResponse: ManagedErrorResponse<RawMediaFile> = {
+      isError: false,
+      value: mockRawPrayerGroupDetails.bannerImageFile!,
+    };
+
+    const mockPutPrayerGroupResponse: ManagedErrorResponse<RawPrayerGroupDetails> =
+      {
+        isError: false,
+        value: mockRawPrayerGroupDetails,
+      };
+
+    mockPostFile.mockReturnValue(mockPostFileResponse);
+    mockPutPrayerGroup.mockReturnValue(mockPutPrayerGroupResponse);
+
+    await waitFor(() => {
+      expect(mockPostFile).toHaveBeenCalled();
+    });
   });
 });

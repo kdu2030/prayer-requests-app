@@ -75,4 +75,12 @@ describe(PrayerGroup, () => {
     );
     expect(bannerPlaceholder).toBeTruthy();
   });
+
+  test("Leave prayer group button displays if user is a member", async () => {
+    component = mountPrayerGroup(mockRawPrayerGroupDetails);
+    const bannerPlaceholder = await component.findByTestId(
+      PrayerGroupHeaderTestIds.leaveGroupButton
+    );
+    expect(bannerPlaceholder).toBeTruthy();
+  });
 });

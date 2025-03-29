@@ -55,7 +55,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       return;
     }
 
-    console.log(response.value);
     if (response.value.id !== prayerGroupId) {
       // This could happen if the user switches prayer groups in the middle of loading
       return;

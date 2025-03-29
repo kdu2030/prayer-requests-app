@@ -6,6 +6,7 @@ import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { PrayerGroupBanner } from "./prayer-group-banner";
+import { PrayerGroupHeaderTestIds } from "./tests/test-ids";
 
 type Props = {
   prayerGroupDetails: PrayerGroupDetails | undefined;
@@ -60,6 +61,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
             mode={"outlined"}
             onPress={onRemoveUser}
             loading={isRemoveUserLoading}
+            testID={PrayerGroupHeaderTestIds.leaveGroupButton}
           >
             {translate("prayerGroup.actions.joined")}
           </Button>
@@ -72,6 +74,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
             mode={"contained"}
             onPress={onAddUser}
             loading={isAddUserLoading}
+            testID={PrayerGroupHeaderTestIds.joinGroupButton}
           >
             {translate("prayerGroup.actions.join")}
           </Button>

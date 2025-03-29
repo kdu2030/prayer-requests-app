@@ -2,7 +2,11 @@ import "@testing-library/jest-native/extend-expect";
 import "@testing-library/jest-native";
 
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
-import { fireEvent, RenderResult } from "@testing-library/react-native";
+import {
+  fireEvent,
+  RenderResult,
+  waitFor,
+} from "@testing-library/react-native";
 
 import { PrayerGroupUserToAdd } from "../../../api/post-prayer-group-users";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
@@ -18,6 +22,7 @@ let component: RenderResult;
 
 const mockGetPrayerGroup = jest.fn();
 const mockPostPrayerGroupUsers = jest.fn();
+const mockDeletePrayerGroupUsers = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
@@ -34,6 +39,11 @@ jest.mock("../../../api/post-prayer-group-users", () => ({
   usePostPrayerGroupUsers:
     () => (id: number, usersToAdd: PrayerGroupUserToAdd[]) =>
       mockPostPrayerGroupUsers(id, usersToAdd),
+}));
+
+jest.mock("../../../api/delete-prayer-group-users", () => ({
+  useDeletePrayerGroupUsers: () => (id: number, userIds: []) =>
+    mockDeletePrayerGroupUsers(id, userIds),
 }));
 
 jest.mock("../../../hooks/use-api-data", () => ({
@@ -148,5 +158,20 @@ describe(PrayerGroup, () => {
     expect(mockPostPrayerGroupUsers).toHaveBeenCalledWith(2, [
       prayerGroupUserToAdd,
     ]);
+  });
+
+  test("Delete prayer group users gets called when user presses the leave button", async () => {
+    mockDeletePrayerGroupUsers.mockReturnValue({ isError: false });
+    component = mountPrayerGroup(mockRawPrayerGroupDetails);
+
+    const leavePrayerGroupButton = await component.findByTestId(
+      PrayerGroupHeaderTestIds.leaveGroupButton
+    );
+
+    fireEvent.press(leavePrayerGroupButton);
+
+    await waitFor(() => {
+      expect(mockDeletePrayerGroupUsers).toHaveBeenCalledWith(2, [1]);
+    });
   });
 });

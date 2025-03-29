@@ -143,4 +143,28 @@ describe(PrayerGroupUsers, () => {
     );
     expect(adminRoleChangeButton).toHaveTextContent("Admin");
   });
+
+  test("User no longer displays after user is deleted", async () => {
+    component = mountPrayerGroupUsers(
+      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockRawPrayerGroupUsers
+    );
+
+    const deleteButton = await component.findByTestId(
+      `${PrayerGroupUsersTestIds.deleteUserButton}[1]`
+    );
+    fireEvent.press(deleteButton);
+
+    const deleteConfirmButton = await component.findByTestId(
+      PrayerGroupUsersTestIds.deleteConfirmButton
+    );
+    fireEvent.press(deleteConfirmButton);
+
+    await waitFor(() => {
+      const deletedUser = component.queryByText(
+        mockRawPrayerGroupUsers[1].username ?? ""
+      );
+      expect(deletedUser).toBeFalsy();
+    });
+  });
 });

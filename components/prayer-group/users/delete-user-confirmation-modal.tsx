@@ -4,6 +4,7 @@ import { Button, Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
 import { RoundedModal } from "../../modals/rounded-modal";
+import { PrayerGroupUsersTestIds } from "./tests/test-ids";
 
 type Props = {
   userToDeleteName: string | undefined;
@@ -32,7 +33,11 @@ export const DeleteUserConfirmationModal: React.FC<Props> = ({
       </Text>
 
       <View className="self-end gap-x-4 mt-6 flex-row">
-        <Button mode="outlined" onPress={onCancel}>
+        <Button
+          mode="outlined"
+          onPress={onCancel}
+          testID={PrayerGroupUsersTestIds.deleteCancelButton}
+        >
           {translate("common.actions.cancel")}
         </Button>
 
@@ -40,6 +45,7 @@ export const DeleteUserConfirmationModal: React.FC<Props> = ({
           mode="contained"
           onPress={onDelete}
           buttonColor={theme.colors.error}
+          testID={PrayerGroupUsersTestIds.deleteConfirmButton}
         >
           {translate("prayerGroup.kickUser.label")}
         </Button>

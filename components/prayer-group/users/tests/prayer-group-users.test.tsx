@@ -26,8 +26,10 @@ import { PrayerGroupUsersTestIds } from "./test-ids";
 let component: RenderResult;
 
 const mockUsePrayerGroupContext = jest.fn();
+
 const mockGetPrayerGroupUsers = jest.fn();
 const mockPutPrayerGroupAdmins = jest.fn();
+const mockDeletePrayerGroupUsers = jest.fn();
 
 jest.mock("../../prayer-group-context", () => ({
   usePrayerGroupContext: () => mockUsePrayerGroupContext(),
@@ -49,6 +51,11 @@ jest.mock("../../../../api/get-prayer-group-users", () => ({
 jest.mock("../../../../api/put-prayer-group-admins", () => ({
   usePutPrayerGroupAdmins: () => (id: number, userIds: number[]) =>
     mockPutPrayerGroupAdmins(id, userIds),
+}));
+
+jest.mock("../../../../api/delete-prayer-group-users", () => ({
+  useDeletePrayerGroupUsers: () => (id: number, userIds: number[]) =>
+    mockDeletePrayerGroupUsers(id, userIds),
 }));
 
 const mountPrayerGroupUsers = (
@@ -194,6 +201,35 @@ describe(PrayerGroupUsers, () => {
 
     await waitFor(() => {
       expect(mockPutPrayerGroupAdmins).toHaveBeenCalledWith(2, [1, 3]);
+    });
+  });
+
+  test("Delete user gets saved properly", async () => {
+    mockDeletePrayerGroupUsers.mockReturnValue({ isError: false });
+    mockPutPrayerGroupAdmins.mockReturnValue({ isError: false });
+
+    component = mountPrayerGroupUsers(
+      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockRawPrayerGroupUsers
+    );
+
+    const deleteUserButton = await component.findByTestId(
+      `${PrayerGroupUsersTestIds.deleteUserButton}[1]`
+    );
+    fireEvent.press(deleteUserButton);
+
+    const deleteConfirmButton = await component.findByTestId(
+      PrayerGroupUsersTestIds.deleteConfirmButton
+    );
+    fireEvent.press(deleteConfirmButton);
+
+    const saveButton = await component.findByTestId(
+      PrayerGroupUsersTestIds.saveButton
+    );
+    fireEvent.press(saveButton);
+
+    await waitFor(() => {
+      expect(mockDeletePrayerGroupUsers).toHaveBeenCalledWith(2, [2]);
     });
   });
 });

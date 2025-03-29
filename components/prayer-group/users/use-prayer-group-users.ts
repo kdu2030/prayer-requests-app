@@ -161,10 +161,12 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       userIdsToDelete.length > 0
         ? deletePrayerGroupUsers(prayerGroupId, userIdsToDelete)
         : { isError: false };
+
     const [deleteUserResponse, updateAdminsResponse] = await Promise.all([
       deleteUserPromise,
       putPrayerGroupAdmins(prayerGroupId, adminUserIds),
     ]);
+
     setIsSaveLoading(false);
 
     if (deleteUserResponse.isError || updateAdminsResponse.isError) {

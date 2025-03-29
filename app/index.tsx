@@ -3,7 +3,6 @@ import "expo-router/entry";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { registerRootComponent } from "expo";
 import { router } from "expo-router";
-import * as ScreenOrientation from "expo-screen-orientation";
 import { StatusBar } from "expo-status-bar";
 import { NativeWindStyleSheet } from "nativewind";
 import * as React from "react";
@@ -119,7 +118,6 @@ const AppContainer: React.FC = () => {
   };
 
   React.useEffect(() => {
-    ScreenOrientation.unlockAsync();
     loadUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

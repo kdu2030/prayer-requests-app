@@ -43,11 +43,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const { translate } = useI18N();
 
   const loadPrayerGroup = React.useCallback(async () => {
+    console.log("Load Prayer Group Called!");
     setPrayerGroupDetails(undefined);
     setIsLoading(true);
 
-    // Adds a delay so prayer group rendering doesn't slow down drawer
-    await new Promise<void>((resolve) => setTimeout(resolve, 100));
     const response = await getPrayerGroup(prayerGroupId);
     setIsLoading(false);
 
@@ -56,6 +55,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       return;
     }
 
+    console.log(response.value);
     if (response.value.id !== prayerGroupId) {
       // This could happen if the user switches prayer groups in the middle of loading
       return;
@@ -63,7 +63,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     const loadedPrayerGroupDetails = mapPrayerGroupDetails(response.value);
     setPrayerGroupDetails(loadedPrayerGroupDetails);
-  }, [getPrayerGroup, prayerGroupId, setPrayerGroupDetails]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prayerGroupId]);
 
   React.useEffect(() => {
     loadPrayerGroup();

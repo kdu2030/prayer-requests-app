@@ -1,34 +1,45 @@
+import "@testing-library/jest-native/extend-expect";
+import "@testing-library/jest-native";
+
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import { RenderResult } from "@testing-library/react-native";
 
 import { mountComponent } from "../../../tests/utils/test-utils";
-import { PrayerGroupDetails } from "../../../types/prayer-group-types";
+import { ManagedErrorResponse } from "../../../types/error-handling";
+import { RawPrayerGroupDetails } from "../../../types/prayer-group-types";
 import { PrayerGroupHeaderTestIds } from "../header/tests/test-ids";
 import { PrayerGroup } from "../prayer-group";
-import { mockPrayerGroupDetails } from "./mock-data";
+import { PrayerGroupContextProvider } from "../prayer-group-context";
+import { mockRawPrayerGroupDetails } from "./mock-data";
 
 let component: RenderResult;
 
-const mockUsePrayerGroupContext = jest.fn();
+const mockGetPrayerGroup = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
-
-jest.mock("../prayer-group-context", () => ({
-  usePrayerGroupContext: () => mockUsePrayerGroupContext(),
-}));
 
 jest.mock("@gorhom/bottom-sheet", () => ({
   __esModule: true,
   ...require("@gorhom/bottom-sheet/mock"),
 }));
 
-const mountPrayerGroup = (prayerGroupDetails: PrayerGroupDetails) => {
-  mockUsePrayerGroupContext.mockReturnValue({
-    prayerGroupDetails,
-    setPrayerGroupDetails: () => {},
-  });
+jest.mock("../../../api/get-prayer-group", () => ({
+  useGetPrayerGroup: () => () => mockGetPrayerGroup(),
+}));
 
-  return mountComponent(<PrayerGroup prayerGroupId={2} />);
+const mountPrayerGroup = (rawPrayerGroupDetails: RawPrayerGroupDetails) => {
+  const mockGetResponse: ManagedErrorResponse<RawPrayerGroupDetails> = {
+    isError: false,
+    value: rawPrayerGroupDetails,
+  };
+
+  mockGetPrayerGroup.mockReturnValue(mockGetResponse);
+
+  return mountComponent(
+    <PrayerGroupContextProvider>
+      <PrayerGroup prayerGroupId={2} />
+    </PrayerGroupContextProvider>
+  );
 };
 
 describe(PrayerGroup, () => {
@@ -38,17 +49,17 @@ describe(PrayerGroup, () => {
   });
 
   test("Mount test", () => {
-    component = mountPrayerGroup(mockPrayerGroupDetails);
+    component = mountPrayerGroup(mockRawPrayerGroupDetails);
     expect(component).toBeTruthy();
   });
 
   test("Prayer group banner displays if not null", async () => {
-    component = mountPrayerGroup(mockPrayerGroupDetails);
+    component = mountPrayerGroup(mockRawPrayerGroupDetails);
     const prayerGroupBanner = await component.findByTestId(
       PrayerGroupHeaderTestIds.imageBanner
     );
     expect(prayerGroupBanner).toHaveProp("source", {
-      uri: mockPrayerGroupDetails.bannerImageFile?.url,
+      uri: mockRawPrayerGroupDetails.bannerImageFile?.url,
     });
   });
 });

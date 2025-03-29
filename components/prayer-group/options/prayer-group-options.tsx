@@ -14,6 +14,7 @@ import { Text, TouchableRipple, useTheme } from "react-native-paper";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
+import { PrayerGroupOptionsTestIds } from "./tests/test-ids";
 
 type Props = {
   prayerGroupDetails?: PrayerGroupDetails;
@@ -61,6 +62,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
             }
             style={{ borderRadius: 8 }}
             borderless
+            testID={PrayerGroupOptionsTestIds.aboutButton}
           >
             <View className="flex-row gap-x-3 items-center py-4 px-2">
               <MaterialCommunityIcons name="information" size={24} />
@@ -83,6 +85,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                 }
                 style={{ borderRadius: 8 }}
                 borderless
+                testID={PrayerGroupOptionsTestIds.editButton}
               >
                 <View className="flex-row gap-x-3 items-center py-4 px-2">
                   <MaterialCommunityIcons name="pencil" size={24} />
@@ -103,6 +106,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                 }
                 style={{ borderRadius: 8 }}
                 borderless
+                testID={PrayerGroupOptionsTestIds.manageUsersButton}
               >
                 <View className="flex-row gap-x-3 items-center py-4 px-2">
                   <MaterialCommunityIcons name="account" size={24} />

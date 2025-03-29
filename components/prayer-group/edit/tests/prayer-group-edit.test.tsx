@@ -6,9 +6,14 @@ import { fireEvent, RenderResult } from "@testing-library/react-native";
 import { PutPrayerGroupRequest } from "../../../../api/put-prayer-group";
 import { mapPrayerGroupDetails } from "../../../../mappers/map-prayer-group";
 import { mountComponent } from "../../../../tests/utils/test-utils";
+import { ManagedErrorResponse } from "../../../../types/error-handling";
 import { FileToUpload } from "../../../../types/media-file-types";
-import { PrayerGroupDetails } from "../../../../types/prayer-group-types";
+import {
+  PrayerGroupDetails,
+  RawPrayerGroupDetails,
+} from "../../../../types/prayer-group-types";
 import { mockRawPrayerGroupDetails, mockUserData } from "../../tests/mock-data";
+import { UNIQUE_GROUP_NAME_ERROR } from "../edit-prayer-group-constants";
 import { PrayerGroupEdit } from "../prayer-group-edit";
 import { PrayerGroupEditTestIds } from "./test-ids";
 
@@ -89,5 +94,41 @@ describe(PrayerGroupEdit, () => {
       PrayerGroupEditTestIds.groupPreviewName
     );
     expect(groupNamePreview).toHaveTextContent(newGroupName);
+  });
+
+  test("Group name must be unique", async () => {
+    const putPrayerGroupResponse: ManagedErrorResponse<RawPrayerGroupDetails> =
+      {
+        isError: true,
+        error: {
+          dataValidationErrors: [UNIQUE_GROUP_NAME_ERROR],
+        },
+      };
+
+    mockPutPrayerGroup.mockReturnValue(putPrayerGroupResponse);
+
+    component = mountPrayerGroupEdit(
+      mapPrayerGroupDetails(mockRawPrayerGroupDetails)
+    );
+
+    const newGroupName = "Order of the Phoenix";
+
+    const groupNameTextInput = component.getByTestId(
+      PrayerGroupEditTestIds.groupNameInput
+    );
+    fireEvent.changeText(groupNameTextInput, newGroupName);
+    fireEvent(groupNameTextInput, "blur");
+
+    const saveButton = await component.findByTestId(
+      PrayerGroupEditTestIds.saveButton
+    );
+    fireEvent.press(saveButton);
+
+    const groupNameContainer = await component.findByTestId(
+      `${PrayerGroupEditTestIds.groupNameInput}-container`
+    );
+    expect(groupNameContainer).toHaveTextContent(
+      "This group name has already been used."
+    );
   });
 });

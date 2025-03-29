@@ -71,6 +71,7 @@ export const PrayerGroupEdit: React.FC = () => {
                   className="self-end"
                   loading={isLoading}
                   onPress={submitForm}
+                  testID={PrayerGroupEditTestIds.saveButton}
                 >
                   {translate("common.actions.save")}
                 </Button>

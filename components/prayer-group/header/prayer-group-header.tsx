@@ -96,7 +96,12 @@ export const PrayerGroupHeader: React.FC<Props> = ({
               {translate("prayerGroup.actions.addPrayerRequest")}
             </Button>
           ) : (
-            <Button icon="information" className="flex-1" mode="contained">
+            <Button
+              icon="information"
+              className="flex-1"
+              mode="contained"
+              testID={PrayerGroupHeaderTestIds.aboutGroupButton}
+            >
               {translate("prayerGroup.options.about")}
             </Button>
           )}

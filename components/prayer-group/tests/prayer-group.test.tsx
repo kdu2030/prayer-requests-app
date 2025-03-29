@@ -97,9 +97,15 @@ describe(PrayerGroup, () => {
     };
 
     component = mountPrayerGroup(rawPrayerGroupDetails);
+
     const joinPrayerGroupButton = await component.findByTestId(
       PrayerGroupHeaderTestIds.joinGroupButton
     );
+    const aboutGroupButton = await component.findByTestId(
+      PrayerGroupHeaderTestIds.aboutGroupButton
+    );
+
     expect(joinPrayerGroupButton).toBeTruthy();
+    expect(aboutGroupButton).toBeTruthy();
   });
 });

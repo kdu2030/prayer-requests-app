@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { TouchableOpacity, View } from "react-native";
-import { useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -35,6 +35,12 @@ export const PrayerGroupSearch: React.FC = () => {
               left={<TextInput.Icon icon="magnify" />}
             />
           </View>
+        </View>
+
+        <View className="flex flex-row items-center justify-center my-16">
+          <Text variant="bodyLarge" className="font-bold">
+            {translate("prayerGroup.search.prompt")}
+          </Text>
         </View>
       </SafeAreaView>
     </>

@@ -123,4 +123,6 @@ export const englishTranslations = {
   "prayerGroup.permissionError.goBackToGroup": "Go back to prayer group",
 
   "prayerGroup.search.placeholder": "Search for prayer groups",
+  "prayerGroup.search.prompt": "Type to search for prayer groups",
+  "prayerGroup.search.noneFound": "No prayer groups found",
 };

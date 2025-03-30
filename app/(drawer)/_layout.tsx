@@ -14,6 +14,7 @@ const DrawerLayout: React.FC = () => {
     <GestureHandlerRootView className="flex-1">
       <Drawer
         screenOptions={{
+          lazy: true,
           header: (props: DrawerHeaderProps) => <DrawerHeader {...props} />,
         }}
         drawerContent={(props: DrawerContentComponentProps) => (

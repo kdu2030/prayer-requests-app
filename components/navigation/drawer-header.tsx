@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { DrawerHeaderProps } from "@react-navigation/drawer";
-import { usePathname } from "expo-router";
+import { useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
+import { ROUTES_WITHOUT_HEADER } from "./drawer-constants";
 
 export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const { translate } = useI18N();
@@ -18,14 +19,10 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
 
-  const pathname = usePathname();
+  const segments = useSegments();
+  const path = `/${segments.join("/")}`;
 
-  if (
-    pathname.startsWith("/prayergroup") &&
-    (pathname.includes("about") ||
-      pathname.includes("edit") ||
-      pathname.includes("users"))
-  ) {
+  if (ROUTES_WITHOUT_HEADER.includes(path)) {
     return null;
   }
 

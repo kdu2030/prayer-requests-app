@@ -32,6 +32,7 @@ export const PrayerGroupSearch: React.FC = () => {
               className="flex-1"
               placeholder={translate("prayerGroup.search.placeholder")}
               style={{ height: 44 }}
+              left={<TextInput.Icon icon="magnify" />}
             />
           </View>
         </View>

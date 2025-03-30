@@ -25,6 +25,7 @@ const DrawerLayout: React.FC = () => {
           name="prayergroup/[id]"
           options={{ unmountOnBlur: true }}
         />
+        <Drawer.Screen name="search" options={{ headerShown: false }} />
       </Drawer>
     </GestureHandlerRootView>
   );

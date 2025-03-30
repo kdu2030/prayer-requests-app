@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { DrawerHeaderProps } from "@react-navigation/drawer";
-import { useSegments } from "expo-router";
+import { router, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -49,7 +49,10 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
           </View>
 
           <View className="flex flex-row items-center">
-            <TouchableOpacity onPress={() => {}} className="mr-4">
+            <TouchableOpacity
+              onPress={() => router.push("/(drawer)/search")}
+              className="mr-4"
+            >
               <Ionicons name="search" size={28} color="white" />
             </TouchableOpacity>
 

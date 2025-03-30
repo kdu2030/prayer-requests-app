@@ -1,4 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -18,9 +19,12 @@ export const PrayerGroupSearch: React.FC = () => {
       <StatusBar backgroundColor={theme.colors.primary} />
 
       <SafeAreaView>
-        <View className="flex flex-row items-center justify-between w-full px-4 py-4 grow">
+        <View
+          className="flex flex-row items-center justify-between w-full px-4 py-4 grow"
+          style={{ backgroundColor: theme.colors.primary }}
+        >
           <View className="flex flex-row items-center">
-            <TouchableOpacity onPress={() => {}} className="mr-2">
+            <TouchableOpacity onPress={() => router.back()} className="mr-2">
               <MaterialIcons name="arrow-back" size={28} color="white" />
             </TouchableOpacity>
             <Text variant="titleLarge" className="font-bold text-white">

@@ -121,4 +121,6 @@ export const englishTranslations = {
   "prayerGroup.permissionError.message":
     "You do not have sufficient permissions to access this page.",
   "prayerGroup.permissionError.goBackToGroup": "Go back to prayer group",
+
+  "prayerGroup.search.placeholder": "Search for prayer groups",
 };

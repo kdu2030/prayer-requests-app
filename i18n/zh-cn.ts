@@ -121,4 +121,6 @@ export const chineseTranslations: Translations = {
   "prayerGroup.permissionError.header": "权限错误",
   "prayerGroup.permissionError.message": "您没有足够的权限访问此页面",
   "prayerGroup.permissionError.goBackToGroup": "回到祷告小组",
+
+  "prayerGroup.search.placeholder": "搜索祷告小组",
 };

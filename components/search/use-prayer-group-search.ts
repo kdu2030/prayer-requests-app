@@ -33,6 +33,7 @@ export const usePrayerGroupSearch = () => {
 
   const loadPrayerGroups = async (query: string) => {
     const response = await getPrayerGroupsBySearch(query, MAX_RESULT_COUNT);
+    console.log(response);
     if (response.isError) {
       return;
     }

@@ -17,7 +17,7 @@ const getPrayerGroupsBySearch = async (
   groupNameQuery: string,
   maxResults: number
 ): Promise<ManagedErrorResponse<RawPrayerGroupSummary[]>> => {
-  const url = `${baseUrl}/api/prayergroup/search`;
+  const url = `${baseUrl}/api/v1/prayergroup/search`;
 
   const params: GetPrayerGroupsBySearchParams = {
     name: groupNameQuery,
@@ -33,6 +33,7 @@ const getPrayerGroupsBySearch = async (
     });
     return { isError: false, value: response.data };
   } catch (error) {
+    console.log(error);
     return handleApiErrors(error);
   }
 };

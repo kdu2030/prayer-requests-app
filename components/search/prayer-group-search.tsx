@@ -3,16 +3,19 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { TouchableOpacity, View } from "react-native";
-import { ActivityIndicator, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { usePrayerGroupSearch } from "./use-prayer-group-search";
 
 export const PrayerGroupSearch: React.FC = () => {
   const { translate } = useI18N();
 
   const theme = useTheme();
+  const { placeholderMessage, groupQuery, onChangeQuery } =
+    usePrayerGroupSearch();
 
   return (
     <>
@@ -28,6 +31,8 @@ export const PrayerGroupSearch: React.FC = () => {
               <MaterialIcons name="arrow-back" size={28} color="white" />
             </TouchableOpacity>
             <TextInput
+              value={groupQuery}
+              onChangeText={onChangeQuery}
               mode="outlined"
               className="flex-1"
               placeholder={translate("prayerGroup.search.placeholder")}
@@ -37,11 +42,13 @@ export const PrayerGroupSearch: React.FC = () => {
           </View>
         </View>
 
-        <View className="flex flex-row items-center justify-center my-16">
-          <Text variant="bodyLarge" className="font-bold">
-            {translate("prayerGroup.search.prompt")}
-          </Text>
-        </View>
+        {placeholderMessage && (
+          <View className="flex flex-row items-center justify-center my-16">
+            <Text variant="bodyLarge" className="font-bold">
+              {placeholderMessage}
+            </Text>
+          </View>
+        )}
       </SafeAreaView>
     </>
   );

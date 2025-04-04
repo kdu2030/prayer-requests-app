@@ -1,3 +1,4 @@
+import { usePathname } from "expo-router";
 import { compact, debounce } from "lodash";
 import * as React from "react";
 
@@ -13,6 +14,8 @@ import {
 
 export const usePrayerGroupSearch = () => {
   const { translate } = useI18N();
+
+  const pathname = usePathname();
 
   const [groupQuery, setGroupQuery] = React.useState<string>("");
   const [groupSearchResults, setGroupSearchResults] = React.useState<
@@ -57,6 +60,11 @@ export const usePrayerGroupSearch = () => {
     );
     debouncedLoadResults();
   };
+
+  React.useEffect(() => {
+    setGroupQuery("");
+    setGroupSearchResults([]);
+  }, [pathname]);
 
   return {
     groupQuery,

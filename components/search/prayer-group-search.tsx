@@ -1,20 +1,21 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { Href, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { TouchableOpacity, View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { Text, TouchableRipple, useTheme } from "react-native-paper";
 import { TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { ProfilePicture } from "../layouts/profile-picture";
 import { usePrayerGroupSearch } from "./use-prayer-group-search";
 
 export const PrayerGroupSearch: React.FC = () => {
   const { translate } = useI18N();
 
   const theme = useTheme();
-  const { placeholderMessage, groupQuery, onChangeQuery } =
+  const { placeholderMessage, groupQuery, onChangeQuery, groupSearchResults } =
     usePrayerGroupSearch();
 
   return (
@@ -47,6 +48,33 @@ export const PrayerGroupSearch: React.FC = () => {
             <Text variant="bodyLarge" className="font-bold">
               {placeholderMessage}
             </Text>
+          </View>
+        )}
+
+        {groupSearchResults.length > 0 && (
+          <View className="flex flex-col mt-4 mx-4">
+            {groupSearchResults.map((group) => (
+              <TouchableRipple
+                rippleColor={"rgba(0, 0, 0, 0.12)"}
+                onPress={() =>
+                  router.push({
+                    pathname: "/prayergroup/[id]",
+                    params: { id: group.prayerGroupId },
+                  } as Href<any>)
+                }
+                style={{ borderRadius: 8, marginBottom: 8 }}
+                borderless
+              >
+                <View className="flex-row gap-x-3 items-center px-4 py-2">
+                  <ProfilePicture
+                    url={group.imageFile?.url}
+                    width={36}
+                    height={36}
+                  />
+                  <Text variant="titleMedium">{group.groupName}</Text>
+                </View>
+              </TouchableRipple>
+            ))}
           </View>
         )}
       </SafeAreaView>

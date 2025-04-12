@@ -34,7 +34,7 @@ export const usePrayerGroupSearch = () => {
     }
   }, [groupQuery.length, groupSearchResults.length, translate]);
 
-  const loadPrayerGroups = async (query: string) => {
+  const loadPrayerGroups = React.useCallback(async (query: string) => {
     const response = await getPrayerGroupsBySearch(query, MAX_RESULT_COUNT);
     if (response.isError) {
       return;
@@ -44,21 +44,24 @@ export const usePrayerGroupSearch = () => {
       mapPrayerGroupSummary(rawSummary)
     );
     setGroupSearchResults(compact(prayerGroupSummaries));
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const debouncedLoadPrayerGroups = React.useMemo(
+    () => debounce((query: string) => loadPrayerGroups(query), DEBOUNCE_TIME),
+    [loadPrayerGroups]
+  );
 
   const onChangeQuery = (query: string) => {
     setGroupQuery(query);
 
     if (query.length < SEARCH_MIN_CHARACTERS) {
+      debouncedLoadPrayerGroups.cancel();
       setGroupSearchResults([]);
       return;
     }
 
-    const debouncedLoadResults = debounce(
-      () => loadPrayerGroups(query),
-      DEBOUNCE_TIME
-    );
-    debouncedLoadResults();
+    debouncedLoadPrayerGroups(query);
   };
 
   React.useEffect(() => {

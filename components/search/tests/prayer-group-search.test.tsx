@@ -24,8 +24,6 @@ jest.mock("expo-router", () => ({
   },
 }));
 
-jest.mock("lodash/debounce", () => jest.fn((fn) => fn));
-
 describe(PrayerGroupSearch, () => {
   afterEach(() => {
     component?.unmount();

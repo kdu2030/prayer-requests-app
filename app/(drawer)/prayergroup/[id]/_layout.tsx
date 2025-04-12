@@ -6,7 +6,10 @@ import { PrayerGroupContextProvider } from "../../../../components/prayer-group/
 const PrayerGroupLayout: React.FC = () => {
   return (
     <PrayerGroupContextProvider>
-      <Drawer screenOptions={{ headerShown: false }} backBehavior="history">
+      <Drawer
+        screenOptions={{ headerShown: false, freezeOnBlur: true }}
+        backBehavior="history"
+      >
         <Drawer.Screen name="users" options={{ unmountOnBlur: true }} />
       </Drawer>
     </PrayerGroupContextProvider>

@@ -1,6 +1,7 @@
 import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
+import { InteractionManager } from "react-native";
 
 import { useDeletePrayerGroupUsers } from "../../api/delete-prayer-group-users";
 import { useGetPrayerGroup } from "../../api/get-prayer-group";
@@ -16,7 +17,7 @@ import { PrayerGroupSummary } from "../../types/prayer-group-types";
 import { usePrayerGroupContext } from "./prayer-group-context";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [showErrorScreen, setShowErrorScreen] = React.useState<boolean>(false);
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
@@ -65,7 +66,11 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   }, [prayerGroupId]);
 
   React.useEffect(() => {
-    loadPrayerGroup();
+    const fetchPrayerGroupTask = InteractionManager.runAfterInteractions(() => {
+      loadPrayerGroup();
+    });
+
+    return () => fetchPrayerGroupTask.cancel();
   }, [loadPrayerGroup]);
 
   const onAddUser = async () => {

@@ -6,7 +6,7 @@ import BottomSheet, {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
-import { router } from "expo-router";
+import { Href, router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
 import { Text, TouchableRipple, useTheme } from "react-native-paper";
@@ -41,6 +41,16 @@ export const PrayerGroupOptions: React.FC<Props> = ({
     []
   );
 
+  const onPressOption = (route: string) => {
+    bottomSheetRef?.current?.close();
+
+    prayerGroupDetails?.prayerGroupId &&
+      router.push({
+        pathname: route,
+        params: { id: prayerGroupDetails?.prayerGroupId },
+      } as Href<any>);
+  };
+
   return (
     <BottomSheet
       snapPoints={["50%"]}
@@ -55,39 +65,18 @@ export const PrayerGroupOptions: React.FC<Props> = ({
           <PrayerGroupOptionButton
             label={translate("prayerGroup.options.about")}
             icon={<MaterialCommunityIcons name="information" size={24} />}
-            onPress={() => {
-              bottomSheetRef?.current?.close();
-              prayerGroupDetails?.prayerGroupId &&
-                router.push({
-                  pathname: "/(drawer)/prayergroup/[id]/about",
-                  params: { id: prayerGroupDetails?.prayerGroupId },
-                });
-            }}
+            onPress={() => onPressOption("/(drawer)/prayergroup/[id]/about")}
             testID={PrayerGroupOptionsTestIds.aboutButton}
           />
 
           {isAdmin && (
             <>
-              <TouchableRipple
-                rippleColor={"rgba(0, 0, 0, 0.12)"}
-                onPress={() =>
-                  prayerGroupDetails?.prayerGroupId &&
-                  router.push({
-                    pathname: "/(drawer)/prayergroup/[id]/edit",
-                    params: { id: prayerGroupDetails?.prayerGroupId },
-                  })
-                }
-                style={{ borderRadius: 8 }}
-                borderless
+              <PrayerGroupOptionButton
+                label={translate("prayerGroup.options.editPrayerGroup")}
+                icon={<MaterialCommunityIcons name="pencil" size={24} />}
+                onPress={() => onPressOption("/(drawer)/prayergroup/[id]/edit")}
                 testID={PrayerGroupOptionsTestIds.editButton}
-              >
-                <View className="flex-row gap-x-3 items-center py-4 px-2">
-                  <MaterialCommunityIcons name="pencil" size={24} />
-                  <Text variant="bodyMedium">
-                    {translate("prayerGroup.options.editPrayerGroup")}
-                  </Text>
-                </View>
-              </TouchableRipple>
+              />
 
               <TouchableRipple
                 rippleColor={"rgba(0, 0, 0, 0.12)"}

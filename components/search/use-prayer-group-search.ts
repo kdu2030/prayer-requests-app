@@ -36,6 +36,7 @@ export const usePrayerGroupSearch = () => {
 
   const loadPrayerGroups = React.useCallback(async (query: string) => {
     const response = await getPrayerGroupsBySearch(query, MAX_RESULT_COUNT);
+
     if (response.isError) {
       return;
     }

@@ -9,6 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
+import { PrayerGroupSearchTestIds } from "./tests/test-ids";
 import { usePrayerGroupSearch } from "./use-prayer-group-search";
 
 export const PrayerGroupSearch: React.FC = () => {
@@ -39,13 +40,18 @@ export const PrayerGroupSearch: React.FC = () => {
               placeholder={translate("prayerGroup.search.placeholder")}
               style={{ height: 44 }}
               left={<TextInput.Icon icon="magnify" />}
+              testID={PrayerGroupSearchTestIds.searchInput}
             />
           </View>
         </View>
 
         {placeholderMessage && (
           <View className="flex flex-row items-center justify-center my-16">
-            <Text variant="bodyLarge" className="font-bold">
+            <Text
+              variant="bodyLarge"
+              className="font-bold"
+              testID={PrayerGroupSearchTestIds.prayerGroupPlaceholder}
+            >
               {placeholderMessage}
             </Text>
           </View>
@@ -64,6 +70,7 @@ export const PrayerGroupSearch: React.FC = () => {
                 }
                 style={{ borderRadius: 8, marginBottom: 8 }}
                 borderless
+                testID={PrayerGroupSearchTestIds.prayerGroupResult}
               >
                 <View className="flex-row gap-x-3 items-center px-4 py-2">
                   <ProfilePicture

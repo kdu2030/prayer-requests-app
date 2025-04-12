@@ -14,6 +14,7 @@ import { Text, TouchableRipple, useTheme } from "react-native-paper";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
+import { PrayerGroupOptionButton } from "./prayer-group-option-button";
 import { PrayerGroupOptionsTestIds } from "./tests/test-ids";
 
 type Props = {
@@ -51,26 +52,19 @@ export const PrayerGroupOptions: React.FC<Props> = ({
     >
       <BottomSheetView>
         <View className="px-4">
-          <TouchableRipple
-            rippleColor={"rgba(0, 0, 0, 0.12)"}
-            onPress={() =>
+          <PrayerGroupOptionButton
+            label={translate("prayerGroup.options.about")}
+            icon={<MaterialCommunityIcons name="information" size={24} />}
+            onPress={() => {
+              bottomSheetRef?.current?.close();
               prayerGroupDetails?.prayerGroupId &&
-              router.push({
-                pathname: "/(drawer)/prayergroup/[id]/about",
-                params: { id: prayerGroupDetails?.prayerGroupId },
-              })
-            }
-            style={{ borderRadius: 8 }}
-            borderless
+                router.push({
+                  pathname: "/(drawer)/prayergroup/[id]/about",
+                  params: { id: prayerGroupDetails?.prayerGroupId },
+                });
+            }}
             testID={PrayerGroupOptionsTestIds.aboutButton}
-          >
-            <View className="flex-row gap-x-3 items-center py-4 px-2">
-              <MaterialCommunityIcons name="information" size={24} />
-              <Text variant="bodyMedium">
-                {translate("prayerGroup.options.about")}
-              </Text>
-            </View>
-          </TouchableRipple>
+          />
 
           {isAdmin && (
             <>

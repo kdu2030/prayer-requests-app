@@ -1,7 +1,6 @@
 import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
-import { InteractionManager } from "react-native";
 
 import { useDeletePrayerGroupUsers } from "../../api/delete-prayer-group-users";
 import { useGetPrayerGroup } from "../../api/get-prayer-group";
@@ -66,11 +65,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   }, [prayerGroupId]);
 
   React.useEffect(() => {
-    const fetchPrayerGroupTask = InteractionManager.runAfterInteractions(() => {
-      loadPrayerGroup();
-    });
-
-    return () => fetchPrayerGroupTask.cancel();
+    loadPrayerGroup();
   }, [loadPrayerGroup]);
 
   const onAddUser = async () => {

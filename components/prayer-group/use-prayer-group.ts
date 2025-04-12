@@ -17,7 +17,7 @@ import { PrayerGroupSummary } from "../../types/prayer-group-types";
 import { usePrayerGroupContext } from "./prayer-group-context";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [showErrorScreen, setShowErrorScreen] = React.useState<boolean>(false);
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();

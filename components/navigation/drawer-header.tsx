@@ -22,7 +22,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const path = `/${segments.join("/")}`;
 
   if (ROUTES_WITHOUT_HEADER.includes(path)) {
-    return null;
+    return <></>;
   }
 
   return (

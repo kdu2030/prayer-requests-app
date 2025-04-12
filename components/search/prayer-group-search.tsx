@@ -62,7 +62,7 @@ export const PrayerGroupSearch: React.FC = () => {
             <FlatList
               data={groupSearchResults}
               testID={PrayerGroupSearchTestIds.prayerGroupResultsList}
-              renderItem={({ item: group }) => (
+              renderItem={({ item: group, index }) => (
                 <TouchableRipple
                   rippleColor={"rgba(0, 0, 0, 0.12)"}
                   onPress={() =>
@@ -73,7 +73,7 @@ export const PrayerGroupSearch: React.FC = () => {
                   }
                   style={{ borderRadius: 8, marginBottom: 8 }}
                   borderless
-                  testID={PrayerGroupSearchTestIds.prayerGroupResult}
+                  testID={`${PrayerGroupSearchTestIds.prayerGroupResult}[${index}]`}
                 >
                   <View className="flex-row gap-x-3 items-center px-4 py-2">
                     <ProfilePicture

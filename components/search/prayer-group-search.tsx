@@ -61,6 +61,7 @@ export const PrayerGroupSearch: React.FC = () => {
           <View className="flex flex-col mt-4 mx-4">
             <FlatList
               data={groupSearchResults}
+              testID={PrayerGroupSearchTestIds.prayerGroupResultsList}
               renderItem={({ item: group }) => (
                 <TouchableRipple
                   rippleColor={"rgba(0, 0, 0, 0.12)"}

@@ -1,11 +1,7 @@
 import "@testing-library/jest-native/extend-expect";
 import "@testing-library/jest-native";
 
-import {
-  fireEvent,
-  RenderResult,
-  waitFor,
-} from "@testing-library/react-native";
+import { act, fireEvent, RenderResult } from "@testing-library/react-native";
 
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { PrayerGroupSearch } from "../prayer-group-search";
@@ -51,12 +47,16 @@ describe(PrayerGroupSearch, () => {
     const searchInput = component.getByTestId(
       PrayerGroupSearchTestIds.searchInput
     );
-    fireEvent.changeText(searchInput, "Prayer Group");
+    act(() => fireEvent.changeText(searchInput, "Prayer Group"));
 
-    await waitFor(() => {
-      mockPrayerGroupSearchResults.forEach((prayerGroup) => {
-        expect(component).toHaveTextContent(prayerGroup.groupName ?? "");
-      });
+    const prayerGroupResultsList = await component.findByTestId(
+      PrayerGroupSearchTestIds.prayerGroupResultsList
+    );
+
+    mockPrayerGroupSearchResults.forEach((prayerGroup) => {
+      expect(prayerGroupResultsList).toHaveTextContent(
+        prayerGroup.groupName ?? ""
+      );
     });
   });
 });

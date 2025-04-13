@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import * as React from "react";
 
 import { getUserTokenPair } from "../api/get-user-token-pair";
-import { decodeJwtToken } from "../components/authentication/auth-helpers";
+import { decodeJwtToken } from "../components/authentication/jwt-helpers";
 import { BEARER_PREFIX } from "../constants/auth-constants";
 import { isTokenValid } from "../helpers/api-helpers";
 import {

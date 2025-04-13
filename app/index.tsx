@@ -14,7 +14,7 @@ import {
   REFRESH_TOKEN_STORAGE_KEY,
   USER_ID_STORAGE_KEY,
 } from "../components/authentication/auth-constants";
-import { decodeJwtToken } from "../components/authentication/auth-helpers";
+import { decodeJwtToken } from "../components/authentication/jwt-helpers";
 import { ErrorSnackbar } from "../components/layouts/error-snackbar";
 import { sleep } from "../helpers/utils";
 import { useApiDataContext } from "../hooks/use-api-data";

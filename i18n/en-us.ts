@@ -111,6 +111,7 @@ export const englishTranslations = {
   "prayerGroup.manageUsers.member": "Member",
   "prayerGroup.manageUsers.usersLabel": "prayer group users",
   "prayerGroup.manageUsers.updateSuccess": "Updated prayer group users",
+  "prayerGroup.manageUsers.noUsersFound": "No users found",
 
   "prayerGroup.kickUser.header": "Kick User?",
   "prayerGroup.kickUser.warning":
@@ -121,4 +122,8 @@ export const englishTranslations = {
   "prayerGroup.permissionError.message":
     "You do not have sufficient permissions to access this page.",
   "prayerGroup.permissionError.goBackToGroup": "Go back to prayer group",
+
+  "prayerGroup.search.placeholder": "Search for prayer groups",
+  "prayerGroup.search.prompt": "Type to search for prayer groups",
+  "prayerGroup.search.noneFound": "No prayer groups found",
 };

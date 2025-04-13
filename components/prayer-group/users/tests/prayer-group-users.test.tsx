@@ -58,6 +58,9 @@ jest.mock("../../../../api/delete-prayer-group-users", () => ({
     mockDeletePrayerGroupUsers(id, userIds),
 }));
 
+jest.mock("expo-font");
+jest.mock("expo-asset");
+
 const mountPrayerGroupUsers = (
   prayerGroupDetails: PrayerGroupDetails,
   prayerGroupUsers: RawPrayerGroupUserSummary[]

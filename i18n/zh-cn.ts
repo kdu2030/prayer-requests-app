@@ -112,6 +112,7 @@ export const chineseTranslations: Translations = {
   "prayerGroup.manageUsers.member": "成员",
   "prayerGroup.manageUsers.usersLabel": "小组用户",
   "prayerGroup.manageUsers.updateSuccess": "编辑了小组用户",
+  "prayerGroup.manageUsers.noUsersFound": "没有找到相关的用户",
 
   "prayerGroup.kickUser.header": "踢出用户？",
   "prayerGroup.kickUser.warning":
@@ -121,4 +122,8 @@ export const chineseTranslations: Translations = {
   "prayerGroup.permissionError.header": "权限错误",
   "prayerGroup.permissionError.message": "您没有足够的权限访问此页面",
   "prayerGroup.permissionError.goBackToGroup": "回到祷告小组",
+
+  "prayerGroup.search.placeholder": "搜索祷告小组",
+  "prayerGroup.search.prompt": "输入以搜索祷告小组",
+  "prayerGroup.search.noneFound": "没有找到相关祷告小组",
 };

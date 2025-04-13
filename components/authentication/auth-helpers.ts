@@ -1,31 +1,17 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { decode } from "base-64";
 
 import { ApiAuthResponse } from "../../api/post-signup";
 import { mapUserData } from "../../mappers/map-user-data";
 import {
-  Token,
   UserData,
   UserTokenPair,
 } from "../../types/context/api-data-context-type";
 import {
-  JwtTokenFields,
   REFRESH_TOKEN_STORAGE_KEY,
   USER_ID_STORAGE_KEY,
   USER_TOKEN_STORAGE_KEY,
 } from "./auth-constants";
-
-export const decodeJwtToken = (token: string): Token => {
-  const tokenParts = token.split(".");
-  const payload = JSON.parse(decode(tokenParts[1]));
-  // exp field is in seconds since Jan 1, 1970. Date constructor expects ms since 1970
-  const expiryDate = new Date(payload[JwtTokenFields.ExpiryDateSecs] * 1000);
-
-  return {
-    token,
-    expiryDate,
-  };
-};
+import { decodeJwtToken } from "./jwt-helpers";
 
 export const handleSuccessfulAuthentication = (
   apiAuthResponse: ApiAuthResponse,

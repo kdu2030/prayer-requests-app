@@ -46,7 +46,7 @@ export const PrayerGroupSearch: React.FC = () => {
         </View>
 
         {placeholderMessage && (
-          <View className="flex flex-row items-center justify-center my-16">
+          <View className="flex flex-row items-center justify-center mt-16">
             <Text
               variant="bodyLarge"
               className="font-bold"

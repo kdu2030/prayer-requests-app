@@ -96,58 +96,73 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
             />
           </View>
 
-          <FlatList
-            data={filteredUsers}
-            className="flex-1"
-            renderItem={({ item, index }) => {
-              if (item.isDeleted) {
-                return null;
-              }
+          {filteredUsers.length > 0 && (
+            <FlatList
+              data={filteredUsers}
+              className="flex-1"
+              renderItem={({ item, index }) => {
+                if (item.isDeleted) {
+                  return null;
+                }
 
-              return (
-                <View
-                  className="p-4 border-b flex-row justify-between"
-                  style={{ borderBottomColor: theme.colors.outline }}
-                >
-                  <View className="flex-row items-center w-3/5">
-                    <ProfilePicture
-                      url={item.image?.url}
-                      width={40}
-                      height={40}
-                    />
-                    <View className="ml-4">
-                      <Text
-                        variant="bodyLarge"
-                        ellipsizeMode="tail"
-                        numberOfLines={1}
-                        testID={`${PrayerGroupUsersTestIds.userDisplayName}[${index}]`}
-                      >
-                        {item.fullName}
-                      </Text>
-                      <Text
-                        variant="bodySmall"
-                        ellipsizeMode="tail"
-                        numberOfLines={1}
-                      >
-                        @ {item.username}
-                      </Text>
+                return (
+                  <View
+                    className="p-4 border-b flex-row justify-between"
+                    style={{ borderBottomColor: theme.colors.outline }}
+                  >
+                    <View className="flex-row items-center w-3/5">
+                      <ProfilePicture
+                        url={item.image?.url}
+                        width={40}
+                        height={40}
+                      />
+                      <View className="ml-4">
+                        <Text
+                          variant="bodyLarge"
+                          ellipsizeMode="tail"
+                          numberOfLines={1}
+                          testID={`${PrayerGroupUsersTestIds.userDisplayName}[${index}]`}
+                        >
+                          {item.fullName}
+                        </Text>
+                        <Text
+                          variant="bodySmall"
+                          ellipsizeMode="tail"
+                          numberOfLines={1}
+                        >
+                          @ {item.username}
+                        </Text>
+                      </View>
+                    </View>
+
+                    <View className="flex-1">
+                      <UserActions
+                        role={item.role}
+                        index={index}
+                        onDeletePress={onDeletePress}
+                        onRoleChange={onRoleChange}
+                        roleChangeTestID={`${PrayerGroupUsersTestIds.roleChangeButton}[${index}]`}
+                        deleteUserTestID={`${PrayerGroupUsersTestIds.deleteUserButton}[${index}]`}
+                      />
                     </View>
                   </View>
+                );
+              }}
+            />
+          )}
 
-                  <View className="flex-1">
-                    <UserActions
-                      role={item.role}
-                      index={index}
-                      onDeletePress={onDeletePress}
-                      onRoleChange={onRoleChange}
-                      roleChangeTestID={`${PrayerGroupUsersTestIds.roleChangeButton}[${index}]`}
-                      deleteUserTestID={`${PrayerGroupUsersTestIds.deleteUserButton}[${index}]`}
-                    />
-                  </View>
-                </View>
-              );
-            }}
-          />
+          {filteredUsers.length === 0 && (
+            <View
+              className="p-4 border-b flex-row justify-center mt-16 flex-1"
+              style={{ borderBottomColor: theme.colors.outline }}
+            >
+              <View>
+                <Text variant="titleMedium">
+                  {translate("prayerGroup.manageUsers.noUsersFound")}
+                </Text>
+              </View>
+            </View>
+          )}
 
           <View
             className="p-4 border-t"

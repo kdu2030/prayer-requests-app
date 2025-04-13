@@ -111,6 +111,7 @@ export const englishTranslations = {
   "prayerGroup.manageUsers.member": "Member",
   "prayerGroup.manageUsers.usersLabel": "prayer group users",
   "prayerGroup.manageUsers.updateSuccess": "Updated prayer group users",
+  "prayerGroup.manageUsers.noUsersFound": "No users found",
 
   "prayerGroup.kickUser.header": "Kick User?",
   "prayerGroup.kickUser.warning":

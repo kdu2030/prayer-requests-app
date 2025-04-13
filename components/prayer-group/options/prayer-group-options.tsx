@@ -9,7 +9,7 @@ import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { Href, router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
-import { Text, TouchableRipple, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
@@ -42,13 +42,13 @@ export const PrayerGroupOptions: React.FC<Props> = ({
   );
 
   const onPressOption = (route: string) => {
-    bottomSheetRef?.current?.close();
-
     prayerGroupDetails?.prayerGroupId &&
       router.push({
         pathname: route,
         params: { id: prayerGroupDetails?.prayerGroupId },
       } as Href<any>);
+
+    setTimeout(() => bottomSheetRef?.current?.close(), 0);
   };
 
   return (
@@ -78,26 +78,14 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                 testID={PrayerGroupOptionsTestIds.editButton}
               />
 
-              <TouchableRipple
-                rippleColor={"rgba(0, 0, 0, 0.12)"}
+              <PrayerGroupOptionButton
+                label={translate("prayerGroup.manageUsers.label")}
+                icon={<MaterialCommunityIcons name="account" size={24} />}
                 onPress={() =>
-                  prayerGroupDetails?.prayerGroupId &&
-                  router.push({
-                    pathname: "/(drawer)/prayergroup/[id]/users",
-                    params: { id: prayerGroupDetails?.prayerGroupId },
-                  })
+                  onPressOption("/(drawer)/prayergroup/[id]/users")
                 }
-                style={{ borderRadius: 8 }}
-                borderless
                 testID={PrayerGroupOptionsTestIds.manageUsersButton}
-              >
-                <View className="flex-row gap-x-3 items-center py-4 px-2">
-                  <MaterialCommunityIcons name="account" size={24} />
-                  <Text variant="bodyMedium">
-                    {translate("prayerGroup.manageUsers.label")}
-                  </Text>
-                </View>
-              </TouchableRipple>
+              />
             </>
           )}
         </View>

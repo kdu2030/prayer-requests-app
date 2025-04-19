@@ -93,6 +93,13 @@ export const PrayerGroupHeader: React.FC<Props> = ({
               className="flex-1"
               mode={"contained"}
               testID={PrayerGroupHeaderTestIds.addPrayerRequestButton}
+              onPress={() =>
+                prayerGroupDetails.prayerGroupId &&
+                router.push({
+                  pathname: "/(drawer)/prayergroup/[id]/create",
+                  params: { id: prayerGroupDetails?.prayerGroupId },
+                })
+              }
             >
               {translate("prayerGroup.actions.addPrayerRequest")}
             </Button>

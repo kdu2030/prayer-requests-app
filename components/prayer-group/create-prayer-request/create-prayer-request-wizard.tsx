@@ -13,10 +13,15 @@ export const CreatePrayerRequestWizard: React.FC = () => {
   const theme = useTheme();
 
   const { translate } = useI18N();
-  const { getPrayerRequestWizardContent } = useCreatePrayerRequestWizard();
+  const { getPrayerRequestWizardContent, getPrayerRequestValidationSchema } =
+    useCreatePrayerRequestWizard();
 
   return (
-    <Formik initialValues={{}} onSubmit={() => {}}>
+    <Formik
+      initialValues={{}}
+      validationSchema={getPrayerRequestValidationSchema}
+      onSubmit={() => {}}
+    >
       <SafeAreaView style={{ display: "flex", flex: 1 }}>
         <ScrollView
           contentContainerStyle={{

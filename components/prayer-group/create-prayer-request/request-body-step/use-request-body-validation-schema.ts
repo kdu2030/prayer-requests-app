@@ -29,7 +29,7 @@ export const useRequestBodyValidationSchema =
     return Yup.object().shape({
       requestTitle: Yup.string()
         .required(requestTitleRequired)
-        .length(TEXT_INPUT_MAX_LENGTH, requestTitleMaxLength),
+        .max(TEXT_INPUT_MAX_LENGTH, requestTitleMaxLength),
       requestDescription: Yup.string().required(requestDescriptionRequired),
     }) as Yup.ObjectSchema<CreatePrayerRequestForm>;
   };

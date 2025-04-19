@@ -1,5 +1,7 @@
+import { Formik } from "formik";
 import * as React from "react";
 import { View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -14,18 +16,23 @@ export const CreatePrayerRequestWizard: React.FC = () => {
   const { getPrayerRequestWizardContent } = useCreatePrayerRequestWizard();
 
   return (
-    <SafeAreaView>
-      <View
-        className="w-full h-full"
-        style={{ backgroundColor: theme.colors.background }}
-      >
-        <PrayerGroupSectionHeader
-          title={translate("prayerGroup.actions.addPrayerRequest")}
-        />
-        <View className="flex flex-col w-full p-4">
-          <>{getPrayerRequestWizardContent()}</>
-        </View>
-      </View>
-    </SafeAreaView>
+    <Formik initialValues={{}} onSubmit={() => {}}>
+      <SafeAreaView style={{ display: "flex", flex: 1 }}>
+        <ScrollView
+          contentContainerStyle={{
+            display: "flex",
+            flexGrow: 1,
+            backgroundColor: theme.colors.background,
+          }}
+        >
+          <PrayerGroupSectionHeader
+            title={translate("prayerGroup.actions.addPrayerRequest")}
+          />
+          <View className="flex flex-col w-full p-4">
+            <>{getPrayerRequestWizardContent()}</>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </Formik>
   );
 };

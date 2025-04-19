@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import { CreatePrayerRequest } from "../../../../components/prayer-group/create-prayer-request/create-prayer-request";
+import { CreatePrayerRequestWizard } from "../../../../components/prayer-group/create-prayer-request/create-prayer-request-wizard";
 
 const CreatePrayerRequestContainer: React.FC = () => {
-  return <CreatePrayerRequest />;
+  return <CreatePrayerRequestWizard />;
 };
 
 export default CreatePrayerRequestContainer;

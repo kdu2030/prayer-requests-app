@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
 
-export const CreatePrayerRequest: React.FC = () => {
+export const CreatePrayerRequestWizard: React.FC = () => {
   const { translate } = useI18N();
 
   return (

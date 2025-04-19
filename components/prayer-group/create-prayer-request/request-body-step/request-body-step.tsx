@@ -28,6 +28,7 @@ export const RequestBodyStep: React.FC = () => {
           name="requestTitle"
           placeholder={translate("prayerGroup.request.title")}
           selectionColor={theme.colors.primary}
+          contentStyle={{ fontWeight: "bold", fontSize: 20 }}
         />
       </View>
     </View>

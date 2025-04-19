@@ -11,6 +11,7 @@ const PrayerGroupLayout: React.FC = () => {
         backBehavior="history"
       >
         <Drawer.Screen name="users" options={{ unmountOnBlur: true }} />
+        <Drawer.Screen name="create" />
       </Drawer>
     </PrayerGroupContextProvider>
   );

@@ -20,15 +20,13 @@ export const RequestBodyStep: React.FC = () => {
       />
 
       <View className="flex flex-col mt-5">
-        {/**TODO: Replace with raw text input from react-native? */}
-
         <TextInput
-          outlineColor={theme.colors.background}
           mode="outlined"
           name="requestTitle"
           placeholder={translate("prayerGroup.request.title")}
           selectionColor={theme.colors.primary}
           contentStyle={{ fontWeight: "bold", fontSize: 20 }}
+          outlineStyle={{ borderColor: theme.colors.background }}
         />
       </View>
     </View>

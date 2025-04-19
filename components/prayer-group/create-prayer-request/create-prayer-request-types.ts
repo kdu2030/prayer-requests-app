@@ -4,7 +4,7 @@ export type CreatePrayerRequestForm = {
   expirationDate?: Date;
 };
 
-export enum CreatePrayerRequestWizardSteps {
+export enum CreatePrayerRequestWizardStep {
   RequestBodyStep = "RequestBodyStep",
   ExpirationStep = "ExpirationStep",
 }

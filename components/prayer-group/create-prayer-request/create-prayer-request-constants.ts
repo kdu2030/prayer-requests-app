@@ -1,0 +1,1 @@
+export const CREATE_REQUEST_NUM_STEPS = 2;

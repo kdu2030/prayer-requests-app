@@ -1,3 +1,5 @@
+import { useNavigation } from "expo-router";
+import { FormikProps } from "formik";
 import * as React from "react";
 import * as Yup from "yup";
 
@@ -21,7 +23,19 @@ export const useCreatePrayerRequestWizard = () => {
     React.useState<CreatePrayerRequestWizardStep>(
       CreatePrayerRequestWizardStep.RequestBodyStep
     );
+
   const requestBodyValidationSchema = useRequestBodyValidationSchema();
+  const navigation = useNavigation();
+
+  const formikRef = React.useRef<FormikProps<CreatePrayerRequestForm>>(null);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      formikRef.current?.resetForm();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const getPrayerRequestWizardContent = () => {
     const wizardStepToContent: WizardStepToContent = {
@@ -47,5 +61,6 @@ export const useCreatePrayerRequestWizard = () => {
     setWizardStep,
     getPrayerRequestWizardContent,
     getPrayerRequestValidationSchema,
+    formikRef,
   };
 };

@@ -14,6 +14,7 @@ interface Props extends TextInputProps {
   containerClassNames?: string;
   onBlur?: () => void;
   required?: boolean;
+  errorClassNames?: string;
 }
 
 export const TextInput: React.FC<Props> = ({
@@ -22,6 +23,7 @@ export const TextInput: React.FC<Props> = ({
   required,
   inputClassNames = "",
   containerClassNames = "",
+  errorClassNames = "",
   onBlur = () => {},
   testID,
   ...props
@@ -48,7 +50,11 @@ export const TextInput: React.FC<Props> = ({
         testID={testID}
         {...props}
       />
-      {isError && <HelperText type="error">{meta.error}</HelperText>}
+      {isError && (
+        <HelperText className={errorClassNames} type="error">
+          {meta.error}
+        </HelperText>
+      )}
     </View>
   );
 };

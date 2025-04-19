@@ -1,5 +1,3 @@
-import classNames from "classnames";
-import { useFormikContext } from "formik";
 import * as React from "react";
 import { View } from "react-native";
 import { useTheme } from "react-native-paper";
@@ -8,10 +6,7 @@ import { useI18N } from "../../../../hooks/use-i18n";
 import { TextInput } from "../../../inputs/text-input";
 import { WizardHeader } from "../../../layouts/wizard-header";
 import { CREATE_REQUEST_NUM_STEPS } from "../create-prayer-request-constants";
-import {
-  CreatePrayerRequestForm,
-  CreatePrayerRequestWizardStep,
-} from "../create-prayer-request-types";
+import { CreatePrayerRequestWizardStep } from "../create-prayer-request-types";
 import { useRequestBodyStep } from "./use-request-body-step";
 
 type Props = {
@@ -24,7 +19,6 @@ export const RequestBodyStep: React.FC<Props> = ({ setWizardStep }) => {
   const theme = useTheme();
   const { translate } = useI18N();
 
-  const { errors } = useFormikContext<CreatePrayerRequestForm>();
   const { onNext } = useRequestBodyStep(setWizardStep);
 
   return (
@@ -43,6 +37,7 @@ export const RequestBodyStep: React.FC<Props> = ({ setWizardStep }) => {
           placeholder={translate("prayerGroup.request.title")}
           contentStyle={{ fontWeight: "bold", fontSize: 20 }}
           outlineStyle={{ borderColor: theme.colors.background }}
+          errorClassNames="mb-3"
         />
 
         <TextInput
@@ -53,9 +48,6 @@ export const RequestBodyStep: React.FC<Props> = ({ setWizardStep }) => {
           )}
           outlineStyle={{ borderColor: theme.colors.background }}
           multiline
-          containerClassNames={classNames({
-            "mt-3": errors.requestDescription,
-          })}
           contentStyle={{ paddingTop: 16 }}
           numberOfLines={5}
         />

@@ -1,7 +1,7 @@
 export type CreatePrayerRequestForm = {
   requestTitle?: string;
   requestDescription?: string;
-  expirationDate?: Date;
+  timeToLive?: 10 | 15 | 20;
 };
 
 export enum CreatePrayerRequestWizardStep {

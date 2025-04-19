@@ -24,9 +24,18 @@ export const RequestBodyStep: React.FC = () => {
           mode="outlined"
           name="requestTitle"
           placeholder={translate("prayerGroup.request.title")}
-          selectionColor={theme.colors.primary}
           contentStyle={{ fontWeight: "bold", fontSize: 20 }}
           outlineStyle={{ borderColor: theme.colors.background }}
+        />
+
+        <TextInput
+          mode="outlined"
+          name="requestDescription"
+          placeholder={translate(
+            "createPrayerGroup.groupNameDescription.description"
+          )}
+          outlineStyle={{ borderColor: theme.colors.background }}
+          multiline
         />
       </View>
     </View>

@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 import { validateFileSizeFromFilePath } from "../../../helpers/file-helpers";
 import { formatNumber } from "../../../helpers/formatting-helpers";
-import { SupportedLanguages, TranslationKey } from "../../../types/languages";
+import { CultureCode, TranslationKey } from "../../../types/languages";
 import { MediaFile } from "../../../types/media-file-types";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import {
@@ -13,7 +13,7 @@ import { validateImageFileName } from "../../create-prayer-group/group-image-ste
 
 export const prayerGroupDetailsValidationSchema = (
   translate: (key: TranslationKey, args?: object) => string,
-  cultureCode: SupportedLanguages
+  cultureCode: CultureCode
 ): Yup.ObjectSchema<PrayerGroupDetails> => {
   const groupNameRequiredError = translate("form.validation.isRequired.error", {
     field: translate("createPrayerGroup.groupNameDescription.groupName"),

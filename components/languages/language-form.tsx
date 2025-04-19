@@ -5,7 +5,7 @@ import { Text } from "react-native-paper";
 import { Button } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
-import { SupportedLanguages } from "../../types/languages";
+import { CultureCode } from "../../types/languages";
 import { AuthContainer } from "../authentication/auth-container";
 import { Select } from "../inputs/select";
 import { ErrorSnackbar } from "../layouts/error-snackbar";
@@ -18,7 +18,7 @@ export const LanguageForm: React.FC = () => {
   >();
 
   const onClick = async () => {
-    const response = await storeLanguage(i18n.language as SupportedLanguages);
+    const response = await storeLanguage(i18n.language as CultureCode);
     if (response.isError) {
       setSnackbarError(
         translate("toaster.failed.saveFailure", {
@@ -44,7 +44,7 @@ export const LanguageForm: React.FC = () => {
           label={translate("language.chooseLanguage.label")}
           options={getLanguageDropdownOptions(translate)}
           value={i18n.language}
-          setValue={async (value: SupportedLanguages) => {
+          setValue={async (value: CultureCode) => {
             await setLanguage(value);
           }}
         />

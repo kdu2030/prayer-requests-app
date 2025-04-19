@@ -1,15 +1,15 @@
-import { LanguageOption, SupportedLanguages } from "../../types/languages";
+import { LanguageOption, CultureCode } from "../../types/languages";
 
 export const LANGUAGE_OPTIONS: LanguageOption[] = [
   {
     displayOptionKey: "language.english.option",
     icon: "🇺🇸",
-    value: SupportedLanguages.English,
+    value: CultureCode.English,
   },
   {
     displayOptionKey: "language.chinese.option",
     icon: "🇨🇳",
-    value: SupportedLanguages.Chinese,
+    value: CultureCode.Chinese,
   },
 ];
 

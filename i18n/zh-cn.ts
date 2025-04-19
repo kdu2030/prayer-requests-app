@@ -51,6 +51,7 @@ export const chineseTranslations: Translations = {
   "form.validation.incorrectPassword.error": "你的密码不正确",
   "form.validation.fileSize": "文件大小必须小于{{size}}。",
   "form.validation.imageFileType": "图片格式必须是 JPG、JPEG 或 PNG。",
+  "form.validation.maxLength": "{{field}}长度必须小于{{length}}字符。",
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "加载{{item}}失败",

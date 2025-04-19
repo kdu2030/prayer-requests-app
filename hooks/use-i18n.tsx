@@ -7,14 +7,12 @@ import {
   ManagedErrorResponse,
 } from "../types/error-handling";
 import { TranslationKey } from "../types/languages";
-import { SupportedLanguages } from "../types/languages";
+import { CultureCode } from "../types/languages";
 
 export const useI18N = () => {
   const resources = useTranslation();
 
-  const loadLanguage = async (): Promise<
-    ManagedErrorResponse<SupportedLanguages>
-  > => {
+  const loadLanguage = async (): Promise<ManagedErrorResponse<CultureCode>> => {
     try {
       const language = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
       if (language) {
@@ -22,7 +20,7 @@ export const useI18N = () => {
       }
       return {
         isError: false,
-        value: language as SupportedLanguages,
+        value: language as CultureCode,
       };
     } catch (error) {
       return { isError: true, error };
@@ -34,12 +32,12 @@ export const useI18N = () => {
     return resources.t(key, options) as string;
   };
 
-  const setLanguage = async (language: SupportedLanguages) => {
+  const setLanguage = async (language: CultureCode) => {
     await resources.i18n.changeLanguage(language);
   };
 
   const storeLanguage = async (
-    language: SupportedLanguages
+    language: CultureCode
   ): Promise<BaseManagedErrorResponse> => {
     try {
       await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, language);

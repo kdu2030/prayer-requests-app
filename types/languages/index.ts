@@ -2,7 +2,7 @@ import { englishTranslations } from "../../i18n/en-us";
 
 export type TranslationKey = keyof typeof englishTranslations;
 
-export enum SupportedLanguages {
+export enum CultureCode {
   English = "en",
   Chinese = "cn",
 }
@@ -10,5 +10,5 @@ export enum SupportedLanguages {
 export type LanguageOption = {
   displayOptionKey: TranslationKey;
   icon: string;
-  value: SupportedLanguages;
+  value: CultureCode;
 };

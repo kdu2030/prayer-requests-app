@@ -4,7 +4,7 @@ import * as React from "react";
 import { ObjectSchema } from "yup";
 
 import { useI18N } from "../../hooks/use-i18n";
-import { SupportedLanguages } from "../../types/languages";
+import { CultureCode } from "../../types/languages";
 import { CreatePrayerGroupWizardStep } from "./create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 import { GroupImageStep } from "./group-image-step/group-image-step";
@@ -47,7 +47,7 @@ export const useCreatePrayerGroupWizard = () => {
       case CreatePrayerGroupWizardStep.ImageStep:
         return groupImageValidationSchema(
           translate,
-          i18n.language as SupportedLanguages
+          i18n.language as CultureCode
         );
     }
   };

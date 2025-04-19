@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 import { validateFileSizeFromFilePath } from "../../../helpers/file-helpers";
 import { formatNumber } from "../../../helpers/formatting-helpers";
-import { SupportedLanguages, TranslationKey } from "../../../types/languages";
+import { CultureCode, TranslationKey } from "../../../types/languages";
 import {
   MAX_GROUP_BANNER_SIZE,
   MAX_GROUP_BANNER_SIZE_MB,
@@ -14,7 +14,7 @@ import { validateImageFileName } from "./group-image-step-helpers";
 
 export const groupImageValidationSchema = (
   translate: (key: TranslationKey, params?: object) => string,
-  cultureCode: SupportedLanguages
+  cultureCode: CultureCode
 ): Yup.ObjectSchema<CreatePrayerGroupForm> => {
   const maxFileSize = `${formatNumber(
     MAX_GROUP_IMAGE_SIZE_MB,

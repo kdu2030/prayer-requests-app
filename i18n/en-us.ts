@@ -48,6 +48,8 @@ export const englishTranslations = {
   "form.validation.incorrectPassword.error": "Your password is incorrect",
   "form.validation.fileSize": "File size must be less than {{size}}.",
   "form.validation.imageFileType": "Image file type must be JPG, JPEG, or PNG.",
+  "form.validation.maxLength":
+    "{{field}} must be less than {{length}} characters.",
 
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",

@@ -5,7 +5,7 @@ import { Button, Text, useTheme } from "react-native-paper";
 
 import { formatNumber } from "../../helpers/formatting-helpers";
 import { useI18N } from "../../hooks/use-i18n";
-import { SupportedLanguages } from "../../types/languages";
+import { CultureCode } from "../../types/languages";
 
 export type WizardHeaderTestIDs = {
   backButton?: string;
@@ -61,13 +61,10 @@ export const WizardHeader: React.FC<Props> = ({
         >
           <Text className="text-white">
             {translate("wizard.stepCount", {
-              step: formatNumber(
-                stepNumber,
-                i18n.language as SupportedLanguages
-              ),
+              step: formatNumber(stepNumber, i18n.language as CultureCode),
               total: formatNumber(
                 totalNumberOfSteps,
-                i18n.language as SupportedLanguages
+                i18n.language as CultureCode
               ),
             })}
           </Text>

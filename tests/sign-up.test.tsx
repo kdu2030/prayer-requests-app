@@ -10,7 +10,7 @@ import { SignupTestIds } from "../components/authentication/auth-constants";
 import Signup from "../components/authentication/sign-up";
 import { ApiResponse } from "../types/api-response-types";
 import { SignupForm } from "../types/forms/auth-forms";
-import { SupportedLanguages } from "../types/languages";
+import { CultureCode } from "../types/languages";
 import { mockUserSummary } from "./mock-data/mock-tokens";
 import { mountComponent } from "./utils/test-utils";
 
@@ -64,7 +64,7 @@ const addInputToSignupForm = ({
 
 describe("Signup Form Tests", () => {
   beforeEach(() => {
-    component = mountComponent(<Signup />, SupportedLanguages.English);
+    component = mountComponent(<Signup />, CultureCode.English);
   });
 
   afterEach(() => {

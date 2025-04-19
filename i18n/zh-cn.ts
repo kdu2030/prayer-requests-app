@@ -126,4 +126,6 @@ export const chineseTranslations: Translations = {
   "prayerGroup.search.placeholder": "搜索祷告小组",
   "prayerGroup.search.prompt": "输入以搜索祷告小组",
   "prayerGroup.search.noneFound": "没有找到相关祷告小组",
+
+  "prayerGroup.request.title": "标题",
 };

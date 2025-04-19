@@ -28,7 +28,7 @@ export const CreatePrayerRequestWizard: React.FC = () => {
           <PrayerGroupSectionHeader
             title={translate("prayerGroup.actions.addPrayerRequest")}
           />
-          <View className="flex flex-col w-full p-4">
+          <View className="flex flex-col p-4">
             <>{getPrayerRequestWizardContent()}</>
           </View>
         </ScrollView>

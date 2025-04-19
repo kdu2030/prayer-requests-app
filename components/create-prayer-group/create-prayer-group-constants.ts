@@ -1,3 +1,6 @@
+import { WizardHeaderTestIDs } from "../layouts/wizard-header";
+import { CreatePrayerGroupWizardHeaderTestIds } from "./tests/test-ids";
+
 export enum CreatePrayerGroupWizardStep {
   NameDescriptionStep = 1,
   RulesStep = 2,
@@ -32,3 +35,9 @@ export const MAX_GROUP_BANNER_SIZE_MB = 10;
 export const MAX_GROUP_BANNER_SIZE = MAX_GROUP_BANNER_SIZE_MB * 1024 * 1024;
 
 export const ACCEPTED_FILE_TYPES = ["JPG", "JPEG", "PNG"];
+
+export const WIZARD_TEST_IDS_CONFIG: WizardHeaderTestIDs = {
+  backButton: CreatePrayerGroupWizardHeaderTestIds.backButton,
+  saveButton: CreatePrayerGroupWizardHeaderTestIds.saveButton,
+  nextButton: CreatePrayerGroupWizardHeaderTestIds.nextButton,
+};

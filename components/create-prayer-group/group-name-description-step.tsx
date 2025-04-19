@@ -6,11 +6,12 @@ import { TEXT_INPUT_MAX_LENGTH } from "../../constants/input-constants";
 import { useI18N } from "../../hooks/use-i18n";
 import { TextInput } from "../inputs/text-input";
 import { ErrorSnackbar } from "../layouts/error-snackbar";
+import { WizardHeader } from "../layouts/wizard-header";
 import {
   CreatePrayerGroupWizardStep,
   NUM_CREATE_PRAYER_GROUP_STEPS,
+  WIZARD_TEST_IDS_CONFIG,
 } from "./create-prayer-group-constants";
-import { CreatePrayerGroupWizardHeader } from "./create-prayer-group-wizard-header";
 import { GroupNameDescriptionStepTestIds } from "./tests/test-ids";
 import { usePrayerGroupDescriptionStep } from "./use-group-name-description-step";
 
@@ -29,12 +30,13 @@ export const GroupNameDescriptionStep: React.FC<Props> = ({
 
   return (
     <>
-      <CreatePrayerGroupWizardHeader
+      <WizardHeader
         stepNumber={1}
         totalNumberOfSteps={NUM_CREATE_PRAYER_GROUP_STEPS}
         isLoading={isLoading}
         onNext={onNext}
         showBackButton={false}
+        testIDs={WIZARD_TEST_IDS_CONFIG}
       />
 
       <View className="mt-4">

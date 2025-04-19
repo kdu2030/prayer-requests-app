@@ -20,6 +20,8 @@ export const RequestBodyStep: React.FC = () => {
       />
 
       <View className="flex flex-col mt-5">
+        {/**TODO: Replace with raw text input from react-native? */}
+
         <TextInput
           outlineColor={theme.colors.background}
           mode="outlined"

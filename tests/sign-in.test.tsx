@@ -55,7 +55,7 @@ const addInputToSignInForm = (
 
 describe("Sign In Tests", () => {
   beforeEach(() => {
-    component = mountComponent(<Signin />, CultureCode.English);
+    component = mountComponent(<Signin />, CultureCode.enUS);
   });
 
   afterEach(() => {

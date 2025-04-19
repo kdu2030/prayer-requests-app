@@ -12,7 +12,7 @@ jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
 export const mountComponent = (
   component: React.ReactNode,
-  language: CultureCode = CultureCode.English
+  language: CultureCode = CultureCode.enUS
 ) => {
   jest.useFakeTimers();
 

@@ -64,7 +64,7 @@ const addInputToSignupForm = ({
 
 describe("Signup Form Tests", () => {
   beforeEach(() => {
-    component = mountComponent(<Signup />, CultureCode.English);
+    component = mountComponent(<Signup />, CultureCode.enUS);
   });
 
   afterEach(() => {

@@ -3,8 +3,8 @@ import { englishTranslations } from "../../i18n/en-us";
 export type TranslationKey = keyof typeof englishTranslations;
 
 export enum CultureCode {
-  English = "en",
-  Chinese = "cn",
+  enUS = "en-US",
+  zhCN = "zh-CN",
 }
 
 export type LanguageOption = {

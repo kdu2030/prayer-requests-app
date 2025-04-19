@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 
-import { LANGUAGE_STORAGE_KEY } from "../constants/languages";
+import { CULTURE_CODES, LANGUAGE_STORAGE_KEY } from "../constants/languages";
 import {
   BaseManagedErrorResponse,
   ManagedErrorResponse,
@@ -15,6 +15,10 @@ export const useI18N = () => {
   const loadLanguage = async (): Promise<ManagedErrorResponse<CultureCode>> => {
     try {
       const language = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
+      if (!CULTURE_CODES.includes(language as CultureCode)) {
+        throw new Error("Unsupported language");
+      }
+
       if (language) {
         resources.i18n.changeLanguage(language);
       }

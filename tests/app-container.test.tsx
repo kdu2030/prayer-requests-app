@@ -57,7 +57,7 @@ describe("App Container Tests", () => {
   test("Language picked but not signed in", async () => {
     mockLoadLanguage.mockReturnValue({
       isError: false,
-      value: CultureCode.English,
+      value: CultureCode.enUS,
     });
 
     component = mountComponent(<AppContainer />);

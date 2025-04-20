@@ -17,7 +17,7 @@ type Props = {
 
 export const ExpirationStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
-  const { expirationDateOptions } = useExpirationStep();
+  const { expirationDateOptions, onSavePrayerRequest } = useExpirationStep();
 
   return (
     <View>
@@ -29,6 +29,7 @@ export const ExpirationStep: React.FC<Props> = ({ setWizardStep }) => {
         onBack={() =>
           setWizardStep(CreatePrayerRequestWizardStep.RequestBodyStep)
         }
+        onSave={onSavePrayerRequest}
       />
 
       <View className="mt-4">

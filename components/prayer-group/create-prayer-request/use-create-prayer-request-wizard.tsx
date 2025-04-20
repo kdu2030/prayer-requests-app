@@ -8,6 +8,7 @@ import {
   CreatePrayerRequestWizardStep,
 } from "./create-prayer-request-types";
 import { ExpirationStep } from "./expiration-step/expiration-step";
+import { useExpirationStepValidationSchema } from "./expiration-step/use-expiration-step-validation-schema";
 import { RequestBodyStep } from "./request-body-step/request-body-step";
 import { useRequestBodyValidationSchema } from "./request-body-step/use-request-body-validation-schema";
 
@@ -26,6 +27,8 @@ export const useCreatePrayerRequestWizard = () => {
     );
 
   const requestBodyValidationSchema = useRequestBodyValidationSchema();
+  const expirationStepValidationSchema = useExpirationStepValidationSchema();
+
   const navigation = useNavigation();
 
   const formikRef = React.useRef<FormikProps<CreatePrayerRequestForm>>(null);
@@ -33,6 +36,7 @@ export const useCreatePrayerRequestWizard = () => {
   React.useEffect(() => {
     const unsubscribe = navigation.addListener("blur", () => {
       formikRef.current?.resetForm();
+      setWizardStep(CreatePrayerRequestWizardStep.RequestBodyStep);
     });
 
     return unsubscribe;
@@ -55,6 +59,8 @@ export const useCreatePrayerRequestWizard = () => {
     const wizardStepToValidationSchema: WizardStepToValidationSchema = {
       [CreatePrayerRequestWizardStep.RequestBodyStep]:
         requestBodyValidationSchema,
+      [CreatePrayerRequestWizardStep.ExpirationStep]:
+        expirationStepValidationSchema,
     };
 
     return wizardStepToValidationSchema[wizardStep];

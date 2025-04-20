@@ -35,7 +35,7 @@ export const FormikSelect = <TValue,>({
         options={options}
         value={field.value}
         setValue={(value) => helpers.setValue(value)}
-        onDismiss={() => helpers.setTouched(true, true)}
+        onDismiss={() => setTimeout(() => helpers.setTouched(true, true), 0)}
         error={isError}
       />
 

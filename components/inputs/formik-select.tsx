@@ -13,6 +13,7 @@ type Props<TValue> = {
   onBlur?: () => void;
   required?: boolean;
   mode?: "outlined" | "flat";
+  containerClassName?: string;
 };
 
 export const FormikSelect = <TValue,>({
@@ -21,12 +22,13 @@ export const FormikSelect = <TValue,>({
   options,
   required,
   mode,
+  containerClassName,
 }: Props<TValue>) => {
   const [field, meta, helpers] = useField<TValue | undefined>(name);
-  const isError = meta.touched && meta.error;
+  const isError = !!(meta.touched && meta.error);
 
   return (
-    <View>
+    <View className={containerClassName}>
       <Select
         mode={mode}
         label={required ? `${label}*` : label}
@@ -34,6 +36,7 @@ export const FormikSelect = <TValue,>({
         value={field.value}
         setValue={(value) => helpers.setValue(value)}
         onDismiss={() => helpers.setTouched(true, true)}
+        error={isError}
       />
 
       {isError && <HelperText type="error">{meta.error}</HelperText>}

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ViewStyle } from "react-native";
 import DropDown from "react-native-paper-dropdown";
 
 import { DropdownOption } from "../../types/inputs/dropdown";
@@ -11,6 +12,8 @@ type Props = {
   options: DropdownOption<any>[];
   onShow?: () => void;
   onDismiss?: () => void;
+  dropdownStyle?: ViewStyle;
+  error?: boolean;
 };
 
 export function Select({
@@ -21,6 +24,8 @@ export function Select({
   options,
   onShow,
   onDismiss,
+  dropdownStyle,
+  error,
 }: Props) {
   const [showDropdown, setShowDropdown] = React.useState<boolean>(false);
   return (
@@ -39,6 +44,12 @@ export function Select({
         onDismiss?.();
       }}
       list={options}
+      dropDownStyle={dropdownStyle}
+      inputProps={
+        error
+          ? { error: true, style: { backgroundColor: "#fecaca" } }
+          : undefined
+      }
     />
   );
 }

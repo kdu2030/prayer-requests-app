@@ -4,7 +4,6 @@ import { Text } from "react-native-paper";
 
 import { useI18N } from "../../../../hooks/use-i18n";
 import { FormikSelect } from "../../../inputs/formik-select";
-import { Select } from "../../../inputs/select";
 import { WizardHeader } from "../../../layouts/wizard-header";
 import { CREATE_REQUEST_NUM_STEPS } from "../create-prayer-request-constants";
 import { CreatePrayerRequestWizardStep } from "../create-prayer-request-types";
@@ -42,10 +41,12 @@ export const ExpirationStep: React.FC<Props> = ({ setWizardStep }) => {
         </Text>
 
         <FormikSelect
+          containerClassName="mt-5"
           mode="flat"
           label={translate("prayerGroup.request.visibilityDuration.label")}
           name="timeToLive"
           options={expirationDateOptions}
+          required
         />
       </View>
     </View>

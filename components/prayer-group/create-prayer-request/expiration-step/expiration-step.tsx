@@ -4,6 +4,7 @@ import { Text } from "react-native-paper";
 
 import { useI18N } from "../../../../hooks/use-i18n";
 import { FormikSelect } from "../../../inputs/formik-select";
+import { ErrorSnackbar } from "../../../layouts/error-snackbar";
 import { WizardHeader } from "../../../layouts/wizard-header";
 import { CREATE_REQUEST_NUM_STEPS } from "../create-prayer-request-constants";
 import { CreatePrayerRequestWizardStep } from "../create-prayer-request-types";
@@ -17,7 +18,13 @@ type Props = {
 
 export const ExpirationStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
-  const { expirationDateOptions, onSavePrayerRequest } = useExpirationStep();
+  const {
+    expirationDateOptions,
+    onSavePrayerRequest,
+    isLoading,
+    snackbarError,
+    setSnackbarError,
+  } = useExpirationStep();
 
   return (
     <View>
@@ -30,6 +37,7 @@ export const ExpirationStep: React.FC<Props> = ({ setWizardStep }) => {
           setWizardStep(CreatePrayerRequestWizardStep.RequestBodyStep)
         }
         onSave={onSavePrayerRequest}
+        isLoading={isLoading}
       />
 
       <View className="mt-4">
@@ -50,6 +58,11 @@ export const ExpirationStep: React.FC<Props> = ({ setWizardStep }) => {
           required
         />
       </View>
+
+      <ErrorSnackbar
+        snackbarError={snackbarError}
+        setSnackbarError={setSnackbarError}
+      />
     </View>
   );
 };

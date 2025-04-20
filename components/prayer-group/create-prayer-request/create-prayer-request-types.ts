@@ -10,6 +10,13 @@ export type CreatePrayerRequestForm = {
   timeToLive?: TimeToLiveOption;
 };
 
+export type RawCreatePrayerRequestForm = {
+  userId?: number;
+  requestTitle?: string;
+  requestDescription?: string;
+  expirationDate?: string;
+};
+
 export enum CreatePrayerRequestWizardStep {
   RequestBodyStep = "RequestBodyStep",
   ExpirationStep = "ExpirationStep",

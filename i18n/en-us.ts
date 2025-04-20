@@ -136,4 +136,6 @@ export const englishTranslations = {
   "prayerGroup.request.visibilityDuration.label": "Visibility duration",
   "prayerGroup.request.expirationDate.week": "{{count}} week",
   "prayerGroup.request.expirationDate.weeks": "{{count}} weeks",
+
+  "prayerRequest.label": "prayer request",
 };

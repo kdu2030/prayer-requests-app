@@ -7,6 +7,7 @@ import {
   CreatePrayerRequestForm,
   CreatePrayerRequestWizardStep,
 } from "./create-prayer-request-types";
+import { ExpirationStep } from "./expiration-step/expiration-step";
 import { RequestBodyStep } from "./request-body-step/request-body-step";
 import { useRequestBodyValidationSchema } from "./request-body-step/use-request-body-validation-schema";
 
@@ -41,6 +42,9 @@ export const useCreatePrayerRequestWizard = () => {
     const wizardStepToContent: WizardStepToContent = {
       [CreatePrayerRequestWizardStep.RequestBodyStep]: (
         <RequestBodyStep setWizardStep={setWizardStep} />
+      ),
+      [CreatePrayerRequestWizardStep.ExpirationStep]: (
+        <ExpirationStep setWizardStep={setWizardStep} />
       ),
     };
 

@@ -130,4 +130,7 @@ export const englishTranslations = {
   "prayerGroup.search.noneFound": "No prayer groups found",
 
   "prayerGroup.request.title": "Title",
+  "prayerGroup.request.expirationDate.header": "Prayer request visibility",
+  "prayerGroup.request.expirationDate.description":
+    "To manage storage limits, prayer requests cannot stay up forever. You can extend your prayer request's visibility before it expires.",
 };

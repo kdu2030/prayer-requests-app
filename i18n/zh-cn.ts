@@ -129,4 +129,7 @@ export const chineseTranslations: Translations = {
   "prayerGroup.search.noneFound": "没有找到相关祷告小组",
 
   "prayerGroup.request.title": "标题",
+  "prayerGroup.request.expirationDate.header": "祷告事项可见时间",
+  "prayerGroup.request.expirationDate.description":
+    "为管理存储限制，祷告事项无法永久保留。您可以在祷告事项过期前延长其可见时间。",
 };

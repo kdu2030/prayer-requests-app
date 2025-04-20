@@ -3,9 +3,12 @@ import { View } from "react-native";
 import { Text } from "react-native-paper";
 
 import { useI18N } from "../../../../hooks/use-i18n";
+import { FormikSelect } from "../../../inputs/formik-select";
+import { Select } from "../../../inputs/select";
 import { WizardHeader } from "../../../layouts/wizard-header";
 import { CREATE_REQUEST_NUM_STEPS } from "../create-prayer-request-constants";
 import { CreatePrayerRequestWizardStep } from "../create-prayer-request-types";
+import { useExpirationStep } from "./use-expiration-step";
 
 type Props = {
   setWizardStep: React.Dispatch<
@@ -15,6 +18,7 @@ type Props = {
 
 export const ExpirationStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
+  const { expirationDateOptions } = useExpirationStep();
 
   return (
     <View>
@@ -36,6 +40,13 @@ export const ExpirationStep: React.FC<Props> = ({ setWizardStep }) => {
         <Text variant="bodyLarge">
           {translate("prayerGroup.request.expirationDate.description")}
         </Text>
+
+        <FormikSelect
+          mode="flat"
+          label={translate("prayerGroup.request.visibilityDuration.label")}
+          name="timeToLive"
+          options={expirationDateOptions}
+        />
       </View>
     </View>
   );

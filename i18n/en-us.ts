@@ -133,4 +133,7 @@ export const englishTranslations = {
   "prayerGroup.request.expirationDate.header": "Prayer request visibility",
   "prayerGroup.request.expirationDate.description":
     "To manage storage limits, prayer requests cannot stay up forever. You can extend your prayer request's visibility before it expires.",
+  "prayerGroup.request.visibilityDuration.label": "Visibility duration",
+  "prayerGroup.request.expirationDate.week": "{{count}} week",
+  "prayerGroup.request.expirationDate.weeks": "{{count}} weeks",
 };

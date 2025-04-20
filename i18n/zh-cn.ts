@@ -132,4 +132,7 @@ export const chineseTranslations: Translations = {
   "prayerGroup.request.expirationDate.header": "祷告事项可见时间",
   "prayerGroup.request.expirationDate.description":
     "为管理存储限制，祷告事项无法永久保留。您可以在祷告事项过期前延长其可见时间。",
+  "prayerGroup.request.visibilityDuration.label": "可见时间",
+  "prayerGroup.request.expirationDate.week": "{{count}}个星期",
+  "prayerGroup.request.expirationDate.weeks": "{{count}}个星期",
 };

@@ -9,9 +9,19 @@ type Props = {
   setValue: (value: any) => void;
   mode?: "outlined" | "flat";
   options: DropdownOption<any>[];
+  onShow?: () => void;
+  onDismiss?: () => void;
 };
 
-export function Select({ label, mode, value, setValue, options }: Props) {
+export function Select({
+  label,
+  mode,
+  value,
+  setValue,
+  options,
+  onShow,
+  onDismiss,
+}: Props) {
   const [showDropdown, setShowDropdown] = React.useState<boolean>(false);
   return (
     <DropDown
@@ -20,8 +30,14 @@ export function Select({ label, mode, value, setValue, options }: Props) {
       setValue={setValue}
       mode={mode ?? "outlined"}
       visible={showDropdown}
-      showDropDown={() => setShowDropdown(true)}
-      onDismiss={() => setShowDropdown(false)}
+      showDropDown={() => {
+        setShowDropdown(true);
+        onShow?.();
+      }}
+      onDismiss={() => {
+        setShowDropdown(false);
+        onDismiss?.();
+      }}
       list={options}
     />
   );

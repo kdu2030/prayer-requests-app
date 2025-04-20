@@ -1,7 +1,13 @@
+export enum TimeToLiveOption {
+  OneWeek = 7,
+  TwoWeeks = 14,
+  ThreeWeeks = 15,
+}
+
 export type CreatePrayerRequestForm = {
   requestTitle?: string;
   requestDescription?: string;
-  timeToLive?: 10 | 15 | 20;
+  timeToLive?: TimeToLiveOption;
 };
 
 export enum CreatePrayerRequestWizardStep {

@@ -22,7 +22,7 @@ export const CreatePrayerRequestWizard: React.FC = () => {
   return (
     <Formik
       initialValues={{}}
-      validationSchema={getPrayerRequestValidationSchema}
+      validationSchema={getPrayerRequestValidationSchema()}
       onSubmit={() => {}}
       innerRef={formikRef}
     >

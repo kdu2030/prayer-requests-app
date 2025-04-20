@@ -61,6 +61,7 @@ export const englishTranslations = {
   "navigation.drawer.screen.home": "Home",
   "navigation.drawer.screen.createPrayerGroup": "Create Prayer Group",
   "navigation.drawer.screen.yourPrayerGroups": "Your Prayer Groups",
+  "navigation.drawer.screen.signout": "Sign Out",
 
   "wizard.stepCount": "{{step}} of {{total}}",
   "wizard.next": "Next",

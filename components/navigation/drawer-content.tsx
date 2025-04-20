@@ -17,6 +17,7 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
 import { PrefixDrawerItem } from "./prefix-drawer-item";
+import { useDrawerContent } from "./use-drawer-content";
 
 export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
   const { userData } = useApiDataContext();
@@ -26,6 +27,8 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
   const { translate } = useI18N();
   const [showPrayerGroups, setShowPrayerGroups] =
     React.useState<boolean>(false);
+
+  const { onSignOut } = useDrawerContent();
 
   return (
     <>
@@ -94,6 +97,12 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                 })}
             </>
           )}
+
+          <Drawer.Item
+            label={translate("navigation.drawer.screen.signout")}
+            icon="logout"
+            onPress={onSignOut}
+          />
         </View>
       </DrawerContentScrollView>
     </>

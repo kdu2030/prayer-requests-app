@@ -63,6 +63,7 @@ export const chineseTranslations: Translations = {
   "navigation.drawer.screen.home": "主页",
   "navigation.drawer.screen.createPrayerGroup": "创建新祷告小组",
   "navigation.drawer.screen.yourPrayerGroups": "您的祷告小组",
+  "navigation.drawer.screen.signout": "退出登录",
 
   "wizard.stepCount": "第{{step}}步、共{{total}}步",
   "wizard.next": "下一步",

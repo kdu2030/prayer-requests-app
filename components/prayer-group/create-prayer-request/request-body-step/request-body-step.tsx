@@ -7,6 +7,7 @@ import { TextInput } from "../../../inputs/text-input";
 import { WizardHeader } from "../../../layouts/wizard-header";
 import { CREATE_REQUEST_NUM_STEPS } from "../create-prayer-request-constants";
 import { CreatePrayerRequestWizardStep } from "../create-prayer-request-types";
+import { RequestBodyTestIds } from "./tests/test-id";
 import { useRequestBodyStep } from "./use-request-body-step";
 
 type Props = {
@@ -28,6 +29,7 @@ export const RequestBodyStep: React.FC<Props> = ({ setWizardStep }) => {
         totalNumberOfSteps={CREATE_REQUEST_NUM_STEPS}
         showBackButton={false}
         onNext={onNext}
+        testIDs={{ nextButton: RequestBodyTestIds.nextButton }}
       />
 
       <View className="flex flex-col mt-5">

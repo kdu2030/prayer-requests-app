@@ -13,7 +13,7 @@ import * as React from "react";
 import { GetPrayerGroupNameValidationResponse } from "../../../api/get-prayer-group-name-validation";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { ManagedErrorResponse } from "../../../types/error-handling";
-import { TranslationKey } from "../../../types/languages";
+import { CultureCode, TranslationKey } from "../../../types/languages";
 import { PRAYER_GROUP_NAME_EXISTS } from "../create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 import { GroupNameDescriptionStep } from "../group-name-description-step";
@@ -40,7 +40,10 @@ const mountGroupNameDescriptionStep = (
   return mountComponent(
     <Formik
       initialValues={initialValues}
-      validationSchema={groupNameValidationSchema(mockTranslate)}
+      validationSchema={groupNameValidationSchema(
+        mockTranslate,
+        CultureCode.enUS
+      )}
       onSubmit={() => {}}
     >
       <GroupNameDescriptionStep setWizardStep={mockSetWizardStep} />

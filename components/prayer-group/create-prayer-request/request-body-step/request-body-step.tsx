@@ -40,6 +40,7 @@ export const RequestBodyStep: React.FC<Props> = ({ setWizardStep }) => {
           contentStyle={{ fontWeight: "bold", fontSize: 20 }}
           outlineStyle={{ borderColor: theme.colors.background }}
           errorClassNames="mb-3"
+          testID={RequestBodyTestIds.requestTitleInput}
         />
 
         <TextInput
@@ -52,6 +53,7 @@ export const RequestBodyStep: React.FC<Props> = ({ setWizardStep }) => {
           multiline
           contentStyle={{ paddingTop: 16 }}
           numberOfLines={5}
+          testID={RequestBodyTestIds.requestDescriptionInput}
         />
       </View>
     </View>

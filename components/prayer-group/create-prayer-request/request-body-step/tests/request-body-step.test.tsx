@@ -1,4 +1,11 @@
-import { renderHook, RenderResult } from "@testing-library/react-native";
+import "@testing-library/jest-native/extend-expect";
+import "@testing-library/jest-native";
+
+import {
+  fireEvent,
+  renderHook,
+  RenderResult,
+} from "@testing-library/react-native";
 import { Formik } from "formik";
 import * as React from "react";
 
@@ -7,6 +14,7 @@ import { TranslationKey } from "../../../../../types/languages";
 import { CreatePrayerRequestForm } from "../../create-prayer-request-types";
 import { RequestBodyStep } from "../request-body-step";
 import { useRequestBodyValidationSchema } from "../use-request-body-validation-schema";
+import { RequestBodyTestIds } from "./test-id";
 
 let component: RenderResult;
 
@@ -46,5 +54,23 @@ describe(RequestBodyStep, () => {
   test("Mount test", () => {
     component = mountRequestBody();
     expect(component).toBeTruthy();
+  });
+
+  test("Request title and description required error validates when user hits next", async () => {
+    mockTranslate.mockReturnValue("Required");
+
+    component = mountRequestBody();
+    const nextButton = component.getByTestId(RequestBodyTestIds.nextButton);
+    fireEvent.press(nextButton);
+
+    const requestTitleContainer = await component.findByTestId(
+      `${RequestBodyTestIds.requestTitleInput}-container`
+    );
+    const requestDescriptionContainer = await component.findByTestId(
+      `${RequestBodyTestIds.requestDescriptionInput}-container`
+    );
+
+    expect(requestTitleContainer).toHaveTextContent("Required");
+    expect(requestDescriptionContainer).toHaveTextContent("Required");
   });
 });

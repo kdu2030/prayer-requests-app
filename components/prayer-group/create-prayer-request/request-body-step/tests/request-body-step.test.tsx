@@ -9,6 +9,7 @@ import {
 import { Formik } from "formik";
 import * as React from "react";
 
+import { englishTranslations } from "../../../../../i18n/en-us";
 import { mountComponent } from "../../../../../tests/utils/test-utils";
 import { TranslationKey } from "../../../../../types/languages";
 import { CreatePrayerRequestForm } from "../../create-prayer-request-types";
@@ -18,14 +19,16 @@ import { RequestBodyTestIds } from "./test-id";
 
 let component: RenderResult;
 
-const mockTranslate = jest.fn();
+const mockTranslate = jest.fn((translationKey: TranslationKey) => {
+  return englishTranslations[translationKey];
+});
 
 jest.mock("../../../../../hooks/use-i18n", () => ({
   useI18N: () => ({
     i18n: {
       language: "en-US",
     },
-    translate: (key: TranslationKey, args: object) => mockTranslate(key, args),
+    translate: (key: TranslationKey) => mockTranslate(key),
   }),
 }));
 
@@ -57,8 +60,6 @@ describe(RequestBodyStep, () => {
   });
 
   test("Request title and description required error validates when user hits next", async () => {
-    mockTranslate.mockReturnValue("Required");
-
     component = mountRequestBody();
     const nextButton = component.getByTestId(RequestBodyTestIds.nextButton);
     fireEvent.press(nextButton);
@@ -70,7 +71,11 @@ describe(RequestBodyStep, () => {
       `${RequestBodyTestIds.requestDescriptionInput}-container`
     );
 
-    expect(requestTitleContainer).toHaveTextContent("Required");
-    expect(requestDescriptionContainer).toHaveTextContent("Required");
+    expect(requestTitleContainer).toHaveTextContent(
+      englishTranslations["form.validation.isRequired.error"]
+    );
+    expect(requestDescriptionContainer).toHaveTextContent(
+      englishTranslations["form.validation.isRequired.error"]
+    );
   });
 });

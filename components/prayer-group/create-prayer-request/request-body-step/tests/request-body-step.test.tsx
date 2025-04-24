@@ -13,10 +13,12 @@ let component: RenderResult;
 const mockTranslate = jest.fn();
 
 jest.mock("../../../../../hooks/use-i18n", () => ({
-  i18n: {
-    language: "en-US",
-  },
-  translate: (key: TranslationKey, args: object) => mockTranslate(key, args),
+  useI18N: () => ({
+    i18n: {
+      language: "en-US",
+    },
+    translate: (key: TranslationKey, args: object) => mockTranslate(key, args),
+  }),
 }));
 
 const mountRequestBody = (formValues?: CreatePrayerRequestForm) => {
@@ -37,7 +39,7 @@ const mountRequestBody = (formValues?: CreatePrayerRequestForm) => {
 
 describe(RequestBodyStep, () => {
   afterEach(() => {
-    component.unmount();
+    component?.unmount();
     jest.resetAllMocks();
   });
 

@@ -43,7 +43,10 @@ export const useCreatePrayerGroupWizard = () => {
     | undefined => {
     switch (wizardStep) {
       case CreatePrayerGroupWizardStep.NameDescriptionStep:
-        return groupNameValidationSchema(translate);
+        return groupNameValidationSchema(
+          translate,
+          i18n.language as CultureCode
+        );
       case CreatePrayerGroupWizardStep.ImageStep:
         return groupImageValidationSchema(
           translate,

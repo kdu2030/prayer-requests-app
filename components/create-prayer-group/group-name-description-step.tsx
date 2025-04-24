@@ -2,7 +2,6 @@ import * as React from "react";
 import { View } from "react-native";
 import { Text } from "react-native-paper";
 
-import { TEXT_INPUT_MAX_LENGTH } from "../../constants/input-constants";
 import { useI18N } from "../../hooks/use-i18n";
 import { TextInput } from "../inputs/text-input";
 import { ErrorSnackbar } from "../layouts/error-snackbar";
@@ -48,7 +47,6 @@ export const GroupNameDescriptionStep: React.FC<Props> = ({
           containerClassNames="mb-5"
           name="groupName"
           label={translate("createPrayerGroup.groupNameDescription.groupName")}
-          maxLength={TEXT_INPUT_MAX_LENGTH}
           required
           testID={GroupNameDescriptionStepTestIds.groupNameInput}
         />

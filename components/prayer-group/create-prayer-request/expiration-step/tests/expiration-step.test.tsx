@@ -13,6 +13,7 @@ import { mockUserData } from "../../../tests/mock-data";
 import {
   CreatePrayerRequestForm,
   RawCreatePrayerRequestForm,
+  TimeToLiveOption,
 } from "../../create-prayer-request-types";
 import { ExpirationStep } from "../expiration-step";
 import { useExpirationStepValidationSchema } from "../use-expiration-step-validation-schema";
@@ -85,5 +86,25 @@ describe(ExpirationStep, () => {
       ExpirationStepTestIds.timeToLiveDropdown
     );
     expect(timeToLiveDropdown).toHaveTextContent("required");
+    expect(mockPostPrayerRequest).not.toHaveBeenCalled();
+  });
+
+  test("Post prayer request gets called with the correct expiration date", () => {
+    jest.setSystemTime(new Date("2016-05-04"));
+
+    mockPostPrayerRequest.mockReturnValue({ isError: false });
+
+    component = mountExpirationStep({
+      requestTitle: "Request Title",
+      requestDescription: "Request description",
+      timeToLive: TimeToLiveOption.TwoWeeks,
+    });
+
+    const expectedPrayerRequest: RawCreatePrayerRequestForm = {
+      userId: 1,
+      requestTitle: "Request Title",
+      requestDescription: "Request description",
+      expirationDate: new Date("2016-05-18").toISOString(),
+    };
   });
 });

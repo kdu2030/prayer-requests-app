@@ -3,8 +3,8 @@ import { View } from "react-native";
 import { Text } from "react-native-paper";
 
 import { useI18N } from "../../../../hooks/use-i18n";
-// import { FormikSelect } from "../../../inputs/formik-select";
-// import { ErrorSnackbar } from "../../../layouts/error-snackbar";
+import { FormikSelect } from "../../../inputs/formik-select";
+import { ErrorSnackbar } from "../../../layouts/error-snackbar";
 import { WizardHeader } from "../../../layouts/wizard-header";
 import { CREATE_REQUEST_NUM_STEPS } from "../create-prayer-request-constants";
 import { CreatePrayerRequestWizardStep } from "../create-prayer-request-types";
@@ -51,20 +51,21 @@ export const ExpirationStep: React.FC<Props> = ({ setWizardStep }) => {
           {translate("prayerGroup.request.expirationDate.description")}
         </Text>
 
-        {/* <FormikSelect
+        <FormikSelect
           containerClassName="mt-5"
           mode="flat"
           label={translate("prayerGroup.request.visibilityDuration.label")}
           name="timeToLive"
           options={expirationDateOptions}
           required
-        /> */}
+          testID={ExpirationStepTestIds.timeToLiveDropdown}
+        />
       </View>
 
-      {/* <ErrorSnackbar
+      <ErrorSnackbar
         snackbarError={snackbarError}
         setSnackbarError={setSnackbarError}
-      /> */}
+      />
     </View>
   );
 };

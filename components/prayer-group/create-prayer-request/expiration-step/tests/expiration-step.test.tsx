@@ -1,10 +1,34 @@
-import { RenderResult } from "@testing-library/react-native";
+import "@testing-library/jest-native/extend-expect";
+import "@testing-library/jest-native";
+
+import {
+  fireEvent,
+  renderHook,
+  RenderResult,
+} from "@testing-library/react-native";
 import { Formik } from "formik";
 
 import { mountComponent } from "../../../../../tests/utils/test-utils";
 import { mockUserData } from "../../../tests/mock-data";
-import { CreatePrayerRequestForm } from "../../create-prayer-request-types";
+import {
+  CreatePrayerRequestForm,
+  RawCreatePrayerRequestForm,
+} from "../../create-prayer-request-types";
 import { ExpirationStep } from "../expiration-step";
+import { useExpirationStepValidationSchema } from "../use-expiration-step-validation-schema";
+import { ExpirationStepTestIds } from "./test-ids";
+
+const mockPostPrayerRequest = jest.fn();
+
+jest.mock("../../../../../api/post-prayer-request", () => ({
+  usePostPrayerRequest:
+    () =>
+    (
+      prayerGroupId: number,
+      createPrayerRequestForm: RawCreatePrayerRequestForm
+    ) =>
+      mockPostPrayerRequest(prayerGroupId, createPrayerRequestForm),
+}));
 
 jest.mock("../../../../../hooks/use-api-data", () => ({
   ...jest.requireActual("../../../../../hooks/use-api-data"),
@@ -18,8 +42,16 @@ let component: RenderResult;
 const mountExpirationStep = (
   createPrayerRequestForm: CreatePrayerRequestForm
 ) => {
+  const { result: expirationStepValidationRef } = renderHook(() =>
+    useExpirationStepValidationSchema()
+  );
+
   return mountComponent(
-    <Formik initialValues={createPrayerRequestForm} onSubmit={() => {}}>
+    <Formik
+      initialValues={createPrayerRequestForm}
+      validationSchema={expirationStepValidationRef.current}
+      onSubmit={() => {}}
+    >
       <ExpirationStep setWizardStep={() => {}} />
     </Formik>
   );
@@ -38,5 +70,20 @@ describe(ExpirationStep, () => {
     });
 
     expect(component).toBeTruthy();
+  });
+
+  test("Save gets blocked when the user does not choose an expiration date.", async () => {
+    component = mountExpirationStep({
+      requestTitle: "Request title",
+      requestDescription: "Request description",
+    });
+
+    const saveButton = component.getByTestId(ExpirationStepTestIds.saveButton);
+    fireEvent.press(saveButton);
+
+    const timeToLiveDropdown = await component.findByTestId(
+      ExpirationStepTestIds.timeToLiveDropdown
+    );
+    expect(timeToLiveDropdown).toHaveTextContent("required");
   });
 });

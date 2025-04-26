@@ -14,6 +14,7 @@ type Props<TValue> = {
   required?: boolean;
   mode?: "outlined" | "flat";
   containerClassName?: string;
+  testID?: string;
 };
 
 export const FormikSelect = <TValue,>({
@@ -23,12 +24,13 @@ export const FormikSelect = <TValue,>({
   required,
   mode,
   containerClassName,
+  testID,
 }: Props<TValue>) => {
   const [field, meta, helpers] = useField<TValue | undefined>(name);
   const isError = !!(meta.touched && meta.error);
 
   return (
-    <View className={containerClassName}>
+    <View className={containerClassName} testID={testID}>
       <Select
         mode={mode}
         label={required ? `${label}*` : label}

@@ -27,8 +27,10 @@ jest.mock("../../../../../api/post-prayer-request", () => ({
     (
       prayerGroupId: number,
       createPrayerRequestForm: RawCreatePrayerRequestForm
-    ) =>
-      mockPostPrayerRequest(prayerGroupId, createPrayerRequestForm),
+    ) => {
+      console.log(createPrayerRequestForm);
+      mockPostPrayerRequest(prayerGroupId, createPrayerRequestForm);
+    },
 }));
 
 jest.mock("../../../../../hooks/use-api-data", () => ({
@@ -68,7 +70,7 @@ const mountExpirationStep = (
 describe(ExpirationStep, () => {
   afterEach(() => {
     component?.unmount();
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   test("Mount test", () => {
@@ -97,6 +99,7 @@ describe(ExpirationStep, () => {
   });
 
   test("Post prayer request gets called with the correct expiration date", async () => {
+    jest.useFakeTimers();
     jest.setSystemTime(new Date("2016-05-04"));
 
     mockPostPrayerRequest.mockReturnValue({ isError: false });
@@ -114,7 +117,9 @@ describe(ExpirationStep, () => {
       expirationDate: new Date("2016-05-18").toISOString(),
     };
 
-    const saveButton = component.findByTestId(ExpirationStepTestIds.saveButton);
+    const saveButton = await component.findByTestId(
+      ExpirationStepTestIds.saveButton
+    );
     fireEvent.press(saveButton);
 
     expect(mockPostPrayerRequest).toHaveBeenCalledWith(

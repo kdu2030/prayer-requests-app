@@ -10,7 +10,6 @@ import { Formik } from "formik";
 import * as React from "react";
 
 import { TEXT_INPUT_MAX_LENGTH } from "../../../../../constants/input-constants";
-import { englishTranslations } from "../../../../../i18n/en-us";
 import { mountComponent } from "../../../../../tests/utils/test-utils";
 import { CreatePrayerRequestForm } from "../../create-prayer-request-types";
 import { RequestBodyStep } from "../request-body-step";

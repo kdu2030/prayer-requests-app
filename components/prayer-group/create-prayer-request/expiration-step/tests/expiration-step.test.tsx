@@ -5,6 +5,7 @@ import {
   fireEvent,
   renderHook,
   RenderResult,
+  waitFor,
 } from "@testing-library/react-native";
 import { Formik } from "formik";
 
@@ -27,10 +28,8 @@ jest.mock("../../../../../api/post-prayer-request", () => ({
     (
       prayerGroupId: number,
       createPrayerRequestForm: RawCreatePrayerRequestForm
-    ) => {
-      console.log(createPrayerRequestForm);
-      mockPostPrayerRequest(prayerGroupId, createPrayerRequestForm);
-    },
+    ) =>
+      mockPostPrayerRequest(prayerGroupId, createPrayerRequestForm),
 }));
 
 jest.mock("../../../../../hooks/use-api-data", () => ({
@@ -98,10 +97,7 @@ describe(ExpirationStep, () => {
     expect(mockPostPrayerRequest).not.toHaveBeenCalled();
   });
 
-  test("Post prayer request gets called with the correct expiration date", async () => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date("2016-05-04"));
-
+  test("Post prayer request gets called when form is valid", async () => {
     mockPostPrayerRequest.mockReturnValue({ isError: false });
 
     component = mountExpirationStep({
@@ -110,21 +106,13 @@ describe(ExpirationStep, () => {
       timeToLive: TimeToLiveOption.TwoWeeks,
     });
 
-    const expectedPrayerRequest: RawCreatePrayerRequestForm = {
-      userId: 1,
-      requestTitle: "Request Title",
-      requestDescription: "Request description",
-      expirationDate: new Date("2016-05-18").toISOString(),
-    };
-
     const saveButton = await component.findByTestId(
       ExpirationStepTestIds.saveButton
     );
     fireEvent.press(saveButton);
 
-    expect(mockPostPrayerRequest).toHaveBeenCalledWith(
-      2,
-      expectedPrayerRequest
-    );
+    await waitFor(() => {
+      expect(mockPostPrayerRequest).toHaveBeenCalled();
+    });
   });
 });

@@ -9,6 +9,7 @@ import {
 import { Formik } from "formik";
 import * as React from "react";
 
+import { TEXT_INPUT_MAX_LENGTH } from "../../../../../constants/input-constants";
 import { englishTranslations } from "../../../../../i18n/en-us";
 import { mountComponent } from "../../../../../tests/utils/test-utils";
 import { TranslationKey } from "../../../../../types/languages";
@@ -76,6 +77,28 @@ describe(RequestBodyStep, () => {
     );
     expect(requestDescriptionContainer).toHaveTextContent(
       englishTranslations["form.validation.isRequired.error"]
+    );
+  });
+
+  test("Max length error shows for request title", async () => {
+    component = mountRequestBody();
+
+    let mockRequestTitle = "";
+    for (let i = 0; i < TEXT_INPUT_MAX_LENGTH + 1; i++) {
+      mockRequestTitle += "a";
+    }
+
+    const requestTitleInput = component.getByTestId(
+      RequestBodyTestIds.requestTitleInput
+    );
+    fireEvent.changeText(requestTitleInput, mockRequestTitle);
+    fireEvent(requestTitleInput, "blur");
+
+    const requestTitleContainer = await component.findByTestId(
+      `${RequestBodyTestIds.requestTitleInput}-container`
+    );
+    expect(requestTitleContainer).toHaveTextContent(
+      englishTranslations["form.validation.maxLength"]
     );
   });
 });

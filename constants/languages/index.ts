@@ -1,16 +1,18 @@
-import { LanguageOption, SupportedLanguages } from "../../types/languages";
+import { CultureCode, LanguageOption } from "../../types/languages";
 
 export const LANGUAGE_OPTIONS: LanguageOption[] = [
   {
     displayOptionKey: "language.english.option",
     icon: "🇺🇸",
-    value: SupportedLanguages.English,
+    value: CultureCode.enUS,
   },
   {
     displayOptionKey: "language.chinese.option",
     icon: "🇨🇳",
-    value: SupportedLanguages.Chinese,
+    value: CultureCode.zhCN,
   },
 ];
+
+export const CULTURE_CODES = [CultureCode.enUS, CultureCode.zhCN];
 
 export const LANGUAGE_STORAGE_KEY = "prayerRequestsApp.language";

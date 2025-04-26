@@ -51,6 +51,7 @@ export const chineseTranslations: Translations = {
   "form.validation.incorrectPassword.error": "你的密码不正确",
   "form.validation.fileSize": "文件大小必须小于{{size}}。",
   "form.validation.imageFileType": "图片格式必须是 JPG、JPEG 或 PNG。",
+  "form.validation.maxLength": "{{field}}长度必须小于{{length}}字符。",
 
   "toaster.failed.saveFailure": "保存{{item}}失败",
   "toaster.failed.loadFailure": "加载{{item}}失败",
@@ -62,6 +63,7 @@ export const chineseTranslations: Translations = {
   "navigation.drawer.screen.home": "主页",
   "navigation.drawer.screen.createPrayerGroup": "创建新祷告小组",
   "navigation.drawer.screen.yourPrayerGroups": "您的祷告小组",
+  "navigation.drawer.screen.signout": "退出登录",
 
   "wizard.stepCount": "第{{step}}步、共{{total}}步",
   "wizard.next": "下一步",
@@ -126,4 +128,14 @@ export const chineseTranslations: Translations = {
   "prayerGroup.search.placeholder": "搜索祷告小组",
   "prayerGroup.search.prompt": "输入以搜索祷告小组",
   "prayerGroup.search.noneFound": "没有找到相关祷告小组",
+
+  "prayerGroup.request.title": "标题",
+  "prayerGroup.request.expirationDate.header": "祷告事项可见时间",
+  "prayerGroup.request.expirationDate.description":
+    "为管理存储限制，祷告事项无法永久保留。您可以在祷告事项过期前延长其可见时间。",
+  "prayerGroup.request.visibilityDuration.label": "可见时间",
+  "prayerGroup.request.expirationDate.week": "{{count}}个星期",
+  "prayerGroup.request.expirationDate.weeks": "{{count}}个星期",
+
+  "prayerRequest.label": "祷告事项",
 };

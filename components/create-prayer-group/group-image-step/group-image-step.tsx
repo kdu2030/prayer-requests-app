@@ -8,12 +8,13 @@ import { useI18N } from "../../../hooks/use-i18n";
 import { ErrorSnackbar } from "../../layouts/error-snackbar";
 import { GroupPreview } from "../../layouts/group-preview";
 import { SelectedImageCard } from "../../layouts/selected-image-card";
+import { WizardHeader } from "../../layouts/wizard-header";
 import {
   CreatePrayerGroupWizardStep,
   NUM_CREATE_PRAYER_GROUP_STEPS,
+  WIZARD_TEST_IDS_CONFIG,
 } from "../create-prayer-group-constants";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
-import { CreatePrayerGroupWizardHeader } from "../create-prayer-group-wizard-header";
 import { GroupImageColorStepTestIds } from "../tests/test-ids";
 import { useGroupImageColorStep } from "./use-group-image-color-step";
 
@@ -40,7 +41,7 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
 
   return (
     <>
-      <CreatePrayerGroupWizardHeader
+      <WizardHeader
         stepNumber={3}
         totalNumberOfSteps={NUM_CREATE_PRAYER_GROUP_STEPS}
         onBack={() => setWizardStep(CreatePrayerGroupWizardStep.RulesStep)}
@@ -48,6 +49,7 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
         showNextButton={false}
         showSaveButton
         isLoading={isLoading}
+        testIDs={WIZARD_TEST_IDS_CONFIG}
       />
 
       <View className="mt-4">

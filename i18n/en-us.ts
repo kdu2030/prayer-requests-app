@@ -48,6 +48,8 @@ export const englishTranslations = {
   "form.validation.incorrectPassword.error": "Your password is incorrect",
   "form.validation.fileSize": "File size must be less than {{size}}.",
   "form.validation.imageFileType": "Image file type must be JPG, JPEG, or PNG.",
+  "form.validation.maxLength":
+    "{{field}} must be less than {{length}} characters.",
 
   "toaster.failed.saveFailure": "Failed to save {{item}}",
   "toaster.failed.loadFailure": "Failed to load {{item}}",
@@ -59,6 +61,7 @@ export const englishTranslations = {
   "navigation.drawer.screen.home": "Home",
   "navigation.drawer.screen.createPrayerGroup": "Create Prayer Group",
   "navigation.drawer.screen.yourPrayerGroups": "Your Prayer Groups",
+  "navigation.drawer.screen.signout": "Sign Out",
 
   "wizard.stepCount": "{{step}} of {{total}}",
   "wizard.next": "Next",
@@ -126,4 +129,14 @@ export const englishTranslations = {
   "prayerGroup.search.placeholder": "Search for prayer groups",
   "prayerGroup.search.prompt": "Type to search for prayer groups",
   "prayerGroup.search.noneFound": "No prayer groups found",
+
+  "prayerGroup.request.title": "Title",
+  "prayerGroup.request.expirationDate.header": "Prayer request visibility",
+  "prayerGroup.request.expirationDate.description":
+    "To manage storage limits, prayer requests cannot stay up forever. You can extend your prayer request's visibility before it expires.",
+  "prayerGroup.request.visibilityDuration.label": "Visibility duration",
+  "prayerGroup.request.expirationDate.week": "{{count}} week",
+  "prayerGroup.request.expirationDate.weeks": "{{count}} weeks",
+
+  "prayerRequest.label": "prayer request",
 };

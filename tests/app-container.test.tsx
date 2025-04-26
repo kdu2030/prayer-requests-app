@@ -3,7 +3,7 @@ import { RenderResult, waitFor } from "@testing-library/react-native";
 import * as React from "react";
 
 import AppContainer from "../app/index";
-import { SupportedLanguages } from "../types/languages";
+import { CultureCode } from "../types/languages";
 import { mountComponent } from "./utils/test-utils";
 
 jest.useFakeTimers();
@@ -57,7 +57,7 @@ describe("App Container Tests", () => {
   test("Language picked but not signed in", async () => {
     mockLoadLanguage.mockReturnValue({
       isError: false,
-      value: SupportedLanguages.English,
+      value: CultureCode.enUS,
     });
 
     component = mountComponent(<AppContainer />);

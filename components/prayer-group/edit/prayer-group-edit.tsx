@@ -9,7 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { TEXT_INPUT_MAX_LENGTH } from "../../../constants/input-constants";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
-import { SupportedLanguages } from "../../../types/languages";
+import { CultureCode } from "../../../types/languages";
 import { TextInput } from "../../inputs/text-input";
 import { ErrorSnackbar } from "../../layouts/error-snackbar";
 import { GroupPreview } from "../../layouts/group-preview";
@@ -57,7 +57,7 @@ export const PrayerGroupEdit: React.FC = () => {
             initialValues={prayerGroupDetails ?? {}}
             validationSchema={prayerGroupDetailsValidationSchema(
               translate,
-              i18n.language as SupportedLanguages
+              i18n.language as CultureCode
             )}
             onSubmit={savePrayerGroupEdit}
             validateOnBlur

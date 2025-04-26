@@ -47,8 +47,6 @@ export const PrayerGroupOptions: React.FC<Props> = ({
         pathname: route,
         params: { id: prayerGroupDetails?.prayerGroupId },
       } as Href<any>);
-
-    setTimeout(() => bottomSheetRef?.current?.close(), 0);
   };
 
   return (
@@ -87,6 +85,16 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                 testID={PrayerGroupOptionsTestIds.manageUsersButton}
               />
             </>
+          )}
+
+          {prayerGroupDetails?.isUserJoined && (
+            <PrayerGroupOptionButton
+              label={translate("prayerGroup.actions.addPrayerRequest")}
+              icon={<MaterialCommunityIcons name="plus" size={24} />}
+              onPress={() => {
+                onPressOption("/(drawer)/prayergroup/[id]/create");
+              }}
+            />
           )}
         </View>
       </BottomSheetView>

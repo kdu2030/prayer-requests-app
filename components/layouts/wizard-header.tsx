@@ -5,8 +5,13 @@ import { Button, Text, useTheme } from "react-native-paper";
 
 import { formatNumber } from "../../helpers/formatting-helpers";
 import { useI18N } from "../../hooks/use-i18n";
-import { SupportedLanguages } from "../../types/languages";
-import { CreatePrayerGroupWizardHeaderTestIds } from "./tests/test-ids";
+import { CultureCode } from "../../types/languages";
+
+export type WizardHeaderTestIDs = {
+  backButton?: string;
+  nextButton?: string;
+  saveButton?: string;
+};
 
 type Props = {
   stepNumber: number;
@@ -18,9 +23,10 @@ type Props = {
   showBackButton?: boolean;
   showNextButton?: boolean;
   showSaveButton?: boolean;
+  testIDs?: WizardHeaderTestIDs;
 };
 
-export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
+export const WizardHeader: React.FC<Props> = ({
   isLoading,
   onNext,
   onBack,
@@ -30,6 +36,7 @@ export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
   showBackButton = true,
   showNextButton = true,
   showSaveButton = false,
+  testIDs,
 }) => {
   const theme = useTheme();
   const { translate, i18n } = useI18N();
@@ -41,7 +48,7 @@ export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
           <TouchableOpacity
             className="mr-3"
             onPress={onBack}
-            testID={CreatePrayerGroupWizardHeaderTestIds.backButton}
+            testID={testIDs?.backButton}
           >
             <Ionicons name="arrow-back" size={28} />
           </TouchableOpacity>
@@ -54,13 +61,10 @@ export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
         >
           <Text className="text-white">
             {translate("wizard.stepCount", {
-              step: formatNumber(
-                stepNumber,
-                i18n.language as SupportedLanguages
-              ),
+              step: formatNumber(stepNumber, i18n.language as CultureCode),
               total: formatNumber(
                 totalNumberOfSteps,
-                i18n.language as SupportedLanguages
+                i18n.language as CultureCode
               ),
             })}
           </Text>
@@ -72,7 +76,7 @@ export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
           mode="outlined"
           onPress={onNext}
           loading={isLoading}
-          testID={CreatePrayerGroupWizardHeaderTestIds.nextButton}
+          testID={testIDs?.nextButton}
         >
           {translate("wizard.next")}
         </Button>
@@ -83,7 +87,7 @@ export const CreatePrayerGroupWizardHeader: React.FC<Props> = ({
           mode="contained"
           onPress={onSave}
           loading={isLoading}
-          testID={CreatePrayerGroupWizardHeaderTestIds.saveButton}
+          testID={testIDs?.saveButton}
         >
           {translate("common.actions.save")}
         </Button>

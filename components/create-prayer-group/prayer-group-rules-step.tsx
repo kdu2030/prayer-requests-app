@@ -4,11 +4,12 @@ import { Text } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { TextInput } from "../inputs/text-input";
+import { WizardHeader } from "../layouts/wizard-header";
 import {
   CreatePrayerGroupWizardStep,
   NUM_CREATE_PRAYER_GROUP_STEPS,
+  WIZARD_TEST_IDS_CONFIG,
 } from "./create-prayer-group-constants";
-import { CreatePrayerGroupWizardHeader } from "./create-prayer-group-wizard-header";
 
 type Props = {
   setWizardStep: React.Dispatch<
@@ -20,7 +21,7 @@ export const PrayerGroupRulesStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
   return (
     <>
-      <CreatePrayerGroupWizardHeader
+      <WizardHeader
         stepNumber={2}
         totalNumberOfSteps={NUM_CREATE_PRAYER_GROUP_STEPS}
         onBack={() =>
@@ -29,6 +30,7 @@ export const PrayerGroupRulesStep: React.FC<Props> = ({ setWizardStep }) => {
         onNext={() => {
           setWizardStep(CreatePrayerGroupWizardStep.ImageStep);
         }}
+        testIDs={WIZARD_TEST_IDS_CONFIG}
       />
 
       <View className="mt-4">

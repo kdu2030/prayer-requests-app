@@ -1,8 +1,8 @@
-import { SupportedLanguages } from "../types/languages";
+import { CultureCode } from "../types/languages";
 
 export const formatNumber = (
   value: number,
-  cultureCode: SupportedLanguages,
+  cultureCode: CultureCode,
   options?: Intl.NumberFormatOptions
 ) => {
   const formatter = new Intl.NumberFormat(cultureCode, options);

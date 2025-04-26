@@ -10,7 +10,7 @@ import Signin from "../app/auth/sign-in";
 import { SigninTestIds } from "../components/authentication/auth-constants";
 import { ApiResponse } from "../types/api-response-types";
 import { SigninForm } from "../types/forms/auth-forms";
-import { SupportedLanguages } from "../types/languages";
+import { CultureCode } from "../types/languages";
 import { mockUserSummary } from "./mock-data/mock-tokens";
 import { mountComponent } from "./utils/test-utils";
 
@@ -55,7 +55,7 @@ const addInputToSignInForm = (
 
 describe("Sign In Tests", () => {
   beforeEach(() => {
-    component = mountComponent(<Signin />, SupportedLanguages.English);
+    component = mountComponent(<Signin />, CultureCode.enUS);
   });
 
   afterEach(() => {

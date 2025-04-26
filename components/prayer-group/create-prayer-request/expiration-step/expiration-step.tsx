@@ -8,6 +8,7 @@ import { ErrorSnackbar } from "../../../layouts/error-snackbar";
 import { WizardHeader } from "../../../layouts/wizard-header";
 import { CREATE_REQUEST_NUM_STEPS } from "../create-prayer-request-constants";
 import { CreatePrayerRequestWizardStep } from "../create-prayer-request-types";
+import { ExpirationStepTestIds } from "./tests/test-ids";
 import { useExpirationStep } from "./use-expiration-step";
 
 type Props = {
@@ -38,6 +39,7 @@ export const ExpirationStep: React.FC<Props> = ({ setWizardStep }) => {
         }
         onSave={onSavePrayerRequest}
         isLoading={isLoading}
+        testIDs={{ saveButton: ExpirationStepTestIds.saveButton }}
       />
 
       <View className="mt-4">

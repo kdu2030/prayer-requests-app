@@ -12,26 +12,12 @@ import * as React from "react";
 import { TEXT_INPUT_MAX_LENGTH } from "../../../../../constants/input-constants";
 import { englishTranslations } from "../../../../../i18n/en-us";
 import { mountComponent } from "../../../../../tests/utils/test-utils";
-import { TranslationKey } from "../../../../../types/languages";
 import { CreatePrayerRequestForm } from "../../create-prayer-request-types";
 import { RequestBodyStep } from "../request-body-step";
 import { useRequestBodyValidationSchema } from "../use-request-body-validation-schema";
 import { RequestBodyTestIds } from "./test-id";
 
 let component: RenderResult;
-
-const mockTranslate = jest.fn((translationKey: TranslationKey) => {
-  return englishTranslations[translationKey];
-});
-
-jest.mock("../../../../../hooks/use-i18n", () => ({
-  useI18N: () => ({
-    i18n: {
-      language: "en-US",
-    },
-    translate: (key: TranslationKey) => mockTranslate(key),
-  }),
-}));
 
 const mountRequestBody = (formValues?: CreatePrayerRequestForm) => {
   const { result: requestBodyValidationSchemaRef } = renderHook(() =>
@@ -72,12 +58,8 @@ describe(RequestBodyStep, () => {
       `${RequestBodyTestIds.requestDescriptionInput}-container`
     );
 
-    expect(requestTitleContainer).toHaveTextContent(
-      englishTranslations["form.validation.isRequired.error"]
-    );
-    expect(requestDescriptionContainer).toHaveTextContent(
-      englishTranslations["form.validation.isRequired.error"]
-    );
+    expect(requestTitleContainer).toHaveTextContent("required");
+    expect(requestDescriptionContainer).toHaveTextContent("required");
   });
 
   test("Max length error shows for request title", async () => {
@@ -98,7 +80,7 @@ describe(RequestBodyStep, () => {
       `${RequestBodyTestIds.requestTitleInput}-container`
     );
     expect(requestTitleContainer).toHaveTextContent(
-      englishTranslations["form.validation.maxLength"]
+      "must be less than 255 characters"
     );
   });
 });

@@ -61,7 +61,6 @@ export const useExpirationStep = () => {
     }
 
     if (!userData?.userId || !prayerGroupDetails?.prayerGroupId) {
-      console.log(userData);
       return;
     }
 

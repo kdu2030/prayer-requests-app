@@ -9,7 +9,7 @@ import {
 import { Formik } from "formik";
 
 import { mountComponent } from "../../../../../tests/utils/test-utils";
-import { mockUserData } from "../../../tests/mock-data";
+import { mockPrayerGroupDetails, mockUserData } from "../../../tests/mock-data";
 import {
   CreatePrayerRequestForm,
   RawCreatePrayerRequestForm,
@@ -35,6 +35,13 @@ jest.mock("../../../../../hooks/use-api-data", () => ({
   ...jest.requireActual("../../../../../hooks/use-api-data"),
   useApiDataContext: () => ({
     userData: mockUserData,
+  }),
+}));
+
+jest.mock("../../../prayer-group-context", () => ({
+  ...jest.requireActual("../../../prayer-group-context"),
+  usePrayerGroupContext: () => ({
+    prayerGroupDetails: mockPrayerGroupDetails,
   }),
 }));
 
@@ -89,7 +96,7 @@ describe(ExpirationStep, () => {
     expect(mockPostPrayerRequest).not.toHaveBeenCalled();
   });
 
-  test("Post prayer request gets called with the correct expiration date", () => {
+  test("Post prayer request gets called with the correct expiration date", async () => {
     jest.setSystemTime(new Date("2016-05-04"));
 
     mockPostPrayerRequest.mockReturnValue({ isError: false });
@@ -106,5 +113,13 @@ describe(ExpirationStep, () => {
       requestDescription: "Request description",
       expirationDate: new Date("2016-05-18").toISOString(),
     };
+
+    const saveButton = component.findByTestId(ExpirationStepTestIds.saveButton);
+    fireEvent.press(saveButton);
+
+    expect(mockPostPrayerRequest).toHaveBeenCalledWith(
+      2,
+      expectedPrayerRequest
+    );
   });
 });

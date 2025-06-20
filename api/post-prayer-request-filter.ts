@@ -1,13 +1,13 @@
 import { AxiosInstance } from "axios";
 import * as React from "react";
 
-import {
-  PrayerRequestFilterCriteria,
-  RawPrayerRequestModel,
-} from "../components/prayer-group/prayer-group-types";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
+import {
+  PrayerRequestFilterCriteria,
+  RawPrayerRequestModel,
+} from "../types/prayer-request-types";
 
 const postPrayerRequestFilter = async (
   fetch: AxiosInstance,

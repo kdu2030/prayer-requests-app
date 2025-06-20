@@ -1,10 +1,10 @@
-import { SortConfig } from "../../types/api-response-types";
+import { SortConfig } from "./api-response-types";
 import {
   PrayerGroupSummary,
   PrayerGroupUserSummary,
   RawPrayerGroupSummary,
   RawPrayerGroupUserSummary,
-} from "../../types/prayer-group-types";
+} from "./prayer-group-types";
 
 export type PrayerRequestFilterCriteria = {
   prayerGroupIds?: number[];

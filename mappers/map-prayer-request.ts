@@ -1,7 +1,7 @@
 import {
   PrayerRequestModel,
   RawPrayerRequestModel,
-} from "../components/prayer-group/prayer-request-types";
+} from "../types/prayer-request-types";
 import { mapPrayerGroupSummary, mapPrayerGroupUser } from "./map-prayer-group";
 
 export const mapPrayerRequests = (

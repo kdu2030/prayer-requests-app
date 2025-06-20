@@ -20,6 +20,7 @@ import { PrayerRequestSortFields } from "./prayer-request-types";
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [showErrorScreen, setShowErrorScreen] = React.useState<boolean>(false);
+
   const [prayerRequestSort, setPrayerRequestSort] = React.useState<SortConfig>({
     sortField: PrayerRequestSortFields.CreatedDate,
     sortOrder: SortOrder.Descending,

@@ -1,5 +1,7 @@
 import { SortConfig } from "../../types/api-response-types";
 import {
+  PrayerGroupSummary,
+  PrayerGroupUserSummary,
   RawPrayerGroupSummary,
   RawPrayerGroupUserSummary,
 } from "../../types/prayer-group-types";
@@ -21,6 +23,22 @@ export type RawPrayerRequestModel = {
   createdDate?: string;
   prayerGroup?: RawPrayerGroupSummary;
   user?: RawPrayerGroupUserSummary;
+  likeCount?: number;
+  commentCount?: number;
+  prayedCount?: number;
+  expirationDate?: string;
+  isUserPrayed?: boolean;
+  isUserLiked?: boolean;
+  isUserCommented?: boolean;
+};
+
+export type PrayerRequestModel = {
+  prayerRequestId?: number;
+  requestTitle?: string;
+  requestDescription?: string;
+  createdDate?: string;
+  prayerGroup?: PrayerGroupSummary;
+  user?: PrayerGroupUserSummary;
   likeCount?: number;
   commentCount?: number;
   prayedCount?: number;

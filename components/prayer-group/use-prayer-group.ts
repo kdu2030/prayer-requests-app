@@ -12,12 +12,18 @@ import { PrayerGroupRole } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { mapPrayerGroupDetails } from "../../mappers/map-prayer-group";
+import { SortConfig, SortOrder } from "../../types/api-response-types";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
 import { usePrayerGroupContext } from "./prayer-group-context";
+import { PrayerRequestSortFields } from "./prayer-request-types";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [showErrorScreen, setShowErrorScreen] = React.useState<boolean>(false);
+  const [prayerRequestSort, setPrayerRequestSort] = React.useState<SortConfig>({
+    sortField: PrayerRequestSortFields.CreatedDate,
+    sortOrder: SortOrder.Descending,
+  });
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
 
@@ -165,5 +171,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     onRetry,
     prayerGroupOptionsRef,
     onOpenOptions,
+    prayerRequestSort,
+    setPrayerRequestSort,
   };
 };

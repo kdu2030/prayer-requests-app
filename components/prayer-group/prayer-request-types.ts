@@ -29,3 +29,10 @@ export type RawPrayerRequestModel = {
   isUserLiked?: boolean;
   isUserCommented?: boolean;
 };
+
+export enum PrayerRequestSortFields {
+  CreatedDate = "CreatedDate",
+  LikeCount = "LikeCount",
+  CommentCount = "CommentCount",
+  PrayedCount = "PrayedCount",
+}

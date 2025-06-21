@@ -80,11 +80,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           backgroundColor: theme.colors.background,
         }}
       >
-        {/* <FlatList
-          ListHeaderComponent={prayerGroupHeader}
-          data={prayerRequests}
-          renderItem={() => <></>}
-        /> */}
         {areRequestsLoading ? (
           <>
             {prayerGroupHeader}

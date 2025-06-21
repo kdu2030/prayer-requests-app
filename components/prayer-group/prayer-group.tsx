@@ -7,6 +7,7 @@ import { useI18N } from "../../hooks/use-i18n";
 import { ErrorScreen } from "../layouts/error-screen";
 import { ErrorSnackbar } from "../layouts/error-snackbar";
 import { SpinnerScreen } from "../layouts/spinner-screen";
+import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
 import { PrayerGroupOptions } from "./options/prayer-group-options";
 import { usePrayerGroupContext } from "./prayer-group-context";
@@ -98,7 +99,13 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           <FlatList
             ListHeaderComponent={prayerGroupHeader}
             data={prayerRequests}
-            renderItem={() => <></>}
+            renderItem={({ item }) => (
+              <PrayerRequestCard
+                prayerRequest={item}
+                showCreatedUser
+                key={item.prayerRequestId}
+              />
+            )}
           />
         )}
 

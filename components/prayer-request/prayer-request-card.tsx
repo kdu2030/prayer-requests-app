@@ -22,16 +22,18 @@ export const PrayerRequestCard: React.FC<Props> = ({
   const displayUser = showCreatedUser && prayerRequest.user?.fullName;
 
   return (
-    <View className="p-6" style={{ backgroundColor: theme.colors.background }}>
+    <View className="p-5" style={{ backgroundColor: theme.colors.background }}>
       <View className="flex flex-row items-center">
         {displayUser && (
-          <View className=" flex flex-row items-center gap-x-2">
+          <View className="flex flex-row items-center">
             <ProfilePicture
               url={prayerRequest.user?.image?.url}
               width={24}
               height={24}
             />
-            <Text variant="bodyMedium">{prayerRequest.user?.fullName}</Text>
+            <Text className="ml-2" variant="bodyMedium">
+              {prayerRequest.user?.fullName}
+            </Text>
           </View>
         )}
 
@@ -44,6 +46,14 @@ export const PrayerRequestCard: React.FC<Props> = ({
           </Text>
         )}
       </View>
+
+      <Text variant="titleMedium" className="mt-4 font-bold" numberOfLines={1}>
+        {prayerRequest.requestTitle}
+      </Text>
+
+      <Text variant="bodyMedium" className="mt-2" numberOfLines={3}>
+        {prayerRequest.requestDescription}
+      </Text>
     </View>
   );
 };

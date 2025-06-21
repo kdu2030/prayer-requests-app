@@ -1,5 +1,6 @@
 import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+import { usePathname } from "expo-router";
 import * as React from "react";
 
 import { useDeletePrayerGroupUsers } from "../../api/delete-prayer-group-users";
@@ -13,13 +14,14 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { mapPrayerGroupDetails } from "../../mappers/map-prayer-group";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
-import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [showErrorScreen, setShowErrorScreen] = React.useState<boolean>(false);
+
+  const pathname = usePathname();
 
   const {
     areRequestsLoading,
@@ -75,25 +77,24 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   };
 
   const loadPrayerGroupData = async () => {
-    let filters: PrayerRequestFilterCriteria | undefined;
-    if (
-      prayerRequests.length > 0 &&
-      prayerRequests[0].prayerGroup?.prayerGroupId !== prayerGroupId
-    ) {
-      filters = DEFAULT_PRAYER_REQUEST_FILTERS;
-      setPrayerRequestFilters(filters);
-      setPrayerRequests([]);
-    }
-
     await loadPrayerGroup();
-    await loadNextPrayerRequestsForGroup(prayerGroupId, filters);
+    await loadNextPrayerRequestsForGroup(prayerGroupId);
   };
 
   React.useEffect(() => {
     loadPrayerGroupData();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prayerGroupId]);
+
+  const cleanupPrayerRequests = async () => {
+    setPrayerRequestFilters(DEFAULT_PRAYER_REQUEST_FILTERS);
+    setPrayerRequests([]);
+  };
+
+  React.useEffect(() => {
+    cleanupPrayerRequests();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   const onAddUser = async () => {
     if (!userData?.userId) {

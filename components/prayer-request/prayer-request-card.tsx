@@ -22,7 +22,13 @@ export const PrayerRequestCard: React.FC<Props> = ({
   const displayUser = showCreatedUser && prayerRequest.user?.fullName;
 
   return (
-    <View className="p-5" style={{ backgroundColor: theme.colors.background }}>
+    <View
+      className="p-5 border-b"
+      style={{
+        backgroundColor: theme.colors.background,
+        borderColor: theme.colors.outline,
+      }}
+    >
       <View className="flex flex-row items-center">
         {displayUser && (
           <View className="flex flex-row items-center">

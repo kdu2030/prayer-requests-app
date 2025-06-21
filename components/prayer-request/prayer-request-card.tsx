@@ -1,8 +1,8 @@
 import * as React from "react";
 import { View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 
-import { formatDate } from "../../helpers/formatting-helpers";
+import { formatDate, formatNumber } from "../../helpers/formatting-helpers";
 import { useI18N } from "../../hooks/use-i18n";
 import { CultureCode } from "../../types/languages";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
@@ -54,6 +54,47 @@ export const PrayerRequestCard: React.FC<Props> = ({
       <Text variant="bodyMedium" className="mt-2" numberOfLines={3}>
         {prayerRequest.requestDescription}
       </Text>
+
+      <View className="flex flex-row justify-between items-center mt-6">
+        <View className="flex flex-row gap-x-3 items-center">
+          <Button
+            mode="outlined"
+            icon={prayerRequest.isUserLiked ? "heart" : "heart-outline"}
+          >
+            {formatNumber(
+              prayerRequest.likeCount ?? 0,
+              i18n.language as CultureCode,
+              { notation: "compact", compactDisplay: "short" }
+            )}
+          </Button>
+
+          <Button
+            mode="outlined"
+            icon={prayerRequest.isUserCommented ? "comment" : "comment-outline"}
+          >
+            {formatNumber(
+              prayerRequest.commentCount ?? 0,
+              i18n.language as CultureCode,
+              { notation: "compact", compactDisplay: "short" }
+            )}
+          </Button>
+        </View>
+
+        <Button
+          mode="outlined"
+          icon={
+            prayerRequest.isUserPrayed
+              ? "account-heart"
+              : "account-heart-outline"
+          }
+        >
+          {formatNumber(
+            prayerRequest.prayedCount ?? 0,
+            i18n.language as CultureCode,
+            { notation: "compact", compactDisplay: "short" }
+          )}
+        </Button>
+      </View>
     </View>
   );
 };

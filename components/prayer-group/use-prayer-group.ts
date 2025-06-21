@@ -87,6 +87,12 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   }, [prayerGroupId]);
 
   const cleanupPrayerRequests = async () => {
+    const samePrayerGroupPath = `/prayergroup/${prayerGroupId}`;
+
+    if (pathname.startsWith(samePrayerGroupPath)) {
+      return;
+    }
+
     setPrayerRequestFilters(DEFAULT_PRAYER_REQUEST_FILTERS);
     setPrayerRequests([]);
   };

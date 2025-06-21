@@ -1,6 +1,6 @@
 import * as React from "react";
-import { View } from "react-native";
-import { useTheme } from "react-native-paper";
+import { FlatList, View } from "react-native";
+import { ActivityIndicator, Text, useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
@@ -35,7 +35,24 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     onRetry,
     prayerGroupOptionsRef,
     onOpenOptions,
+    areRequestsLoading,
+    prayerRequests,
   } = usePrayerGroup(prayerGroupId);
+
+  const prayerGroupHeader = React.useMemo(
+    () => (
+      <PrayerGroupHeader
+        prayerGroupDetails={prayerGroupDetails}
+        isAddUserLoading={isAddUserLoading}
+        isRemoveUserLoading={isRemoveUserLoading}
+        onAddUser={onAddUser}
+        onRemoveUser={onRemoveUser}
+        onOpenOptions={onOpenOptions}
+      />
+    ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isAddUserLoading, isRemoveUserLoading, prayerGroupDetails]
+  );
 
   if (isLoading) {
     return (
@@ -63,14 +80,32 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           backgroundColor: theme.colors.background,
         }}
       >
-        <PrayerGroupHeader
-          prayerGroupDetails={prayerGroupDetails}
-          isAddUserLoading={isAddUserLoading}
-          isRemoveUserLoading={isRemoveUserLoading}
-          onAddUser={onAddUser}
-          onRemoveUser={onRemoveUser}
-          onOpenOptions={onOpenOptions}
-        />
+        {/* <FlatList
+          ListHeaderComponent={prayerGroupHeader}
+          data={prayerRequests}
+          renderItem={() => <></>}
+        /> */}
+        {areRequestsLoading ? (
+          <>
+            {prayerGroupHeader}
+            <View className="flex mt-32 items-center">
+              <ActivityIndicator
+                animating={true}
+                size={64}
+                color={theme.colors.primary}
+              />
+              <Text variant="titleMedium" className="mt-5">
+                {translate("prayerRequest.loading")}
+              </Text>
+            </View>
+          </>
+        ) : (
+          <FlatList
+            ListHeaderComponent={prayerGroupHeader}
+            data={prayerRequests}
+            renderItem={() => <></>}
+          />
+        )}
 
         <PrayerGroupOptions
           prayerGroupDetails={prayerGroupDetails}

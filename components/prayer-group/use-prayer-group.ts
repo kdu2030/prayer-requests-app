@@ -108,6 +108,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     }
 
     setPrayerRequests(mapPrayerRequests(response.value));
+    console.log(mapPrayerRequests(response.value));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prayerGroupId, userData?.userId]);
 

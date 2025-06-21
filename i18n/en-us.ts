@@ -139,4 +139,5 @@ export const englishTranslations = {
   "prayerGroup.request.expirationDate.weeks": "{{count}} weeks",
 
   "prayerRequest.label": "prayer request",
+  "prayerRequest.loading": "Loading prayer requests",
 };

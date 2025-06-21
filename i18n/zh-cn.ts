@@ -138,4 +138,5 @@ export const chineseTranslations: Translations = {
   "prayerGroup.request.expirationDate.weeks": "{{count}}个星期",
 
   "prayerRequest.label": "祷告事项",
+  "prayerRequest.loading": "加载祷告事项",
 };

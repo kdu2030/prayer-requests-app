@@ -27,6 +27,7 @@ export type PrayerGroupContextType = {
     prayerGroupId: number,
     customFilters?: PrayerRequestFilterCriteria
   ) => Promise<void>;
+  cleanupPrayerRequests: () => void;
 };
 
 const DEFAULT_PRAYER_GROUP_CONTEXT: PrayerGroupContextType = {
@@ -38,6 +39,7 @@ const DEFAULT_PRAYER_GROUP_CONTEXT: PrayerGroupContextType = {
   areRequestsLoading: false,
   setAreRequestsLoading: () => {},
   loadNextPrayerRequestsForGroup: async () => {},
+  cleanupPrayerRequests: () => {},
 };
 
 const PrayerGroupContext = React.createContext<PrayerGroupContextType>(
@@ -57,6 +59,8 @@ export const PrayerGroupContextProvider: React.FC<Props> = ({ children }) => {
     Omit<PrayerRequestFilterCriteria, "prayerGroupIds">
   >(DEFAULT_PRAYER_REQUEST_FILTERS);
 
+  const [prayerRequestGroupId, setPrayerRequestGroupId] =
+    React.useState<number>();
   const [prayerRequests, setPrayerRequests] = React.useState<
     PrayerRequestModel[]
   >([]);
@@ -67,10 +71,20 @@ export const PrayerGroupContextProvider: React.FC<Props> = ({ children }) => {
 
   const postPrayerRequestFilter = usePostPrayerRequestFilter();
 
+  const cleanupPrayerRequests = async () => {
+    setPrayerRequestFilters(DEFAULT_PRAYER_REQUEST_FILTERS);
+    setPrayerRequests([]);
+  };
+
   const loadNextPrayerRequestsForGroup = async (
     prayerGroupId: number,
     customFilters?: PrayerRequestFilterCriteria
   ) => {
+    if (prayerRequestGroupId !== prayerGroupId) {
+      cleanupPrayerRequests();
+    }
+
+    setPrayerRequestGroupId(prayerGroupId);
     const filters = customFilters ?? prayerRequestFilters;
 
     if (!userData?.userId) {
@@ -112,6 +126,7 @@ export const PrayerGroupContextProvider: React.FC<Props> = ({ children }) => {
         areRequestsLoading,
         setAreRequestsLoading,
         loadNextPrayerRequestsForGroup,
+        cleanupPrayerRequests,
       }}
     >
       {children}

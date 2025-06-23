@@ -14,7 +14,6 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { mapPrayerGroupDetails } from "../../mappers/map-prayer-group";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
-import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
@@ -27,9 +26,9 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     areRequestsLoading,
     prayerRequests,
     prayerRequestFilters,
-    setPrayerRequests,
     setPrayerRequestFilters,
     loadNextPrayerRequestsForGroup,
+    cleanupPrayerRequests,
   } = usePrayerGroupContext();
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
@@ -86,19 +85,17 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prayerGroupId]);
 
-  const cleanupPrayerRequests = async () => {
+  const cleanupPrayerRequestsOnPathChange = async () => {
     const samePrayerGroupPath = `/prayergroup/${prayerGroupId}`;
 
     if (pathname.startsWith(samePrayerGroupPath)) {
       return;
     }
-
-    setPrayerRequestFilters(DEFAULT_PRAYER_REQUEST_FILTERS);
-    setPrayerRequests([]);
+    cleanupPrayerRequests();
   };
 
   React.useEffect(() => {
-    cleanupPrayerRequests();
+    cleanupPrayerRequestsOnPathChange();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 

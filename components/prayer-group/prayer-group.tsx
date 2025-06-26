@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FlatList, View } from "react-native";
-import { ActivityIndicator, Text, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
@@ -11,6 +11,7 @@ import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
 import { PrayerGroupOptions } from "./options/prayer-group-options";
 import { usePrayerGroupContext } from "./prayer-group-context";
+import { PrayerRequestSpinner } from "./spinners/prayer-request-spinner";
 import { usePrayerGroup } from "./use-prayer-group";
 
 type Props = {
@@ -84,15 +85,11 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         {areRequestsLoading ? (
           <>
             {prayerGroupHeader}
-            <View className="flex mt-32 items-center">
-              <ActivityIndicator
-                animating={true}
-                size={64}
-                color={theme.colors.primary}
+            <View className="mt-32">
+              <PrayerRequestSpinner
+                textClassName="mt-5"
+                labelVariant={"titleMedium"}
               />
-              <Text variant="titleMedium" className="mt-5">
-                {translate("prayerRequest.loading")}
-              </Text>
             </View>
           </>
         ) : (
@@ -106,6 +103,15 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                 key={item.prayerRequestId}
               />
             )}
+            ListFooterComponent={
+              <View className="py-6">
+                <PrayerRequestSpinner
+                  size={48}
+                  textClassName="mt-3"
+                  labelVariant="titleSmall"
+                />
+              </View>
+            }
           />
         )}
 

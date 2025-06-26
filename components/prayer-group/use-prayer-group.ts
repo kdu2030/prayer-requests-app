@@ -23,6 +23,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const pathname = usePathname();
 
   const {
+    prayerGroupDetails,
+    setPrayerGroupDetails,
     areRequestsLoading,
     prayerRequests,
     prayerRequestFilters,
@@ -31,7 +33,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     cleanupPrayerRequests,
   } = usePrayerGroupContext();
 
-  const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
+  const [areNextRequestsLoading, setAreNextRequestsLoading] =
+    React.useState<boolean>(false);
 
   const [isRemoveUserLoading, setIsRemoveUserLoading] =
     React.useState<boolean>(false);

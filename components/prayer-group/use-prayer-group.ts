@@ -1,6 +1,5 @@
 import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
-import { usePathname } from "expo-router";
 import * as React from "react";
 
 import { useDeletePrayerGroupUsers } from "../../api/delete-prayer-group-users";
@@ -20,8 +19,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [showErrorScreen, setShowErrorScreen] = React.useState<boolean>(false);
 
-  const pathname = usePathname();
-
   const {
     prayerGroupDetails,
     setPrayerGroupDetails,
@@ -31,10 +28,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setPrayerRequestFilters,
     loadNextPrayerRequestsForGroup,
     cleanupPrayerRequests,
+    areNextRequestsLoading,
   } = usePrayerGroupContext();
-
-  const [areNextRequestsLoading, setAreNextRequestsLoading] =
-    React.useState<boolean>(false);
 
   const [isRemoveUserLoading, setIsRemoveUserLoading] =
     React.useState<boolean>(false);
@@ -79,32 +74,15 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   };
 
   const loadPrayerGroupData = async () => {
+    cleanupPrayerRequests();
     await loadPrayerGroup();
-    await loadNextPrayerRequestsForGroup(prayerGroupId);
+    await loadNextPrayerRequestsForGroup(prayerGroupId, true);
   };
 
   React.useEffect(() => {
     loadPrayerGroupData();
-
-    return () => {
-      cleanupPrayerRequests();
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prayerGroupId]);
-
-  const cleanupPrayerRequestsOnPathChange = async () => {
-    const samePrayerGroupPath = `/prayergroup/${prayerGroupId}`;
-
-    if (pathname.startsWith(samePrayerGroupPath)) {
-      return;
-    }
-    cleanupPrayerRequests();
-  };
-
-  React.useEffect(() => {
-    cleanupPrayerRequestsOnPathChange();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
 
   const onAddUser = async () => {
     if (!userData?.userId) {
@@ -189,6 +167,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     prayerGroupOptionsRef.current.snapToIndex(0);
   };
 
+  const onEndReached = async () => {
+    await loadNextPrayerRequestsForGroup(prayerGroupId, true);
+  };
+
   return {
     isLoading,
     setIsLoading,
@@ -207,5 +189,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setPrayerRequestFilters,
     areRequestsLoading,
     prayerRequests,
+    onEndReached,
+    areNextRequestsLoading,
   };
 };

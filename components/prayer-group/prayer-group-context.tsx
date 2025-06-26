@@ -23,8 +23,11 @@ export type PrayerGroupContextType = {
   setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>;
   areRequestsLoading: boolean;
   setAreRequestsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  areNextRequestsLoading: boolean;
+  setAreNextRequestsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   loadNextPrayerRequestsForGroup: (
     prayerGroupId: number,
+    showCOmpleteSpinner: boolean,
     customFilters?: PrayerRequestFilterCriteria
   ) => Promise<void>;
   cleanupPrayerRequests: () => void;
@@ -40,6 +43,8 @@ const DEFAULT_PRAYER_GROUP_CONTEXT: PrayerGroupContextType = {
   setAreRequestsLoading: () => {},
   loadNextPrayerRequestsForGroup: async () => {},
   cleanupPrayerRequests: () => {},
+  areNextRequestsLoading: false,
+  setAreNextRequestsLoading: () => {},
 };
 
 const PrayerGroupContext = React.createContext<PrayerGroupContextType>(
@@ -64,7 +69,10 @@ export const PrayerGroupContextProvider: React.FC<Props> = ({ children }) => {
   const [prayerRequests, setPrayerRequests] = React.useState<
     PrayerRequestModel[]
   >([]);
+
   const [areRequestsLoading, setAreRequestsLoading] =
+    React.useState<boolean>(false);
+  const [areNextRequestsLoading, setAreNextRequestsLoading] =
     React.useState<boolean>(false);
 
   const { userData } = useApiDataContext();
@@ -78,8 +86,13 @@ export const PrayerGroupContextProvider: React.FC<Props> = ({ children }) => {
 
   const loadNextPrayerRequestsForGroup = async (
     prayerGroupId: number,
+    showCompleteSpinner: boolean,
     customFilters?: PrayerRequestFilterCriteria
   ) => {
+    const setShowSpinner = showCompleteSpinner
+      ? setAreRequestsLoading
+      : setAreNextRequestsLoading;
+
     if (prayerRequestGroupId !== prayerGroupId) {
       cleanupPrayerRequests();
     }
@@ -91,14 +104,14 @@ export const PrayerGroupContextProvider: React.FC<Props> = ({ children }) => {
       return;
     }
 
-    setAreRequestsLoading(true);
+    setShowSpinner(true);
 
     const response = await postPrayerRequestFilter(userData.userId, {
       ...filters,
       prayerGroupIds: [prayerGroupId],
     });
 
-    setAreRequestsLoading(false);
+    setShowSpinner(false);
 
     if (response.isError) {
       // TODO: Add error handling here
@@ -127,6 +140,8 @@ export const PrayerGroupContextProvider: React.FC<Props> = ({ children }) => {
         setAreRequestsLoading,
         loadNextPrayerRequestsForGroup,
         cleanupPrayerRequests,
+        areNextRequestsLoading,
+        setAreNextRequestsLoading,
       }}
     >
       {children}

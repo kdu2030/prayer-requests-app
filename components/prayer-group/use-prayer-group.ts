@@ -82,6 +82,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   React.useEffect(() => {
     loadPrayerGroupData();
+
+    return () => {
+      cleanupPrayerRequests();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prayerGroupId]);
 

@@ -13,6 +13,7 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { mapPrayerGroupDetails } from "../../mappers/map-prayer-group";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
+import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
 import { usePrayerGroupContext } from "./prayer-group-context";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
@@ -168,7 +169,16 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   };
 
   const onEndReached = async () => {
-    await loadNextPrayerRequestsForGroup(prayerGroupId, true);
+    const updatedPrayerRequestFilters: PrayerRequestFilterCriteria = {
+      ...prayerRequestFilters,
+      pageIndex: (prayerRequestFilters.pageIndex ?? 0) + 1,
+    };
+    setPrayerRequestFilters(updatedPrayerRequestFilters);
+    await loadNextPrayerRequestsForGroup(
+      prayerGroupId,
+      false,
+      updatedPrayerRequestFilters
+    );
   };
 
   return {

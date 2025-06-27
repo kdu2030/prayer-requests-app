@@ -39,6 +39,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     onOpenOptions,
     areRequestsLoading,
     prayerRequests,
+    onEndReached,
+    areNextRequestsLoading,
   } = usePrayerGroup(prayerGroupId);
 
   const prayerGroupHeader = React.useMemo(
@@ -104,14 +106,18 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
               />
             )}
             ListFooterComponent={
-              <View className="py-6">
-                <PrayerRequestSpinner
-                  size={48}
-                  textClassName="mt-3"
-                  labelVariant="titleSmall"
-                />
-              </View>
+              areNextRequestsLoading ? (
+                <View className="py-6">
+                  <PrayerRequestSpinner
+                    size={48}
+                    textClassName="mt-3"
+                    labelVariant="titleSmall"
+                  />
+                </View>
+              ) : undefined
             }
+            onEndReachedThreshold={0.8}
+            onEndReached={onEndReached}
           />
         )}
 

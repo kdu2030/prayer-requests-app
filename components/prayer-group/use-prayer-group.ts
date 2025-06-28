@@ -8,29 +8,38 @@ import {
   PrayerGroupUserToAdd,
   usePostPrayerGroupUsers,
 } from "../../api/post-prayer-group-users";
+import { usePostPrayerRequestFilter } from "../../api/post-prayer-request-filter";
 import { PrayerGroupRole } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { mapPrayerGroupDetails } from "../../mappers/map-prayer-group";
+import { mapPrayerRequests } from "../../mappers/map-prayer-request";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
-import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
+import {
+  PrayerRequestFilterCriteria,
+  PrayerRequestModel,
+} from "../../types/prayer-request-types";
+import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [showErrorScreen, setShowErrorScreen] = React.useState<boolean>(false);
 
-  const {
-    prayerGroupDetails,
-    setPrayerGroupDetails,
-    areRequestsLoading,
-    prayerRequests,
-    prayerRequestFilters,
-    setPrayerRequestFilters,
-    loadNextPrayerRequestsForGroup,
-    cleanupPrayerRequests,
-    areNextRequestsLoading,
-  } = usePrayerGroupContext();
+  const [prayerRequestFilters, setPrayerRequestFilters] = React.useState<
+    Omit<PrayerRequestFilterCriteria, "prayerGroupIds">
+  >(DEFAULT_PRAYER_REQUEST_FILTERS);
+
+  const [prayerRequests, setPrayerRequests] = React.useState<
+    PrayerRequestModel[]
+  >([]);
+
+  const [areRequestsLoading, setAreRequestsLoading] =
+    React.useState<boolean>(false);
+  const [areNextRequestsLoading, setAreNextRequestsLoading] =
+    React.useState<boolean>(false);
+
+  const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
 
   const [isRemoveUserLoading, setIsRemoveUserLoading] =
     React.useState<boolean>(false);
@@ -50,8 +59,52 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const getPrayerGroup = useGetPrayerGroup();
   const deletePrayerGroupUsers = useDeletePrayerGroupUsers();
   const postPrayerGroupUsers = usePostPrayerGroupUsers();
+  const postPrayerRequestFilter = usePostPrayerRequestFilter();
 
   const { translate } = useI18N();
+
+  const cleanupPrayerRequests = async () => {
+    setPrayerRequestFilters(DEFAULT_PRAYER_REQUEST_FILTERS);
+    setPrayerRequests([]);
+  };
+
+  const loadNextPrayerRequestsForGroup = async (
+    prayerGroupId: number,
+    showCompleteSpinner: boolean,
+    customFilters?: PrayerRequestFilterCriteria
+  ) => {
+    const setShowSpinner = showCompleteSpinner
+      ? setAreRequestsLoading
+      : setAreNextRequestsLoading;
+
+    const filters = customFilters ?? prayerRequestFilters;
+
+    if (!userData?.userId) {
+      return;
+    }
+
+    setShowSpinner(true);
+
+    const response = await postPrayerRequestFilter(userData.userId, {
+      ...filters,
+      prayerGroupIds: [prayerGroupId],
+    });
+
+    setShowSpinner(false);
+
+    if (response.isError) {
+      // TODO: Add error handling here
+      setPrayerRequests([]);
+      return;
+    }
+
+    // Since prayer requests can be infinitely scrolled
+    // We don't want to get rid of the current existing prayer requests unless group ID changes.
+    setPrayerRequests((existingRequests) => [
+      ...existingRequests,
+      ...mapPrayerRequests(response.value),
+    ]);
+  };
 
   const loadPrayerGroup = async () => {
     setPrayerGroupDetails(undefined);

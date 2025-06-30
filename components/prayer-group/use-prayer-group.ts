@@ -226,7 +226,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const onEndReached = async () => {
     if (
-      prayerRequestTotalCount.current != null &&
+      prayerRequestTotalCount.current == null ||
       prayerRequests.length >= prayerRequestTotalCount.current
     ) {
       return;

@@ -32,6 +32,11 @@ export type RawPrayerRequestModel = {
   isUserCommented?: boolean;
 };
 
+export type RawPrayerRequestGetResponse = {
+  prayerRequests?: RawPrayerRequestModel[];
+  totalCount?: number;
+};
+
 export type PrayerRequestModel = {
   prayerRequestId?: number;
   requestTitle?: string;

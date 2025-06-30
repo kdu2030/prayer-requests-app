@@ -6,7 +6,7 @@ import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
 import {
   PrayerRequestFilterCriteria,
-  RawPrayerRequestModel,
+  RawPrayerRequestGetResponse,
 } from "../types/prayer-request-types";
 
 const postPrayerRequestFilter = async (
@@ -14,11 +14,11 @@ const postPrayerRequestFilter = async (
   baseUrl: string,
   userId: number,
   filterCriteria: PrayerRequestFilterCriteria
-): Promise<ManagedErrorResponse<RawPrayerRequestModel[]>> => {
+): Promise<ManagedErrorResponse<RawPrayerRequestGetResponse>> => {
   try {
     const url = `${baseUrl}/api/v1/prayer-request/filter`;
 
-    const response = await fetch.post<RawPrayerRequestModel[]>(
+    const response = await fetch.post<RawPrayerRequestGetResponse>(
       url,
       {
         userId,

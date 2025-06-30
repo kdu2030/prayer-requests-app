@@ -33,6 +33,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const [prayerRequests, setPrayerRequests] = React.useState<
     PrayerRequestModel[]
   >([]);
+  const prayerRequestTotalCount = React.useRef<number | null>();
 
   const [areRequestsLoading, setAreRequestsLoading] =
     React.useState<boolean>(false);
@@ -66,6 +67,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const cleanupPrayerRequests = async () => {
     setPrayerRequestFilters(DEFAULT_PRAYER_REQUEST_FILTERS);
     setPrayerRequests([]);
+    prayerRequestTotalCount.current = null;
   };
 
   const loadNextPrayerRequestsForGroup = async (
@@ -104,6 +106,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       ...existingRequests,
       ...mapPrayerRequests(response.value.prayerRequests ?? []),
     ]);
+    prayerRequestTotalCount.current = response.value.totalCount;
   };
 
   const loadPrayerGroup = async () => {
@@ -222,6 +225,13 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   };
 
   const onEndReached = async () => {
+    if (
+      prayerRequestTotalCount.current &&
+      prayerRequests.length >= prayerRequestTotalCount.current
+    ) {
+      return;
+    }
+
     const updatedPrayerRequestFilters: PrayerRequestFilterCriteria = {
       ...prayerRequestFilters,
       pageIndex: (prayerRequestFilters.pageIndex ?? 0) + 1,

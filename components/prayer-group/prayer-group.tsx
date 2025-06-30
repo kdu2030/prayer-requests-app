@@ -116,8 +116,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                 </View>
               ) : undefined
             }
-            // onEndReachedThreshold={0.8}
-            // onEndReached={onEndReached}
+            onEndReachedThreshold={0.8}
+            onEndReached={onEndReached}
           />
         )}
 

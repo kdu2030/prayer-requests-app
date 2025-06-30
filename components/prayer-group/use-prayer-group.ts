@@ -81,7 +81,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     const filters = customFilters ?? prayerRequestFilters;
 
-    console.log(filters);
+    console.log({ ...filters, prayerGroupIds: [prayerGroupId] });
 
     if (!userData?.userId) {
       return;
@@ -136,7 +136,11 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     cleanupPrayerRequests();
 
     await loadPrayerGroup();
-    await loadNextPrayerRequestsForGroup(prayerGroupId, true);
+    await loadNextPrayerRequestsForGroup(
+      prayerGroupId,
+      true,
+      DEFAULT_PRAYER_REQUEST_FILTERS
+    );
   };
 
   React.useEffect(() => {

@@ -81,8 +81,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     const filters = customFilters ?? prayerRequestFilters;
 
-    console.log({ ...filters, prayerGroupIds: [prayerGroupId] });
-
     if (!userData?.userId) {
       return;
     }

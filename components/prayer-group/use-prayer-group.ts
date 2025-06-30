@@ -81,6 +81,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     const filters = customFilters ?? prayerRequestFilters;
 
+    console.log(filters);
+
     if (!userData?.userId) {
       return;
     }
@@ -132,6 +134,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const loadPrayerGroupData = async () => {
     cleanupPrayerRequests();
+
     await loadPrayerGroup();
     await loadNextPrayerRequestsForGroup(prayerGroupId, true);
   };
@@ -225,6 +228,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   };
 
   const onEndReached = async () => {
+    if (areNextRequestsLoading || areRequestsLoading) {
+      return;
+    }
+
     if (
       prayerRequestTotalCount.current == null ||
       prayerRequests.length >= prayerRequestTotalCount.current

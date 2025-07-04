@@ -85,7 +85,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           backgroundColor: theme.colors.background,
         }}
       >
-        {areRequestsLoading ? (
+        {areRequestsLoading && (
           <>
             {prayerGroupHeader}
             <View className="mt-32">
@@ -95,7 +95,9 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
               />
             </View>
           </>
-        ) : (
+        )}
+
+        {!areRequestsLoading && (
           <FlatList
             ListHeaderComponent={prayerGroupHeader}
             data={prayerRequests}

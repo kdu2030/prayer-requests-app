@@ -140,6 +140,7 @@ export const englishTranslations = {
 
   "prayerRequest.label": "prayer request",
   "prayerRequest.loading": "Loading prayer requests",
+  "prayerRequest.loading.failure": "Unable to load prayer requests",
   "prayerRequest.addLike.failure": "Unable to add prayer request like",
   "prayerRequest.removeLike.failure": "Unable to remove prayer request like",
 };

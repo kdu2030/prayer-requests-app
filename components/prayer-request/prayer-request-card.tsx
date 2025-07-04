@@ -11,6 +11,10 @@ import { ProfilePicture } from "../layouts/profile-picture";
 type Props = {
   prayerRequest: PrayerRequestModel;
   showCreatedUser: boolean;
+  updatePrayerRequestLikes: (
+    prayerRequestId: number,
+    addLike: boolean
+  ) => Promise<void>;
 };
 
 export const PrayerRequestCard: React.FC<Props> = ({

@@ -9,6 +9,7 @@ import {
   usePostPrayerGroupUsers,
 } from "../../api/post-prayer-group-users";
 import { usePostPrayerRequestFilter } from "../../api/post-prayer-request-filter";
+import { usePostPrayerRequestLike } from "../../api/post-prayer-request-like";
 import { PrayerGroupRole } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
@@ -60,7 +61,9 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const getPrayerGroup = useGetPrayerGroup();
   const deletePrayerGroupUsers = useDeletePrayerGroupUsers();
   const postPrayerGroupUsers = usePostPrayerGroupUsers();
+
   const postPrayerRequestFilter = usePostPrayerRequestFilter();
+  const postPrayerRequestLike = usePostPrayerRequestLike();
 
   const { translate } = useI18N();
 
@@ -253,6 +256,48 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     );
   };
 
+  const addPrayerRequestLike = async (
+    userId: number,
+    prayerRequestId: number
+  ) => {
+    const response = await postPrayerRequestLike(userId, prayerRequestId);
+
+    if (response.isError) {
+      setSnackbarError(translate("prayerRequest.addLike.failure"));
+      return;
+    }
+
+    const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
+      if (prayerRequest.prayerRequestId !== prayerRequestId) {
+        return prayerRequest;
+      }
+
+      return {
+        ...prayerRequest,
+        isUserLiked: true,
+        likeCount: (prayerRequest.likeCount ?? 0) + 1,
+      };
+    });
+
+    setPrayerRequests(updatedPrayerRequests);
+  };
+
+  const updatePrayerRequestLikes = async (
+    prayerRequestId: number,
+    addLike: boolean
+  ) => {
+    const userId = userData?.userId;
+
+    if (!userId) {
+      return;
+    }
+
+    if (addLike) {
+      addPrayerRequestLike(userId, prayerRequestId);
+      return;
+    }
+  };
+
   return {
     isLoading,
     setIsLoading,
@@ -273,5 +318,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     prayerRequests,
     onEndReached,
     areNextRequestsLoading,
+    updatePrayerRequestLikes,
   };
 };

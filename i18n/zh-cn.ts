@@ -139,4 +139,5 @@ export const chineseTranslations: Translations = {
 
   "prayerRequest.label": "祷告事项",
   "prayerRequest.loading": "加载祷告事项",
+  "prayerRequest.addLike.failure": "无法点赞祷告事项",
 };

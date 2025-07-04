@@ -13,6 +13,7 @@ import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { ManagedErrorResponse } from "../../../types/error-handling";
 import { RawPrayerGroupDetails } from "../../../types/prayer-group-types";
+import { PrayerRequestFilterCriteria } from "../../../types/prayer-request-types";
 import { PrayerGroupHeaderTestIds } from "../header/tests/test-ids";
 import { PrayerGroup } from "../prayer-group";
 import { PrayerGroupContextProvider } from "../prayer-group-context";
@@ -23,6 +24,7 @@ let component: RenderResult;
 const mockGetPrayerGroup = jest.fn();
 const mockPostPrayerGroupUsers = jest.fn();
 const mockDeletePrayerGroupUsers = jest.fn();
+const mockPostPrayerRequestFilter = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
@@ -49,6 +51,13 @@ jest.mock("../../../api/delete-prayer-group-users", () => ({
 jest.mock("../../../hooks/use-api-data", () => ({
   ...jest.requireActual("../../../hooks/use-api-data"),
   useApiDataContext: () => ({ userData: mockUserData, setUserData: jest.fn() }),
+}));
+
+jest.mock("../../../api/post-prayer-request-filter", () => ({
+  usePostPrayerRequestFilter: (
+    userId: number,
+    filterCriteria: PrayerRequestFilterCriteria
+  ) => mockPostPrayerRequestFilter(userId, filterCriteria),
 }));
 
 const mountPrayerGroup = (rawPrayerGroupDetails: RawPrayerGroupDetails) => {

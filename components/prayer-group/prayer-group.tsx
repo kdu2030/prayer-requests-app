@@ -11,6 +11,7 @@ import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
 import { PrayerGroupOptions } from "./options/prayer-group-options";
 import { usePrayerGroupContext } from "./prayer-group-context";
+import { PrayerRequestPlaceholder } from "./prayer-request-placeholder";
 import { PrayerRequestSpinner } from "./spinners/prayer-request-spinner";
 import { usePrayerGroup } from "./use-prayer-group";
 
@@ -115,34 +116,47 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           </>
         )}
 
-        {!areRequestsLoading && !isPrayerRequestError && (
-          <FlatList
-            ListHeaderComponent={prayerGroupHeader}
-            data={prayerRequests}
-            renderItem={({ item }) => (
-              <PrayerRequestCard
-                prayerRequest={item}
-                prayerRequests={prayerRequests}
-                setPrayerRequests={setPrayerRequests}
-                setSnackbarError={setSnackbarError}
-                key={item.prayerRequestId}
-              />
-            )}
-            ListFooterComponent={
-              areNextRequestsLoading ? (
-                <View className="py-6">
-                  <PrayerRequestSpinner
-                    size={48}
-                    textClassName="mt-3"
-                    labelVariant="titleSmall"
-                  />
-                </View>
-              ) : undefined
-            }
-            onEndReachedThreshold={0.8}
-            onEndReached={onEndReached}
-          />
-        )}
+        {!areRequestsLoading &&
+          !isPrayerRequestError &&
+          prayerRequests.length < 0 && (
+            <>
+              {prayerGroupHeader}
+              <View className="mt-32">
+                <PrayerRequestPlaceholder />
+              </View>
+            </>
+          )}
+
+        {!areRequestsLoading &&
+          !isPrayerRequestError &&
+          prayerRequests.length && (
+            <FlatList
+              ListHeaderComponent={prayerGroupHeader}
+              data={prayerRequests}
+              renderItem={({ item }) => (
+                <PrayerRequestCard
+                  prayerRequest={item}
+                  prayerRequests={prayerRequests}
+                  setPrayerRequests={setPrayerRequests}
+                  setSnackbarError={setSnackbarError}
+                  key={item.prayerRequestId}
+                />
+              )}
+              ListFooterComponent={
+                areNextRequestsLoading ? (
+                  <View className="py-6">
+                    <PrayerRequestSpinner
+                      size={48}
+                      textClassName="mt-3"
+                      labelVariant="titleSmall"
+                    />
+                  </View>
+                ) : undefined
+              }
+              onEndReachedThreshold={0.8}
+              onEndReached={onEndReached}
+            />
+          )}
 
         <PrayerGroupOptions
           prayerGroupDetails={prayerGroupDetails}

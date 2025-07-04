@@ -142,4 +142,5 @@ export const chineseTranslations: Translations = {
   "prayerRequest.loading.failure": "无法加载祷告事项",
   "prayerRequest.addLike.failure": "无法点赞祷告事项",
   "prayerRequest.removeLike.failure": "无法删除祷告事项点赞",
+  "prayerRequest.prayerGroup.noPrayerRequests": "这个祷告小组还没有祷告事项。",
 };

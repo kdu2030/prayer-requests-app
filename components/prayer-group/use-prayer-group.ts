@@ -39,6 +39,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     React.useState<boolean>(false);
   const [areNextRequestsLoading, setAreNextRequestsLoading] =
     React.useState<boolean>(false);
+  const [isPrayerRequestError, setIsPrayerRequestError] =
+    React.useState<boolean>(false);
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
 
@@ -275,5 +277,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     onEndReached,
     areNextRequestsLoading,
     setPrayerRequests,
+    isPrayerRequestError,
+    setIsPrayerRequestError,
   };
 };

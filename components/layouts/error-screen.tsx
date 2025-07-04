@@ -1,4 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import classNames from "classnames";
 import * as React from "react";
 import { View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
@@ -8,14 +9,18 @@ import { useI18N } from "../../hooks/use-i18n";
 
 type Props = {
   errorLabel: string;
+  className?: string;
   onRetry: () => void;
   showSafeArea?: boolean;
+  fillContainer?: boolean;
 };
 
 export const ErrorScreen: React.FC<Props> = ({
   errorLabel,
   onRetry,
   showSafeArea = true,
+  className,
+  fillContainer = true,
 }) => {
   const theme = useTheme();
   const { left, right, bottom } = useSafeAreaInsets();
@@ -29,7 +34,11 @@ export const ErrorScreen: React.FC<Props> = ({
   return (
     <>
       <View
-        className="flex items-center justify-center flex-1"
+        className={classNames(
+          "flex items-center justify-center",
+          fillContainer && "flex-1",
+          className
+        )}
         style={{
           backgroundColor: theme.colors.background,
           ...safeAreaStyles,

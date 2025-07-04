@@ -7,6 +7,7 @@ import { useI18N } from "../../hooks/use-i18n";
 import { CultureCode } from "../../types/languages";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { ProfilePicture } from "../layouts/profile-picture";
+import { usePrayerRequestCard } from "./use-prayer-request-card";
 
 type Props = {
   prayerRequest: PrayerRequestModel;
@@ -20,10 +21,16 @@ type Props = {
 export const PrayerRequestCard: React.FC<Props> = ({
   prayerRequest,
   showCreatedUser,
+  updatePrayerRequestLikes,
 }) => {
   const theme = useTheme();
   const { i18n } = useI18N();
   const displayUser = showCreatedUser && prayerRequest.user?.fullName;
+
+  const { isLikeLoading, onLikePress } = usePrayerRequestCard(
+    prayerRequest,
+    updatePrayerRequestLikes
+  );
 
   return (
     <View
@@ -70,6 +77,8 @@ export const PrayerRequestCard: React.FC<Props> = ({
           <Button
             mode="outlined"
             icon={prayerRequest.isUserLiked ? "heart" : "heart-outline"}
+            loading={isLikeLoading}
+            onPress={onLikePress}
           >
             {formatNumber(
               prayerRequest.likeCount ?? 0,

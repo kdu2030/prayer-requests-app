@@ -118,7 +118,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
 
         {!areRequestsLoading &&
           !isPrayerRequestError &&
-          prayerRequests.length < 0 && (
+          prayerRequests.length <= 0 && (
             <>
               {prayerGroupHeader}
               <View className="mt-32">
@@ -129,7 +129,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
 
         {!areRequestsLoading &&
           !isPrayerRequestError &&
-          prayerRequests.length && (
+          prayerRequests.length > 0 && (
             <FlatList
               ListHeaderComponent={prayerGroupHeader}
               data={prayerRequests}

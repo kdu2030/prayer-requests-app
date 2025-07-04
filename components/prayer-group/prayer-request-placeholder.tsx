@@ -1,4 +1,4 @@
-import { SimpleLineIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import * as React from "react";
 import { View } from "react-native";
 import { Text } from "react-native-paper";
@@ -9,8 +9,8 @@ export const PrayerRequestPlaceholder: React.FC = () => {
   const { translate } = useI18N();
 
   return (
-    <View>
-      <SimpleLineIcons name="bubbles" size={70} />
+    <View className="items-center">
+      <Ionicons name="chatbox-outline" size={64} />
       <Text className="mt-5" variant="titleMedium">
         {translate("prayerRequest.prayerGroup.noPrayerRequests")}
       </Text>

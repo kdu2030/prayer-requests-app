@@ -18,10 +18,6 @@ const postPrayerRequestFilter = async (
   try {
     const url = `${baseUrl}/api/v1/prayer-request/filter`;
 
-    if (filterCriteria.pageIndex != 0) {
-      throw new Error("");
-    }
-
     const response = await fetch.post<RawPrayerRequestGetResponse>(
       url,
       {

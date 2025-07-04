@@ -10,7 +10,7 @@ export const usePrayerRequestCard = (
   prayerRequest: PrayerRequestModel,
   prayerRequests: PrayerRequestModel[],
   setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>,
-  setSnackbarError: React.Dispatch<React.SetStateAction<string>>
+  setSnackbarError: React.Dispatch<React.SetStateAction<string | undefined>>
 ) => {
   const [isLikeLoading, setIsLikeLoading] = React.useState<boolean>(false);
   const { translate } = useI18N();

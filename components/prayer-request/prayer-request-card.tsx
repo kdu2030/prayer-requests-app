@@ -11,17 +11,18 @@ import { usePrayerRequestCard } from "./use-prayer-request-card";
 
 type Props = {
   prayerRequest: PrayerRequestModel;
-  showCreatedUser: boolean;
-  updatePrayerRequestLikes: (
-    prayerRequestId: number,
-    addLike: boolean
-  ) => Promise<void>;
+  prayerRequests: PrayerRequestModel[];
+  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>;
+  setSnackbarError: React.Dispatch<React.SetStateAction<string | undefined>>;
+  showCreatedUser?: boolean;
 };
 
 export const PrayerRequestCard: React.FC<Props> = ({
   prayerRequest,
+  prayerRequests,
+  setPrayerRequests,
+  setSnackbarError,
   showCreatedUser,
-  updatePrayerRequestLikes,
 }) => {
   const theme = useTheme();
   const { i18n } = useI18N();
@@ -29,7 +30,9 @@ export const PrayerRequestCard: React.FC<Props> = ({
 
   const { isLikeLoading, onLikePress, likeIcon } = usePrayerRequestCard(
     prayerRequest,
-    updatePrayerRequestLikes
+    prayerRequests,
+    setPrayerRequests,
+    setSnackbarError
   );
 
   return (

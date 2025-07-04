@@ -3,14 +3,12 @@ import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
 
 import { useDeletePrayerGroupUsers } from "../../api/delete-prayer-group-users";
-import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like";
 import { useGetPrayerGroup } from "../../api/get-prayer-group";
 import {
   PrayerGroupUserToAdd,
   usePostPrayerGroupUsers,
 } from "../../api/post-prayer-group-users";
 import { usePostPrayerRequestFilter } from "../../api/post-prayer-request-filter";
-import { usePostPrayerRequestLike } from "../../api/post-prayer-request-like";
 import { PrayerGroupRole } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
@@ -64,8 +62,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const postPrayerGroupUsers = usePostPrayerGroupUsers();
 
   const postPrayerRequestFilter = usePostPrayerRequestFilter();
-  const postPrayerRequestLike = usePostPrayerRequestLike();
-  const deletePrayerRequestLike = useDeletePrayerRequestLike();
 
   const { translate } = useI18N();
 
@@ -258,78 +254,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     );
   };
 
-  // FIXME: We need to move addPrayerRequestLike, removePrayerRequestLike to Prayer Request Card
-  // This will allow us to reuse that logic elsewhere, such as the user homepage, user profiles, bookmarked prayer request list, etc.
-  const addPrayerRequestLike = async (
-    userId: number,
-    prayerRequestId: number
-  ) => {
-    const response = await postPrayerRequestLike(userId, prayerRequestId);
-
-    if (response.isError) {
-      setSnackbarError(translate("prayerRequest.addLike.failure"));
-      return;
-    }
-
-    const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-      if (prayerRequest.prayerRequestId !== prayerRequestId) {
-        return prayerRequest;
-      }
-
-      return {
-        ...prayerRequest,
-        isUserLiked: true,
-        likeCount: (prayerRequest.likeCount ?? 0) + 1,
-      };
-    });
-
-    setPrayerRequests(updatedPrayerRequests);
-  };
-
-  const removePrayerRequestLike = async (
-    userId: number,
-    prayerRequestId: number
-  ) => {
-    const response = await deletePrayerRequestLike(prayerRequestId, userId);
-
-    if (response.isError) {
-      setSnackbarError(translate("prayerRequest.removeLike.failure"));
-      return;
-    }
-
-    const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-      if (prayerRequest.prayerRequestId !== prayerRequestId) {
-        return prayerRequest;
-      }
-
-      return {
-        ...prayerRequest,
-        isUserLiked: false,
-        likeCount: prayerRequest.likeCount ? prayerRequest.likeCount - 1 : 0,
-      };
-    });
-
-    setPrayerRequests(updatedPrayerRequests);
-  };
-
-  const updatePrayerRequestLikes = async (
-    prayerRequestId: number,
-    addLike: boolean
-  ) => {
-    const userId = userData?.userId;
-
-    if (!userId) {
-      return;
-    }
-
-    if (addLike) {
-      await addPrayerRequestLike(userId, prayerRequestId);
-      return;
-    }
-
-    await removePrayerRequestLike(userId, prayerRequestId);
-  };
-
   return {
     isLoading,
     setIsLoading,
@@ -350,6 +274,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     prayerRequests,
     onEndReached,
     areNextRequestsLoading,
-    updatePrayerRequestLikes,
+    setPrayerRequests,
   };
 };

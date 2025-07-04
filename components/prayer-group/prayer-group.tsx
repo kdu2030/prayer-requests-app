@@ -41,7 +41,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     prayerRequests,
     onEndReached,
     areNextRequestsLoading,
-    updatePrayerRequestLikes,
+    setPrayerRequests,
   } = usePrayerGroup(prayerGroupId);
 
   const prayerGroupHeader = React.useMemo(
@@ -102,8 +102,9 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
             renderItem={({ item }) => (
               <PrayerRequestCard
                 prayerRequest={item}
-                showCreatedUser
-                updatePrayerRequestLikes={updatePrayerRequestLikes}
+                prayerRequests={prayerRequests}
+                setPrayerRequests={setPrayerRequests}
+                setSnackbarError={setSnackbarError}
                 key={item.prayerRequestId}
               />
             )}

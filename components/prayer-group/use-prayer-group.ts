@@ -258,6 +258,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     );
   };
 
+  // FIXME: We need to move addPrayerRequestLike, removePrayerRequestLike to Prayer Request Card
+  // This will allow us to reuse that logic elsewhere, such as the user homepage, user profiles, bookmarked prayer request list, etc.
   const addPrayerRequestLike = async (
     userId: number,
     prayerRequestId: number

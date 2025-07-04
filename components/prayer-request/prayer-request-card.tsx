@@ -7,6 +7,7 @@ import { useI18N } from "../../hooks/use-i18n";
 import { CultureCode } from "../../types/languages";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { ProfilePicture } from "../layouts/profile-picture";
+import { PrayerRequestCardTestIds } from "./tests/test-ids";
 import { usePrayerRequestCard } from "./use-prayer-request-card";
 
 type Props = {
@@ -50,6 +51,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
               url={prayerRequest.user?.image?.url}
               width={24}
               height={24}
+              testID={PrayerRequestCardTestIds.userProfilePicture}
             />
             <Text className="ml-2" variant="bodyMedium">
               {prayerRequest.user?.fullName}
@@ -58,7 +60,11 @@ export const PrayerRequestCard: React.FC<Props> = ({
         )}
 
         {prayerRequest.createdDate && (
-          <Text variant="bodyMedium" className="ml-4 text-gray-500">
+          <Text
+            variant="bodyMedium"
+            className="ml-4 text-gray-500"
+            testID={PrayerRequestCardTestIds.createdDate}
+          >
             {formatDate(
               prayerRequest.createdDate,
               i18n.language as CultureCode
@@ -82,6 +88,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
             icon={likeIcon}
             loading={isLikeLoading}
             onPress={onLikePress}
+            testID={PrayerRequestCardTestIds.likeButton}
           >
             {formatNumber(
               prayerRequest.likeCount ?? 0,
@@ -93,6 +100,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
           <Button
             mode="outlined"
             icon={prayerRequest.isUserCommented ? "comment" : "comment-outline"}
+            testID={PrayerRequestCardTestIds.commentButton}
           >
             {formatNumber(
               prayerRequest.commentCount ?? 0,
@@ -109,6 +117,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
               ? "account-heart"
               : "account-heart-outline"
           }
+          testID={PrayerRequestCardTestIds.prayedButton}
         >
           {formatNumber(
             prayerRequest.prayedCount ?? 0,

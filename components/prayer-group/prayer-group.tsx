@@ -99,7 +99,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           </>
         )}
 
-        {!isPrayerRequestError && (
+        {isPrayerRequestError && (
           <>
             {prayerGroupHeader}
             <View className="mt-32">

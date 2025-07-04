@@ -27,7 +27,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
   const { i18n } = useI18N();
   const displayUser = showCreatedUser && prayerRequest.user?.fullName;
 
-  const { isLikeLoading, onLikePress } = usePrayerRequestCard(
+  const { isLikeLoading, onLikePress, likeIcon } = usePrayerRequestCard(
     prayerRequest,
     updatePrayerRequestLikes
   );
@@ -76,7 +76,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
         <View className="flex flex-row gap-x-3 items-center">
           <Button
             mode="outlined"
-            icon={prayerRequest.isUserLiked ? "heart" : "heart-outline"}
+            icon={likeIcon}
             loading={isLikeLoading}
             onPress={onLikePress}
           >

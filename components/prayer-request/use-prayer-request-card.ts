@@ -24,8 +24,16 @@ export const usePrayerRequestCard = (
     setIsLikeLoading(false);
   };
 
+  const likeIcon = React.useMemo(() => {
+    if (isLikeLoading) {
+      return undefined;
+    }
+    return prayerRequest.isUserLiked ? "heart" : "heart-outline";
+  }, [isLikeLoading, prayerRequest.isUserLiked]);
+
   return {
     isLikeLoading,
     onLikePress,
+    likeIcon,
   };
 };

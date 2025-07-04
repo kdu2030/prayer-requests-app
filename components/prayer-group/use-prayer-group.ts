@@ -101,11 +101,12 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     setShowSpinner(false);
 
-    if (response.isError) {
-      showCompleteSpinner
-        ? setIsPrayerRequestError(true)
-        : setSnackbarError(translate("prayerRequest.loading.failure"));
+    if (response.isError && showCompleteSpinner) {
+      setIsPrayerRequestError(true);
       setPrayerRequests([]);
+      return;
+    } else if (response.isError) {
+      setSnackbarError(translate("prayerRequest.loading.failure"));
       return;
     }
 

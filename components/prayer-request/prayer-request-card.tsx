@@ -23,7 +23,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
   prayerRequests,
   setPrayerRequests,
   setSnackbarError,
-  showCreatedUser,
+  showCreatedUser = true,
 }) => {
   const theme = useTheme();
   const { i18n } = useI18N();

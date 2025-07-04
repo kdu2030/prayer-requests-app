@@ -78,6 +78,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     showCompleteSpinner: boolean,
     customFilters?: PrayerRequestFilterCriteria
   ) => {
+    if (isPrayerRequestError) {
+      setIsPrayerRequestError(false);
+    }
+
     const setShowSpinner = showCompleteSpinner
       ? setAreRequestsLoading
       : setAreNextRequestsLoading;
@@ -98,7 +102,9 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setShowSpinner(false);
 
     if (response.isError) {
-      // TODO: Add error handling here
+      showCompleteSpinner
+        ? setIsPrayerRequestError(true)
+        : setSnackbarError(translate("prayerRequest.loading.failure"));
       setPrayerRequests([]);
       return;
     }
@@ -279,5 +285,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setPrayerRequests,
     isPrayerRequestError,
     setIsPrayerRequestError,
+    loadNextPrayerRequestsForGroup,
   };
 };

@@ -43,6 +43,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     areNextRequestsLoading,
     setPrayerRequests,
     isPrayerRequestError,
+    loadNextPrayerRequestsForGroup,
   } = usePrayerGroup(prayerGroupId);
 
   const prayerGroupHeader = React.useMemo(
@@ -104,9 +105,11 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
             <View className="mt-32">
               <ErrorScreen
                 errorLabel={translate("prayerRequest.loading.failure")}
-                onRetry={() => {}}
                 showSafeArea={false}
                 fillContainer={false}
+                onRetry={() =>
+                  loadNextPrayerRequestsForGroup(prayerGroupId, true)
+                }
               />
             </View>
           </>

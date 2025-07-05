@@ -80,11 +80,27 @@ export const PrayerRequestCard: React.FC<Props> = ({
         )}
       </View>
 
-      <Text variant="titleMedium" className="mt-4 font-bold" numberOfLines={1}>
+      <Text
+        variant="titleMedium"
+        className="mt-4 font-bold"
+        numberOfLines={1}
+        testID={getArrayTestId(
+          PrayerRequestCardTestIds.requestTitle,
+          prayerRequest.prayerRequestId
+        )}
+      >
         {prayerRequest.requestTitle}
       </Text>
 
-      <Text variant="bodyMedium" className="mt-2" numberOfLines={3}>
+      <Text
+        variant="bodyMedium"
+        className="mt-2"
+        numberOfLines={3}
+        testID={getArrayTestId(
+          PrayerRequestCardTestIds.requestDescription,
+          prayerRequest.prayerRequestId
+        )}
+      >
         {prayerRequest.requestDescription}
       </Text>
 

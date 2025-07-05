@@ -13,11 +13,20 @@ import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { ManagedErrorResponse } from "../../../types/error-handling";
 import { RawPrayerGroupDetails } from "../../../types/prayer-group-types";
-import { PrayerRequestFilterCriteria } from "../../../types/prayer-request-types";
+import {
+  PrayerRequestFilterCriteria,
+  RawPrayerRequestGetResponse,
+} from "../../../types/prayer-request-types";
+import { PrayerRequestCardTestIds } from "../../prayer-request/tests/test-ids";
 import { PrayerGroupHeaderTestIds } from "../header/tests/test-ids";
 import { PrayerGroup } from "../prayer-group";
 import { PrayerGroupContextProvider } from "../prayer-group-context";
-import { mockRawPrayerGroupDetails, mockUserData } from "./mock-data";
+import {
+  mockPrayerGroupDetails,
+  mockPrayerRequests,
+  mockRawPrayerGroupDetails,
+  mockUserData,
+} from "./mock-data";
 
 let component: RenderResult;
 
@@ -54,10 +63,9 @@ jest.mock("../../../hooks/use-api-data", () => ({
 }));
 
 jest.mock("../../../api/post-prayer-request-filter", () => ({
-  usePostPrayerRequestFilter: (
-    userId: number,
-    filterCriteria: PrayerRequestFilterCriteria
-  ) => mockPostPrayerRequestFilter(userId, filterCriteria),
+  usePostPrayerRequestFilter:
+    () => (userId: number, filterCriteria: PrayerRequestFilterCriteria) =>
+      mockPostPrayerRequestFilter(userId, filterCriteria),
 }));
 
 const mountPrayerGroup = (rawPrayerGroupDetails: RawPrayerGroupDetails) => {
@@ -184,5 +192,28 @@ describe(PrayerGroup, () => {
     await waitFor(() => {
       expect(mockDeletePrayerGroupUsers).toHaveBeenCalledWith(2, [1]);
     });
+  });
+
+  test("Prayer requests for prayer group show up on mount", async () => {
+    const mockPrayerRequestFilterResponse: ManagedErrorResponse<RawPrayerRequestGetResponse> =
+      {
+        isError: false,
+        value: {
+          prayerRequests: mockPrayerRequests,
+          totalCount: 3,
+        },
+      };
+
+    mockPostPrayerRequestFilter.mockReturnValue(
+      mockPrayerRequestFilterResponse
+    );
+
+    component = mountPrayerGroup(mockPrayerGroupDetails);
+
+    const prayerRequest = await component.findByTestId(
+      `${PrayerRequestCardTestIds.requestTitle}-${9}`
+    );
+
+    expect(prayerRequest).toBeTruthy();
   });
 });

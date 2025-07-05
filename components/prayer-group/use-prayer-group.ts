@@ -1,6 +1,7 @@
 import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
+import superjson from "superjson";
 
 import { useDeletePrayerGroupUsers } from "../../api/delete-prayer-group-users";
 import { useGetPrayerGroup } from "../../api/get-prayer-group";
@@ -103,6 +104,11 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       setSnackbarError(translate("prayerRequest.loading.failure"));
       return;
     }
+
+    // FIXME: Remove
+    console.log(
+      superjson.stringify(response.value.prayerRequests?.slice(0, 3))
+    );
 
     // Since prayer requests can be infinitely scrolled
     // We don't want to get rid of the current existing prayer requests unless group ID changes.

@@ -14,6 +14,7 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { mapPrayerGroupDetails } from "../../mappers/map-prayer-group";
 import { mapPrayerRequests } from "../../mappers/map-prayer-request";
+import { LoadStatus } from "../../types/api-response-types";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
 import {
   PrayerRequestFilterCriteria,
@@ -35,12 +36,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   >([]);
   const prayerRequestTotalCount = React.useRef<number | null>();
 
-  const [areRequestsLoading, setAreRequestsLoading] =
-    React.useState<boolean>(false);
-  const [areNextRequestsLoading, setAreNextRequestsLoading] =
-    React.useState<boolean>(false);
-  const [isPrayerRequestError, setIsPrayerRequestError] =
-    React.useState<boolean>(false);
+  const [prayerRequestLoadStatus, setPrayerRequestLoadStatus] =
+    React.useState<LoadStatus>(LoadStatus.NotStarted);
+  const [nextPrayerRequestLoadStatus, setNextPrayerRequestLoadStatus] =
+    React.useState<LoadStatus>(LoadStatus.NotStarted);
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
 
@@ -78,13 +77,9 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     showCompleteSpinner: boolean,
     customFilters?: PrayerRequestFilterCriteria
   ) => {
-    if (isPrayerRequestError) {
-      setIsPrayerRequestError(false);
-    }
-
-    const setShowSpinner = showCompleteSpinner
-      ? setAreRequestsLoading
-      : setAreNextRequestsLoading;
+    const setLoadStatus = showCompleteSpinner
+      ? setPrayerRequestLoadStatus
+      : setNextPrayerRequestLoadStatus;
 
     const filters = customFilters ?? prayerRequestFilters;
 
@@ -92,20 +87,19 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       return;
     }
 
-    setShowSpinner(true);
+    setLoadStatus(LoadStatus.Loading);
 
     const response = await postPrayerRequestFilter(userData.userId, {
       ...filters,
       prayerGroupIds: [prayerGroupId],
     });
 
-    setShowSpinner(false);
-
     if (response.isError && showCompleteSpinner) {
-      setIsPrayerRequestError(true);
+      setLoadStatus(LoadStatus.Error);
       setPrayerRequests([]);
       return;
     } else if (response.isError) {
+      setLoadStatus(LoadStatus.Error);
       setSnackbarError(translate("prayerRequest.loading.failure"));
       return;
     }
@@ -117,6 +111,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       ...mapPrayerRequests(response.value.prayerRequests ?? []),
     ]);
     prayerRequestTotalCount.current = response.value.totalCount;
+
+    setLoadStatus(LoadStatus.Success);
   };
 
   const loadPrayerGroup = async () => {
@@ -240,7 +236,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   };
 
   const onEndReached = async () => {
-    if (areNextRequestsLoading || areRequestsLoading) {
+    if (
+      nextPrayerRequestLoadStatus === LoadStatus.Loading ||
+      prayerRequestLoadStatus === LoadStatus.Loading
+    ) {
       return;
     }
 
@@ -279,13 +278,11 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     onOpenOptions,
     prayerRequestFilters,
     setPrayerRequestFilters,
-    areRequestsLoading,
     prayerRequests,
     onEndReached,
-    areNextRequestsLoading,
     setPrayerRequests,
-    isPrayerRequestError,
-    setIsPrayerRequestError,
     loadNextPrayerRequestsForGroup,
+    nextPrayerRequestLoadStatus,
+    prayerRequestLoadStatus,
   };
 };

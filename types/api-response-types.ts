@@ -36,3 +36,10 @@ export type SortConfig = {
   sortField: string;
   sortOrder: SortOrder;
 };
+
+export enum LoadStatus {
+  NotStarted = 1,
+  Loading,
+  Success,
+  Error,
+}

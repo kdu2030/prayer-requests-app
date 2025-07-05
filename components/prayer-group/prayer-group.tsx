@@ -4,6 +4,7 @@ import { useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
 import { ErrorSnackbar } from "../layouts/error-snackbar";
 import { SpinnerScreen } from "../layouts/spinner-screen";
@@ -38,12 +39,11 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     onRetry,
     prayerGroupOptionsRef,
     onOpenOptions,
-    areRequestsLoading,
+    nextPrayerRequestLoadStatus,
+    prayerRequestLoadStatus,
     prayerRequests,
     onEndReached,
-    areNextRequestsLoading,
     setPrayerRequests,
-    isPrayerRequestError,
     loadNextPrayerRequestsForGroup,
   } = usePrayerGroup(prayerGroupId);
 
@@ -88,7 +88,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           backgroundColor: theme.colors.background,
         }}
       >
-        {areRequestsLoading && (
+        {prayerRequestLoadStatus === LoadStatus.Loading && (
           <>
             {prayerGroupHeader}
             <View className="mt-32">
@@ -100,7 +100,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           </>
         )}
 
-        {isPrayerRequestError && (
+        {prayerRequestLoadStatus === LoadStatus.Error && (
           <>
             {prayerGroupHeader}
             <View className="mt-32">
@@ -116,8 +116,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           </>
         )}
 
-        {!areRequestsLoading &&
-          !isPrayerRequestError &&
+        {prayerRequestLoadStatus === LoadStatus.Success &&
           prayerRequests.length <= 0 && (
             <>
               {prayerGroupHeader}
@@ -127,8 +126,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
             </>
           )}
 
-        {!areRequestsLoading &&
-          !isPrayerRequestError &&
+        {prayerRequestLoadStatus === LoadStatus.Success &&
           prayerRequests.length > 0 && (
             <FlatList
               ListHeaderComponent={prayerGroupHeader}
@@ -143,7 +141,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                 />
               )}
               ListFooterComponent={
-                areNextRequestsLoading ? (
+                nextPrayerRequestLoadStatus === LoadStatus.Loading ? (
                   <View className="py-6">
                     <PrayerRequestSpinner
                       size={48}

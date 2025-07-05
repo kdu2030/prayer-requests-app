@@ -45,6 +45,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     onEndReached,
     setPrayerRequests,
     loadNextPrayerRequestsForGroup,
+    showPrayerRequestList,
   } = usePrayerGroup(prayerGroupId);
 
   const prayerGroupHeader = React.useMemo(
@@ -88,43 +89,34 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           backgroundColor: theme.colors.background,
         }}
       >
-        {prayerRequestLoadStatus === LoadStatus.Loading && (
+        {!showPrayerRequestList && (
           <>
             {prayerGroupHeader}
             <View className="mt-32">
-              <PrayerRequestSpinner
-                textClassName="mt-5"
-                labelVariant={"titleMedium"}
-              />
-            </View>
-          </>
-        )}
+              {prayerRequestLoadStatus === LoadStatus.Loading && (
+                <PrayerRequestSpinner
+                  textClassName="mt-5"
+                  labelVariant={"titleMedium"}
+                />
+              )}
 
-        {prayerRequestLoadStatus === LoadStatus.Error && (
-          <>
-            {prayerGroupHeader}
-            <View className="mt-32">
-              <ErrorScreen
-                errorLabel={translate("prayerRequest.loading.failure")}
-                showSafeArea={false}
-                fillContainer={false}
-                onRetry={() =>
-                  loadNextPrayerRequestsForGroup(prayerGroupId, true)
-                }
-              />
-            </View>
-          </>
-        )}
+              {prayerRequestLoadStatus === LoadStatus.Error && (
+                <ErrorScreen
+                  errorLabel={translate("prayerRequest.loading.failure")}
+                  showSafeArea={false}
+                  fillContainer={false}
+                  onRetry={() =>
+                    loadNextPrayerRequestsForGroup(prayerGroupId, true)
+                  }
+                />
+              )}
 
-        {prayerRequestLoadStatus === LoadStatus.Success &&
-          prayerRequests.length <= 0 && (
-            <>
-              {prayerGroupHeader}
-              <View className="mt-32">
+              {prayerRequestLoadStatus === LoadStatus.Success && (
                 <PrayerRequestPlaceholder />
-              </View>
-            </>
-          )}
+              )}
+            </View>
+          </>
+        )}
 
         {prayerRequestLoadStatus === LoadStatus.Success &&
           prayerRequests.length > 0 && (

@@ -262,6 +262,13 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     );
   };
 
+  const showPrayerRequestList = React.useMemo(() => {
+    return (
+      prayerRequestLoadStatus === LoadStatus.Success &&
+      prayerRequests.length > 0
+    );
+  }, [prayerRequestLoadStatus, prayerRequests.length]);
+
   return {
     isLoading,
     setIsLoading,
@@ -284,5 +291,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     loadNextPrayerRequestsForGroup,
     nextPrayerRequestLoadStatus,
     prayerRequestLoadStatus,
+    showPrayerRequestList,
   };
 };

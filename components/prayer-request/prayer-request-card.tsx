@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 
 import { formatDate, formatNumber } from "../../helpers/formatting-helpers";
+import { getArrayTestId } from "../../helpers/utils";
 import { useI18N } from "../../hooks/use-i18n";
 import { CultureCode } from "../../types/languages";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
@@ -51,7 +52,10 @@ export const PrayerRequestCard: React.FC<Props> = ({
               url={prayerRequest.user?.image?.url}
               width={24}
               height={24}
-              testID={PrayerRequestCardTestIds.userProfilePicture}
+              testID={getArrayTestId(
+                PrayerRequestCardTestIds.userProfilePicture,
+                prayerRequest.prayerRequestId
+              )}
             />
             <Text className="ml-2" variant="bodyMedium">
               {prayerRequest.user?.fullName}
@@ -63,7 +67,10 @@ export const PrayerRequestCard: React.FC<Props> = ({
           <Text
             variant="bodyMedium"
             className="ml-4 text-gray-500"
-            testID={PrayerRequestCardTestIds.createdDate}
+            testID={getArrayTestId(
+              PrayerRequestCardTestIds.createdDate,
+              prayerRequest.prayerRequestId
+            )}
           >
             {formatDate(
               prayerRequest.createdDate,
@@ -88,7 +95,10 @@ export const PrayerRequestCard: React.FC<Props> = ({
             icon={likeIcon}
             loading={isLikeLoading}
             onPress={onLikePress}
-            testID={PrayerRequestCardTestIds.likeButton}
+            testID={getArrayTestId(
+              PrayerRequestCardTestIds.likeButton,
+              prayerRequest.prayerRequestId
+            )}
           >
             {formatNumber(
               prayerRequest.likeCount ?? 0,
@@ -100,7 +110,10 @@ export const PrayerRequestCard: React.FC<Props> = ({
           <Button
             mode="outlined"
             icon={prayerRequest.isUserCommented ? "comment" : "comment-outline"}
-            testID={PrayerRequestCardTestIds.commentButton}
+            testID={getArrayTestId(
+              PrayerRequestCardTestIds.commentButton,
+              prayerRequest.prayerRequestId
+            )}
           >
             {formatNumber(
               prayerRequest.commentCount ?? 0,
@@ -117,7 +130,10 @@ export const PrayerRequestCard: React.FC<Props> = ({
               ? "account-heart"
               : "account-heart-outline"
           }
-          testID={PrayerRequestCardTestIds.prayedButton}
+          testID={getArrayTestId(
+            PrayerRequestCardTestIds.prayedButton,
+            prayerRequest.prayerRequestId
+          )}
         >
           {formatNumber(
             prayerRequest.prayedCount ?? 0,

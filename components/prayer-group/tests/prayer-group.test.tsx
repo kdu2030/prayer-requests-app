@@ -11,6 +11,7 @@ import {
 import { PrayerGroupUserToAdd } from "../../../api/post-prayer-group-users";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../tests/utils/test-utils";
+import { SortOrder } from "../../../types/api-response-types";
 import { ManagedErrorResponse } from "../../../types/error-handling";
 import { RawPrayerGroupDetails } from "../../../types/prayer-group-types";
 import {
@@ -204,8 +205,18 @@ describe(PrayerGroup, () => {
         },
       };
 
-    mockPostPrayerRequestFilter.mockReturnValue(
-      mockPrayerRequestFilterResponse
+    let prayerRequestFilterCriteria: PrayerRequestFilterCriteria = {
+      sortConfig: {
+        sortField: "createdDate",
+        sortOrder: SortOrder.Descending,
+      },
+    };
+
+    mockPostPrayerRequestFilter.mockImplementation(
+      (_userId: number, filterCriteria: PrayerRequestFilterCriteria) => {
+        prayerRequestFilterCriteria = filterCriteria;
+        return mockPrayerRequestFilterResponse;
+      }
     );
 
     component = mountPrayerGroup(mockPrayerGroupDetails);
@@ -215,5 +226,7 @@ describe(PrayerGroup, () => {
     );
 
     expect(prayerRequest).toBeTruthy();
+    expect(prayerRequestFilterCriteria?.pageIndex).toBe(0);
+    expect(prayerRequestFilterCriteria?.prayerGroupIds).toStrictEqual([2]);
   });
 });

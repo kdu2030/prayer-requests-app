@@ -145,4 +145,6 @@ export const englishTranslations = {
   "prayerRequest.removeLike.failure": "Unable to remove prayer request like",
   "prayerRequest.prayerGroup.noPrayerRequests":
     "This prayer group does not have prayer requests yet.",
+
+  "prayerRequest.sorting.label": "Update Prayer Request Sorting",
 };

@@ -73,6 +73,12 @@ export const PrayerGroupOptions: React.FC<Props> = ({
             }}
           />
         )}
+
+        <PrayerGroupOptionButton
+          label={translate("prayerRequest.sorting.label")}
+          icon={<MaterialCommunityIcons name="sort" size={24} />}
+          onPress={() => {}}
+        />
       </View>
     </AppBottomSheet>
   );

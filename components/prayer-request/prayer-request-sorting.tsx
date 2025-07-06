@@ -1,8 +1,9 @@
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Button, RadioButton, Text } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { SortOrder } from "../../types/api-response-types";
 import {
   PrayerRequestFilterCriteria,
   PrayerRequestSortFields,
@@ -55,7 +56,36 @@ export const PrayerRequestSorting: React.FC<Props> = ({
           }
         />
 
-        <Button mode="contained" className="mt-3">
+        <View className="mt-5">
+          <Text variant="labelMedium">
+            {translate("prayerRequest.sorting.sortDirection")}
+          </Text>
+
+          <RadioButton.Group
+            value={filterCriteria.sortConfig.sortOrder.toString()}
+            onValueChange={(value) =>
+              setFilterCriteria((filterCriteria) => ({
+                ...filterCriteria,
+                sortConfig: {
+                  ...filterCriteria.sortConfig,
+                  sortOrder: +value,
+                },
+              }))
+            }
+          >
+            <RadioButton.Item
+              label={translate("prayerRequest.sorting.ascending")}
+              value={SortOrder.Ascending.toString()}
+            />
+
+            <RadioButton.Item
+              label={translate("prayerRequest.sorting.descending")}
+              value={SortOrder.Descending.toString()}
+            />
+          </RadioButton.Group>
+        </View>
+
+        <Button mode="contained" className="mt-5">
           {translate("prayerRequest.sorting.action")}
         </Button>
       </View>

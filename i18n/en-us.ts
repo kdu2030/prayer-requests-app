@@ -154,4 +154,7 @@ export const englishTranslations = {
   "prayerRequest.sorting.commentCount": "Comment Count",
   "prayerRequest.sorting.prayerCount": "Prayed Count",
   "prayerRequest.sorting.action": "Update sorting",
+  "prayerRequest.sorting.sortDirection": "Sort Direction",
+  "prayerRequest.sorting.ascending": "Ascending",
+  "prayerRequest.sorting.descending": "Descending",
 };

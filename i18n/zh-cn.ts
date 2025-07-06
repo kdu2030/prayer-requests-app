@@ -152,4 +152,7 @@ export const chineseTranslations: Translations = {
   "prayerRequest.sorting.commentCount": "评论数",
   "prayerRequest.sorting.prayerCount": "祷告数",
   "prayerRequest.sorting.action": "改排序",
+  "prayerRequest.sorting.sortDirection": "排序方向",
+  "prayerRequest.sorting.ascending": "升序",
+  "prayerRequest.sorting.descending": "降序",
 };

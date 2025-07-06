@@ -8,8 +8,8 @@ import { BaseManagedErrorResponse } from "../types/error-handling";
 const deletePrayerRequestLike = async (
   fetch: AxiosInstance,
   baseUrl: string,
-  prayerRequestId: number,
-  userId: number
+  userId: number,
+  prayerRequestId: number
 ): Promise<BaseManagedErrorResponse> => {
   const url = `${baseUrl}/api/v1/prayer-request/${prayerRequestId}/like`;
 
@@ -25,8 +25,8 @@ export const useDeletePrayerRequestLike = () => {
   const { baseUrl, fetch } = useApiDataContext();
 
   return React.useCallback(
-    (prayerRequestId: number, userId: number) =>
-      deletePrayerRequestLike(fetch, baseUrl, prayerRequestId, userId),
+    (userId: number, prayerRequestId: number) =>
+      deletePrayerRequestLike(fetch, baseUrl, userId, prayerRequestId),
     [baseUrl, fetch]
   );
 };

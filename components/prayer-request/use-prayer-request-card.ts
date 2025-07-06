@@ -56,7 +56,7 @@ export const usePrayerRequestCard = (
       return;
     }
 
-    const response = await deletePrayerRequestLike(prayerRequestId, userId);
+    const response = await deletePrayerRequestLike(userId, prayerRequestId);
 
     if (response.isError) {
       setSnackbarError(translate("prayerRequest.removeLike.failure"));

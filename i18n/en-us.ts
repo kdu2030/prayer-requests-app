@@ -147,4 +147,10 @@ export const englishTranslations = {
     "This prayer group does not have prayer requests yet.",
 
   "prayerRequest.sorting.label": "Update Prayer Request Sorting",
+  "prayerRequest.sorting.header": "Prayer Request Sorting",
+  "prayerRequest.sorting.sortBy": "Sort by",
+  "prayerRequest.sorting.createdDate": "Created Date",
+  "prayerRequest.sorting.likeCount": "Like Count",
+  "prayerRequest.sorting.commentCount": "Comment Count",
+  "prayerRequqest.sorting.prayerCount": "Prayed Count",
 };

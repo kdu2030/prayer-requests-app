@@ -145,4 +145,10 @@ export const chineseTranslations: Translations = {
   "prayerRequest.prayerGroup.noPrayerRequests": "这个祷告小组还没有祷告事项。",
 
   "prayerRequest.sorting.label": "改祷告事项排序",
+  "prayerRequest.sorting.header": "祷告事项排序",
+  "prayerRequest.sorting.sortBy": "排序方式",
+  "prayerRequest.sorting.createdDate": "创建日期",
+  "prayerRequest.sorting.likeCount": "点赞数",
+  "prayerRequest.sorting.commentCount": "评论数",
+  "prayerRequqest.sorting.prayerCount": "祷告数",
 };

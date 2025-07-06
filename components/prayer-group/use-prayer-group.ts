@@ -51,6 +51,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   );
 
   const [isOptionsOpen, setIsOptionsOpen] = React.useState<boolean>(false);
+  const [isSortingOpen, setIsSortingOpen] = React.useState<boolean>(false);
 
   const { userData, setUserData } = useApiDataContext();
 
@@ -285,5 +286,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     prayerRequestLoadStatus,
     showPrayerRequestList,
     setIsOptionsOpen,
+    isSortingOpen,
+    setIsSortingOpen,
   };
 };

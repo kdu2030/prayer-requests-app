@@ -69,11 +69,27 @@ jest.mock("../../../api/post-prayer-request-filter", () => ({
       mockPostPrayerRequestFilter(userId, filterCriteria),
 }));
 
-const mountPrayerGroup = (rawPrayerGroupDetails: RawPrayerGroupDetails) => {
+const mountPrayerGroup = (
+  rawPrayerGroupDetails: RawPrayerGroupDetails,
+  useCustomPostPrayerRequestMock: boolean = false
+) => {
   const mockGetResponse: ManagedErrorResponse<RawPrayerGroupDetails> = {
     isError: false,
     value: rawPrayerGroupDetails,
   };
+
+  const mockPrayerRequestResponse: ManagedErrorResponse<RawPrayerRequestGetResponse> =
+    {
+      isError: false,
+      value: {
+        prayerRequests: [],
+        totalCount: 0,
+      },
+    };
+
+  if (!useCustomPostPrayerRequestMock) {
+    mockPostPrayerRequestFilter.mockReturnValue(mockPrayerRequestResponse);
+  }
 
   mockGetPrayerGroup.mockReturnValue(mockGetResponse);
 
@@ -219,7 +235,7 @@ describe(PrayerGroup, () => {
       }
     );
 
-    component = mountPrayerGroup(mockPrayerGroupDetails);
+    component = mountPrayerGroup(mockPrayerGroupDetails, true);
 
     const prayerRequest = await component.findByTestId(
       `${PrayerRequestCardTestIds.requestTitle}-${9}`

@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Text } from "react-native-paper";
+import { View } from "react-native";
+import { Button, Text } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import {
@@ -34,24 +35,30 @@ export const PrayerRequestSorting: React.FC<Props> = ({
       setIsOpen={setIsSortingOpen}
       snapPoints={["50%"]}
     >
-      <Text variant="titleMedium" className="font-bold">
-        {translate("prayerRequest.sorting.header")}
-      </Text>
+      <View className="px-4">
+        <Text variant="titleMedium" className="font-bold mb-4">
+          {translate("prayerRequest.sorting.header")}
+        </Text>
 
-      <Select
-        label={translate("prayerRequest.sorting.sortBy")}
-        value={filterCriteria.sortConfig.sortField}
-        options={sortFieldOptions}
-        setValue={(value) =>
-          setFilterCriteria((filterCriteria) => ({
-            ...filterCriteria,
-            sortConfig: {
-              ...filterCriteria.sortConfig,
-              sortField: value as PrayerRequestSortFields,
-            },
-          }))
-        }
-      />
+        <Select
+          label={translate("prayerRequest.sorting.sortBy")}
+          value={filterCriteria.sortConfig.sortField}
+          options={sortFieldOptions}
+          setValue={(value) =>
+            setFilterCriteria((filterCriteria) => ({
+              ...filterCriteria,
+              sortConfig: {
+                ...filterCriteria.sortConfig,
+                sortField: value as PrayerRequestSortFields,
+              },
+            }))
+          }
+        />
+
+        <Button mode="contained" className="mt-3">
+          {translate("prayerRequest.sorting.action")}
+        </Button>
+      </View>
     </AppBottomSheet>
   );
 };

@@ -14,12 +14,14 @@ type Props = {
   prayerGroupDetails?: PrayerGroupDetails;
   isOptionsOpen: boolean;
   setIsOptionsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSortingOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const PrayerGroupOptions: React.FC<Props> = ({
   prayerGroupDetails,
   isOptionsOpen,
   setIsOptionsOpen,
+  setIsSortingOpen,
 }) => {
   const { translate } = useI18N();
   const isAdmin = prayerGroupDetails?.userRole === PrayerGroupRole.Admin;
@@ -77,7 +79,10 @@ export const PrayerGroupOptions: React.FC<Props> = ({
         <PrayerGroupOptionButton
           label={translate("prayerRequest.sorting.label")}
           icon={<MaterialCommunityIcons name="sort" size={24} />}
-          onPress={() => {}}
+          onPress={() => {
+            setIsOptionsOpen(false);
+            setIsSortingOpen(true);
+          }}
         />
       </View>
     </AppBottomSheet>

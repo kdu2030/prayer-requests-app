@@ -9,6 +9,7 @@ import { ErrorScreen } from "../layouts/error-screen";
 import { ErrorSnackbar } from "../layouts/error-snackbar";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
+import { PrayerRequestSorting } from "../prayer-request/prayer-request-sorting";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
 import { PrayerGroupOptions } from "./options/prayer-group-options";
 import { usePrayerGroupContext } from "./prayer-group-context";
@@ -47,6 +48,10 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     loadNextPrayerRequestsForGroup,
     showPrayerRequestList,
     setIsOptionsOpen,
+    isSortingOpen,
+    setIsSortingOpen,
+    prayerRequestFilters,
+    setPrayerRequestFilters,
   } = usePrayerGroup(prayerGroupId);
 
   const prayerGroupHeader = React.useMemo(
@@ -153,6 +158,14 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           prayerGroupDetails={prayerGroupDetails}
           isOptionsOpen={isOptionsOpen}
           setIsOptionsOpen={setIsOptionsOpen}
+          setIsSortingOpen={setIsSortingOpen}
+        />
+
+        <PrayerRequestSorting
+          isSortingOpen={isSortingOpen}
+          setIsSortingOpen={setIsSortingOpen}
+          filterCriteria={prayerRequestFilters}
+          setFilterCriteria={setPrayerRequestFilters}
         />
 
         <ErrorSnackbar

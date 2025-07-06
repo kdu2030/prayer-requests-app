@@ -152,5 +152,6 @@ export const englishTranslations = {
   "prayerRequest.sorting.createdDate": "Created Date",
   "prayerRequest.sorting.likeCount": "Like Count",
   "prayerRequest.sorting.commentCount": "Comment Count",
-  "prayerRequqest.sorting.prayerCount": "Prayed Count",
+  "prayerRequest.sorting.prayerCount": "Prayed Count",
+  "prayerRequest.sorting.action": "Update sorting",
 };

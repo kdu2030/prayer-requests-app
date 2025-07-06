@@ -67,7 +67,7 @@ describe(PrayerRequestCard, () => {
     expect(component).toBeTruthy();
   });
 
-  test("Like button Adds prayer request like if user hasn't liked prayer request", async () => {
+  test("Like button adds prayer request like if user hasn't liked prayer request", async () => {
     let updatedPrayerRequests: PrayerRequestModel[] = [];
 
     mockSetPrayerRequests.mockImplementation(
@@ -92,6 +92,33 @@ describe(PrayerRequestCard, () => {
 
       expect(updatedPrayerRequests[0].isUserLiked).toBeTruthy();
       expect(updatedPrayerRequests[0].likeCount).toBe(2);
+    });
+  });
+
+  test("Like button removes prayer request like if user liked prayer request", async () => {
+    let updatedPrayerRequests: PrayerRequestModel[] = [];
+
+    mockSetPrayerRequests.mockImplementation(
+      (prayerRequests: PrayerRequestModel[]) => {
+        updatedPrayerRequests = prayerRequests;
+      }
+    );
+
+    mockDeletePrayerRequestLike.mockReturnValue({ isError: false });
+
+    const prayerRequests = mapPrayerRequests(mockPrayerRequests);
+    component = mountPrayerRequestCard(prayerRequests[1], prayerRequests);
+
+    const likeButton = component.getByTestId(
+      getArrayTestId(PrayerRequestCardTestIds.likeButton, 8)
+    );
+    fireEvent.press(likeButton);
+
+    await waitFor(() => {
+      expect(mockDeletePrayerRequestLike).toHaveBeenCalledWith(1, 8);
+
+      expect(updatedPrayerRequests[1].isUserLiked).toBeFalsy();
+      expect(updatedPrayerRequests[1].likeCount).toBe(0);
     });
   });
 });

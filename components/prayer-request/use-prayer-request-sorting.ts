@@ -22,7 +22,7 @@ export const usePrayerRequestSorting = () => {
         value: PrayerRequestSortFields.CommentCount,
       },
       {
-        label: translate("prayerRequqest.sorting.prayerCount"),
+        label: translate("prayerRequest.sorting.prayerCount"),
         value: PrayerRequestSortFields.PrayedCount,
       },
     ],

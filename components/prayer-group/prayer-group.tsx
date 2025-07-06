@@ -37,7 +37,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     isAddUserLoading,
     showErrorScreen,
     onRetry,
-    prayerGroupOptionsRef,
+    isOptionsOpen,
     onOpenOptions,
     nextPrayerRequestLoadStatus,
     prayerRequestLoadStatus,
@@ -150,7 +150,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
 
         <PrayerGroupOptions
           prayerGroupDetails={prayerGroupDetails}
-          bottomSheetRef={prayerGroupOptionsRef}
+          isOptionsOpen={isOptionsOpen}
         />
 
         <ErrorSnackbar

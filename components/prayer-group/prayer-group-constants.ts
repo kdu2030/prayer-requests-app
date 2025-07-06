@@ -7,8 +7,7 @@ import {
 export const DEFAULT_PRAYER_REQUEST_FILTERS: PrayerRequestFilterCriteria = {
   creatorUserIds: [],
   pageIndex: 0,
-  // TODO: Change back to 10
-  pageSize: 4,
+  pageSize: 10,
   includeExpiredRequests: false,
   sortConfig: {
     sortField: PrayerRequestSortFields.CreatedDate,

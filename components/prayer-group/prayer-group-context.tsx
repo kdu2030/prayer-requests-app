@@ -28,7 +28,10 @@ export const PrayerGroupContextProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <PrayerGroupContext.Provider
-      value={{ prayerGroupDetails, setPrayerGroupDetails }}
+      value={{
+        prayerGroupDetails,
+        setPrayerGroupDetails,
+      }}
     >
       {children}
     </PrayerGroupContext.Provider>

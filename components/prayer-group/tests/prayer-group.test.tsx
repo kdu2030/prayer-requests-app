@@ -11,18 +11,30 @@ import {
 import { PrayerGroupUserToAdd } from "../../../api/post-prayer-group-users";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../tests/utils/test-utils";
+import { SortOrder } from "../../../types/api-response-types";
 import { ManagedErrorResponse } from "../../../types/error-handling";
 import { RawPrayerGroupDetails } from "../../../types/prayer-group-types";
+import {
+  PrayerRequestFilterCriteria,
+  RawPrayerRequestGetResponse,
+} from "../../../types/prayer-request-types";
+import { PrayerRequestCardTestIds } from "../../prayer-request/tests/test-ids";
 import { PrayerGroupHeaderTestIds } from "../header/tests/test-ids";
 import { PrayerGroup } from "../prayer-group";
 import { PrayerGroupContextProvider } from "../prayer-group-context";
-import { mockRawPrayerGroupDetails, mockUserData } from "./mock-data";
+import {
+  mockPrayerGroupDetails,
+  mockPrayerRequests,
+  mockRawPrayerGroupDetails,
+  mockUserData,
+} from "./mock-data";
 
 let component: RenderResult;
 
 const mockGetPrayerGroup = jest.fn();
 const mockPostPrayerGroupUsers = jest.fn();
 const mockDeletePrayerGroupUsers = jest.fn();
+const mockPostPrayerRequestFilter = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
@@ -51,11 +63,33 @@ jest.mock("../../../hooks/use-api-data", () => ({
   useApiDataContext: () => ({ userData: mockUserData, setUserData: jest.fn() }),
 }));
 
-const mountPrayerGroup = (rawPrayerGroupDetails: RawPrayerGroupDetails) => {
+jest.mock("../../../api/post-prayer-request-filter", () => ({
+  usePostPrayerRequestFilter:
+    () => (userId: number, filterCriteria: PrayerRequestFilterCriteria) =>
+      mockPostPrayerRequestFilter(userId, filterCriteria),
+}));
+
+const mountPrayerGroup = (
+  rawPrayerGroupDetails: RawPrayerGroupDetails,
+  useCustomPostPrayerRequestMock: boolean = false
+) => {
   const mockGetResponse: ManagedErrorResponse<RawPrayerGroupDetails> = {
     isError: false,
     value: rawPrayerGroupDetails,
   };
+
+  const mockPrayerRequestResponse: ManagedErrorResponse<RawPrayerRequestGetResponse> =
+    {
+      isError: false,
+      value: {
+        prayerRequests: [],
+        totalCount: 0,
+      },
+    };
+
+  if (!useCustomPostPrayerRequestMock) {
+    mockPostPrayerRequestFilter.mockReturnValue(mockPrayerRequestResponse);
+  }
 
   mockGetPrayerGroup.mockReturnValue(mockGetResponse);
 
@@ -175,5 +209,40 @@ describe(PrayerGroup, () => {
     await waitFor(() => {
       expect(mockDeletePrayerGroupUsers).toHaveBeenCalledWith(2, [1]);
     });
+  });
+
+  test("Prayer requests for prayer group show up on mount", async () => {
+    const mockPrayerRequestFilterResponse: ManagedErrorResponse<RawPrayerRequestGetResponse> =
+      {
+        isError: false,
+        value: {
+          prayerRequests: mockPrayerRequests,
+          totalCount: 3,
+        },
+      };
+
+    let prayerRequestFilterCriteria: PrayerRequestFilterCriteria = {
+      sortConfig: {
+        sortField: "createdDate",
+        sortOrder: SortOrder.Descending,
+      },
+    };
+
+    mockPostPrayerRequestFilter.mockImplementation(
+      (_userId: number, filterCriteria: PrayerRequestFilterCriteria) => {
+        prayerRequestFilterCriteria = filterCriteria;
+        return mockPrayerRequestFilterResponse;
+      }
+    );
+
+    component = mountPrayerGroup(mockPrayerGroupDetails, true);
+
+    const prayerRequest = await component.findByTestId(
+      `${PrayerRequestCardTestIds.requestTitle}-${9}`
+    );
+
+    expect(prayerRequest).toBeTruthy();
+    expect(prayerRequestFilterCriteria?.pageIndex).toBe(0);
+    expect(prayerRequestFilterCriteria?.prayerGroupIds).toStrictEqual([2]);
   });
 });

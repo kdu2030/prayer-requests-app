@@ -4,6 +4,7 @@ import {
   PrayerGroupDetails,
   RawPrayerGroupDetails,
 } from "../../../types/prayer-group-types";
+import { RawPrayerRequestModel } from "../../../types/prayer-request-types";
 
 export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
   admins: [{ fullName: "Jim Halpert", id: 1 }],
@@ -67,3 +68,75 @@ export const mockMediaFile: MediaFile = {
   mediaFileId: 4,
   url: "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
 };
+
+export const mockPrayerRequests: RawPrayerRequestModel[] = [
+  {
+    id: 9,
+    requestTitle: "Test",
+    requestDescription: "Test",
+    createdDate: "2025-07-04T01:11:35.907537Z",
+    prayerGroup: {
+      id: 1,
+      groupName: "Grace Christian Fellowship",
+      imageFile: {
+        id: 2,
+        fileName: "6c8eb229-ab1f-4adf-a444-aac434c12619.jpeg",
+        url: "https://prayerappfileservices.pythonanywhere.com/static/c16e92f9-3c43-42ab-a214-a9230cad3f10.jpeg",
+        fileType: 1,
+      },
+    },
+    user: { id: 1, username: "jhalpert", fullName: "Jim Halpert" },
+    likeCount: 1,
+    commentCount: 0,
+    prayedCount: 0,
+    expirationDate: "2025-07-19T01:11:26.271Z",
+    isUserLiked: false,
+    isUserCommented: false,
+  },
+  {
+    id: 8,
+    requestTitle: "Prayer Request 7",
+    requestDescription: "Prayer Request 7",
+    createdDate: "2025-07-04T01:07:01.975895Z",
+    prayerGroup: {
+      id: 1,
+      groupName: "Grace Christian Fellowship",
+      imageFile: {
+        id: 2,
+        fileName: "6c8eb229-ab1f-4adf-a444-aac434c12619.jpeg",
+        url: "https://prayerappfileservices.pythonanywhere.com/static/c16e92f9-3c43-42ab-a214-a9230cad3f10.jpeg",
+        fileType: 1,
+      },
+    },
+    user: { id: 1, username: "jhalpert", fullName: "Jim Halpert" },
+    likeCount: 1,
+    commentCount: 0,
+    prayedCount: 0,
+    expirationDate: "2025-07-19T01:06:51.026Z",
+    isUserLiked: true,
+    isUserCommented: false,
+  },
+  {
+    id: 7,
+    requestTitle: "Prayer Request 6",
+    requestDescription: "Prayer request 7",
+    createdDate: "2025-06-29T19:58:27.283659Z",
+    prayerGroup: {
+      id: 1,
+      groupName: "Grace Christian Fellowship",
+      imageFile: {
+        id: 2,
+        fileName: "6c8eb229-ab1f-4adf-a444-aac434c12619.jpeg",
+        url: "https://prayerappfileservices.pythonanywhere.com/static/c16e92f9-3c43-42ab-a214-a9230cad3f10.jpeg",
+        fileType: 1,
+      },
+    },
+    user: { id: 1, username: "jhalpert", fullName: "Jim Halpert" },
+    likeCount: 0,
+    commentCount: 0,
+    prayedCount: 0,
+    expirationDate: "2025-07-14T19:58:29.314Z",
+    isUserLiked: false,
+    isUserCommented: false,
+  },
+];

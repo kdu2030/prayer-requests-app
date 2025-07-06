@@ -46,6 +46,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     setPrayerRequests,
     loadNextPrayerRequestsForGroup,
     showPrayerRequestList,
+    setIsOptionsOpen,
   } = usePrayerGroup(prayerGroupId);
 
   const prayerGroupHeader = React.useMemo(
@@ -151,6 +152,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         <PrayerGroupOptions
           prayerGroupDetails={prayerGroupDetails}
           isOptionsOpen={isOptionsOpen}
+          setIsOptionsOpen={setIsOptionsOpen}
         />
 
         <ErrorSnackbar

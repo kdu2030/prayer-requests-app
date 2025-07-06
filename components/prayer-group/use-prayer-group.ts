@@ -284,5 +284,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     nextPrayerRequestLoadStatus,
     prayerRequestLoadStatus,
     showPrayerRequestList,
+    setIsOptionsOpen,
   };
 };

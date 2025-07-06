@@ -13,11 +13,13 @@ import { PrayerGroupOptionsTestIds } from "./tests/test-ids";
 type Props = {
   prayerGroupDetails?: PrayerGroupDetails;
   isOptionsOpen: boolean;
+  setIsOptionsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const PrayerGroupOptions: React.FC<Props> = ({
   prayerGroupDetails,
   isOptionsOpen,
+  setIsOptionsOpen,
 }) => {
   const { translate } = useI18N();
   const isAdmin = prayerGroupDetails?.userRole === PrayerGroupRole.Admin;
@@ -31,7 +33,11 @@ export const PrayerGroupOptions: React.FC<Props> = ({
   };
 
   return (
-    <AppBottomSheet snapPoints={["50%"]} isOpen={isOptionsOpen}>
+    <AppBottomSheet
+      snapPoints={["50%"]}
+      isOpen={isOptionsOpen}
+      setIsOpen={setIsOptionsOpen}
+    >
       <View className="px-4">
         <PrayerGroupOptionButton
           label={translate("prayerGroup.options.about")}

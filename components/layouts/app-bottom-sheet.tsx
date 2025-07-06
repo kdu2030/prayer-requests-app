@@ -10,12 +10,14 @@ import { useTheme } from "react-native-paper";
 
 type Props = {
   isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   snapPoints: (number | string)[];
   children: React.ReactNode;
 };
 
 export const AppBottomSheet: React.FC<Props> = ({
   isOpen,
+  setIsOpen,
   snapPoints,
   children,
 }) => {
@@ -52,6 +54,7 @@ export const AppBottomSheet: React.FC<Props> = ({
       ref={bottomSheetRef}
       backgroundStyle={{ backgroundColor: theme.colors.background }}
       backdropComponent={renderBackdrop}
+      onClose={() => setIsOpen(false)}
     >
       <BottomSheetView>{children}</BottomSheetView>
     </BottomSheet>

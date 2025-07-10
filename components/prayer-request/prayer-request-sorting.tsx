@@ -34,7 +34,7 @@ export const PrayerRequestSorting: React.FC<Props> = ({
       setIsOpen={setIsSortingOpen}
       snapPoints={["50%"]}
     >
-      <View className="px-4">
+      <View className="h-full px-4">
         <Text variant="titleMedium" className="font-bold mb-4">
           {translate("prayerRequest.sorting.header")}
         </Text>
@@ -83,7 +83,7 @@ export const PrayerRequestSorting: React.FC<Props> = ({
           </RadioButton.Group>
         </View>
 
-        <Button mode="contained" className="mt-5">
+        <Button mode="contained" className="mt-auto mb-6">
           {translate("prayerRequest.sorting.action")}
         </Button>
       </View>

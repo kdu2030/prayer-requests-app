@@ -13,6 +13,7 @@ type Props = {
   setIsOpen: (isOpen: boolean) => void;
   snapPoints: (number | string)[];
   children: React.ReactNode;
+  containerClassName?: string;
 };
 
 export const AppBottomSheet: React.FC<Props> = ({
@@ -20,6 +21,7 @@ export const AppBottomSheet: React.FC<Props> = ({
   setIsOpen,
   snapPoints,
   children,
+  containerClassName,
 }) => {
   const theme = useTheme();
   const bottomSheetRef = React.useRef<BottomSheetProps & BottomSheetMethods>(
@@ -56,7 +58,9 @@ export const AppBottomSheet: React.FC<Props> = ({
       backdropComponent={renderBackdrop}
       onClose={() => setIsOpen(false)}
     >
-      <BottomSheetView>{children}</BottomSheetView>
+      <BottomSheetView className={containerClassName}>
+        {children}
+      </BottomSheetView>
     </BottomSheet>
   );
 };

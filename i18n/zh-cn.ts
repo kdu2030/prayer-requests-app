@@ -136,6 +136,7 @@ export const chineseTranslations: Translations = {
   "prayerGroup.request.visibilityDuration.label": "可见时间",
   "prayerGroup.request.expirationDate.week": "{{count}}个星期",
   "prayerGroup.request.expirationDate.weeks": "{{count}}个星期",
+  "prayerGroup.request.joinToViewRequests": "加入以看祷告事项。",
 
   "prayerRequest.label": "祷告事项",
   "prayerRequest.loading": "加载祷告事项",

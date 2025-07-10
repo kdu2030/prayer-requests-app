@@ -13,7 +13,10 @@ import { useI18N } from "../../hooks/use-i18n";
 import { mapPrayerGroupDetails } from "../../mappers/map-prayer-group";
 import { mapPrayerRequests } from "../../mappers/map-prayer-request";
 import { LoadStatus } from "../../types/api-response-types";
-import { PrayerGroupSummary } from "../../types/prayer-group-types";
+import {
+  PrayerGroupDetails,
+  PrayerGroupSummary,
+} from "../../types/prayer-group-types";
 import {
   PrayerRequestFilterCriteria,
   PrayerRequestModel,
@@ -112,7 +115,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setLoadStatus(LoadStatus.Success);
   };
 
-  const loadPrayerGroup = async () => {
+  const loadPrayerGroup = async (): Promise<PrayerGroupDetails | undefined> => {
     setPrayerGroupDetails(undefined);
     setIsLoading(true);
 
@@ -131,17 +134,21 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     const loadedPrayerGroupDetails = mapPrayerGroupDetails(response.value);
     setPrayerGroupDetails(loadedPrayerGroupDetails);
+    return loadedPrayerGroupDetails;
   };
 
   const loadPrayerGroupData = async () => {
     cleanupPrayerRequests();
 
-    await loadPrayerGroup();
-    await loadNextPrayerRequestsForGroup(
-      prayerGroupId,
-      true,
-      DEFAULT_PRAYER_REQUEST_FILTERS
-    );
+    const prayerGroupDetails = await loadPrayerGroup();
+
+    if (prayerGroupDetails?.isUserJoined) {
+      await loadNextPrayerRequestsForGroup(
+        prayerGroupId,
+        true,
+        DEFAULT_PRAYER_REQUEST_FILTERS
+      );
+    }
   };
 
   React.useEffect(() => {

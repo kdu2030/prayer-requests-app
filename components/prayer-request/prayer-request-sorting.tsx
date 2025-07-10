@@ -15,20 +15,18 @@ import { usePrayerRequestSorting } from "./use-prayer-request-sorting";
 type Props = {
   isSortingOpen: boolean;
   setIsSortingOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  filterCriteria: PrayerRequestFilterCriteria;
-  setFilterCriteria: React.Dispatch<
-    React.SetStateAction<PrayerRequestFilterCriteria>
-  >;
+  initialFilterCriteria: PrayerRequestFilterCriteria;
+  onUpdateFilters: (filterCriteria: PrayerRequestFilterCriteria) => void;
 };
 
 export const PrayerRequestSorting: React.FC<Props> = ({
   isSortingOpen,
   setIsSortingOpen,
-  filterCriteria,
-  setFilterCriteria,
+  initialFilterCriteria,
 }) => {
   const { translate } = useI18N();
-  const { sortFieldOptions } = usePrayerRequestSorting();
+  const { sortFieldOptions, filterCriteria, setFilterCriteria } =
+    usePrayerRequestSorting(initialFilterCriteria);
 
   return (
     <AppBottomSheet

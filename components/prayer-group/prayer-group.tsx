@@ -164,8 +164,10 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         <PrayerRequestSorting
           isSortingOpen={isSortingOpen}
           setIsSortingOpen={setIsSortingOpen}
-          filterCriteria={prayerRequestFilters}
-          setFilterCriteria={setPrayerRequestFilters}
+          initialFilterCriteria={prayerRequestFilters}
+          onUpdateFilters={(filterCriteria) =>
+            setPrayerRequestFilters(filterCriteria)
+          }
         />
 
         <ErrorSnackbar

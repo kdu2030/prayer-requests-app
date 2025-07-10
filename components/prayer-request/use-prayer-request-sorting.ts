@@ -2,9 +2,17 @@ import * as React from "react";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { DropdownOption } from "../../types/inputs/dropdown";
-import { PrayerRequestSortFields } from "../../types/prayer-request-types";
+import {
+  PrayerRequestFilterCriteria,
+  PrayerRequestSortFields,
+} from "../../types/prayer-request-types";
 
-export const usePrayerRequestSorting = () => {
+export const usePrayerRequestSorting = (
+  initialFilterCriteria: PrayerRequestFilterCriteria
+) => {
+  const [filterCriteria, setFilterCriteria] =
+    React.useState<PrayerRequestFilterCriteria>(initialFilterCriteria);
+
   const { translate } = useI18N();
 
   const sortFieldOptions: DropdownOption<string>[] = React.useMemo(
@@ -31,5 +39,7 @@ export const usePrayerRequestSorting = () => {
 
   return {
     sortFieldOptions,
+    filterCriteria,
+    setFilterCriteria,
   };
 };

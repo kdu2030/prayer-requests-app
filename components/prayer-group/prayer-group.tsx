@@ -117,12 +117,12 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                 />
               )}
 
-              {prayerRequestLoadStatus === LoadStatus.Success ||
-                (!prayerGroupDetails?.isUserJoined && (
-                  <PrayerRequestPlaceholder
-                    isJoined={prayerGroupDetails?.isUserJoined ?? false}
-                  />
-                ))}
+              {(prayerRequestLoadStatus === LoadStatus.Success ||
+                !prayerGroupDetails?.isUserJoined) && (
+                <PrayerRequestPlaceholder
+                  isJoined={prayerGroupDetails?.isUserJoined ?? false}
+                />
+              )}
             </View>
           </>
         )}

@@ -189,6 +189,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       userRole: PrayerGroupRole.Member,
     });
     setUserData({ ...userData, prayerGroups });
+    loadNextPrayerRequestsForGroup(prayerGroupId, true);
   };
 
   const onRemoveUser = async () => {
@@ -224,6 +225,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     prayerGroups.splice(deletedPrayerGroupIndex, 1);
 
     setUserData({ ...userData, prayerGroups });
+
+    cleanupPrayerRequests();
   };
 
   const onRetry = () => {
@@ -268,6 +271,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       prayerRequests.length > 0
     );
   }, [prayerRequestLoadStatus, prayerRequests.length]);
+
+  React.useEffect(() => {
+    console.log(showPrayerRequestList);
+  }, [showPrayerRequestList]);
 
   const onUpdateFilters = async (filters: PrayerRequestFilterCriteria) => {
     setPrayerRequestFilters(filters);

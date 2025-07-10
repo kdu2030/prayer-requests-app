@@ -36,7 +36,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
 
   return (
     <AppBottomSheet
-      snapPoints={["50%"]}
+      snapPoints={prayerGroupDetails?.isUserJoined ? ["50%"] : ["15%"]}
       isOpen={isOptionsOpen}
       setIsOpen={setIsOptionsOpen}
     >
@@ -67,23 +67,25 @@ export const PrayerGroupOptions: React.FC<Props> = ({
         )}
 
         {prayerGroupDetails?.isUserJoined && (
-          <PrayerGroupOptionButton
-            label={translate("prayerGroup.actions.addPrayerRequest")}
-            icon={<MaterialCommunityIcons name="plus" size={24} />}
-            onPress={() => {
-              onPressOption("/(drawer)/prayergroup/[id]/create");
-            }}
-          />
-        )}
+          <>
+            <PrayerGroupOptionButton
+              label={translate("prayerGroup.actions.addPrayerRequest")}
+              icon={<MaterialCommunityIcons name="plus" size={24} />}
+              onPress={() => {
+                onPressOption("/(drawer)/prayergroup/[id]/create");
+              }}
+            />
 
-        <PrayerGroupOptionButton
-          label={translate("prayerRequest.sorting.label")}
-          icon={<MaterialCommunityIcons name="sort" size={24} />}
-          onPress={() => {
-            setIsOptionsOpen(false);
-            setIsSortingOpen(true);
-          }}
-        />
+            <PrayerGroupOptionButton
+              label={translate("prayerRequest.sorting.label")}
+              icon={<MaterialCommunityIcons name="sort" size={24} />}
+              onPress={() => {
+                setIsOptionsOpen(false);
+                setIsSortingOpen(true);
+              }}
+            />
+          </>
+        )}
       </View>
     </AppBottomSheet>
   );

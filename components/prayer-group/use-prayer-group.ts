@@ -272,10 +272,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     );
   }, [prayerRequestLoadStatus, prayerRequests.length]);
 
-  React.useEffect(() => {
-    console.log(showPrayerRequestList);
-  }, [showPrayerRequestList]);
-
   const onUpdateFilters = async (filters: PrayerRequestFilterCriteria) => {
     setPrayerRequestFilters(filters);
 

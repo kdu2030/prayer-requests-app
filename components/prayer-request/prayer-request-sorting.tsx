@@ -20,15 +20,20 @@ export const PrayerRequestSorting: React.FC<Props> = ({
   isSortingOpen,
   setIsSortingOpen,
   initialFilterCriteria,
+  onUpdateFilters,
 }) => {
   const { translate } = useI18N();
   const {
     sortFieldOptions,
     filterCriteria,
-
     updateSortField,
     updateSortOrder,
-  } = usePrayerRequestSorting(initialFilterCriteria);
+    handleFilterUpdate,
+  } = usePrayerRequestSorting(
+    initialFilterCriteria,
+    setIsSortingOpen,
+    onUpdateFilters
+  );
 
   return (
     <AppBottomSheet
@@ -69,7 +74,11 @@ export const PrayerRequestSorting: React.FC<Props> = ({
           </RadioButton.Group>
         </View>
 
-        <Button mode="contained" className="mt-auto mb-6">
+        <Button
+          mode="contained"
+          className="mt-auto mb-6"
+          onPress={handleFilterUpdate}
+        >
           {translate("prayerRequest.sorting.action")}
         </Button>
       </View>

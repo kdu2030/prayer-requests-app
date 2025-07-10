@@ -8,7 +8,9 @@ import {
 } from "../../types/prayer-request-types";
 
 export const usePrayerRequestSorting = (
-  initialFilterCriteria: PrayerRequestFilterCriteria
+  initialFilterCriteria: PrayerRequestFilterCriteria,
+  setIsSortingOpen: (isOpen: boolean) => void,
+  onUpdateFilters: (filterCriteria: PrayerRequestFilterCriteria) => void
 ) => {
   const [filterCriteria, setFilterCriteria] =
     React.useState<PrayerRequestFilterCriteria>(initialFilterCriteria);
@@ -57,11 +59,17 @@ export const usePrayerRequestSorting = (
     }));
   };
 
+  const handleFilterUpdate = () => {
+    setIsSortingOpen(false);
+    onUpdateFilters({ ...filterCriteria, pageIndex: 0 });
+  };
+
   return {
     sortFieldOptions,
     filterCriteria,
     setFilterCriteria,
     updateSortField,
     updateSortOrder,
+    handleFilterUpdate,
   };
 };

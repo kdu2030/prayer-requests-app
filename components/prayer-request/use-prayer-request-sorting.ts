@@ -37,9 +37,31 @@ export const usePrayerRequestSorting = (
     [translate]
   );
 
+  const updateSortField = (value: PrayerRequestSortFields) => {
+    setFilterCriteria((filterCriteria) => ({
+      ...filterCriteria,
+      sortConfig: {
+        ...filterCriteria.sortConfig,
+        sortField: value as PrayerRequestSortFields,
+      },
+    }));
+  };
+
+  const updateSortOrder = (value: string) => {
+    setFilterCriteria((filterCriteria) => ({
+      ...filterCriteria,
+      sortConfig: {
+        ...filterCriteria.sortConfig,
+        sortOrder: +value,
+      },
+    }));
+  };
+
   return {
     sortFieldOptions,
     filterCriteria,
     setFilterCriteria,
+    updateSortField,
+    updateSortOrder,
   };
 };

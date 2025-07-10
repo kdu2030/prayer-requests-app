@@ -4,10 +4,7 @@ import { Button, RadioButton, Text } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { SortOrder } from "../../types/api-response-types";
-import {
-  PrayerRequestFilterCriteria,
-  PrayerRequestSortFields,
-} from "../../types/prayer-request-types";
+import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
 import { Select } from "../inputs/select";
 import { AppBottomSheet } from "../layouts/app-bottom-sheet";
 import { usePrayerRequestSorting } from "./use-prayer-request-sorting";
@@ -25,8 +22,13 @@ export const PrayerRequestSorting: React.FC<Props> = ({
   initialFilterCriteria,
 }) => {
   const { translate } = useI18N();
-  const { sortFieldOptions, filterCriteria, setFilterCriteria } =
-    usePrayerRequestSorting(initialFilterCriteria);
+  const {
+    sortFieldOptions,
+    filterCriteria,
+
+    updateSortField,
+    updateSortOrder,
+  } = usePrayerRequestSorting(initialFilterCriteria);
 
   return (
     <AppBottomSheet
@@ -43,15 +45,7 @@ export const PrayerRequestSorting: React.FC<Props> = ({
           label={translate("prayerRequest.sorting.sortBy")}
           value={filterCriteria.sortConfig.sortField}
           options={sortFieldOptions}
-          setValue={(value) =>
-            setFilterCriteria((filterCriteria) => ({
-              ...filterCriteria,
-              sortConfig: {
-                ...filterCriteria.sortConfig,
-                sortField: value as PrayerRequestSortFields,
-              },
-            }))
-          }
+          setValue={updateSortField}
         />
 
         <View className="mt-5">
@@ -61,15 +55,7 @@ export const PrayerRequestSorting: React.FC<Props> = ({
 
           <RadioButton.Group
             value={filterCriteria.sortConfig.sortOrder.toString()}
-            onValueChange={(value) =>
-              setFilterCriteria((filterCriteria) => ({
-                ...filterCriteria,
-                sortConfig: {
-                  ...filterCriteria.sortConfig,
-                  sortOrder: +value,
-                },
-              }))
-            }
+            onValueChange={updateSortOrder}
           >
             <RadioButton.Item
               label={translate("prayerRequest.sorting.ascending")}

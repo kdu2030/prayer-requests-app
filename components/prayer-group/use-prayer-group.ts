@@ -262,6 +262,15 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     );
   }, [prayerRequestLoadStatus, prayerRequests.length]);
 
+  const onUpdateFilters = async (filters: PrayerRequestFilterCriteria) => {
+    setPrayerRequestFilters(filters);
+
+    setPrayerRequests([]);
+    prayerRequestTotalCount.current = null;
+
+    await loadNextPrayerRequestsForGroup(prayerGroupId, true, filters);
+  };
+
   return {
     isLoading,
     setIsLoading,
@@ -288,5 +297,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setIsOptionsOpen,
     isSortingOpen,
     setIsSortingOpen,
+    onUpdateFilters,
   };
 };

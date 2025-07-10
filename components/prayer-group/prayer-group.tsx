@@ -51,7 +51,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     isSortingOpen,
     setIsSortingOpen,
     prayerRequestFilters,
-    setPrayerRequestFilters,
+    onUpdateFilters,
   } = usePrayerGroup(prayerGroupId);
 
   const prayerGroupHeader = React.useMemo(
@@ -165,9 +165,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           isSortingOpen={isSortingOpen}
           setIsSortingOpen={setIsSortingOpen}
           initialFilterCriteria={prayerRequestFilters}
-          onUpdateFilters={(filterCriteria) =>
-            setPrayerRequestFilters(filterCriteria)
-          }
+          onUpdateFilters={onUpdateFilters}
         />
 
         <ErrorSnackbar

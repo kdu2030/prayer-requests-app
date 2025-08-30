@@ -8,6 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
 import { useCreatePrayerRequestWizard } from "./use-create-prayer-request-wizard";
+import { VisibilityLevel } from "../../../constants/prayer-group-constants";
 
 export const CreatePrayerRequestWizard: React.FC = () => {
   const theme = useTheme();
@@ -21,7 +22,7 @@ export const CreatePrayerRequestWizard: React.FC = () => {
 
   return (
     <Formik
-      initialValues={{}}
+      initialValues={{ visibilityLevel: VisibilityLevel.Public }}
       validationSchema={getPrayerRequestValidationSchema()}
       onSubmit={() => {}}
       innerRef={formikRef}

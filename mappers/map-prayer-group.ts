@@ -13,16 +13,16 @@ import { mapMediaFile } from "./map-media-file";
 
 export const mapCreatePrayerGroupRequest = (
   createPrayerGroupForm: CreatePrayerGroupForm,
-  imageId: number | undefined,
-  bannerImageId: number | undefined
+  avatarFileId: number | undefined,
+  bannerFileId: number | undefined
 ): PostCreatePrayerGroupRequest => {
   return {
     groupName: createPrayerGroupForm.groupName,
     description: createPrayerGroupForm.description,
     rules: createPrayerGroupForm.rules,
-    color: createPrayerGroupForm.color,
-    imageFileId: imageId,
-    bannerImageFileId: bannerImageId,
+    visibilityLevel: createPrayerGroupForm.visibilityLevel,
+    avatarFileId: avatarFileId,
+    bannerFileId: bannerFileId,
   };
 };
 
@@ -63,9 +63,8 @@ export const mapPrayerGroupDetails = (
     prayerGroupId: rawPrayerGroupDetails.prayerGroupId,
     description: rawPrayerGroupDetails.description,
     groupName: rawPrayerGroupDetails.groupName,
-    color: rawPrayerGroupDetails.color,
     rules: rawPrayerGroupDetails.rules,
-    isUserJoined: rawPrayerGroupDetails.isUserJoined,
+    userJoinStatus: rawPrayerGroupDetails.userJoinStatus,
     userRole: rawPrayerGroupDetails.userRole,
     admins,
     avatarFile: mapMediaFile(rawPrayerGroupDetails.avatarFile),

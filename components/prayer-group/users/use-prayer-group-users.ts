@@ -5,7 +5,10 @@ import * as React from "react";
 import { useDeletePrayerGroupUsers } from "../../../api/delete-prayer-group-users";
 import { useGetPrayerGroupUsers } from "../../../api/get-prayer-group-users";
 import { usePutPrayerGroupAdmins } from "../../../api/put-prayer-group-admins";
-import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
+import {
+  JoinStatus,
+  PrayerGroupRole,
+} from "../../../constants/prayer-group-constants";
 import { sleep } from "../../../helpers/utils";
 import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
@@ -205,7 +208,9 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     setPrayerGroupDetails({
       ...prayerGroupDetails,
       admins: updatedAdmins,
-      isUserJoined: !userDeletedThemselves,
+      userJoinStatus: userDeletedThemselves
+        ? JoinStatus.NotJoined
+        : JoinStatus.Joined,
       userRole: userDeletedThemselves ? undefined : updatedUserRole,
     });
 

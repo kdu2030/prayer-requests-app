@@ -9,7 +9,7 @@ export const postSignin = async (
   signinRequest: SigninForm
 ): Promise<ApiResponse<ApiAuthResponse>> => {
   try {
-    const url = `${baseUrl}/api/v1/user/summary`;
+    const url = `${baseUrl}/api/user/summary`;
     const signinResponse = await axios.post<ApiAuthResponse>(
       url,
       signinRequest

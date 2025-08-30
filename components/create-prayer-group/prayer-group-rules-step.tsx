@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View } from "react-native";
-import { Text } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { TextInput } from "../inputs/text-input";
@@ -24,7 +24,9 @@ type Props = {
 
 export const PrayerGroupRulesStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
-  const { validateForm, setTouched, touched, setErrors } =
+  const theme = useTheme();
+
+  const { validateForm, setTouched, touched, setErrors, values } =
     useFormikContext<CreatePrayerGroupForm>();
 
   const visibilityLevelOptions = React.useMemo(() => {
@@ -39,6 +41,16 @@ export const PrayerGroupRulesStep: React.FC<Props> = ({ setWizardStep }) => {
       },
     ];
   }, []);
+
+  const publicDescription = React.useMemo(
+    () => translate("createPrayerGroup.visibilityLevel.public.description"),
+    []
+  );
+
+  const privateDescription = React.useMemo(
+    () => translate("createPrayerGroup.visibilityLevel.private.description"),
+    []
+  );
 
   return (
     <>
@@ -82,6 +94,18 @@ export const PrayerGroupRulesStep: React.FC<Props> = ({ setWizardStep }) => {
           options={visibilityLevelOptions}
           required
         />
+
+        {values.visibilityLevel === VisibilityLevel.Public && (
+          <Text className="mt-2 text-gray-600" variant="labelLarge">
+            {publicDescription}
+          </Text>
+        )}
+
+        {values.visibilityLevel === VisibilityLevel.Private && (
+          <Text className="mt-2 text-gray-600" variant="labelLarge">
+            {privateDescription}
+          </Text>
+        )}
       </View>
     </>
   );

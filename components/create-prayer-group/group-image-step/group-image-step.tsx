@@ -36,8 +36,8 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
     isLoading,
   } = useGroupImageColorStep();
 
-  const imageError = get(errors, "image.filePath");
-  const bannerImageError = get(errors, "bannerImage.filePath");
+  const imageError = get(errors, "avatarFile.filePath");
+  const bannerImageError = get(errors, "bannerFile.filePath");
 
   return (
     <>
@@ -82,7 +82,7 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
           <Button
             mode="outlined"
             className="w-1/2"
-            onPress={() => selectImage("image", [1, 1])}
+            onPress={() => selectImage("avatarFile", [1, 1])}
             testID={GroupImageColorStepTestIds.selectImageButton}
           >
             {translate("createPrayerGroup.groupImageColorStep.selectImage")}
@@ -92,7 +92,7 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
         {values.avatarFile && (
           <>
             <SelectedImageCard
-              onRemoveImage={() => onRemoveSelectedImage("image")}
+              onRemoveImage={() => onRemoveSelectedImage("avatarFile")}
               fileName={values.avatarFile.fileName ?? ""}
             />
             {imageError && <HelperText type="error">{imageError}</HelperText>}
@@ -107,7 +107,7 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
         <Button
           mode="outlined"
           className="w-1/2"
-          onPress={() => selectImage("bannerImage", [10, 3])}
+          onPress={() => selectImage("bannerFile", [10, 3])}
           testID={GroupImageColorStepTestIds.selectImageButton}
         >
           {translate("createPrayerGroup.groupImageColorStep.selectImage")}
@@ -117,7 +117,7 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
       {values.bannerFile && (
         <>
           <SelectedImageCard
-            onRemoveImage={() => onRemoveSelectedImage("bannerImage")}
+            onRemoveImage={() => onRemoveSelectedImage("bannerFile")}
             fileName={values.bannerFile.fileName ?? ""}
           />
           {bannerImageError && (

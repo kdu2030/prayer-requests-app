@@ -54,6 +54,7 @@ export const useGroupImageColorStep = () => {
         quality: 1,
       });
       const imageResult = result.assets ? result.assets[0] : undefined;
+
       if (!imageResult) {
         return;
       }

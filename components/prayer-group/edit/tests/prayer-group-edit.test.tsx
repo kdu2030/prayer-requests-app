@@ -13,7 +13,7 @@ import { mapPrayerGroupDetails } from "../../../../mappers/map-prayer-group";
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import { UserData } from "../../../../types/context/api-data-context-type";
 import { ManagedErrorResponse } from "../../../../types/error-handling";
-import { FileToUpload, RawMediaFile } from "../../../../types/media-file-types";
+import { FileToUpload, MediaFile } from "../../../../types/media-file-types";
 import {
   PrayerGroupDetails,
   RawPrayerGroupDetails,
@@ -167,7 +167,7 @@ describe(PrayerGroupEdit, () => {
     );
     fireEvent.press(saveButton);
 
-    const mockPostFileResponse: ManagedErrorResponse<RawMediaFile> = {
+    const mockPostFileResponse: ManagedErrorResponse<MediaFile> = {
       isError: false,
       value: mockRawPrayerGroupDetails.bannerFile!,
     };
@@ -204,7 +204,7 @@ describe(PrayerGroupEdit, () => {
     );
     fireEvent.press(saveButton);
 
-    const mockPostFileResponse: ManagedErrorResponse<RawMediaFile> = {
+    const mockPostFileResponse: ManagedErrorResponse<MediaFile> = {
       isError: false,
       value: mockRawPrayerGroupDetails.avatarFile!,
     };

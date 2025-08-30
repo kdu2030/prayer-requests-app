@@ -3,13 +3,13 @@ import {
   PrayerGroupRole,
   VisibilityLevel,
 } from "../constants/prayer-group-constants";
-import { MediaFile, RawMediaFile } from "./media-file-types";
+import { MediaFile } from "./media-file-types";
 
 export type RawPrayerGroupUserSummary = {
   userId?: number;
   fullName?: string;
   username?: string;
-  image?: RawMediaFile;
+  image?: MediaFile;
   prayerGroupRole?: PrayerGroupRole;
 };
 
@@ -54,7 +54,7 @@ export type PrayerGroupDetails = {
 export type RawPrayerGroupSummary = {
   id?: number;
   groupName?: string;
-  avatarFile?: RawMediaFile;
+  avatarFile?: MediaFile;
 };
 
 export type PrayerGroupSummary = Omit<RawPrayerGroupSummary, "id"> & {

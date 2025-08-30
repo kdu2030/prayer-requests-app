@@ -4,19 +4,19 @@ import * as React from "react";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
-import { FileToUpload, RawMediaFile } from "../types/media-file-types";
+import { FileToUpload, MediaFile } from "../types/media-file-types";
 
 const postFile = async (
   fetch: AxiosInstance,
   baseUrl: string,
   file: FileToUpload
-): Promise<ManagedErrorResponse<RawMediaFile>> => {
+): Promise<ManagedErrorResponse<MediaFile>> => {
   try {
     const url = `${baseUrl}/api/file`;
     const formData = new FormData();
     formData.append("file", file as any);
 
-    const response = await fetch.post<RawMediaFile>(url, formData, {
+    const response = await fetch.post<MediaFile>(url, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

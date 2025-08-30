@@ -9,7 +9,6 @@ import {
   RawPrayerGroupSummary,
   RawPrayerGroupUserSummary,
 } from "../types/prayer-group-types";
-import { mapMediaFile } from "./map-media-file";
 
 export const mapCreatePrayerGroupRequest = (
   createPrayerGroupForm: CreatePrayerGroupForm,
@@ -36,7 +35,7 @@ export const mapPrayerGroupSummary = (
   return {
     ...rawPrayerGroupSummary,
     prayerGroupId: rawPrayerGroupSummary.id,
-    avatarFile: mapMediaFile(rawPrayerGroupSummary.avatarFile),
+    avatarFile: rawPrayerGroupSummary.avatarFile,
   };
 };
 
@@ -45,7 +44,7 @@ export const mapPrayerGroupUser = (
 ): PrayerGroupUserSummary => {
   return {
     userId: rawPrayerGroupUser.userId,
-    image: mapMediaFile(rawPrayerGroupUser.image),
+    image: rawPrayerGroupUser.image,
     fullName: rawPrayerGroupUser.fullName,
     username: rawPrayerGroupUser.username,
     prayerGroupRole: rawPrayerGroupUser.prayerGroupRole,
@@ -67,18 +66,18 @@ export const mapPrayerGroupDetails = (
     userJoinStatus: rawPrayerGroupDetails.userJoinStatus,
     userRole: rawPrayerGroupDetails.userRole,
     admins,
-    avatarFile: mapMediaFile(rawPrayerGroupDetails.avatarFile),
-    bannerFile: mapMediaFile(rawPrayerGroupDetails.bannerFile),
+    avatarFile: rawPrayerGroupDetails.avatarFile,
+    bannerFile: rawPrayerGroupDetails.bannerFile,
   };
 };
 
 export const mapPrayerGroupSummaryFromPrayerGroupDetails = (
-  prayerGroupDetails: RawPrayerGroupDetails
+  prayerGroupDetails: PrayerGroupDetails
 ): PrayerGroupSummary => {
   return {
     prayerGroupId: prayerGroupDetails.prayerGroupId,
     groupName: prayerGroupDetails.groupName,
-    avatarFile: mapMediaFile(prayerGroupDetails.avatarFile),
+    avatarFile: prayerGroupDetails.avatarFile,
   };
 };
 

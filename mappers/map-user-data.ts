@@ -6,7 +6,7 @@ import {
   UserData,
   UserTokenPair,
 } from "../types/context/api-data-context-type";
-import { mapMediaFile } from "./map-media-file";
+
 import { mapPrayerGroupSummary } from "./map-prayer-group";
 
 export const mapUserData = (
@@ -21,7 +21,7 @@ export const mapUserData = (
     fullName: userSummaryResponse.fullName,
     email: userSummaryResponse.email,
     username: userSummaryResponse.username,
-    image: mapMediaFile(userSummaryResponse.image),
+    image: userSummaryResponse.image,
     prayerGroups: compact(prayerGroups),
   };
 };

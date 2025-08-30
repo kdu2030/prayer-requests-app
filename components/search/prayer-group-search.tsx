@@ -77,7 +77,7 @@ export const PrayerGroupSearch: React.FC = () => {
                 >
                   <View className="flex-row gap-x-3 items-center px-4 py-2">
                     <ProfilePicture
-                      url={group.imageFile?.url}
+                      url={group.avatarFile?.url}
                       width={36}
                       height={36}
                     />

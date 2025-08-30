@@ -2,8 +2,11 @@ import axios, { AxiosError } from "axios";
 
 import { ApiErrorResponse, ApiResponse } from "../types/api-response-types";
 import { SignupForm } from "../types/forms/auth-forms";
-import { RawMediaFile } from "../types/media-file-types";
-import { RawPrayerGroupSummary } from "../types/prayer-group-types";
+import { MediaFile, RawMediaFile } from "../types/media-file-types";
+import {
+  PrayerGroupSummary,
+  RawPrayerGroupSummary,
+} from "../types/prayer-group-types";
 
 export type RawUserTokenPair = {
   accessToken?: string;
@@ -11,13 +14,13 @@ export type RawUserTokenPair = {
 };
 
 export type ApiAuthResponse = {
-  id?: number;
+  userId?: number;
   username?: string;
   emailAddress?: string;
   fullName?: string;
   tokens?: RawUserTokenPair;
-  image?: RawMediaFile;
-  prayerGroups?: RawPrayerGroupSummary[];
+  image?: MediaFile;
+  prayerGroups?: PrayerGroupSummary[];
 };
 
 export const postSignup = async (
@@ -25,7 +28,7 @@ export const postSignup = async (
   signupRequest: SignupForm
 ): Promise<ApiResponse<ApiAuthResponse>> => {
   try {
-    const url = `${baseUrl}/api/v1/user`;
+    const url = `${baseUrl}/api/user`;
     const signupResponse = await axios.post<ApiAuthResponse>(
       url,
       signupRequest

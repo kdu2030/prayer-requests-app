@@ -41,7 +41,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
             <ProfilePicture
               width={52}
               height={52}
-              url={prayerGroupDetails?.imageFile?.url}
+              url={prayerGroupDetails?.avatarFile?.url}
             />
           </View>
 

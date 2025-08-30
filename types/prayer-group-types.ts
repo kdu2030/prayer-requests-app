@@ -43,14 +43,14 @@ export type PrayerGroupDetails = {
   isUserJoined?: boolean;
   userRole?: PrayerGroupRole;
   admins?: PrayerGroupUserSummary[];
-  imageFile?: MediaFile;
+  avatarFile?: MediaFile;
   bannerImageFile?: MediaFile;
 };
 
 export type RawPrayerGroupSummary = {
   id?: number;
   groupName?: string;
-  imageFile?: RawMediaFile;
+  avatarFile?: RawMediaFile;
 };
 
 export type PrayerGroupSummary = Omit<RawPrayerGroupSummary, "id"> & {

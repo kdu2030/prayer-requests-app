@@ -79,7 +79,7 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                     <PrefixDrawerItem
                       left={
                         <ProfilePicture
-                          url={group.imageFile?.url}
+                          url={group.avatarFile?.url}
                           width={24}
                           height={24}
                         />

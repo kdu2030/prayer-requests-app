@@ -1,7 +1,7 @@
 import { ApiAuthResponse } from "../../api/post-signup";
 
 export const mockUserSummary: ApiAuthResponse = {
-  id: 212,
+  userId: 212,
   username: "darth_vader",
   fullName: "Darth Vader",
   emailAddress: "darthvader@empire.com",

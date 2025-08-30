@@ -40,7 +40,7 @@ export const mockPrayerGroupDetails: PrayerGroupDetails = {
   description: "Prayer Group 2 Description",
   groupName: "Prayer Group 2",
   prayerGroupId: 2,
-  imageFile: {
+  avatarFile: {
     fileName: "80762286-809b-4c1c-8919-c74cc3a140e0.jpeg",
     fileType: 1,
     mediaFileId: 4,
@@ -78,7 +78,7 @@ export const mockPrayerRequests: RawPrayerRequestModel[] = [
     prayerGroup: {
       id: 1,
       groupName: "Grace Christian Fellowship",
-      imageFile: {
+      avatarFile: {
         id: 2,
         fileName: "6c8eb229-ab1f-4adf-a444-aac434c12619.jpeg",
         url: "https://prayerappfileservices.pythonanywhere.com/static/c16e92f9-3c43-42ab-a214-a9230cad3f10.jpeg",
@@ -101,7 +101,7 @@ export const mockPrayerRequests: RawPrayerRequestModel[] = [
     prayerGroup: {
       id: 1,
       groupName: "Grace Christian Fellowship",
-      imageFile: {
+      avatarFile: {
         id: 2,
         fileName: "6c8eb229-ab1f-4adf-a444-aac434c12619.jpeg",
         url: "https://prayerappfileservices.pythonanywhere.com/static/c16e92f9-3c43-42ab-a214-a9230cad3f10.jpeg",
@@ -124,7 +124,7 @@ export const mockPrayerRequests: RawPrayerRequestModel[] = [
     prayerGroup: {
       id: 1,
       groupName: "Grace Christian Fellowship",
-      imageFile: {
+      avatarFile: {
         id: 2,
         fileName: "6c8eb229-ab1f-4adf-a444-aac434c12619.jpeg",
         url: "https://prayerappfileservices.pythonanywhere.com/static/c16e92f9-3c43-42ab-a214-a9230cad3f10.jpeg",

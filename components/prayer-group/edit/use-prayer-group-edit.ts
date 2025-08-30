@@ -92,9 +92,9 @@ export const usePrayerGroupEdit = () => {
     let deleteAvatarPromise;
     let deleteBannerPromise;
 
-    const originalAvatarImageId = originalPrayerGroup.imageFile?.mediaFileId;
+    const originalAvatarImageId = originalPrayerGroup.avatarFile?.mediaFileId;
     const updatedAvatarImageId =
-      updatedPrayerGroupDetails.imageFile?.mediaFileId;
+      updatedPrayerGroupDetails.avatarFile?.mediaFileId;
 
     const originalBannerImageId =
       originalPrayerGroup.bannerImageFile?.mediaFileId;
@@ -129,8 +129,8 @@ export const usePrayerGroupEdit = () => {
     let imageFilePromise;
     let bannerImagePromise;
 
-    if (values.imageFile && !values.imageFile.mediaFileId) {
-      imageFilePromise = postFile(mapFileToUpload(values.imageFile));
+    if (values.avatarFile && !values.avatarFile.mediaFileId) {
+      imageFilePromise = postFile(mapFileToUpload(values.avatarFile));
     }
 
     if (values.bannerImageFile && !values.bannerImageFile.mediaFileId) {
@@ -163,7 +163,7 @@ export const usePrayerGroupEdit = () => {
     }
 
     if (imageFileResponse?.value) {
-      valuesToSubmit.imageFile = mapMediaFile(imageFileResponse.value);
+      valuesToSubmit.avatarFile = mapMediaFile(imageFileResponse.value);
     }
 
     if (bannerImageResponse?.value) {

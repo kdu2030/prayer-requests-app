@@ -174,7 +174,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     const prayerGroupSummary: PrayerGroupSummary = {
       prayerGroupId,
       groupName: prayerGroupDetails?.groupName,
-      imageFile: prayerGroupDetails?.imageFile,
+      avatarFile: prayerGroupDetails?.avatarFile,
     };
 
     const prayerGroups = [...(userData.prayerGroups ?? []), prayerGroupSummary];

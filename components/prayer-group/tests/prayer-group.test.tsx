@@ -119,14 +119,14 @@ describe(PrayerGroup, () => {
       PrayerGroupHeaderTestIds.imageBanner
     );
     expect(prayerGroupBanner).toHaveProp("source", {
-      uri: mockRawPrayerGroupDetails.bannerImageFile?.url,
+      uri: mockRawPrayerGroupDetails.bannerFile?.url,
     });
   });
 
   test("Prayer group banner placeholder displays if banner is null", async () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
       ...mockRawPrayerGroupDetails,
-      bannerImageFile: undefined,
+      bannerFile: undefined,
     };
 
     component = mountPrayerGroup(rawPrayerGroupDetails);

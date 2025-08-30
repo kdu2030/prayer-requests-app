@@ -30,7 +30,7 @@ export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
 
 export const mockPrayerGroupDetails: PrayerGroupDetails = {
   admins: [{ fullName: "Jim Halpert", userId: 1 }],
-  bannerImageFile: {
+  bannerFile: {
     fileName: "1116f806-63cc-4bac-8f9b-00f2e734483f.jpeg",
     fileType: 1,
     mediaFileId: 3,

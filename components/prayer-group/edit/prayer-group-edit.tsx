@@ -82,7 +82,7 @@ export const PrayerGroupEdit: React.FC = () => {
 
                 <GroupPreview
                   profilePictureUri={values?.avatarFile?.url}
-                  bannerUri={values?.bannerImageFile?.url}
+                  bannerUri={values?.bannerFile?.url}
                   groupName={values?.groupName ?? ""}
                   description={values?.description ?? ""}
                   bannerTestID={PrayerGroupEditTestIds.groupPreviewBanner}
@@ -173,16 +173,14 @@ export const PrayerGroupEdit: React.FC = () => {
                   </Button>
                 </View>
 
-                {values.bannerImageFile && (
+                {values.bannerFile && (
                   <>
                     <SelectedImageCard
                       onRemoveImage={() => clearField("bannerImageFile")}
-                      fileName={values.bannerImageFile.fileName ?? ""}
+                      fileName={values.bannerFile.fileName ?? ""}
                     />
-                    {errors.bannerImageFile && (
-                      <HelperText type="error">
-                        {errors.bannerImageFile}
-                      </HelperText>
+                    {errors.bannerFile && (
+                      <HelperText type="error">{errors.bannerFile}</HelperText>
                     )}
                   </>
                 )}

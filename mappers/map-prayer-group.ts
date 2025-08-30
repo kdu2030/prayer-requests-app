@@ -69,7 +69,7 @@ export const mapPrayerGroupDetails = (
     userRole: rawPrayerGroupDetails.userRole,
     admins,
     avatarFile: mapMediaFile(rawPrayerGroupDetails.avatarFile),
-    bannerImageFile: mapMediaFile(rawPrayerGroupDetails.bannerFile),
+    bannerFile: mapMediaFile(rawPrayerGroupDetails.bannerFile),
   };
 };
 
@@ -91,6 +91,6 @@ export const mapPrayerGroupToPutPrayerGroupRequest = (
     description: prayerGroupDetails.description,
     rules: prayerGroupDetails.rules,
     imageFileId: prayerGroupDetails.avatarFile?.mediaFileId,
-    bannerImageFileId: prayerGroupDetails.bannerImageFile?.mediaFileId,
+    bannerImageFileId: prayerGroupDetails.bannerFile?.mediaFileId,
   };
 };

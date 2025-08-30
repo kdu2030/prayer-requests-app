@@ -34,7 +34,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
       className="border-b pb-5"
       style={{ borderColor: theme.colors.outline }}
     >
-      <PrayerGroupBanner uri={prayerGroupDetails?.bannerImageFile?.url} />
+      <PrayerGroupBanner uri={prayerGroupDetails?.bannerFile?.url} />
       <View className="pt-4 px-4 flex-row items-center justify-between">
         <View className="w-2/3 self-start flex-row items-center">
           <View className="mr-4">

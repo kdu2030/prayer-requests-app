@@ -96,10 +96,9 @@ export const usePrayerGroupEdit = () => {
     const updatedAvatarImageId =
       updatedPrayerGroupDetails.avatarFile?.mediaFileId;
 
-    const originalBannerImageId =
-      originalPrayerGroup.bannerImageFile?.mediaFileId;
+    const originalBannerImageId = originalPrayerGroup.bannerFile?.mediaFileId;
     const updatedBannerImageId =
-      updatedPrayerGroupDetails.bannerImageFile?.mediaFileId;
+      updatedPrayerGroupDetails.bannerFile?.mediaFileId;
 
     if (
       originalAvatarImageId &&
@@ -133,8 +132,8 @@ export const usePrayerGroupEdit = () => {
       imageFilePromise = postFile(mapFileToUpload(values.avatarFile));
     }
 
-    if (values.bannerImageFile && !values.bannerImageFile.mediaFileId) {
-      bannerImagePromise = postFile(mapFileToUpload(values.bannerImageFile));
+    if (values.bannerFile && !values.bannerFile.mediaFileId) {
+      bannerImagePromise = postFile(mapFileToUpload(values.bannerFile));
     }
 
     const [imageFileResponse, bannerImageResponse] = await Promise.all([
@@ -167,7 +166,7 @@ export const usePrayerGroupEdit = () => {
     }
 
     if (bannerImageResponse?.value) {
-      valuesToSubmit.bannerImageFile = mapMediaFile(bannerImageResponse.value);
+      valuesToSubmit.bannerFile = mapMediaFile(bannerImageResponse.value);
     }
 
     const putPrayerGroupResponse = await putPrayerGroup(

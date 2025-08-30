@@ -45,7 +45,7 @@ export type PrayerGroupDetails = {
   userRole?: PrayerGroupRole;
   admins?: PrayerGroupUserSummary[];
   avatarFile?: MediaFile;
-  bannerImageFile?: MediaFile;
+  bannerFile?: MediaFile;
 };
 
 export type RawPrayerGroupSummary = {

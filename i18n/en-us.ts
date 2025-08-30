@@ -74,8 +74,7 @@ export const englishTranslations = {
   "createPrayerGroup.groupNameDescription.description": "Description",
   "createPrayerGroup.groupNameDescription.validateGroupFailed":
     "Unable to validate group name",
-  "createPrayerGroup.rules.title":
-    "Add Content Rules and Select Visibility Level",
+  "createPrayerGroup.rules.title": "Content Rules and Visibility Level",
   "createPrayerGroup.rules.stepDescription":
     "Let your group members know what can be posted.",
   "createPrayerGroup.visibilityLevel.label": "Visibility Level",

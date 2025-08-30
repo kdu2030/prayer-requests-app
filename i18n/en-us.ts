@@ -81,6 +81,10 @@ export const englishTranslations = {
   "createPrayerGroup.visibilityLevel.label": "Visibility Level",
   "createPrayerGroup.visibilityLevel.public": "Public",
   "createPrayerGroup.visibilityLevel.private": "Private",
+  "createPrayerGroup.visibilityLevel.public.description":
+    "Anyone can join the prayer group and view prayer requests.",
+  "createPrayerGroup.visibilityLevel.private.description":
+    "Prayer requests are visible only to members, and joining requires admin approval.",
   "createPrayerGroup.rules.label": "Rules",
   "createPrayerGroup.groupImageColorStep.title": "Style your Prayer Group",
   "createPrayerGroup.groupImageColorStep.description":

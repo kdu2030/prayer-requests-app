@@ -10,7 +10,7 @@ const deleteFile = async (
   baseUrl: string,
   fileId: number
 ): Promise<BaseManagedErrorResponse> => {
-  const url = `${baseUrl}/api/v1/file/${fileId}`;
+  const url = `${baseUrl}/api/file/${fileId}`;
 
   try {
     await fetch.delete(url);

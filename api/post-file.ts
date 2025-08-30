@@ -12,7 +12,7 @@ const postFile = async (
   file: FileToUpload
 ): Promise<ManagedErrorResponse<RawMediaFile>> => {
   try {
-    const url = `${baseUrl}/api/v1/file`;
+    const url = `${baseUrl}/api/file`;
     const formData = new FormData();
     formData.append("file", file as any);
 

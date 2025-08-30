@@ -79,6 +79,10 @@ export const chineseTranslations: Translations = {
   "createPrayerGroup.visibilityLevel.label": "可见性",
   "createPrayerGroup.visibilityLevel.public": "公共",
   "createPrayerGroup.visibilityLevel.private": "私密",
+  "createPrayerGroup.visibilityLevel.public.description":
+    "任何人都可以加入你的祷告小组并查看小组的祷告事项。",
+  "createPrayerGroup.visibilityLevel.private.description":
+    "只有小组成员才能查看祷告事项，加入必须经过管理员的同意。",
   "createPrayerGroup.rules.stepDescription":
     "让您的小组成员知道可以发布什么内容。",
   "createPrayerGroup.rules.label": "规则",

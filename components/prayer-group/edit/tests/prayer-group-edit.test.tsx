@@ -154,7 +154,7 @@ describe(PrayerGroupEdit, () => {
       ...mockRawPrayerGroupDetails,
       bannerFile: {
         ...mockRawPrayerGroupDetails.bannerFile,
-        id: undefined,
+        mediaFileId: undefined,
       },
     };
 
@@ -191,7 +191,7 @@ describe(PrayerGroupEdit, () => {
       ...mockRawPrayerGroupDetails,
       avatarFile: {
         ...mockRawPrayerGroupDetails.avatarFile,
-        id: undefined,
+        mediaFileId: undefined,
       },
     };
 
@@ -214,7 +214,7 @@ describe(PrayerGroupEdit, () => {
         isError: false,
         value: {
           ...mockRawPrayerGroupDetails,
-          avatarFile: { ...mockMediaFile, id: 4 },
+          avatarFile: { ...mockMediaFile, mediaFileId: 4 },
         },
       };
 

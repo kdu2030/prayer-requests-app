@@ -8,6 +8,7 @@ import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { PrayerGroupBanner } from "./prayer-group-banner";
 import { PrayerGroupHeaderTestIds } from "./tests/test-ids";
+import { JoinStatus } from "../../../constants/prayer-group-constants";
 
 type Props = {
   prayerGroupDetails: PrayerGroupDetails | undefined;
@@ -55,7 +56,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
           </Text>
         </View>
 
-        {prayerGroupDetails?.isUserJoined && (
+        {prayerGroupDetails?.userJoinStatus === JoinStatus.Joined && (
           <Button
             icon={"check"}
             className="justify-self-end"
@@ -68,7 +69,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
           </Button>
         )}
 
-        {!prayerGroupDetails?.isUserJoined && (
+        {prayerGroupDetails?.userJoinStatus != JoinStatus.Joined && (
           <Button
             icon={"account-multiple-plus"}
             className="justify-self-end"
@@ -87,7 +88,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
         </Text>
 
         <View className="flex-row gap-x-4 mt-4">
-          {prayerGroupDetails?.isUserJoined ? (
+          {prayerGroupDetails?.userJoinStatus === JoinStatus.Joined ? (
             <Button
               icon="plus"
               className="flex-1"

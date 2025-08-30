@@ -39,7 +39,6 @@ export type PrayerGroupDetails = {
   groupName?: string;
   description?: string;
   rules?: string;
-  color?: string;
   isUserJoined?: boolean;
   userRole?: PrayerGroupRole;
   admins?: PrayerGroupUserSummary[];

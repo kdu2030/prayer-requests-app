@@ -17,7 +17,7 @@ export const mapUserData = (
   );
 
   return {
-    userId: userSummaryResponse.id,
+    userId: userSummaryResponse.userId,
     fullName: userSummaryResponse.fullName,
     email: userSummaryResponse.email,
     username: userSummaryResponse.username,

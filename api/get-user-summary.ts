@@ -5,18 +5,18 @@ import { BEARER_PREFIX } from "../constants/auth-constants";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
-import { RawMediaFile } from "../types/media-file-types";
-import { RawPrayerGroupSummary } from "../types/prayer-group-types";
+import { MediaFile } from "../types/media-file-types";
+import { PrayerGroupSummary } from "../types/prayer-group-types";
 import { RawUserTokenPair } from "./post-signup";
 
 export type GetUserSummaryResponse = {
-  id?: number;
+  userId?: number;
   username?: string;
   email?: string;
   fullName?: string;
   tokens?: RawUserTokenPair;
-  image?: RawMediaFile;
-  prayerGroups?: RawPrayerGroupSummary[];
+  image?: MediaFile;
+  prayerGroups?: PrayerGroupSummary[];
 };
 
 const getUserSummary = async (
@@ -25,7 +25,7 @@ const getUserSummary = async (
   userId: number
 ): Promise<ManagedErrorResponse<GetUserSummaryResponse>> => {
   try {
-    const url = `${baseUrl}/api/v1/user/${userId}/summary`;
+    const url = `${baseUrl}/api/user/${userId}/summary`;
     const response = await fetch.get<GetUserSummaryResponse>(url, {
       headers: { "Content-Type": "application/json" },
     });
@@ -42,7 +42,7 @@ export const getUserSummaryRaw = async (
   userId: number
 ): Promise<ManagedErrorResponse<GetUserSummaryResponse>> => {
   try {
-    const url = `${baseUrl}/api/v1/user/${userId}/summary`;
+    const url = `${baseUrl}/api/user/${userId}/summary`;
     const response = await axios.get<GetUserSummaryResponse>(url, {
       headers: {
         "Content-Type": "application/json",

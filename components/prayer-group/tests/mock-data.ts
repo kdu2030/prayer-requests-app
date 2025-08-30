@@ -7,8 +7,8 @@ import {
 import { RawPrayerRequestModel } from "../../../types/prayer-request-types";
 
 export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
-  admins: [{ fullName: "Jim Halpert", id: 1 }],
-  bannerImageFile: {
+  admins: [{ fullName: "Jim Halpert", userId: 1 }],
+  bannerFile: {
     fileName: "1116f806-63cc-4bac-8f9b-00f2e734483f.jpeg",
     fileType: 1,
     id: 3,
@@ -17,8 +17,8 @@ export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
   color: "#106d20",
   description: "Prayer Group 2 Description",
   groupName: "Prayer Group 2",
-  id: 2,
-  imageFile: {
+  prayerGroupId: 2,
+  avatarFile: {
     fileName: "80762286-809b-4c1c-8919-c74cc3a140e0.jpeg",
     fileType: 1,
     id: 4,
@@ -85,7 +85,11 @@ export const mockPrayerRequests: RawPrayerRequestModel[] = [
         fileType: 1,
       },
     },
-    user: { id: 1, username: "jhalpert", fullName: "Jim Halpert" },
+    user: {
+      userId: 1,
+      username: "jhalpert",
+      fullName: "Jim Halpert",
+    },
     likeCount: 1,
     commentCount: 0,
     prayedCount: 0,
@@ -108,7 +112,11 @@ export const mockPrayerRequests: RawPrayerRequestModel[] = [
         fileType: 1,
       },
     },
-    user: { id: 1, username: "jhalpert", fullName: "Jim Halpert" },
+    user: {
+      userId: 1,
+      username: "jhalpert",
+      fullName: "Jim Halpert",
+    },
     likeCount: 1,
     commentCount: 0,
     prayedCount: 0,
@@ -131,7 +139,11 @@ export const mockPrayerRequests: RawPrayerRequestModel[] = [
         fileType: 1,
       },
     },
-    user: { id: 1, username: "jhalpert", fullName: "Jim Halpert" },
+    user: {
+      userId: 1,
+      username: "jhalpert",
+      fullName: "Jim Halpert",
+    },
     likeCount: 0,
     commentCount: 0,
     prayedCount: 0,

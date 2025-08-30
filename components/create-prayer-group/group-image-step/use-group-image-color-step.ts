@@ -137,7 +137,7 @@ export const useGroupImageColorStep = () => {
       return;
     }
 
-    const prayerGroupId = createPrayerGroupResponse.value.id;
+    const prayerGroupId = createPrayerGroupResponse.value.prayerGroupId;
 
     const prayerGroupSummary = mapPrayerGroupSummaryFromPrayerGroupDetails(
       createPrayerGroupResponse.value

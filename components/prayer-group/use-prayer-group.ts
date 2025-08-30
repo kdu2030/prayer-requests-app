@@ -127,7 +127,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       return;
     }
 
-    if (response.value.id !== prayerGroupId) {
+    if (response.value.prayerGroupId !== prayerGroupId) {
       // This could happen if the user switches prayer groups in the middle of loading
       return;
     }

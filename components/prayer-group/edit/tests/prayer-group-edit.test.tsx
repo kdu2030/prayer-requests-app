@@ -152,8 +152,8 @@ describe(PrayerGroupEdit, () => {
   test("Post file gets called if banner image is not uploaded", async () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
       ...mockRawPrayerGroupDetails,
-      bannerImageFile: {
-        ...mockRawPrayerGroupDetails.bannerImageFile,
+      bannerFile: {
+        ...mockRawPrayerGroupDetails.bannerFile,
         id: undefined,
       },
     };
@@ -169,7 +169,7 @@ describe(PrayerGroupEdit, () => {
 
     const mockPostFileResponse: ManagedErrorResponse<RawMediaFile> = {
       isError: false,
-      value: mockRawPrayerGroupDetails.bannerImageFile!,
+      value: mockRawPrayerGroupDetails.bannerFile!,
     };
 
     const mockPutPrayerGroupResponse: ManagedErrorResponse<RawPrayerGroupDetails> =
@@ -189,8 +189,8 @@ describe(PrayerGroupEdit, () => {
   test("Avatar image in user data gets updated in user data upon save", async () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
       ...mockRawPrayerGroupDetails,
-      imageFile: {
-        ...mockRawPrayerGroupDetails.imageFile,
+      avatarFile: {
+        ...mockRawPrayerGroupDetails.avatarFile,
         id: undefined,
       },
     };
@@ -206,7 +206,7 @@ describe(PrayerGroupEdit, () => {
 
     const mockPostFileResponse: ManagedErrorResponse<RawMediaFile> = {
       isError: false,
-      value: mockRawPrayerGroupDetails.imageFile!,
+      value: mockRawPrayerGroupDetails.avatarFile!,
     };
 
     const mockPutPrayerGroupResponse: ManagedErrorResponse<RawPrayerGroupDetails> =
@@ -214,7 +214,7 @@ describe(PrayerGroupEdit, () => {
         isError: false,
         value: {
           ...mockRawPrayerGroupDetails,
-          imageFile: { ...mockMediaFile, id: 4 },
+          avatarFile: { ...mockMediaFile, id: 4 },
         },
       };
 

@@ -80,7 +80,9 @@ const mountPrayerGroupUsers = (
   mockGetPrayerGroupUsers.mockReturnValue(getUsersResponse);
 
   return mountComponent(
-    <PrayerGroupUsers prayerGroupId={mockRawPrayerGroupDetails.id ?? -1} />
+    <PrayerGroupUsers
+      prayerGroupId={mockRawPrayerGroupDetails.prayerGroupId ?? -1}
+    />
   );
 };
 

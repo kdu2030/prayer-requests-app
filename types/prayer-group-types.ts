@@ -1,8 +1,11 @@
-import { PrayerGroupRole } from "../constants/prayer-group-constants";
+import {
+  JoinStatus,
+  PrayerGroupRole,
+} from "../constants/prayer-group-constants";
 import { MediaFile, RawMediaFile } from "./media-file-types";
 
 export type RawPrayerGroupUserSummary = {
-  id?: number;
+  userId?: number;
   fullName?: string;
   username?: string;
   image?: RawMediaFile;
@@ -22,16 +25,15 @@ export interface DeletablePrayerGroupUser extends PrayerGroupUserSummary {
 }
 
 export type RawPrayerGroupDetails = {
-  id?: number;
+  prayerGroupId?: number;
   groupName?: string;
   description?: string;
   rules?: string;
-  color?: string;
-  isUserJoined?: boolean;
+  userJoinStatus?: JoinStatus;
   userRole?: PrayerGroupRole;
   admins?: RawPrayerGroupUserSummary[];
-  imageFile?: RawMediaFile;
-  bannerImageFile?: RawMediaFile;
+  avatarFile?: RawMediaFile;
+  bannerFile?: RawMediaFile;
 };
 
 export type PrayerGroupDetails = {
@@ -39,7 +41,7 @@ export type PrayerGroupDetails = {
   groupName?: string;
   description?: string;
   rules?: string;
-  isUserJoined?: boolean;
+  userJoinStatus?: JoinStatus;
   userRole?: PrayerGroupRole;
   admins?: PrayerGroupUserSummary[];
   avatarFile?: MediaFile;

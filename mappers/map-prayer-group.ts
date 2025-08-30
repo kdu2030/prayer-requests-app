@@ -44,7 +44,7 @@ export const mapPrayerGroupUser = (
   rawPrayerGroupUser: RawPrayerGroupUserSummary
 ): PrayerGroupUserSummary => {
   return {
-    userId: rawPrayerGroupUser.id,
+    userId: rawPrayerGroupUser.userId,
     image: mapMediaFile(rawPrayerGroupUser.image),
     fullName: rawPrayerGroupUser.fullName,
     username: rawPrayerGroupUser.username,
@@ -60,7 +60,7 @@ export const mapPrayerGroupDetails = (
   );
 
   return {
-    prayerGroupId: rawPrayerGroupDetails.id,
+    prayerGroupId: rawPrayerGroupDetails.prayerGroupId,
     description: rawPrayerGroupDetails.description,
     groupName: rawPrayerGroupDetails.groupName,
     color: rawPrayerGroupDetails.color,
@@ -68,8 +68,8 @@ export const mapPrayerGroupDetails = (
     isUserJoined: rawPrayerGroupDetails.isUserJoined,
     userRole: rawPrayerGroupDetails.userRole,
     admins,
-    avatarFile: mapMediaFile(rawPrayerGroupDetails.imageFile),
-    bannerImageFile: mapMediaFile(rawPrayerGroupDetails.bannerImageFile),
+    avatarFile: mapMediaFile(rawPrayerGroupDetails.avatarFile),
+    bannerImageFile: mapMediaFile(rawPrayerGroupDetails.bannerFile),
   };
 };
 
@@ -77,9 +77,9 @@ export const mapPrayerGroupSummaryFromPrayerGroupDetails = (
   prayerGroupDetails: RawPrayerGroupDetails
 ): PrayerGroupSummary => {
   return {
-    prayerGroupId: prayerGroupDetails.id,
+    prayerGroupId: prayerGroupDetails.prayerGroupId,
     groupName: prayerGroupDetails.groupName,
-    avatarFile: mapMediaFile(prayerGroupDetails.imageFile),
+    avatarFile: mapMediaFile(prayerGroupDetails.avatarFile),
   };
 };
 

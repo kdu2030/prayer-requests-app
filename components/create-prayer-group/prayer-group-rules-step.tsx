@@ -12,6 +12,9 @@ import {
 } from "./create-prayer-group-constants";
 import { FormikSelect } from "../inputs/formik-select";
 import { VisibilityLevel } from "../../constants/prayer-group-constants";
+import { setNestedObjectValues, useFormikContext } from "formik";
+import { CreatePrayerGroupForm } from "./create-prayer-group-types";
+import { isEmpty } from "lodash";
 
 type Props = {
   setWizardStep: React.Dispatch<
@@ -21,6 +24,8 @@ type Props = {
 
 export const PrayerGroupRulesStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
+  const { validateForm, setTouched, touched, setErrors } =
+    useFormikContext<CreatePrayerGroupForm>();
 
   const visibilityLevelOptions = React.useMemo(() => {
     return [
@@ -43,7 +48,15 @@ export const PrayerGroupRulesStep: React.FC<Props> = ({ setWizardStep }) => {
         onBack={() =>
           setWizardStep(CreatePrayerGroupWizardStep.NameDescriptionStep)
         }
-        onNext={() => {
+        onNext={async () => {
+          const errors = await validateForm();
+
+          if (!isEmpty(errors)) {
+            setTouched(setNestedObjectValues({ ...errors, ...touched }, true));
+            setErrors(errors);
+            return;
+          }
+
           setWizardStep(CreatePrayerGroupWizardStep.ImageStep);
         }}
         testIDs={WIZARD_TEST_IDS_CONFIG}

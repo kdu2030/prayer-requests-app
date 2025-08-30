@@ -10,6 +10,8 @@ import {
   NUM_CREATE_PRAYER_GROUP_STEPS,
   WIZARD_TEST_IDS_CONFIG,
 } from "./create-prayer-group-constants";
+import { FormikSelect } from "../inputs/formik-select";
+import { VisibilityLevel } from "../../constants/prayer-group-constants";
 
 type Props = {
   setWizardStep: React.Dispatch<
@@ -19,6 +21,20 @@ type Props = {
 
 export const PrayerGroupRulesStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
+
+  const visibilityLevelOptions = React.useMemo(() => {
+    return [
+      {
+        label: translate("createPrayerGroup.visibilityLevel.public"),
+        value: VisibilityLevel.Public,
+      },
+      {
+        label: translate("createPrayerGroup.visibilityLevel.private"),
+        value: VisibilityLevel.Private,
+      },
+    ];
+  }, []);
+
   return (
     <>
       <WizardHeader
@@ -34,19 +50,24 @@ export const PrayerGroupRulesStep: React.FC<Props> = ({ setWizardStep }) => {
       />
 
       <View className="mt-4">
-        <Text className="mb-2 font-bold" variant="titleLarge">
+        <Text className="mb-5 font-bold" variant="titleLarge">
           {translate("createPrayerGroup.rules.title")}
-        </Text>
-
-        <Text variant="bodyLarge" className="mb-5">
-          {translate("createPrayerGroup.rules.stepDescription")}
         </Text>
 
         <TextInput
           name="rules"
+          containerClassNames="mb-5"
           label={translate("createPrayerGroup.rules.label")}
           numberOfLines={5}
           multiline
+        />
+
+        <FormikSelect
+          name="visibilityLevel"
+          mode="flat"
+          label={translate("createPrayerGroup.visibilityLevel.label")}
+          options={visibilityLevelOptions}
+          required
         />
       </View>
     </>

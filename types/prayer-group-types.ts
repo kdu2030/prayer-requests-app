@@ -1,6 +1,7 @@
 import {
   JoinStatus,
   PrayerGroupRole,
+  VisibilityLevel,
 } from "../constants/prayer-group-constants";
 import { MediaFile, RawMediaFile } from "./media-file-types";
 
@@ -29,11 +30,12 @@ export type RawPrayerGroupDetails = {
   groupName?: string;
   description?: string;
   rules?: string;
+  visibilityLevel?: VisibilityLevel;
   userJoinStatus?: JoinStatus;
   userRole?: PrayerGroupRole;
-  admins?: RawPrayerGroupUserSummary[];
-  avatarFile?: RawMediaFile;
-  bannerFile?: RawMediaFile;
+  admins?: PrayerGroupUserSummary;
+  avatarFile?: MediaFile;
+  bannerFile?: MediaFile;
 };
 
 export type PrayerGroupDetails = {
@@ -41,6 +43,7 @@ export type PrayerGroupDetails = {
   groupName?: string;
   description?: string;
   rules?: string;
+  visibilityLevel?: VisibilityLevel;
   userJoinStatus?: JoinStatus;
   userRole?: PrayerGroupRole;
   admins?: PrayerGroupUserSummary[];

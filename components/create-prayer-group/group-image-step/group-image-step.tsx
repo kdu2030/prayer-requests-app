@@ -68,8 +68,8 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
         <GroupPreview
           groupName={values.groupName ?? ""}
           description={values.description ?? ""}
-          profilePictureUri={values.image?.url}
-          bannerUri={values?.bannerImage?.url}
+          profilePictureUri={values.avatarFile?.url}
+          bannerUri={values?.bannerFile?.url}
           bannerTestID={GroupImageColorStepTestIds.backgroundColorPreview}
           groupNameTestID={GroupImageColorStepTestIds.groupNamePreview}
           descriptionTestID={GroupImageColorStepTestIds.descriptionPreview}
@@ -89,11 +89,11 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
           </Button>
         </View>
 
-        {values.image && (
+        {values.avatarFile && (
           <>
             <SelectedImageCard
               onRemoveImage={() => onRemoveSelectedImage("image")}
-              fileName={values.image.fileName ?? ""}
+              fileName={values.avatarFile.fileName ?? ""}
             />
             {imageError && <HelperText type="error">{imageError}</HelperText>}
           </>
@@ -114,11 +114,11 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
         </Button>
       </View>
 
-      {values.bannerImage && (
+      {values.bannerFile && (
         <>
           <SelectedImageCard
             onRemoveImage={() => onRemoveSelectedImage("bannerImage")}
-            fileName={values.bannerImage.fileName ?? ""}
+            fileName={values.bannerFile.fileName ?? ""}
           />
           {bannerImageError && (
             <HelperText type="error">{bannerImageError}</HelperText>

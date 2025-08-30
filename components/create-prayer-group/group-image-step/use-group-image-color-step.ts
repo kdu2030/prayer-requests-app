@@ -100,8 +100,8 @@ export const useGroupImageColorStep = () => {
     setIsLoading(true);
 
     const [imageUploadResponse, bannerImageUploadResponse] = await Promise.all([
-      uploadPrayerGroupImage(values.image),
-      uploadPrayerGroupImage(values.bannerImage),
+      uploadPrayerGroupImage(values.avatarFile),
+      uploadPrayerGroupImage(values.bannerFile),
     ]);
 
     if (imageUploadResponse.isError || bannerImageUploadResponse.isError) {

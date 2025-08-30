@@ -3,6 +3,7 @@ import * as React from "react";
 import { View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 
+import { JoinStatus } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { ProfilePicture } from "../../layouts/profile-picture";
@@ -34,14 +35,14 @@ export const PrayerGroupHeader: React.FC<Props> = ({
       className="border-b pb-5"
       style={{ borderColor: theme.colors.outline }}
     >
-      <PrayerGroupBanner uri={prayerGroupDetails?.bannerImageFile?.url} />
+      <PrayerGroupBanner uri={prayerGroupDetails?.bannerFile?.fileUrl} />
       <View className="pt-4 px-4 flex-row items-center justify-between">
         <View className="w-2/3 self-start flex-row items-center">
           <View className="mr-4">
             <ProfilePicture
               width={52}
               height={52}
-              url={prayerGroupDetails?.imageFile?.url}
+              url={prayerGroupDetails?.avatarFile?.fileUrl}
             />
           </View>
 
@@ -55,7 +56,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
           </Text>
         </View>
 
-        {prayerGroupDetails?.isUserJoined && (
+        {prayerGroupDetails?.userJoinStatus === JoinStatus.Joined && (
           <Button
             icon={"check"}
             className="justify-self-end"
@@ -68,7 +69,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
           </Button>
         )}
 
-        {!prayerGroupDetails?.isUserJoined && (
+        {prayerGroupDetails?.userJoinStatus != JoinStatus.Joined && (
           <Button
             icon={"account-multiple-plus"}
             className="justify-self-end"
@@ -87,7 +88,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
         </Text>
 
         <View className="flex-row gap-x-4 mt-4">
-          {prayerGroupDetails?.isUserJoined ? (
+          {prayerGroupDetails?.userJoinStatus === JoinStatus.Joined ? (
             <Button
               icon="plus"
               className="flex-1"

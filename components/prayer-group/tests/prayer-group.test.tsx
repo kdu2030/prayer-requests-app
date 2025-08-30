@@ -9,7 +9,10 @@ import {
 } from "@testing-library/react-native";
 
 import { PrayerGroupUserToAdd } from "../../../api/post-prayer-group-users";
-import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
+import {
+  JoinStatus,
+  PrayerGroupRole,
+} from "../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { SortOrder } from "../../../types/api-response-types";
 import { ManagedErrorResponse } from "../../../types/error-handling";
@@ -119,14 +122,14 @@ describe(PrayerGroup, () => {
       PrayerGroupHeaderTestIds.imageBanner
     );
     expect(prayerGroupBanner).toHaveProp("source", {
-      uri: mockRawPrayerGroupDetails.bannerImageFile?.url,
+      uri: mockRawPrayerGroupDetails.bannerFile?.fileUrl,
     });
   });
 
   test("Prayer group banner placeholder displays if banner is null", async () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
       ...mockRawPrayerGroupDetails,
-      bannerImageFile: undefined,
+      bannerFile: undefined,
     };
 
     component = mountPrayerGroup(rawPrayerGroupDetails);
@@ -153,7 +156,7 @@ describe(PrayerGroup, () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
       ...mockRawPrayerGroupDetails,
       userRole: undefined,
-      isUserJoined: false,
+      userJoinStatus: JoinStatus.NotJoined,
     };
 
     component = mountPrayerGroup(rawPrayerGroupDetails);
@@ -175,7 +178,7 @@ describe(PrayerGroup, () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
       ...mockRawPrayerGroupDetails,
       userRole: undefined,
-      isUserJoined: false,
+      userJoinStatus: JoinStatus.NotJoined,
     };
 
     component = mountPrayerGroup(rawPrayerGroupDetails);

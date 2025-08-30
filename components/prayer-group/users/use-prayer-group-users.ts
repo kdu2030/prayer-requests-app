@@ -5,7 +5,10 @@ import * as React from "react";
 import { useDeletePrayerGroupUsers } from "../../../api/delete-prayer-group-users";
 import { useGetPrayerGroupUsers } from "../../../api/get-prayer-group-users";
 import { usePutPrayerGroupAdmins } from "../../../api/put-prayer-group-admins";
-import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
+import {
+  JoinStatus,
+  PrayerGroupRole,
+} from "../../../constants/prayer-group-constants";
 import { sleep } from "../../../helpers/utils";
 import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
@@ -136,8 +139,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     const updatedFilteredUsers = [...filteredUsers];
     const updatedUsers = [...prayerGroupUsers];
 
-    updatedFilteredUsers[index].role = role;
-    updatedUsers[prayerGroupUsersIndex].role = role;
+    updatedFilteredUsers[index].prayerGroupRole = role;
+    updatedUsers[prayerGroupUsersIndex].prayerGroupRole = role;
 
     setPrayerGroupUsers(updatedUsers);
     setFilteredUsers(updatedFilteredUsers);
@@ -156,7 +159,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
         userIdsToDelete.push(user.userId);
       }
 
-      if (user.role === PrayerGroupRole.Admin && !user.isDeleted) {
+      if (user.prayerGroupRole === PrayerGroupRole.Admin && !user.isDeleted) {
         adminUserIds.push(user.userId);
       }
     });
@@ -205,7 +208,9 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     setPrayerGroupDetails({
       ...prayerGroupDetails,
       admins: updatedAdmins,
-      isUserJoined: !userDeletedThemselves,
+      userJoinStatus: userDeletedThemselves
+        ? JoinStatus.NotJoined
+        : JoinStatus.Joined,
       userRole: userDeletedThemselves ? undefined : updatedUserRole,
     });
 

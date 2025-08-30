@@ -1,10 +1,11 @@
+import { VisibilityLevel } from "../../constants/prayer-group-constants";
 import { MediaFile } from "../../types/media-file-types";
 
 export type CreatePrayerGroupForm = {
   groupName?: string;
   description?: string;
   rules?: string;
-  image?: MediaFile;
-  color?: string;
-  bannerImage?: MediaFile;
+  visibilityLevel?: VisibilityLevel;
+  avatarFile?: MediaFile;
+  bannerFile?: MediaFile;
 };

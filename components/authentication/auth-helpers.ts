@@ -18,7 +18,7 @@ export const handleSuccessfulAuthentication = (
   setUserData: (userData: UserData) => void,
   setUserTokens: (userTokenPair: UserTokenPair) => void
 ) => {
-  const { id: userId } = apiAuthResponse;
+  const { userId: userId } = apiAuthResponse;
   const { refreshToken, accessToken } = apiAuthResponse?.tokens ?? {};
 
   if (!refreshToken || !accessToken) {

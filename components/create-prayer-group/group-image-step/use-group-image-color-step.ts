@@ -17,7 +17,7 @@ import {
   mapPrayerGroupSummaryFromPrayerGroupDetails,
 } from "../../../mappers/map-prayer-group";
 import { ManagedErrorResponse } from "../../../types/error-handling";
-import { MediaFile, RawMediaFile } from "../../../types/media-file-types";
+import { MediaFile } from "../../../types/media-file-types";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 
 export const useGroupImageColorStep = () => {
@@ -54,6 +54,7 @@ export const useGroupImageColorStep = () => {
         quality: 1,
       });
       const imageResult = result.assets ? result.assets[0] : undefined;
+
       if (!imageResult) {
         return;
       }
@@ -77,7 +78,7 @@ export const useGroupImageColorStep = () => {
 
   const uploadPrayerGroupImage = async (
     image: MediaFile | undefined
-  ): Promise<ManagedErrorResponse<RawMediaFile | undefined>> => {
+  ): Promise<ManagedErrorResponse<MediaFile | undefined>> => {
     if (!image) {
       return { isError: false, value: undefined };
     }
@@ -100,8 +101,8 @@ export const useGroupImageColorStep = () => {
     setIsLoading(true);
 
     const [imageUploadResponse, bannerImageUploadResponse] = await Promise.all([
-      uploadPrayerGroupImage(values.image),
-      uploadPrayerGroupImage(values.bannerImage),
+      uploadPrayerGroupImage(values.avatarFile),
+      uploadPrayerGroupImage(values.bannerFile),
     ]);
 
     if (imageUploadResponse.isError || bannerImageUploadResponse.isError) {
@@ -114,8 +115,8 @@ export const useGroupImageColorStep = () => {
       return;
     }
 
-    const imageId = imageUploadResponse.value?.id;
-    const bannerImageId = bannerImageUploadResponse.value?.id;
+    const imageId = imageUploadResponse.value?.mediaFileId;
+    const bannerImageId = bannerImageUploadResponse.value?.mediaFileId;
 
     const createPrayerGroupRequest = mapCreatePrayerGroupRequest(
       values,
@@ -137,7 +138,7 @@ export const useGroupImageColorStep = () => {
       return;
     }
 
-    const prayerGroupId = createPrayerGroupResponse.value.id;
+    const prayerGroupId = createPrayerGroupResponse.value.prayerGroupId;
 
     const prayerGroupSummary = mapPrayerGroupSummaryFromPrayerGroupDetails(
       createPrayerGroupResponse.value

@@ -10,7 +10,7 @@ export const getUserTokenPair = async (
   refreshToken: string
 ): Promise<ManagedErrorResponse<RawUserTokenPair>> => {
   try {
-    const url = `${baseUrl}/api/v1/user/token`;
+    const url = `${baseUrl}/api/user/token`;
     const response = await axios.get<RawUserTokenPair>(url, {
       headers: {
         Authorization: `${BEARER_PREFIX} ${refreshToken}`,

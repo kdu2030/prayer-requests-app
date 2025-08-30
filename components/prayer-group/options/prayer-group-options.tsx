@@ -11,7 +11,10 @@ import * as React from "react";
 import { View } from "react-native";
 import { useTheme } from "react-native-paper";
 
-import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
+import {
+  JoinStatus,
+  PrayerGroupRole,
+} from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { PrayerGroupOptionButton } from "./prayer-group-option-button";
@@ -87,7 +90,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
             </>
           )}
 
-          {prayerGroupDetails?.isUserJoined && (
+          {prayerGroupDetails?.userJoinStatus == JoinStatus.Joined && (
             <PrayerGroupOptionButton
               label={translate("prayerGroup.actions.addPrayerRequest")}
               icon={<MaterialCommunityIcons name="plus" size={24} />}

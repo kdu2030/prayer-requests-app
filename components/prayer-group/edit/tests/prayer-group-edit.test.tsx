@@ -13,7 +13,7 @@ import { mapPrayerGroupDetails } from "../../../../mappers/map-prayer-group";
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import { UserData } from "../../../../types/context/api-data-context-type";
 import { ManagedErrorResponse } from "../../../../types/error-handling";
-import { FileToUpload, RawMediaFile } from "../../../../types/media-file-types";
+import { FileToUpload, MediaFile } from "../../../../types/media-file-types";
 import {
   PrayerGroupDetails,
   RawPrayerGroupDetails,
@@ -152,9 +152,9 @@ describe(PrayerGroupEdit, () => {
   test("Post file gets called if banner image is not uploaded", async () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
       ...mockRawPrayerGroupDetails,
-      bannerImageFile: {
-        ...mockRawPrayerGroupDetails.bannerImageFile,
-        id: undefined,
+      bannerFile: {
+        ...mockRawPrayerGroupDetails.bannerFile,
+        mediaFileId: undefined,
       },
     };
 
@@ -167,9 +167,9 @@ describe(PrayerGroupEdit, () => {
     );
     fireEvent.press(saveButton);
 
-    const mockPostFileResponse: ManagedErrorResponse<RawMediaFile> = {
+    const mockPostFileResponse: ManagedErrorResponse<MediaFile> = {
       isError: false,
-      value: mockRawPrayerGroupDetails.bannerImageFile!,
+      value: mockRawPrayerGroupDetails.bannerFile!,
     };
 
     const mockPutPrayerGroupResponse: ManagedErrorResponse<RawPrayerGroupDetails> =
@@ -189,9 +189,9 @@ describe(PrayerGroupEdit, () => {
   test("Avatar image in user data gets updated in user data upon save", async () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
       ...mockRawPrayerGroupDetails,
-      imageFile: {
-        ...mockRawPrayerGroupDetails.imageFile,
-        id: undefined,
+      avatarFile: {
+        ...mockRawPrayerGroupDetails.avatarFile,
+        mediaFileId: undefined,
       },
     };
 
@@ -204,9 +204,9 @@ describe(PrayerGroupEdit, () => {
     );
     fireEvent.press(saveButton);
 
-    const mockPostFileResponse: ManagedErrorResponse<RawMediaFile> = {
+    const mockPostFileResponse: ManagedErrorResponse<MediaFile> = {
       isError: false,
-      value: mockRawPrayerGroupDetails.imageFile!,
+      value: mockRawPrayerGroupDetails.avatarFile!,
     };
 
     const mockPutPrayerGroupResponse: ManagedErrorResponse<RawPrayerGroupDetails> =
@@ -214,7 +214,7 @@ describe(PrayerGroupEdit, () => {
         isError: false,
         value: {
           ...mockRawPrayerGroupDetails,
-          imageFile: { ...mockMediaFile, id: 4 },
+          avatarFile: { ...mockMediaFile, mediaFileId: 4 },
         },
       };
 
@@ -228,7 +228,7 @@ describe(PrayerGroupEdit, () => {
           mockUserData.prayerGroups![0],
           {
             prayerGroupId: 2,
-            imageFile: { ...mockMediaFile, id: 4 },
+            avatarFile: { ...mockMediaFile, mediaFileId: 4 },
             groupName: "Prayer Group 2",
           },
         ],

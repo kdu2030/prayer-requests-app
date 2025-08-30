@@ -10,7 +10,6 @@ import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import {
   mapFileToUpload,
-  mapMediaFile,
   mapMediaFileFromImagePickerAsset,
 } from "../../../mappers/map-media-file";
 import {
@@ -92,14 +91,13 @@ export const usePrayerGroupEdit = () => {
     let deleteAvatarPromise;
     let deleteBannerPromise;
 
-    const originalAvatarImageId = originalPrayerGroup.imageFile?.mediaFileId;
+    const originalAvatarImageId = originalPrayerGroup.avatarFile?.mediaFileId;
     const updatedAvatarImageId =
-      updatedPrayerGroupDetails.imageFile?.mediaFileId;
+      updatedPrayerGroupDetails.avatarFile?.mediaFileId;
 
-    const originalBannerImageId =
-      originalPrayerGroup.bannerImageFile?.mediaFileId;
+    const originalBannerImageId = originalPrayerGroup.bannerFile?.mediaFileId;
     const updatedBannerImageId =
-      updatedPrayerGroupDetails.bannerImageFile?.mediaFileId;
+      updatedPrayerGroupDetails.bannerFile?.mediaFileId;
 
     if (
       originalAvatarImageId &&
@@ -129,12 +127,12 @@ export const usePrayerGroupEdit = () => {
     let imageFilePromise;
     let bannerImagePromise;
 
-    if (values.imageFile && !values.imageFile.mediaFileId) {
-      imageFilePromise = postFile(mapFileToUpload(values.imageFile));
+    if (values.avatarFile && !values.avatarFile.mediaFileId) {
+      imageFilePromise = postFile(mapFileToUpload(values.avatarFile));
     }
 
-    if (values.bannerImageFile && !values.bannerImageFile.mediaFileId) {
-      bannerImagePromise = postFile(mapFileToUpload(values.bannerImageFile));
+    if (values.bannerFile && !values.bannerFile.mediaFileId) {
+      bannerImagePromise = postFile(mapFileToUpload(values.bannerFile));
     }
 
     const [imageFileResponse, bannerImageResponse] = await Promise.all([
@@ -163,11 +161,11 @@ export const usePrayerGroupEdit = () => {
     }
 
     if (imageFileResponse?.value) {
-      valuesToSubmit.imageFile = mapMediaFile(imageFileResponse.value);
+      valuesToSubmit.avatarFile = imageFileResponse.value;
     }
 
     if (bannerImageResponse?.value) {
-      valuesToSubmit.bannerImageFile = mapMediaFile(bannerImageResponse.value);
+      valuesToSubmit.bannerFile = bannerImageResponse.value;
     }
 
     const putPrayerGroupResponse = await putPrayerGroup(
@@ -212,7 +210,7 @@ export const usePrayerGroupEdit = () => {
     const updatedPrayerGroupDetails: PrayerGroupDetails = {
       ...prayerGroupDetails,
       ...responsePrayerGroupDetails,
-      isUserJoined: prayerGroupDetails?.isUserJoined,
+      userJoinStatus: prayerGroupDetails?.userJoinStatus,
       userRole: prayerGroupDetails?.userRole,
       admins: prayerGroupDetails?.admins,
     };

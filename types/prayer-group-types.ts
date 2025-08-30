@@ -1,12 +1,16 @@
-import { PrayerGroupRole } from "../constants/prayer-group-constants";
-import { MediaFile, RawMediaFile } from "./media-file-types";
+import {
+  JoinStatus,
+  PrayerGroupRole,
+  VisibilityLevel,
+} from "../constants/prayer-group-constants";
+import { MediaFile } from "./media-file-types";
 
 export type RawPrayerGroupUserSummary = {
-  id?: number;
+  userId?: number;
   fullName?: string;
   username?: string;
-  image?: RawMediaFile;
-  role?: PrayerGroupRole;
+  image?: MediaFile;
+  prayerGroupRole?: PrayerGroupRole;
 };
 
 export type PrayerGroupUserSummary = {
@@ -14,7 +18,7 @@ export type PrayerGroupUserSummary = {
   fullName?: string;
   username?: string;
   image?: MediaFile;
-  role?: PrayerGroupRole;
+  prayerGroupRole?: PrayerGroupRole;
 };
 
 export interface DeletablePrayerGroupUser extends PrayerGroupUserSummary {
@@ -22,16 +26,16 @@ export interface DeletablePrayerGroupUser extends PrayerGroupUserSummary {
 }
 
 export type RawPrayerGroupDetails = {
-  id?: number;
+  prayerGroupId?: number;
   groupName?: string;
   description?: string;
   rules?: string;
-  color?: string;
-  isUserJoined?: boolean;
+  visibilityLevel?: VisibilityLevel;
+  userJoinStatus?: JoinStatus;
   userRole?: PrayerGroupRole;
-  admins?: RawPrayerGroupUserSummary[];
-  imageFile?: RawMediaFile;
-  bannerImageFile?: RawMediaFile;
+  admins?: PrayerGroupUserSummary[];
+  avatarFile?: MediaFile;
+  bannerFile?: MediaFile;
 };
 
 export type PrayerGroupDetails = {
@@ -39,18 +43,18 @@ export type PrayerGroupDetails = {
   groupName?: string;
   description?: string;
   rules?: string;
-  color?: string;
-  isUserJoined?: boolean;
+  visibilityLevel?: VisibilityLevel;
+  userJoinStatus?: JoinStatus;
   userRole?: PrayerGroupRole;
   admins?: PrayerGroupUserSummary[];
-  imageFile?: MediaFile;
-  bannerImageFile?: MediaFile;
+  avatarFile?: MediaFile;
+  bannerFile?: MediaFile;
 };
 
 export type RawPrayerGroupSummary = {
   id?: number;
   groupName?: string;
-  imageFile?: RawMediaFile;
+  avatarFile?: MediaFile;
 };
 
 export type PrayerGroupSummary = Omit<RawPrayerGroupSummary, "id"> & {

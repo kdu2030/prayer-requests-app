@@ -11,6 +11,7 @@ import { GroupImageStep } from "./group-image-step/group-image-step";
 import { groupImageValidationSchema } from "./group-image-step/group-image-validation-schema";
 import { GroupNameDescriptionStep } from "./group-name-description-step";
 import { groupNameValidationSchema } from "./group-name-validation-schema";
+import { groupRulesValidationSchema } from "./group-rules-validation-schema";
 import { PrayerGroupRulesStep } from "./prayer-group-rules-step";
 
 export const useCreatePrayerGroupWizard = () => {
@@ -47,6 +48,8 @@ export const useCreatePrayerGroupWizard = () => {
           translate,
           i18n.language as CultureCode
         );
+      case CreatePrayerGroupWizardStep.RulesStep:
+        return groupRulesValidationSchema(translate);
       case CreatePrayerGroupWizardStep.ImageStep:
         return groupImageValidationSchema(
           translate,

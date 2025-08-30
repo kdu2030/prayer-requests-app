@@ -9,20 +9,19 @@ import {
   RawPrayerGroupSummary,
   RawPrayerGroupUserSummary,
 } from "../types/prayer-group-types";
-import { mapMediaFile } from "./map-media-file";
 
 export const mapCreatePrayerGroupRequest = (
   createPrayerGroupForm: CreatePrayerGroupForm,
-  imageId: number | undefined,
-  bannerImageId: number | undefined
+  avatarFileId: number | undefined,
+  bannerFileId: number | undefined
 ): PostCreatePrayerGroupRequest => {
   return {
     groupName: createPrayerGroupForm.groupName,
     description: createPrayerGroupForm.description,
     rules: createPrayerGroupForm.rules,
-    color: createPrayerGroupForm.color,
-    imageFileId: imageId,
-    bannerImageFileId: bannerImageId,
+    visibilityLevel: createPrayerGroupForm.visibilityLevel,
+    avatarFileId: avatarFileId,
+    bannerFileId: bannerFileId,
   };
 };
 
@@ -36,7 +35,7 @@ export const mapPrayerGroupSummary = (
   return {
     ...rawPrayerGroupSummary,
     prayerGroupId: rawPrayerGroupSummary.id,
-    imageFile: mapMediaFile(rawPrayerGroupSummary.imageFile),
+    avatarFile: rawPrayerGroupSummary.avatarFile,
   };
 };
 
@@ -44,11 +43,11 @@ export const mapPrayerGroupUser = (
   rawPrayerGroupUser: RawPrayerGroupUserSummary
 ): PrayerGroupUserSummary => {
   return {
-    userId: rawPrayerGroupUser.id,
-    image: mapMediaFile(rawPrayerGroupUser.image),
+    userId: rawPrayerGroupUser.userId,
+    image: rawPrayerGroupUser.image,
     fullName: rawPrayerGroupUser.fullName,
     username: rawPrayerGroupUser.username,
-    role: rawPrayerGroupUser.role,
+    prayerGroupRole: rawPrayerGroupUser.prayerGroupRole,
   };
 };
 
@@ -60,26 +59,25 @@ export const mapPrayerGroupDetails = (
   );
 
   return {
-    prayerGroupId: rawPrayerGroupDetails.id,
+    prayerGroupId: rawPrayerGroupDetails.prayerGroupId,
     description: rawPrayerGroupDetails.description,
     groupName: rawPrayerGroupDetails.groupName,
-    color: rawPrayerGroupDetails.color,
     rules: rawPrayerGroupDetails.rules,
-    isUserJoined: rawPrayerGroupDetails.isUserJoined,
+    userJoinStatus: rawPrayerGroupDetails.userJoinStatus,
     userRole: rawPrayerGroupDetails.userRole,
     admins,
-    imageFile: mapMediaFile(rawPrayerGroupDetails.imageFile),
-    bannerImageFile: mapMediaFile(rawPrayerGroupDetails.bannerImageFile),
+    avatarFile: rawPrayerGroupDetails.avatarFile,
+    bannerFile: rawPrayerGroupDetails.bannerFile,
   };
 };
 
 export const mapPrayerGroupSummaryFromPrayerGroupDetails = (
-  prayerGroupDetails: RawPrayerGroupDetails
+  prayerGroupDetails: PrayerGroupDetails
 ): PrayerGroupSummary => {
   return {
-    prayerGroupId: prayerGroupDetails.id,
+    prayerGroupId: prayerGroupDetails.prayerGroupId,
     groupName: prayerGroupDetails.groupName,
-    imageFile: mapMediaFile(prayerGroupDetails.imageFile),
+    avatarFile: prayerGroupDetails.avatarFile,
   };
 };
 
@@ -90,7 +88,7 @@ export const mapPrayerGroupToPutPrayerGroupRequest = (
     groupName: prayerGroupDetails.groupName,
     description: prayerGroupDetails.description,
     rules: prayerGroupDetails.rules,
-    imageFileId: prayerGroupDetails.imageFile?.mediaFileId,
-    bannerImageFileId: prayerGroupDetails.bannerImageFile?.mediaFileId,
+    imageFileId: prayerGroupDetails.avatarFile?.mediaFileId,
+    bannerImageFileId: prayerGroupDetails.bannerFile?.mediaFileId,
   };
 };

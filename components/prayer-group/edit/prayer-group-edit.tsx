@@ -81,8 +81,8 @@ export const PrayerGroupEdit: React.FC = () => {
                 </Text>
 
                 <GroupPreview
-                  profilePictureUri={values?.imageFile?.url}
-                  bannerUri={values?.bannerImageFile?.url}
+                  profilePictureUri={values?.avatarFile?.fileUrl}
+                  bannerUri={values?.bannerFile?.fileUrl}
                   groupName={values?.groupName ?? ""}
                   description={values?.description ?? ""}
                   bannerTestID={PrayerGroupEditTestIds.groupPreviewBanner}
@@ -146,14 +146,14 @@ export const PrayerGroupEdit: React.FC = () => {
                   </Button>
                 </View>
 
-                {values.imageFile && (
+                {values.avatarFile && (
                   <>
                     <SelectedImageCard
                       onRemoveImage={() => clearField("imageFile")}
-                      fileName={values.imageFile.fileName ?? ""}
+                      fileName={values.avatarFile.fileName ?? ""}
                     />
-                    {errors.imageFile && (
-                      <HelperText type="error">{errors.imageFile}</HelperText>
+                    {errors.avatarFile && (
+                      <HelperText type="error">{errors.avatarFile}</HelperText>
                     )}
                   </>
                 )}
@@ -173,16 +173,14 @@ export const PrayerGroupEdit: React.FC = () => {
                   </Button>
                 </View>
 
-                {values.bannerImageFile && (
+                {values.bannerFile && (
                   <>
                     <SelectedImageCard
                       onRemoveImage={() => clearField("bannerImageFile")}
-                      fileName={values.bannerImageFile.fileName ?? ""}
+                      fileName={values.bannerFile.fileName ?? ""}
                     />
-                    {errors.bannerImageFile && (
-                      <HelperText type="error">
-                        {errors.bannerImageFile}
-                      </HelperText>
+                    {errors.bannerFile && (
+                      <HelperText type="error">{errors.bannerFile}</HelperText>
                     )}
                   </>
                 )}

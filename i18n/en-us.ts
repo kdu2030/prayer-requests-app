@@ -74,9 +74,13 @@ export const englishTranslations = {
   "createPrayerGroup.groupNameDescription.description": "Description",
   "createPrayerGroup.groupNameDescription.validateGroupFailed":
     "Unable to validate group name",
-  "createPrayerGroup.rules.title": "Add Content Rules for Your Group",
+  "createPrayerGroup.rules.title":
+    "Add Content Rules and Select Visibility Level",
   "createPrayerGroup.rules.stepDescription":
     "Let your group members know what can be posted.",
+  "createPrayerGroup.visibilityLevel.label": "Visibility Level",
+  "createPrayerGroup.visibilityLevel.public": "Public",
+  "createPrayerGroup.visibilityLevel.private": "Private",
   "createPrayerGroup.rules.label": "Rules",
   "createPrayerGroup.groupImageColorStep.title": "Style your Prayer Group",
   "createPrayerGroup.groupImageColorStep.description":

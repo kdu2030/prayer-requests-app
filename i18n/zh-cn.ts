@@ -75,7 +75,10 @@ export const chineseTranslations: Translations = {
   "createPrayerGroup.groupNameDescription.description": "描述",
   "createPrayerGroup.groupNameDescription.validateGroupFailed":
     "小组名字验证失败",
-  "createPrayerGroup.rules.title": "为您的小组添加内容规则",
+  "createPrayerGroup.rules.title": "添加内容规则和选可见性",
+  "createPrayerGroup.visibilityLevel.label": "可见性",
+  "createPrayerGroup.visibilityLevel.public": "公共",
+  "createPrayerGroup.visibilityLevel.private": "私密",
   "createPrayerGroup.rules.stepDescription":
     "让您的小组成员知道可以发布什么内容。",
   "createPrayerGroup.rules.label": "规则",

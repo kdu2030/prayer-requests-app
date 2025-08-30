@@ -17,8 +17,8 @@ export type MediaFile = {
 };
 
 export enum FileType {
-  Unknown = 0,
-  Image = 1,
+  Unknown = "UNKNOWN",
+  Image = "IMAGE",
 }
 
 export type FileToUpload = {

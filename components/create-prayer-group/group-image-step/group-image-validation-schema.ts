@@ -37,7 +37,7 @@ export const groupImageValidationSchema = (
   const fileTypeError = translate("form.validation.imageFileType");
 
   return Yup.object().shape({
-    image: Yup.object()
+    avatarFile: Yup.object()
       .shape({
         filePath: Yup.string()
           .nullable()
@@ -52,7 +52,7 @@ export const groupImageValidationSchema = (
           }),
       })
       .nullable(),
-    bannerImage: Yup.object().shape({
+    bannerFile: Yup.object().shape({
       filePath: Yup.string()
         .nullable()
         .test((value) => validateImageFileName(value ?? undefined))

@@ -37,9 +37,12 @@ export const prayerGroupDetailsValidationSchema = (
   });
 
   return Yup.object().shape({
+    prayerGroupId: Yup.number().nullable(),
+    rules: Yup.string().nullable(),
+    visibilityLevel: Yup.string().nullable(),
     groupName: Yup.string().required(groupNameRequiredError),
     description: Yup.string().required(descriptionRequiredError),
-    imageFile: Yup.object()
+    avatarFile: Yup.object()
       .test("imageFileType", fileTypeError, (file?: MediaFile) => {
         return validateImageFileName(file?.fileName);
       })

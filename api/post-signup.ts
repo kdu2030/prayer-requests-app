@@ -2,11 +2,8 @@ import axios, { AxiosError } from "axios";
 
 import { ApiErrorResponse, ApiResponse } from "../types/api-response-types";
 import { SignupForm } from "../types/forms/auth-forms";
-import { MediaFile, RawMediaFile } from "../types/media-file-types";
-import {
-  PrayerGroupSummary,
-  RawPrayerGroupSummary,
-} from "../types/prayer-group-types";
+import { MediaFile } from "../types/media-file-types";
+import { PrayerGroupSummary } from "../types/prayer-group-types";
 
 export type RawUserTokenPair = {
   accessToken?: string;

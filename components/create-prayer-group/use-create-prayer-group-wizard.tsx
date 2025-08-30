@@ -11,8 +11,8 @@ import { GroupImageStep } from "./group-image-step/group-image-step";
 import { groupImageValidationSchema } from "./group-image-step/group-image-validation-schema";
 import { GroupNameDescriptionStep } from "./group-name-description-step";
 import { groupNameValidationSchema } from "./group-name-validation-schema";
-import { PrayerGroupRulesStep } from "./prayer-group-rules-step";
 import { groupRulesValidationSchema } from "./group-rules-validation-schema";
+import { PrayerGroupRulesStep } from "./prayer-group-rules-step";
 
 export const useCreatePrayerGroupWizard = () => {
   const [wizardStep, setWizardStep] =

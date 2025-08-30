@@ -10,7 +10,6 @@ import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import {
   mapFileToUpload,
-  mapMediaFile,
   mapMediaFileFromImagePickerAsset,
 } from "../../../mappers/map-media-file";
 import {
@@ -162,11 +161,11 @@ export const usePrayerGroupEdit = () => {
     }
 
     if (imageFileResponse?.value) {
-      valuesToSubmit.avatarFile = mapMediaFile(imageFileResponse.value);
+      valuesToSubmit.avatarFile = imageFileResponse.value;
     }
 
     if (bannerImageResponse?.value) {
-      valuesToSubmit.bannerFile = mapMediaFile(bannerImageResponse.value);
+      valuesToSubmit.bannerFile = bannerImageResponse.value;
     }
 
     const putPrayerGroupResponse = await putPrayerGroup(

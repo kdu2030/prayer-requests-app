@@ -6,7 +6,6 @@ import {
   UserData,
   UserTokenPair,
 } from "../types/context/api-data-context-type";
-
 import { mapPrayerGroupSummary } from "./map-prayer-group";
 
 export const mapUserData = (

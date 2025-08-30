@@ -1,8 +1,12 @@
+import { setNestedObjectValues, useFormikContext } from "formik";
+import { isEmpty } from "lodash";
 import * as React from "react";
 import { View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 
+import { VisibilityLevel } from "../../constants/prayer-group-constants";
 import { useI18N } from "../../hooks/use-i18n";
+import { FormikSelect } from "../inputs/formik-select";
 import { TextInput } from "../inputs/text-input";
 import { WizardHeader } from "../layouts/wizard-header";
 import {
@@ -10,11 +14,7 @@ import {
   NUM_CREATE_PRAYER_GROUP_STEPS,
   WIZARD_TEST_IDS_CONFIG,
 } from "./create-prayer-group-constants";
-import { FormikSelect } from "../inputs/formik-select";
-import { VisibilityLevel } from "../../constants/prayer-group-constants";
-import { setNestedObjectValues, useFormikContext } from "formik";
 import { CreatePrayerGroupForm } from "./create-prayer-group-types";
-import { isEmpty } from "lodash";
 
 type Props = {
   setWizardStep: React.Dispatch<

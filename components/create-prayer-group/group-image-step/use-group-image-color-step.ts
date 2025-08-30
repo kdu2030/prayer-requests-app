@@ -17,7 +17,7 @@ import {
   mapPrayerGroupSummaryFromPrayerGroupDetails,
 } from "../../../mappers/map-prayer-group";
 import { ManagedErrorResponse } from "../../../types/error-handling";
-import { MediaFile, RawMediaFile } from "../../../types/media-file-types";
+import { MediaFile } from "../../../types/media-file-types";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 
 export const useGroupImageColorStep = () => {
@@ -78,7 +78,7 @@ export const useGroupImageColorStep = () => {
 
   const uploadPrayerGroupImage = async (
     image: MediaFile | undefined
-  ): Promise<ManagedErrorResponse<RawMediaFile | undefined>> => {
+  ): Promise<ManagedErrorResponse<MediaFile | undefined>> => {
     if (!image) {
       return { isError: false, value: undefined };
     }

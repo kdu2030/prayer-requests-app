@@ -1,6 +1,7 @@
 import * as Yup from "yup";
-import { CreatePrayerGroupForm } from "./create-prayer-group-types";
+
 import { TranslationKey } from "../../types/languages";
+import { CreatePrayerGroupForm } from "./create-prayer-group-types";
 
 export const groupRulesValidationSchema = (
   translate: (key: TranslationKey, options?: any) => string

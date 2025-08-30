@@ -136,8 +136,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     const updatedFilteredUsers = [...filteredUsers];
     const updatedUsers = [...prayerGroupUsers];
 
-    updatedFilteredUsers[index].role = role;
-    updatedUsers[prayerGroupUsersIndex].role = role;
+    updatedFilteredUsers[index].prayerGroupRole = role;
+    updatedUsers[prayerGroupUsersIndex].prayerGroupRole = role;
 
     setPrayerGroupUsers(updatedUsers);
     setFilteredUsers(updatedFilteredUsers);
@@ -156,7 +156,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
         userIdsToDelete.push(user.userId);
       }
 
-      if (user.role === PrayerGroupRole.Admin && !user.isDeleted) {
+      if (user.prayerGroupRole === PrayerGroupRole.Admin && !user.isDeleted) {
         adminUserIds.push(user.userId);
       }
     });

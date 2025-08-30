@@ -9,7 +9,10 @@ import {
   usePostPrayerGroupUsers,
 } from "../../api/post-prayer-group-users";
 import { usePostPrayerRequestFilter } from "../../api/post-prayer-request-filter";
-import { PrayerGroupRole } from "../../constants/prayer-group-constants";
+import {
+  JoinStatus,
+  PrayerGroupRole,
+} from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { mapPrayerGroupDetails } from "../../mappers/map-prayer-group";
@@ -181,7 +184,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     setPrayerGroupDetails({
       ...prayerGroupDetails,
-      isUserJoined: true,
+      userJoinStatus: JoinStatus.Joined,
       userRole: PrayerGroupRole.Member,
     });
     setUserData({ ...userData, prayerGroups });
@@ -209,7 +212,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     setPrayerGroupDetails({
       ...prayerGroupDetails,
-      isUserJoined: false,
+      userJoinStatus: JoinStatus.Joined,
       userRole: undefined,
     });
 

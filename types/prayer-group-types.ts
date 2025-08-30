@@ -10,7 +10,7 @@ export type RawPrayerGroupUserSummary = {
   fullName?: string;
   username?: string;
   image?: RawMediaFile;
-  role?: PrayerGroupRole;
+  prayerGroupRole?: PrayerGroupRole;
 };
 
 export type PrayerGroupUserSummary = {
@@ -18,7 +18,7 @@ export type PrayerGroupUserSummary = {
   fullName?: string;
   username?: string;
   image?: MediaFile;
-  role?: PrayerGroupRole;
+  prayerGroupRole?: PrayerGroupRole;
 };
 
 export interface DeletablePrayerGroupUser extends PrayerGroupUserSummary {

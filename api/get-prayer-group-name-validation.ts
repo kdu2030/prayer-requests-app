@@ -16,7 +16,7 @@ const getPrayerGroupNameValidation = async (
   prayerGroupName: string
 ): Promise<ManagedErrorResponse<GetPrayerGroupNameValidationResponse>> => {
   try {
-    const url = `${baseUrl}/api/v1/prayergroup/validate-name`;
+    const url = `${baseUrl}/api/prayergroup/validate-name`;
     const response = await fetch.get<GetPrayerGroupNameValidationResponse>(
       url,
       {

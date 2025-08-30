@@ -68,8 +68,8 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
         <GroupPreview
           groupName={values.groupName ?? ""}
           description={values.description ?? ""}
-          profilePictureUri={values.avatarFile?.url}
-          bannerUri={values?.bannerFile?.url}
+          profilePictureUri={values.avatarFile?.fileUrl}
+          bannerUri={values?.bannerFile?.fileUrl}
           bannerTestID={GroupImageColorStepTestIds.backgroundColorPreview}
           groupNameTestID={GroupImageColorStepTestIds.groupNamePreview}
           descriptionTestID={GroupImageColorStepTestIds.descriptionPreview}

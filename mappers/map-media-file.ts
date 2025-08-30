@@ -15,7 +15,7 @@ export const mapMediaFileFromImagePickerAsset = (
   const fileName = path.basename(asset.uri);
   return {
     fileName,
-    url: asset.uri,
+    fileUrl: asset.uri,
     filePath: asset.uri,
     fileType: FileType.Image,
   };
@@ -40,6 +40,6 @@ export const mapMediaFile = (
 
   return {
     ...rawMediaFile,
-    mediaFileId: rawMediaFile.id,
+    mediaFileId: rawMediaFile.mediaFileId,
   };
 };

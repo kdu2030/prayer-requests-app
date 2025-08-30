@@ -112,7 +112,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
                   >
                     <View className="flex-row items-center w-3/5">
                       <ProfilePicture
-                        url={item.image?.url}
+                        url={item.image?.fileUrl}
                         width={40}
                         height={40}
                       />

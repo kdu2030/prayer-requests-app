@@ -33,7 +33,7 @@ export type RawPrayerGroupDetails = {
   visibilityLevel?: VisibilityLevel;
   userJoinStatus?: JoinStatus;
   userRole?: PrayerGroupRole;
-  admins?: PrayerGroupUserSummary;
+  admins?: PrayerGroupUserSummary[];
   avatarFile?: MediaFile;
   bannerFile?: MediaFile;
 };

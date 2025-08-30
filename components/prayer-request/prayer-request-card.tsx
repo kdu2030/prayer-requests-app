@@ -49,7 +49,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
         {displayUser && (
           <View className="flex flex-row items-center">
             <ProfilePicture
-              url={prayerRequest.user?.image?.url}
+              url={prayerRequest.user?.image?.fileUrl}
               width={24}
               height={24}
               testID={getArrayTestId(

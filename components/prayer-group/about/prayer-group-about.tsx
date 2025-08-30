@@ -53,7 +53,7 @@ export const PrayerGroupAbout: React.FC = () => {
                 return (
                   <View className="flex-row items-center" key={admin.userId}>
                     <ProfilePicture
-                      url={admin.image?.url}
+                      url={admin.image?.fileUrl}
                       width={28}
                       height={28}
                     />

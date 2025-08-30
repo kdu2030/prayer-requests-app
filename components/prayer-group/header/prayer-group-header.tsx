@@ -35,14 +35,14 @@ export const PrayerGroupHeader: React.FC<Props> = ({
       className="border-b pb-5"
       style={{ borderColor: theme.colors.outline }}
     >
-      <PrayerGroupBanner uri={prayerGroupDetails?.bannerFile?.url} />
+      <PrayerGroupBanner uri={prayerGroupDetails?.bannerFile?.fileUrl} />
       <View className="pt-4 px-4 flex-row items-center justify-between">
         <View className="w-2/3 self-start flex-row items-center">
           <View className="mr-4">
             <ProfilePicture
               width={52}
               height={52}
-              url={prayerGroupDetails?.avatarFile?.url}
+              url={prayerGroupDetails?.avatarFile?.fileUrl}
             />
           </View>
 

@@ -81,8 +81,8 @@ export const PrayerGroupEdit: React.FC = () => {
                 </Text>
 
                 <GroupPreview
-                  profilePictureUri={values?.avatarFile?.url}
-                  bannerUri={values?.bannerFile?.url}
+                  profilePictureUri={values?.avatarFile?.fileUrl}
+                  bannerUri={values?.bannerFile?.fileUrl}
                   groupName={values?.groupName ?? ""}
                   description={values?.description ?? ""}
                   bannerTestID={PrayerGroupEditTestIds.groupPreviewBanner}

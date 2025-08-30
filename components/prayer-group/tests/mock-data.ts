@@ -12,7 +12,8 @@ export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
     fileName: "1116f806-63cc-4bac-8f9b-00f2e734483f.jpeg",
     fileType: 1,
     id: 3,
-    url: "https://prayerappfileservices.pythonanywhere.com/static/b35e74e1-ae84-4a84-8dca-33da9c40ca21.jpeg",
+    fileUrl:
+      "https://prayerappfileservices.pythonanywhere.com/static/b35e74e1-ae84-4a84-8dca-33da9c40ca21.jpeg",
   },
   color: "#106d20",
   description: "Prayer Group 2 Description",
@@ -22,7 +23,8 @@ export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
     fileName: "80762286-809b-4c1c-8919-c74cc3a140e0.jpeg",
     fileType: 1,
     id: 4,
-    url: "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
+    fileUrl:
+      "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
   },
   isUserJoined: true,
   userRole: 1,
@@ -34,7 +36,8 @@ export const mockPrayerGroupDetails: PrayerGroupDetails = {
     fileName: "1116f806-63cc-4bac-8f9b-00f2e734483f.jpeg",
     fileType: 1,
     mediaFileId: 3,
-    url: "https://prayerappfileservices.pythonanywhere.com/static/b35e74e1-ae84-4a84-8dca-33da9c40ca21.jpeg",
+    fileUrl:
+      "https://prayerappfileservices.pythonanywhere.com/static/b35e74e1-ae84-4a84-8dca-33da9c40ca21.jpeg",
   },
   color: "#106d20",
   description: "Prayer Group 2 Description",
@@ -44,7 +47,8 @@ export const mockPrayerGroupDetails: PrayerGroupDetails = {
     fileName: "80762286-809b-4c1c-8919-c74cc3a140e0.jpeg",
     fileType: 1,
     mediaFileId: 4,
-    url: "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
+    fileUrl:
+      "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
   },
   isUserJoined: true,
   userRole: 1,
@@ -66,7 +70,8 @@ export const mockMediaFile: MediaFile = {
   fileName: "80762286-809b-4c1c-8919-c74cc3a140e0.jpeg",
   fileType: 1,
   mediaFileId: 4,
-  url: "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
+  fileUrl:
+    "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
 };
 
 export const mockPrayerRequests: RawPrayerRequestModel[] = [
@@ -79,9 +84,10 @@ export const mockPrayerRequests: RawPrayerRequestModel[] = [
       id: 1,
       groupName: "Grace Christian Fellowship",
       avatarFile: {
-        id: 2,
+        mediaFileId: 2,
         fileName: "6c8eb229-ab1f-4adf-a444-aac434c12619.jpeg",
-        url: "https://prayerappfileservices.pythonanywhere.com/static/c16e92f9-3c43-42ab-a214-a9230cad3f10.jpeg",
+        fileUrl:
+          "https://prayerappfileservices.pythonanywhere.com/static/c16e92f9-3c43-42ab-a214-a9230cad3f10.jpeg",
         fileType: 1,
       },
     },
@@ -106,9 +112,10 @@ export const mockPrayerRequests: RawPrayerRequestModel[] = [
       id: 1,
       groupName: "Grace Christian Fellowship",
       avatarFile: {
-        id: 2,
+        mediaFileId: 2,
         fileName: "6c8eb229-ab1f-4adf-a444-aac434c12619.jpeg",
-        url: "https://prayerappfileservices.pythonanywhere.com/static/c16e92f9-3c43-42ab-a214-a9230cad3f10.jpeg",
+        fileUrl:
+          "https://prayerappfileservices.pythonanywhere.com/static/c16e92f9-3c43-42ab-a214-a9230cad3f10.jpeg",
         fileType: 1,
       },
     },
@@ -133,9 +140,10 @@ export const mockPrayerRequests: RawPrayerRequestModel[] = [
       id: 1,
       groupName: "Grace Christian Fellowship",
       avatarFile: {
-        id: 2,
+        mediaFileId: 2,
         fileName: "6c8eb229-ab1f-4adf-a444-aac434c12619.jpeg",
-        url: "https://prayerappfileservices.pythonanywhere.com/static/c16e92f9-3c43-42ab-a214-a9230cad3f10.jpeg",
+        fileUrl:
+          "https://prayerappfileservices.pythonanywhere.com/static/c16e92f9-3c43-42ab-a214-a9230cad3f10.jpeg",
         fileType: 1,
       },
     },

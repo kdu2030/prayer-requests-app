@@ -228,7 +228,7 @@ describe(PrayerGroupEdit, () => {
           mockUserData.prayerGroups![0],
           {
             prayerGroupId: 2,
-            avatarFile: { ...mockMediaFile, id: 4 },
+            avatarFile: { ...mockMediaFile, mediaFileId: 4 },
             groupName: "Prayer Group 2",
           },
         ],

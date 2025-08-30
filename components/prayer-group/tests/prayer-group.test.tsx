@@ -119,7 +119,7 @@ describe(PrayerGroup, () => {
       PrayerGroupHeaderTestIds.imageBanner
     );
     expect(prayerGroupBanner).toHaveProp("source", {
-      uri: mockRawPrayerGroupDetails.bannerFile?.url,
+      uri: mockRawPrayerGroupDetails.bannerFile?.fileUrl,
     });
   });
 

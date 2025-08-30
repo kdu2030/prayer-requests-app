@@ -43,7 +43,11 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
           className="flex flex-col items-center justify-center py-2"
           style={{ backgroundColor: theme.colors.primary }}
         >
-          <ProfilePicture url={userData?.image?.url} width={52} height={52} />
+          <ProfilePicture
+            url={userData?.image?.fileUrl}
+            width={52}
+            height={52}
+          />
           <Text className="mt-2 text-white">{userData?.fullName}</Text>
           <Text className="text-white">{`@ ${userData?.username}`}</Text>
         </View>
@@ -79,7 +83,7 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                     <PrefixDrawerItem
                       left={
                         <ProfilePicture
-                          url={group.avatarFile?.url}
+                          url={group.avatarFile?.fileUrl}
                           width={24}
                           height={24}
                         />

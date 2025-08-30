@@ -1,9 +1,9 @@
 import { ContentType } from "../constants/file-constants";
 
 export type RawMediaFile = {
-  id?: number;
+  mediaFileId?: number;
   fileName?: string;
-  url?: string;
+  fileUrl?: string;
   fileType?: FileType;
 };
 
@@ -11,7 +11,7 @@ export type RawMediaFile = {
 export type MediaFile = {
   mediaFileId?: number;
   fileName?: string;
-  url?: string;
+  fileUrl?: string;
   fileType?: FileType;
   filePath?: string;
 };

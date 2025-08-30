@@ -56,7 +56,11 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
               <Ionicons name="search" size={28} color="white" />
             </TouchableOpacity>
 
-            <ProfilePicture url={userData?.image?.url} width={36} height={36} />
+            <ProfilePicture
+              url={userData?.image?.fileUrl}
+              width={36}
+              height={36}
+            />
           </View>
         </View>
       </SafeAreaView>

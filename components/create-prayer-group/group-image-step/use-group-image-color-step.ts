@@ -114,8 +114,8 @@ export const useGroupImageColorStep = () => {
       return;
     }
 
-    const imageId = imageUploadResponse.value?.id;
-    const bannerImageId = bannerImageUploadResponse.value?.id;
+    const imageId = imageUploadResponse.value?.mediaFileId;
+    const bannerImageId = bannerImageUploadResponse.value?.mediaFileId;
 
     const createPrayerGroupRequest = mapCreatePrayerGroupRequest(
       values,

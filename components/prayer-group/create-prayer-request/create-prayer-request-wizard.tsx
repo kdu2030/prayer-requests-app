@@ -5,7 +5,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { VisibilityLevel } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
 import { useCreatePrayerRequestWizard } from "./use-create-prayer-request-wizard";

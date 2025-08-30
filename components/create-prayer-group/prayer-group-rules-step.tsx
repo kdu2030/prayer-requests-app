@@ -24,8 +24,6 @@ type Props = {
 
 export const PrayerGroupRulesStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
-  const theme = useTheme();
-
   const { validateForm, setTouched, touched, setErrors, values } =
     useFormikContext<CreatePrayerGroupForm>();
 

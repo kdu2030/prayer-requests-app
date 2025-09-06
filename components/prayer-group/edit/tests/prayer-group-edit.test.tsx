@@ -20,7 +20,7 @@ import {
 } from "../../../../types/prayer-group-types";
 import {
   mockMediaFile,
-  mockRawPrayerGroupDetails,
+  mockPrayerGroupDetails,
   mockUserData,
 } from "../../tests/mock-data";
 import { UNIQUE_GROUP_NAME_ERROR } from "../edit-prayer-group-constants";
@@ -88,7 +88,7 @@ describe(PrayerGroupEdit, () => {
 
   test("Mount test", () => {
     component = mountPrayerGroupEdit(
-      mapPrayerGroupDetails(mockRawPrayerGroupDetails)
+      mapPrayerGroupDetails(mockPrayerGroupDetails)
     );
 
     expect(component).toBeTruthy();
@@ -96,7 +96,7 @@ describe(PrayerGroupEdit, () => {
 
   test("Updating group name will update the group name in the preview", async () => {
     component = mountPrayerGroupEdit(
-      mapPrayerGroupDetails(mockRawPrayerGroupDetails)
+      mapPrayerGroupDetails(mockPrayerGroupDetails)
     );
 
     const newGroupName = "Ravenclaw";
@@ -125,7 +125,7 @@ describe(PrayerGroupEdit, () => {
     mockPutPrayerGroup.mockReturnValue(putPrayerGroupResponse);
 
     component = mountPrayerGroupEdit(
-      mapPrayerGroupDetails(mockRawPrayerGroupDetails)
+      mapPrayerGroupDetails(mockPrayerGroupDetails)
     );
 
     const newGroupName = "Order of the Phoenix";
@@ -151,9 +151,9 @@ describe(PrayerGroupEdit, () => {
 
   test("Post file gets called if banner image is not uploaded", async () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
-      ...mockRawPrayerGroupDetails,
+      ...mockPrayerGroupDetails,
       bannerFile: {
-        ...mockRawPrayerGroupDetails.bannerFile,
+        ...mockPrayerGroupDetails.bannerFile,
         mediaFileId: undefined,
       },
     };
@@ -169,13 +169,13 @@ describe(PrayerGroupEdit, () => {
 
     const mockPostFileResponse: ManagedErrorResponse<MediaFile> = {
       isError: false,
-      value: mockRawPrayerGroupDetails.bannerFile!,
+      value: mockPrayerGroupDetails.bannerFile!,
     };
 
     const mockPutPrayerGroupResponse: ManagedErrorResponse<RawPrayerGroupDetails> =
       {
         isError: false,
-        value: mockRawPrayerGroupDetails,
+        value: mockPrayerGroupDetails,
       };
 
     mockPostFile.mockReturnValue(mockPostFileResponse);
@@ -188,9 +188,9 @@ describe(PrayerGroupEdit, () => {
 
   test("Avatar image in user data gets updated in user data upon save", async () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
-      ...mockRawPrayerGroupDetails,
+      ...mockPrayerGroupDetails,
       avatarFile: {
-        ...mockRawPrayerGroupDetails.avatarFile,
+        ...mockPrayerGroupDetails.avatarFile,
         mediaFileId: undefined,
       },
     };
@@ -206,14 +206,14 @@ describe(PrayerGroupEdit, () => {
 
     const mockPostFileResponse: ManagedErrorResponse<MediaFile> = {
       isError: false,
-      value: mockRawPrayerGroupDetails.avatarFile!,
+      value: mockPrayerGroupDetails.avatarFile!,
     };
 
     const mockPutPrayerGroupResponse: ManagedErrorResponse<RawPrayerGroupDetails> =
       {
         isError: false,
         value: {
-          ...mockRawPrayerGroupDetails,
+          ...mockPrayerGroupDetails,
           avatarFile: { ...mockMediaFile, mediaFileId: 4 },
         },
       };

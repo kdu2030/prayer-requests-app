@@ -26,9 +26,9 @@ import { PrayerGroupHeaderTestIds } from "../header/tests/test-ids";
 import { PrayerGroup } from "../prayer-group";
 import { PrayerGroupContextProvider } from "../prayer-group-context";
 import {
-  mockPrayerGroupDetails,
+  mockPrayerGroupDetails1,
   mockPrayerRequests,
-  mockRawPrayerGroupDetails,
+  mockPrayerGroupDetails,
   mockUserData,
 } from "./mock-data";
 
@@ -110,25 +110,25 @@ describe(PrayerGroup, () => {
   });
 
   test("Mount test", async () => {
-    component = mountPrayerGroup(mockRawPrayerGroupDetails);
+    component = mountPrayerGroup(mockPrayerGroupDetails);
     await waitFor(() => {
       expect(component).toBeTruthy();
     });
   });
 
   test("Prayer group banner displays if not null", async () => {
-    component = mountPrayerGroup(mockRawPrayerGroupDetails);
+    component = mountPrayerGroup(mockPrayerGroupDetails);
     const prayerGroupBanner = await component.findByTestId(
       PrayerGroupHeaderTestIds.imageBanner
     );
     expect(prayerGroupBanner).toHaveProp("source", {
-      uri: mockRawPrayerGroupDetails.bannerFile?.fileUrl,
+      uri: mockPrayerGroupDetails.bannerFile?.fileUrl,
     });
   });
 
   test("Prayer group banner placeholder displays if banner is null", async () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
-      ...mockRawPrayerGroupDetails,
+      ...mockPrayerGroupDetails,
       bannerFile: undefined,
     };
 
@@ -140,7 +140,7 @@ describe(PrayerGroup, () => {
   });
 
   test("Correct buttons display if user is a member", async () => {
-    component = mountPrayerGroup(mockRawPrayerGroupDetails);
+    component = mountPrayerGroup(mockPrayerGroupDetails);
     const leaveGroupButton = await component.findByTestId(
       PrayerGroupHeaderTestIds.leaveGroupButton
     );
@@ -154,7 +154,7 @@ describe(PrayerGroup, () => {
 
   test("Join prayer group button displays if user is not a member", async () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
-      ...mockRawPrayerGroupDetails,
+      ...mockPrayerGroupDetails,
       prayerGroupRole: undefined,
       userJoinStatus: JoinStatus.NotJoined,
     };
@@ -176,7 +176,7 @@ describe(PrayerGroup, () => {
     mockPostPrayerGroupUsers.mockReturnValue({ isError: false });
 
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
-      ...mockRawPrayerGroupDetails,
+      ...mockPrayerGroupDetails,
       prayerGroupRole: undefined,
       userJoinStatus: JoinStatus.NotJoined,
     };
@@ -201,7 +201,7 @@ describe(PrayerGroup, () => {
 
   test("Delete prayer group users gets called when user presses the leave button", async () => {
     mockDeletePrayerGroupUsers.mockReturnValue({ isError: false });
-    component = mountPrayerGroup(mockRawPrayerGroupDetails);
+    component = mountPrayerGroup(mockPrayerGroupDetails);
 
     const leavePrayerGroupButton = await component.findByTestId(
       PrayerGroupHeaderTestIds.leaveGroupButton
@@ -238,7 +238,7 @@ describe(PrayerGroup, () => {
       }
     );
 
-    component = mountPrayerGroup(mockPrayerGroupDetails, true);
+    component = mountPrayerGroup(mockPrayerGroupDetails1, true);
 
     const prayerRequest = await component.findByTestId(
       `${PrayerRequestCardTestIds.requestTitle}-${9}`

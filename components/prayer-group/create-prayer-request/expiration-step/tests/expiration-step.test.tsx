@@ -10,7 +10,10 @@ import {
 import { Formik } from "formik";
 
 import { mountComponent } from "../../../../../tests/utils/test-utils";
-import { mockPrayerGroupDetails, mockUserData } from "../../../tests/mock-data";
+import {
+  mockPrayerGroupDetails1,
+  mockUserData,
+} from "../../../tests/mock-data";
 import {
   CreatePrayerRequestForm,
   RawCreatePrayerRequestForm,
@@ -42,7 +45,7 @@ jest.mock("../../../../../hooks/use-api-data", () => ({
 jest.mock("../../../prayer-group-context", () => ({
   ...jest.requireActual("../../../prayer-group-context"),
   usePrayerGroupContext: () => ({
-    prayerGroupDetails: mockPrayerGroupDetails,
+    prayerGroupDetails: mockPrayerGroupDetails1,
   }),
 }));
 

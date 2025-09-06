@@ -4,13 +4,10 @@ import {
 } from "../../../constants/prayer-group-constants";
 import { UserData } from "../../../types/context/api-data-context-type";
 import { FileType, MediaFile } from "../../../types/media-file-types";
-import {
-  PrayerGroupDetails,
-  RawPrayerGroupDetails,
-} from "../../../types/prayer-group-types";
+import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { RawPrayerRequestModel } from "../../../types/prayer-request-types";
 
-export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
+export const mockPrayerGroupDetails: PrayerGroupDetails = {
   admins: [{ fullName: "Jim Halpert", userId: 1 }],
   bannerFile: {
     fileName: "1116f806-63cc-4bac-8f9b-00f2e734483f.jpeg",
@@ -33,7 +30,7 @@ export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
   prayerGroupRole: PrayerGroupRole.Admin,
 };
 
-export const mockPrayerGroupDetails: PrayerGroupDetails = {
+export const mockPrayerGroupDetails1: PrayerGroupDetails = {
   admins: [{ fullName: "Jim Halpert", userId: 1 }],
   bannerFile: {
     fileName: "1116f806-63cc-4bac-8f9b-00f2e734483f.jpeg",

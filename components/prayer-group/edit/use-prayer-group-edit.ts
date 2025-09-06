@@ -13,7 +13,6 @@ import {
   mapMediaFileFromImagePickerAsset,
 } from "../../../mappers/map-media-file";
 import {
-  mapPrayerGroupDetails,
   mapPrayerGroupSummaryFromPrayerGroupDetails,
   mapPrayerGroupToPutPrayerGroupRequest,
 } from "../../../mappers/map-prayer-group";
@@ -234,9 +233,7 @@ export const usePrayerGroupEdit = () => {
     prayerGroupDetails &&
       removeUnusedPrayerGroupFiles(prayerGroupDetails, valuesToSubmit);
 
-    const responsePrayerGroupDetails = mapPrayerGroupDetails(
-      putPrayerGroupResponse.value
-    );
+    const responsePrayerGroupDetails = putPrayerGroupResponse.value;
 
     const updatedPrayerGroupDetails: PrayerGroupDetails = {
       ...prayerGroupDetails,

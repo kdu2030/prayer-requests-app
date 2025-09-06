@@ -51,27 +51,6 @@ export const mapPrayerGroupUser = (
   };
 };
 
-export const mapPrayerGroupDetails = (
-  rawPrayerGroupDetails: RawPrayerGroupDetails
-): PrayerGroupDetails => {
-  const admins = rawPrayerGroupDetails.admins?.map((admin) =>
-    mapPrayerGroupUser(admin)
-  );
-
-  return {
-    prayerGroupId: rawPrayerGroupDetails.prayerGroupId,
-    description: rawPrayerGroupDetails.description,
-    groupName: rawPrayerGroupDetails.groupName,
-    rules: rawPrayerGroupDetails.rules,
-    userJoinStatus: rawPrayerGroupDetails.userJoinStatus,
-    prayerGroupRole: rawPrayerGroupDetails.prayerGroupRole,
-    admins,
-    avatarFile: rawPrayerGroupDetails.avatarFile,
-    bannerFile: rawPrayerGroupDetails.bannerFile,
-    visibilityLevel: rawPrayerGroupDetails.visibilityLevel,
-  };
-};
-
 export const mapPrayerGroupSummaryFromPrayerGroupDetails = (
   prayerGroupDetails: PrayerGroupDetails
 ): PrayerGroupSummary => {

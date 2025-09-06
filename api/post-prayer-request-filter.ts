@@ -15,9 +15,6 @@ const postPrayerRequestFilter = async (
   userId: number,
   filterCriteria: PrayerRequestFilterCriteria
 ): Promise<ManagedErrorResponse<RawPrayerRequestGetResponse>> => {
-  // FIXME: Temporary, remove when prayer-request filter working
-  return { isError: false, value: { prayerRequests: [], totalCount: 0 } };
-
   try {
     const url = `${baseUrl}/api/v1/prayer-request/filter`;
 

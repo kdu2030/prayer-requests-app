@@ -5,13 +5,15 @@ import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
 import { RawPrayerGroupDetails } from "../types/prayer-group-types";
+import { VisibilityLevel } from "../constants/prayer-group-constants";
 
 export type PutPrayerGroupRequest = {
   groupName?: string;
   description?: string;
   rules?: string;
-  imageFileId?: number;
-  bannerImageFileId?: number;
+  avatarFileId?: number;
+  bannerFileId?: number;
+  visibilityLevel?: VisibilityLevel;
 };
 
 const putPrayerGroup = async (
@@ -20,7 +22,7 @@ const putPrayerGroup = async (
   prayerGroupId: number,
   request: PutPrayerGroupRequest
 ): Promise<ManagedErrorResponse<RawPrayerGroupDetails>> => {
-  const url = `${baseUrl}/api/v1/prayergroup/${prayerGroupId}`;
+  const url = `${baseUrl}/api/prayergroup/${prayerGroupId}`;
 
   try {
     const response = await fetch.put<RawPrayerGroupDetails>(url, request, {

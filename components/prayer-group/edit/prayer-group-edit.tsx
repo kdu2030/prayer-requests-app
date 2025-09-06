@@ -20,6 +20,7 @@ import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section
 import { prayerGroupDetailsValidationSchema } from "./prayer-group-details-validation-schema";
 import { PrayerGroupEditTestIds } from "./tests/test-ids";
 import { usePrayerGroupEdit } from "./use-prayer-group-edit";
+import { FormikSelect } from "../../inputs/formik-select";
 
 export const PrayerGroupEdit: React.FC = () => {
   const theme = useTheme();
@@ -34,9 +35,10 @@ export const PrayerGroupEdit: React.FC = () => {
     clearField,
     isLoading,
     savePrayerGroupEdit,
+    visibilityOptions,
   } = usePrayerGroupEdit();
 
-  if (prayerGroupDetails?.userRole !== PrayerGroupRole.Admin) {
+  if (prayerGroupDetails?.prayerGroupRole !== PrayerGroupRole.Admin) {
     return <PrayerGroupPermissionError />;
   }
 
@@ -127,6 +129,15 @@ export const PrayerGroupEdit: React.FC = () => {
                   numberOfLines={5}
                 />
 
+                <FormikSelect
+                  mode="flat"
+                  containerClassName="mt-5"
+                  name="visibilityLevel"
+                  options={visibilityOptions}
+                  label={translate("createPrayerGroup.visibilityLevel.label")}
+                  required
+                />
+
                 <Text variant="bodyLarge" className="font-bold mt-5">
                   {translate("prayerGroup.edit.images")}
                 </Text>
@@ -138,7 +149,7 @@ export const PrayerGroupEdit: React.FC = () => {
                   <Button
                     mode="outlined"
                     className="w-1/2"
-                    onPress={() => selectImage("imageFile", [1, 1])}
+                    onPress={() => selectImage("avatarFile", [1, 1])}
                   >
                     {translate(
                       "createPrayerGroup.groupImageColorStep.selectImage"
@@ -149,7 +160,7 @@ export const PrayerGroupEdit: React.FC = () => {
                 {values.avatarFile && (
                   <>
                     <SelectedImageCard
-                      onRemoveImage={() => clearField("imageFile")}
+                      onRemoveImage={() => clearField("avatarFile")}
                       fileName={values.avatarFile.fileName ?? ""}
                     />
                     {errors.avatarFile && (
@@ -165,7 +176,7 @@ export const PrayerGroupEdit: React.FC = () => {
                   <Button
                     mode="outlined"
                     className="w-1/2"
-                    onPress={() => selectImage("bannerImageFile", [10, 3])}
+                    onPress={() => selectImage("bannerFile", [10, 3])}
                   >
                     {translate(
                       "createPrayerGroup.groupImageColorStep.selectImage"
@@ -176,7 +187,7 @@ export const PrayerGroupEdit: React.FC = () => {
                 {values.bannerFile && (
                   <>
                     <SelectedImageCard
-                      onRemoveImage={() => clearField("bannerImageFile")}
+                      onRemoveImage={() => clearField("bannerFile")}
                       fileName={values.bannerFile.fileName ?? ""}
                     />
                     {errors.bannerFile && (

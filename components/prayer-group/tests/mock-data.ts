@@ -4,34 +4,8 @@ import {
 } from "../../../constants/prayer-group-constants";
 import { UserData } from "../../../types/context/api-data-context-type";
 import { FileType, MediaFile } from "../../../types/media-file-types";
-import {
-  PrayerGroupDetails,
-  RawPrayerGroupDetails,
-} from "../../../types/prayer-group-types";
+import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { RawPrayerRequestModel } from "../../../types/prayer-request-types";
-
-export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
-  admins: [{ fullName: "Jim Halpert", userId: 1 }],
-  bannerFile: {
-    fileName: "1116f806-63cc-4bac-8f9b-00f2e734483f.jpeg",
-    fileType: FileType.Image,
-    mediaFileId: 3,
-    fileUrl:
-      "https://prayerappfileservices.pythonanywhere.com/static/b35e74e1-ae84-4a84-8dca-33da9c40ca21.jpeg",
-  },
-  description: "Prayer Group 2 Description",
-  groupName: "Prayer Group 2",
-  prayerGroupId: 2,
-  avatarFile: {
-    fileName: "80762286-809b-4c1c-8919-c74cc3a140e0.jpeg",
-    fileType: FileType.Image,
-    mediaFileId: 4,
-    fileUrl:
-      "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
-  },
-  userJoinStatus: JoinStatus.Joined,
-  userRole: PrayerGroupRole.Admin,
-};
 
 export const mockPrayerGroupDetails: PrayerGroupDetails = {
   admins: [{ fullName: "Jim Halpert", userId: 1 }],
@@ -53,7 +27,30 @@ export const mockPrayerGroupDetails: PrayerGroupDetails = {
       "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
   },
   userJoinStatus: JoinStatus.Joined,
-  userRole: PrayerGroupRole.Admin,
+  prayerGroupRole: PrayerGroupRole.Admin,
+};
+
+export const mockPrayerGroupDetails1: PrayerGroupDetails = {
+  admins: [{ fullName: "Jim Halpert", userId: 1 }],
+  bannerFile: {
+    fileName: "1116f806-63cc-4bac-8f9b-00f2e734483f.jpeg",
+    fileType: FileType.Image,
+    mediaFileId: 3,
+    fileUrl:
+      "https://prayerappfileservices.pythonanywhere.com/static/b35e74e1-ae84-4a84-8dca-33da9c40ca21.jpeg",
+  },
+  description: "Prayer Group 2 Description",
+  groupName: "Prayer Group 2",
+  prayerGroupId: 2,
+  avatarFile: {
+    fileName: "80762286-809b-4c1c-8919-c74cc3a140e0.jpeg",
+    fileType: FileType.Image,
+    mediaFileId: 4,
+    fileUrl:
+      "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
+  },
+  userJoinStatus: JoinStatus.Joined,
+  prayerGroupRole: PrayerGroupRole.Admin,
 };
 
 export const mockUserData: UserData = {

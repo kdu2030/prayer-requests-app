@@ -13,13 +13,15 @@ import {
   mapMediaFileFromImagePickerAsset,
 } from "../../../mappers/map-media-file";
 import {
-  mapPrayerGroupDetails,
   mapPrayerGroupSummaryFromPrayerGroupDetails,
   mapPrayerGroupToPutPrayerGroupRequest,
 } from "../../../mappers/map-prayer-group";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { UNIQUE_GROUP_NAME_ERROR } from "./edit-prayer-group-constants";
+import { useGetPrayerGroupNameValidation } from "../../../api/get-prayer-group-name-validation";
+import { DropdownOption } from "../../../types/inputs/dropdown";
+import { VisibilityLevel } from "../../../constants/prayer-group-constants";
 
 export const usePrayerGroupEdit = () => {
   const { translate } = useI18N();
@@ -33,6 +35,7 @@ export const usePrayerGroupEdit = () => {
   const postFile = usePostFile();
   const putPrayerGroup = usePutPrayerGroup();
   const deleteFile = useDeleteFile();
+  const getGroupNameValidation = useGetPrayerGroupNameValidation();
 
   const [snackbarError, setSnackbarError] = React.useState<
     string | undefined
@@ -42,6 +45,20 @@ export const usePrayerGroupEdit = () => {
   React.useEffect(() => {
     formikRef.current?.resetForm({ values: prayerGroupDetails });
   }, [prayerGroupDetails, pathname]);
+
+  const visibilityOptions: DropdownOption<VisibilityLevel>[] = React.useMemo(
+    () => [
+      {
+        label: translate("createPrayerGroup.visibilityLevel.public"),
+        value: VisibilityLevel.Public,
+      },
+      {
+        label: translate("createPrayerGroup.visibilityLevel.private"),
+        value: VisibilityLevel.Private,
+      },
+    ],
+    []
+  );
 
   const selectImage = async (fieldName: string, aspect: [number, number]) => {
     if (!formikRef.current) {
@@ -124,8 +141,10 @@ export const usePrayerGroupEdit = () => {
     const { setFieldError } = formikHelpers;
 
     setIsLoading(true);
+
     let imageFilePromise;
     let bannerImagePromise;
+    let groupNameValidationPromise;
 
     if (values.avatarFile && !values.avatarFile.mediaFileId) {
       imageFilePromise = postFile(mapFileToUpload(values.avatarFile));
@@ -135,10 +154,40 @@ export const usePrayerGroupEdit = () => {
       bannerImagePromise = postFile(mapFileToUpload(values.bannerFile));
     }
 
-    const [imageFileResponse, bannerImageResponse] = await Promise.all([
+    if (formikRef.current?.initialValues.groupName !== values.groupName) {
+      groupNameValidationPromise = getGroupNameValidation(
+        values.groupName ?? ""
+      );
+    }
+
+    const [
+      imageFileResponse,
+      bannerImageResponse,
+      groupNameValidationResponse,
+    ] = await Promise.all([
       imageFilePromise,
       bannerImagePromise,
+      groupNameValidationPromise,
     ]);
+
+    if (
+      !groupNameValidationResponse?.isError &&
+      groupNameValidationResponse?.value.errors?.includes(
+        UNIQUE_GROUP_NAME_ERROR
+      )
+    ) {
+      setFieldError(
+        "groupName",
+        translate("form.validation.unique.error", {
+          field: translate(
+            "createPrayerGroup.groupNameDescription.groupName"
+          ).toLocaleLowerCase(),
+        })
+      );
+
+      setIsLoading(false);
+      return;
+    }
 
     if (imageFileResponse?.isError) {
       setSnackbarError(
@@ -174,23 +223,6 @@ export const usePrayerGroupEdit = () => {
     );
     setIsLoading(false);
 
-    if (
-      putPrayerGroupResponse.isError &&
-      putPrayerGroupResponse.error?.dataValidationErrors?.includes(
-        UNIQUE_GROUP_NAME_ERROR
-      )
-    ) {
-      setFieldError(
-        "groupName",
-        translate("form.validation.unique.error", {
-          field: translate(
-            "createPrayerGroup.groupNameDescription.groupName"
-          ).toLocaleLowerCase(),
-        })
-      );
-      return;
-    }
-
     if (putPrayerGroupResponse.isError) {
       setSnackbarError(
         translate("toaster.failed.updateFailure", {
@@ -203,15 +235,13 @@ export const usePrayerGroupEdit = () => {
     prayerGroupDetails &&
       removeUnusedPrayerGroupFiles(prayerGroupDetails, valuesToSubmit);
 
-    const responsePrayerGroupDetails = mapPrayerGroupDetails(
-      putPrayerGroupResponse.value
-    );
+    const responsePrayerGroupDetails = putPrayerGroupResponse.value;
 
     const updatedPrayerGroupDetails: PrayerGroupDetails = {
       ...prayerGroupDetails,
       ...responsePrayerGroupDetails,
       userJoinStatus: prayerGroupDetails?.userJoinStatus,
-      userRole: prayerGroupDetails?.userRole,
+      prayerGroupRole: prayerGroupDetails?.prayerGroupRole,
       admins: prayerGroupDetails?.admins,
     };
 
@@ -244,5 +274,6 @@ export const usePrayerGroupEdit = () => {
     clearField,
     isLoading,
     savePrayerGroupEdit,
+    visibilityOptions,
   };
 };

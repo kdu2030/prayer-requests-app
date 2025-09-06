@@ -11,14 +11,14 @@ import * as React from "react";
 
 import { GetPrayerGroupUsersResponse } from "../../../../api/get-prayer-group-users";
 import { PrayerGroupRole } from "../../../../constants/prayer-group-constants";
-import { mapPrayerGroupDetails } from "../../../../mappers/map-prayer-group";
+
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import { ManagedErrorResponse } from "../../../../types/error-handling";
 import {
   PrayerGroupDetails,
   RawPrayerGroupUserSummary,
 } from "../../../../types/prayer-group-types";
-import { mockRawPrayerGroupDetails, mockUserData } from "../../tests/mock-data";
+import { mockPrayerGroupDetails, mockUserData } from "../../tests/mock-data";
 import { PrayerGroupUsers } from "../prayer-group-users";
 import { mockRawPrayerGroupUsers } from "./mock-data";
 import { PrayerGroupUsersTestIds } from "./test-ids";
@@ -81,7 +81,7 @@ const mountPrayerGroupUsers = (
 
   return mountComponent(
     <PrayerGroupUsers
-      prayerGroupId={mockRawPrayerGroupDetails.prayerGroupId ?? -1}
+      prayerGroupId={mockPrayerGroupDetails.prayerGroupId ?? -1}
     />
   );
 };
@@ -94,7 +94,7 @@ describe(PrayerGroupUsers, () => {
 
   test("Mount test", async () => {
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 
@@ -105,7 +105,7 @@ describe(PrayerGroupUsers, () => {
 
   test("User can be searched by display name", async () => {
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 
@@ -126,7 +126,7 @@ describe(PrayerGroupUsers, () => {
 
   test("User can be searched by username", async () => {
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 
@@ -147,7 +147,7 @@ describe(PrayerGroupUsers, () => {
 
   test("Prayer group role gets updated when role change button is pressed", async () => {
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 
@@ -164,7 +164,7 @@ describe(PrayerGroupUsers, () => {
 
   test("User no longer displays after user is deleted", async () => {
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 
@@ -190,7 +190,7 @@ describe(PrayerGroupUsers, () => {
     mockPutPrayerGroupAdmins.mockReturnValue({ isError: false });
 
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 
@@ -214,7 +214,7 @@ describe(PrayerGroupUsers, () => {
     mockPutPrayerGroupAdmins.mockReturnValue({ isError: false });
 
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockRawPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 

@@ -4,13 +4,13 @@ import { renderHook, RenderResult } from "@testing-library/react-native";
 import { useRef } from "react";
 
 import { PrayerGroupRole } from "../../../../constants/prayer-group-constants";
-import { mapPrayerGroupDetails } from "../../../../mappers/map-prayer-group";
+
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import {
   PrayerGroupDetails,
   RawPrayerGroupDetails,
 } from "../../../../types/prayer-group-types";
-import { mockRawPrayerGroupDetails } from "../../tests/mock-data";
+import { mockPrayerGroupDetails } from "../../tests/mock-data";
 import { PrayerGroupOptions } from "../prayer-group-options";
 import { PrayerGroupOptionsTestIds } from "./test-ids";
 
@@ -42,16 +42,12 @@ describe(PrayerGroupOptions, () => {
   });
 
   test("Mount test", () => {
-    component = mountPrayerGroupOptions(
-      mapPrayerGroupDetails(mockRawPrayerGroupDetails)
-    );
+    component = mountPrayerGroupOptions(mockPrayerGroupDetails);
     expect(component).toBeTruthy();
   });
 
   test("If the user is an admin, show edit prayer group and manage users", async () => {
-    component = mountPrayerGroupOptions(
-      mapPrayerGroupDetails(mockRawPrayerGroupDetails)
-    );
+    component = mountPrayerGroupOptions(mockPrayerGroupDetails);
     const editPrayerGroupButton = await component.findByTestId(
       PrayerGroupOptionsTestIds.editButton
     );
@@ -65,14 +61,12 @@ describe(PrayerGroupOptions, () => {
   });
 
   test("If the user is not an admin, hide edit prayer group and manage users", async () => {
-    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
-      ...mockRawPrayerGroupDetails,
-      userRole: PrayerGroupRole.Member,
+    const prayerGroupDetails: RawPrayerGroupDetails = {
+      ...mockPrayerGroupDetails,
+      prayerGroupRole: PrayerGroupRole.Member,
     };
 
-    component = mountPrayerGroupOptions(
-      mapPrayerGroupDetails(rawPrayerGroupDetails)
-    );
+    component = mountPrayerGroupOptions(prayerGroupDetails);
 
     const editPrayerGroupButton = component.queryByTestId(
       PrayerGroupOptionsTestIds.editButton

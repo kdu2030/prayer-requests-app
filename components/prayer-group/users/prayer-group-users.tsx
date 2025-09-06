@@ -49,7 +49,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
     setSuccessMessage,
   } = usePrayerGroupUsers(prayerGroupId);
 
-  if (prayerGroupDetails?.userRole !== PrayerGroupRole.Admin) {
+  if (prayerGroupDetails?.prayerGroupRole !== PrayerGroupRole.Admin) {
     return <PrayerGroupPermissionError />;
   }
 
@@ -74,7 +74,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
         />
       )}
 
-      {!isLoading && (
+      {!isLoading && !isError && (
         <View
           className="flex-1"
           style={{ backgroundColor: theme.colors.background }}

@@ -6,22 +6,17 @@ import {
   UserData,
   UserTokenPair,
 } from "../types/context/api-data-context-type";
-import { mapPrayerGroupSummary } from "./map-prayer-group";
 
 export const mapUserData = (
   userSummaryResponse: GetUserSummaryResponse
 ): UserData => {
-  const prayerGroups = userSummaryResponse.prayerGroups?.map((summary) =>
-    mapPrayerGroupSummary(summary)
-  );
-
   return {
     userId: userSummaryResponse.userId,
     fullName: userSummaryResponse.fullName,
     email: userSummaryResponse.email,
     username: userSummaryResponse.username,
     image: userSummaryResponse.image,
-    prayerGroups: compact(prayerGroups),
+    prayerGroups: userSummaryResponse.prayerGroups ?? [],
   };
 };
 

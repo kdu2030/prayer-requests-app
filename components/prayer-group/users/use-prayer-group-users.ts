@@ -203,7 +203,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
     const updatedUserRole = userSelfAdminRemoval
       ? PrayerGroupRole.Member
-      : prayerGroupDetails?.userRole;
+      : prayerGroupDetails?.prayerGroupRole;
 
     setPrayerGroupDetails({
       ...prayerGroupDetails,
@@ -211,7 +211,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       userJoinStatus: userDeletedThemselves
         ? JoinStatus.NotJoined
         : JoinStatus.Joined,
-      userRole: userDeletedThemselves ? undefined : updatedUserRole,
+      prayerGroupRole: userDeletedThemselves ? undefined : updatedUserRole,
     });
 
     if (userDeletedThemselves) {

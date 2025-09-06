@@ -20,6 +20,7 @@ import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section
 import { prayerGroupDetailsValidationSchema } from "./prayer-group-details-validation-schema";
 import { PrayerGroupEditTestIds } from "./tests/test-ids";
 import { usePrayerGroupEdit } from "./use-prayer-group-edit";
+import { FormikSelect } from "../../inputs/formik-select";
 
 export const PrayerGroupEdit: React.FC = () => {
   const theme = useTheme();
@@ -34,6 +35,7 @@ export const PrayerGroupEdit: React.FC = () => {
     clearField,
     isLoading,
     savePrayerGroupEdit,
+    visibilityOptions,
   } = usePrayerGroupEdit();
 
   if (prayerGroupDetails?.prayerGroupRole !== PrayerGroupRole.Admin) {
@@ -125,6 +127,15 @@ export const PrayerGroupEdit: React.FC = () => {
                   label={translate("createPrayerGroup.rules.label")}
                   multiline
                   numberOfLines={5}
+                />
+
+                <FormikSelect
+                  mode="flat"
+                  containerClassName="mt-5"
+                  name="visibilityLevel"
+                  options={visibilityOptions}
+                  label={translate("createPrayerGroup.visibilityLevel.label")}
+                  required
                 />
 
                 <Text variant="bodyLarge" className="font-bold mt-5">

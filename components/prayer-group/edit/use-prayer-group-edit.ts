@@ -21,6 +21,8 @@ import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { UNIQUE_GROUP_NAME_ERROR } from "./edit-prayer-group-constants";
 import { useGetPrayerGroupNameValidation } from "../../../api/get-prayer-group-name-validation";
+import { DropdownOption } from "../../../types/inputs/dropdown";
+import { VisibilityLevel } from "../../../constants/prayer-group-constants";
 
 export const usePrayerGroupEdit = () => {
   const { translate } = useI18N();
@@ -44,6 +46,20 @@ export const usePrayerGroupEdit = () => {
   React.useEffect(() => {
     formikRef.current?.resetForm({ values: prayerGroupDetails });
   }, [prayerGroupDetails, pathname]);
+
+  const visibilityOptions: DropdownOption<VisibilityLevel>[] = React.useMemo(
+    () => [
+      {
+        label: translate("createPrayerGroup.visibilityLevel.public"),
+        value: VisibilityLevel.Public,
+      },
+      {
+        label: translate("createPrayerGroup.visibilityLevel.private"),
+        value: VisibilityLevel.Private,
+      },
+    ],
+    []
+  );
 
   const selectImage = async (fieldName: string, aspect: [number, number]) => {
     if (!formikRef.current) {
@@ -123,7 +139,7 @@ export const usePrayerGroupEdit = () => {
     formikHelpers: FormikHelpers<PrayerGroupDetails>
   ) => {
     const valuesToSubmit: PrayerGroupDetails = { ...values };
-    const { setFieldError, setFieldTouched } = formikHelpers;
+    const { setFieldError } = formikHelpers;
 
     setIsLoading(true);
 
@@ -259,5 +275,6 @@ export const usePrayerGroupEdit = () => {
     clearField,
     isLoading,
     savePrayerGroupEdit,
+    visibilityOptions,
   };
 };

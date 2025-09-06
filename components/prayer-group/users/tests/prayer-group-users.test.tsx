@@ -11,7 +11,7 @@ import * as React from "react";
 
 import { GetPrayerGroupUsersResponse } from "../../../../api/get-prayer-group-users";
 import { PrayerGroupRole } from "../../../../constants/prayer-group-constants";
-import { mapPrayerGroupDetails } from "../../../../mappers/map-prayer-group";
+
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import { ManagedErrorResponse } from "../../../../types/error-handling";
 import {
@@ -94,7 +94,7 @@ describe(PrayerGroupUsers, () => {
 
   test("Mount test", async () => {
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 
@@ -105,7 +105,7 @@ describe(PrayerGroupUsers, () => {
 
   test("User can be searched by display name", async () => {
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 
@@ -126,7 +126,7 @@ describe(PrayerGroupUsers, () => {
 
   test("User can be searched by username", async () => {
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 
@@ -147,7 +147,7 @@ describe(PrayerGroupUsers, () => {
 
   test("Prayer group role gets updated when role change button is pressed", async () => {
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 
@@ -164,7 +164,7 @@ describe(PrayerGroupUsers, () => {
 
   test("User no longer displays after user is deleted", async () => {
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 
@@ -190,7 +190,7 @@ describe(PrayerGroupUsers, () => {
     mockPutPrayerGroupAdmins.mockReturnValue({ isError: false });
 
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 
@@ -214,7 +214,7 @@ describe(PrayerGroupUsers, () => {
     mockPutPrayerGroupAdmins.mockReturnValue({ isError: false });
 
     component = mountPrayerGroupUsers(
-      mapPrayerGroupDetails(mockPrayerGroupDetails),
+      mockPrayerGroupDetails,
       mockRawPrayerGroupUsers
     );
 

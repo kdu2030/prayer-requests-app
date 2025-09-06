@@ -36,7 +36,7 @@ export const PrayerGroupEdit: React.FC = () => {
     savePrayerGroupEdit,
   } = usePrayerGroupEdit();
 
-  if (prayerGroupDetails?.userRole !== PrayerGroupRole.Admin) {
+  if (prayerGroupDetails?.prayerGroupRole !== PrayerGroupRole.Admin) {
     return <PrayerGroupPermissionError />;
   }
 

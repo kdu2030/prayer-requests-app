@@ -32,7 +32,7 @@ export type RawPrayerGroupDetails = {
   rules?: string;
   visibilityLevel?: VisibilityLevel;
   userJoinStatus?: JoinStatus;
-  userRole?: PrayerGroupRole;
+  prayerGroupRole?: PrayerGroupRole;
   admins?: PrayerGroupUserSummary[];
   avatarFile?: MediaFile;
   bannerFile?: MediaFile;
@@ -45,7 +45,7 @@ export type PrayerGroupDetails = {
   rules?: string;
   visibilityLevel?: VisibilityLevel;
   userJoinStatus?: JoinStatus;
-  userRole?: PrayerGroupRole;
+  prayerGroupRole?: PrayerGroupRole;
   admins?: PrayerGroupUserSummary[];
   avatarFile?: MediaFile;
   bannerFile?: MediaFile;

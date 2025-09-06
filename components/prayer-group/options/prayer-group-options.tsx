@@ -31,7 +31,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
-  const isAdmin = prayerGroupDetails?.userRole === PrayerGroupRole.Admin;
+  const isAdmin = prayerGroupDetails?.prayerGroupRole === PrayerGroupRole.Admin;
 
   const renderBackdrop = React.useCallback(
     (props: BottomSheetBackdropProps) => (

@@ -58,13 +58,15 @@ export const mapPrayerGroupDetails = (
     mapPrayerGroupUser(admin)
   );
 
+  console.log(rawPrayerGroupDetails);
+
   return {
     prayerGroupId: rawPrayerGroupDetails.prayerGroupId,
     description: rawPrayerGroupDetails.description,
     groupName: rawPrayerGroupDetails.groupName,
     rules: rawPrayerGroupDetails.rules,
     userJoinStatus: rawPrayerGroupDetails.userJoinStatus,
-    userRole: rawPrayerGroupDetails.userRole,
+    prayerGroupRole: rawPrayerGroupDetails.prayerGroupRole,
     admins,
     avatarFile: rawPrayerGroupDetails.avatarFile,
     bannerFile: rawPrayerGroupDetails.bannerFile,

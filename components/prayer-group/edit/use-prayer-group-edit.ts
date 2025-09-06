@@ -211,7 +211,7 @@ export const usePrayerGroupEdit = () => {
       ...prayerGroupDetails,
       ...responsePrayerGroupDetails,
       userJoinStatus: prayerGroupDetails?.userJoinStatus,
-      userRole: prayerGroupDetails?.userRole,
+      prayerGroupRole: prayerGroupDetails?.prayerGroupRole,
       admins: prayerGroupDetails?.admins,
     };
 

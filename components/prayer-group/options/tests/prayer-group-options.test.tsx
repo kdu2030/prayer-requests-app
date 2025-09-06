@@ -67,7 +67,7 @@ describe(PrayerGroupOptions, () => {
   test("If the user is not an admin, hide edit prayer group and manage users", async () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
       ...mockRawPrayerGroupDetails,
-      userRole: PrayerGroupRole.Member,
+      prayerGroupRole: PrayerGroupRole.Member,
     };
 
     component = mountPrayerGroupOptions(

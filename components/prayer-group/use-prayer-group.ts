@@ -185,7 +185,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setPrayerGroupDetails({
       ...prayerGroupDetails,
       userJoinStatus: JoinStatus.Joined,
-      userRole: PrayerGroupRole.Member,
+      prayerGroupRole: PrayerGroupRole.Member,
     });
     setUserData({ ...userData, prayerGroups });
   };
@@ -213,7 +213,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setPrayerGroupDetails({
       ...prayerGroupDetails,
       userJoinStatus: JoinStatus.Joined,
-      userRole: undefined,
+      prayerGroupRole: undefined,
     });
 
     const prayerGroups = [...(userData.prayerGroups ?? [])];

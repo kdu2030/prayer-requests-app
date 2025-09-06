@@ -155,7 +155,7 @@ describe(PrayerGroup, () => {
   test("Join prayer group button displays if user is not a member", async () => {
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
       ...mockRawPrayerGroupDetails,
-      userRole: undefined,
+      prayerGroupRole: undefined,
       userJoinStatus: JoinStatus.NotJoined,
     };
 
@@ -177,7 +177,7 @@ describe(PrayerGroup, () => {
 
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
       ...mockRawPrayerGroupDetails,
-      userRole: undefined,
+      prayerGroupRole: undefined,
       userJoinStatus: JoinStatus.NotJoined,
     };
 

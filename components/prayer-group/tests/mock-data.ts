@@ -30,7 +30,7 @@ export const mockRawPrayerGroupDetails: RawPrayerGroupDetails = {
       "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
   },
   userJoinStatus: JoinStatus.Joined,
-  userRole: PrayerGroupRole.Admin,
+  prayerGroupRole: PrayerGroupRole.Admin,
 };
 
 export const mockPrayerGroupDetails: PrayerGroupDetails = {
@@ -53,7 +53,7 @@ export const mockPrayerGroupDetails: PrayerGroupDetails = {
       "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
   },
   userJoinStatus: JoinStatus.Joined,
-  userRole: PrayerGroupRole.Admin,
+  prayerGroupRole: PrayerGroupRole.Admin,
 };
 
 export const mockUserData: UserData = {

@@ -20,6 +20,7 @@ import {
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { UNIQUE_GROUP_NAME_ERROR } from "./edit-prayer-group-constants";
+import { useGetPrayerGroupNameValidation } from "../../../api/get-prayer-group-name-validation";
 
 export const usePrayerGroupEdit = () => {
   const { translate } = useI18N();
@@ -33,6 +34,7 @@ export const usePrayerGroupEdit = () => {
   const postFile = usePostFile();
   const putPrayerGroup = usePutPrayerGroup();
   const deleteFile = useDeleteFile();
+  const getGroupNameValidation = useGetPrayerGroupNameValidation();
 
   const [snackbarError, setSnackbarError] = React.useState<
     string | undefined
@@ -121,11 +123,13 @@ export const usePrayerGroupEdit = () => {
     formikHelpers: FormikHelpers<PrayerGroupDetails>
   ) => {
     const valuesToSubmit: PrayerGroupDetails = { ...values };
-    const { setFieldError } = formikHelpers;
+    const { setFieldError, setFieldTouched } = formikHelpers;
 
     setIsLoading(true);
+
     let imageFilePromise;
     let bannerImagePromise;
+    let groupNameValidationPromise;
 
     if (values.avatarFile && !values.avatarFile.mediaFileId) {
       imageFilePromise = postFile(mapFileToUpload(values.avatarFile));
@@ -135,10 +139,38 @@ export const usePrayerGroupEdit = () => {
       bannerImagePromise = postFile(mapFileToUpload(values.bannerFile));
     }
 
-    const [imageFileResponse, bannerImageResponse] = await Promise.all([
+    if (formikRef.current?.initialValues.groupName !== values.groupName) {
+      groupNameValidationPromise = getGroupNameValidation(
+        values.groupName ?? ""
+      );
+    }
+
+    const [
+      imageFileResponse,
+      bannerImageResponse,
+      groupNameValidationResponse,
+    ] = await Promise.all([
       imageFilePromise,
       bannerImagePromise,
+      groupNameValidationPromise,
     ]);
+
+    if (
+      !groupNameValidationResponse?.isError &&
+      groupNameValidationResponse?.value.errors?.includes(
+        UNIQUE_GROUP_NAME_ERROR
+      )
+    ) {
+      setFieldError(
+        "groupName",
+        translate("form.validation.unique.error", {
+          field: translate("createPrayerGroup.groupNameDescription.groupName"),
+        })
+      );
+
+      setIsLoading(false);
+      return;
+    }
 
     if (imageFileResponse?.isError) {
       setSnackbarError(
@@ -173,23 +205,6 @@ export const usePrayerGroupEdit = () => {
       mapPrayerGroupToPutPrayerGroupRequest(valuesToSubmit)
     );
     setIsLoading(false);
-
-    if (
-      putPrayerGroupResponse.isError &&
-      putPrayerGroupResponse.error?.dataValidationErrors?.includes(
-        UNIQUE_GROUP_NAME_ERROR
-      )
-    ) {
-      setFieldError(
-        "groupName",
-        translate("form.validation.unique.error", {
-          field: translate(
-            "createPrayerGroup.groupNameDescription.groupName"
-          ).toLocaleLowerCase(),
-        })
-      );
-      return;
-    }
 
     if (putPrayerGroupResponse.isError) {
       setSnackbarError(

@@ -122,7 +122,9 @@ describe(PrayerGroupEdit, () => {
         },
       };
 
-    mockGetPrayerGroupNameValidation(getPrayerGroupNameValidationResponse);
+    mockGetPrayerGroupNameValidation.mockReturnValue(
+      getPrayerGroupNameValidationResponse
+    );
 
     component = mountPrayerGroupEdit(mockPrayerGroupDetails);
 

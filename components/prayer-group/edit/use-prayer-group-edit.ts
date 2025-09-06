@@ -179,7 +179,9 @@ export const usePrayerGroupEdit = () => {
       setFieldError(
         "groupName",
         translate("form.validation.unique.error", {
-          field: translate("createPrayerGroup.groupNameDescription.groupName"),
+          field: translate(
+            "createPrayerGroup.groupNameDescription.groupName"
+          ).toLocaleLowerCase(),
         })
       );
 

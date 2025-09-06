@@ -10,8 +10,8 @@ export type PutPrayerGroupRequest = {
   groupName?: string;
   description?: string;
   rules?: string;
-  imageFileId?: number;
-  bannerImageFileId?: number;
+  avatarFileId?: number;
+  bannerFileId?: number;
 };
 
 const putPrayerGroup = async (
@@ -20,7 +20,7 @@ const putPrayerGroup = async (
   prayerGroupId: number,
   request: PutPrayerGroupRequest
 ): Promise<ManagedErrorResponse<RawPrayerGroupDetails>> => {
-  const url = `${baseUrl}/api/v1/prayergroup/${prayerGroupId}`;
+  const url = `${baseUrl}/api/prayergroup/${prayerGroupId}`;
 
   try {
     const response = await fetch.put<RawPrayerGroupDetails>(url, request, {

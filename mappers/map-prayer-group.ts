@@ -88,7 +88,7 @@ export const mapPrayerGroupToPutPrayerGroupRequest = (
     groupName: prayerGroupDetails.groupName,
     description: prayerGroupDetails.description,
     rules: prayerGroupDetails.rules,
-    imageFileId: prayerGroupDetails.avatarFile?.mediaFileId,
-    bannerImageFileId: prayerGroupDetails.bannerFile?.mediaFileId,
+    avatarFileId: prayerGroupDetails.avatarFile?.mediaFileId,
+    bannerFileId: prayerGroupDetails.bannerFile?.mediaFileId,
   };
 };

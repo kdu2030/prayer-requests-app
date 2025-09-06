@@ -11,7 +11,7 @@ const getPrayerGroup = async (
   baseUrl: string,
   prayerGroupId: number
 ): Promise<ManagedErrorResponse<RawPrayerGroupDetails>> => {
-  const url = `${baseUrl}/api/v1/prayergroup/${prayerGroupId}`;
+  const url = `${baseUrl}/api/prayergroup/${prayerGroupId}`;
 
   try {
     const response = await fetch.get<RawPrayerGroupDetails>(url);

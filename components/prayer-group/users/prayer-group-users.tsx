@@ -74,7 +74,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
         />
       )}
 
-      {!isLoading && (
+      {!isLoading && !isError && (
         <View
           className="flex-1"
           style={{ backgroundColor: theme.colors.background }}

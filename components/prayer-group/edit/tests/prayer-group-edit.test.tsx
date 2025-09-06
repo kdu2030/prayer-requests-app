@@ -9,15 +9,11 @@ import {
 } from "@testing-library/react-native";
 
 import { PutPrayerGroupRequest } from "../../../../api/put-prayer-group";
-import { mapPrayerGroupDetails } from "../../../../mappers/map-prayer-group";
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import { UserData } from "../../../../types/context/api-data-context-type";
 import { ManagedErrorResponse } from "../../../../types/error-handling";
 import { FileToUpload, MediaFile } from "../../../../types/media-file-types";
-import {
-  PrayerGroupDetails,
-  RawPrayerGroupDetails,
-} from "../../../../types/prayer-group-types";
+import { PrayerGroupDetails } from "../../../../types/prayer-group-types";
 import {
   mockMediaFile,
   mockPrayerGroupDetails,
@@ -26,6 +22,7 @@ import {
 import { UNIQUE_GROUP_NAME_ERROR } from "../edit-prayer-group-constants";
 import { PrayerGroupEdit } from "../prayer-group-edit";
 import { PrayerGroupEditTestIds } from "./test-ids";
+import { GetPrayerGroupNameValidationResponse } from "../../../../api/get-prayer-group-name-validation";
 
 let component: RenderResult;
 
@@ -35,6 +32,7 @@ const mockSetUserData = jest.fn();
 const mockPostFile = jest.fn();
 const mockDeleteFile = jest.fn();
 const mockPutPrayerGroup = jest.fn();
+const mockGetPrayerGroupNameValidation = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
@@ -71,6 +69,11 @@ jest.mock("../../../../api/put-prayer-group", () => ({
       mockPutPrayerGroup(prayerGroupId, request),
 }));
 
+jest.mock("../../../../api/get-prayer-group-name-validation", () => ({
+  useGetPrayerGroupNameValidation: () => (prayerGroupName: string) =>
+    mockGetPrayerGroupNameValidation(prayerGroupName),
+}));
+
 const mountPrayerGroupEdit = (prayerGroupDetails: PrayerGroupDetails) => {
   mockUsePrayerGroupContext.mockReturnValue({
     prayerGroupDetails,
@@ -87,17 +90,13 @@ describe(PrayerGroupEdit, () => {
   });
 
   test("Mount test", () => {
-    component = mountPrayerGroupEdit(
-      mapPrayerGroupDetails(mockPrayerGroupDetails)
-    );
+    component = mountPrayerGroupEdit(mockPrayerGroupDetails);
 
     expect(component).toBeTruthy();
   });
 
   test("Updating group name will update the group name in the preview", async () => {
-    component = mountPrayerGroupEdit(
-      mapPrayerGroupDetails(mockPrayerGroupDetails)
-    );
+    component = mountPrayerGroupEdit(mockPrayerGroupDetails);
 
     const newGroupName = "Ravenclaw";
 
@@ -114,19 +113,18 @@ describe(PrayerGroupEdit, () => {
   });
 
   test("Group name must be unique", async () => {
-    const putPrayerGroupResponse: ManagedErrorResponse<RawPrayerGroupDetails> =
+    const getPrayerGroupNameValidationResponse: ManagedErrorResponse<GetPrayerGroupNameValidationResponse> =
       {
-        isError: true,
-        error: {
-          dataValidationErrors: [UNIQUE_GROUP_NAME_ERROR],
+        isError: false,
+        value: {
+          isNameValid: false,
+          errors: [UNIQUE_GROUP_NAME_ERROR],
         },
       };
 
-    mockPutPrayerGroup.mockReturnValue(putPrayerGroupResponse);
+    mockGetPrayerGroupNameValidation(getPrayerGroupNameValidationResponse);
 
-    component = mountPrayerGroupEdit(
-      mapPrayerGroupDetails(mockPrayerGroupDetails)
-    );
+    component = mountPrayerGroupEdit(mockPrayerGroupDetails);
 
     const newGroupName = "Order of the Phoenix";
 
@@ -150,7 +148,7 @@ describe(PrayerGroupEdit, () => {
   });
 
   test("Post file gets called if banner image is not uploaded", async () => {
-    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+    const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       bannerFile: {
         ...mockPrayerGroupDetails.bannerFile,
@@ -158,9 +156,7 @@ describe(PrayerGroupEdit, () => {
       },
     };
 
-    component = mountPrayerGroupEdit(
-      mapPrayerGroupDetails(rawPrayerGroupDetails)
-    );
+    component = mountPrayerGroupEdit(prayerGroupDetails);
 
     const saveButton = await component.findByTestId(
       PrayerGroupEditTestIds.saveButton
@@ -172,7 +168,7 @@ describe(PrayerGroupEdit, () => {
       value: mockPrayerGroupDetails.bannerFile!,
     };
 
-    const mockPutPrayerGroupResponse: ManagedErrorResponse<RawPrayerGroupDetails> =
+    const mockPutPrayerGroupResponse: ManagedErrorResponse<PrayerGroupDetails> =
       {
         isError: false,
         value: mockPrayerGroupDetails,
@@ -187,7 +183,7 @@ describe(PrayerGroupEdit, () => {
   });
 
   test("Avatar image in user data gets updated in user data upon save", async () => {
-    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+    const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       avatarFile: {
         ...mockPrayerGroupDetails.avatarFile,
@@ -195,9 +191,7 @@ describe(PrayerGroupEdit, () => {
       },
     };
 
-    component = mountPrayerGroupEdit(
-      mapPrayerGroupDetails(rawPrayerGroupDetails)
-    );
+    component = mountPrayerGroupEdit(prayerGroupDetails);
 
     const saveButton = await component.findByTestId(
       PrayerGroupEditTestIds.saveButton
@@ -209,7 +203,7 @@ describe(PrayerGroupEdit, () => {
       value: mockPrayerGroupDetails.avatarFile!,
     };
 
-    const mockPutPrayerGroupResponse: ManagedErrorResponse<RawPrayerGroupDetails> =
+    const mockPutPrayerGroupResponse: ManagedErrorResponse<PrayerGroupDetails> =
       {
         isError: false,
         value: {

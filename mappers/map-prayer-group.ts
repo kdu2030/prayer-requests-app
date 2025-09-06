@@ -90,5 +90,6 @@ export const mapPrayerGroupToPutPrayerGroupRequest = (
     rules: prayerGroupDetails.rules,
     avatarFileId: prayerGroupDetails.avatarFile?.mediaFileId,
     bannerFileId: prayerGroupDetails.bannerFile?.mediaFileId,
+    visibilityLevel: prayerGroupDetails.visibilityLevel,
   };
 };

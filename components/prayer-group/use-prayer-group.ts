@@ -15,7 +15,7 @@ import {
 } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
-import { mapPrayerGroupDetails } from "../../mappers/map-prayer-group";
+
 import { mapPrayerRequests } from "../../mappers/map-prayer-request";
 import { LoadStatus } from "../../types/api-response-types";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
@@ -135,8 +135,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       return;
     }
 
-    const loadedPrayerGroupDetails = mapPrayerGroupDetails(response.value);
-    setPrayerGroupDetails(loadedPrayerGroupDetails);
+    setPrayerGroupDetails(response.value);
   };
 
   const loadPrayerGroupData = async () => {

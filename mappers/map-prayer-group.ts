@@ -68,6 +68,7 @@ export const mapPrayerGroupDetails = (
     admins,
     avatarFile: rawPrayerGroupDetails.avatarFile,
     bannerFile: rawPrayerGroupDetails.bannerFile,
+    visibilityLevel: rawPrayerGroupDetails.visibilityLevel,
   };
 };
 

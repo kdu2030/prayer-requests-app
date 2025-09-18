@@ -71,15 +71,7 @@ const AppContainer: React.FC = () => {
 
   const loadUserData = async () => {
     const response = await loadLanguage();
-    if (response.isError) {
-      setSnackbarError(
-        translate("toaster.failed.loadFailure", {
-          item: translate("loading.userData.label").toLocaleLowerCase(),
-        })
-      );
-      await sleep(1000);
-    }
-
+  
     if (response.isError || response.value == null) {
       router.push("/language/language-picker");
       return;

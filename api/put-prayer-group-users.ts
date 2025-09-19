@@ -6,8 +6,8 @@ import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 
 export type PrayerGroupUserUpdateModel = {
-  prayerGroupId?: number;
-  prayerGroupRole?: PrayerGroupRole[];
+  userId?: number;
+  prayerGroupRole?: PrayerGroupRole;
 };
 
 export type PutPrayerGroupUserUpdateRequest = {

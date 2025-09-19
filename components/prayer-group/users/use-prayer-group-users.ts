@@ -18,10 +18,14 @@ import {
   PrayerGroupUserSummary,
 } from "../../../types/prayer-group-types";
 import { usePrayerGroupContext } from "../prayer-group-context";
-import { normalizeText } from "./prayer-group-user-helpers";
+import {
+  mapPrayerGroupUsers,
+  normalizeText,
+} from "./prayer-group-user-helpers";
 
 import { usePostPrayerGroupUsersQuery } from "../../../api/post-prayer-group-users-query";
 import { PRAYER_GROUP_USERS_QUERY } from "./prayer-group-users-constants";
+import { usePutPrayerGroupUsers } from "../../../api/put-prayer-group-users";
 
 export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const { translate } = useI18N();
@@ -59,6 +63,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
   const putPrayerGroupAdmins = usePutPrayerGroupAdmins();
   const deletePrayerGroupUsers = useDeletePrayerGroupUsers();
+
+  const putPrayerGroupUsers = usePutPrayerGroupUsers();
 
   const loadPrayerGroupUsers = React.useCallback(async () => {
     setIsLoading(true);
@@ -146,33 +152,17 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
   };
 
   const onSavePrayerGroupUsers = async () => {
-    const userIdsToDelete: number[] = [];
-    const adminUserIds: number[] = [];
-
-    prayerGroupUsers.forEach((user) => {
-      if (!user.userId) {
-        return;
-      }
-
-      if (user.prayerGroupRole === PrayerGroupRole.Admin) {
-        adminUserIds.push(user.userId);
-      }
-    });
-
     setIsSaveLoading(true);
-    const deleteUserPromise =
-      userIdsToDelete.length > 0
-        ? deletePrayerGroupUsers(prayerGroupId, userIdsToDelete)
-        : { isError: false };
 
-    const [deleteUserResponse, updateAdminsResponse] = await Promise.all([
-      deleteUserPromise,
-      putPrayerGroupAdmins(prayerGroupId, adminUserIds),
-    ]);
+    const prayerGroupUserUpdateModels = mapPrayerGroupUsers(prayerGroupUsers);
+    const response = await putPrayerGroupUsers(
+      prayerGroupId,
+      prayerGroupUserUpdateModels
+    );
 
     setIsSaveLoading(false);
 
-    if (deleteUserResponse.isError || updateAdminsResponse.isError) {
+    if (response.isError) {
       setSaveError(
         translate("toaster.failed.updateFailure", {
           item: translate("prayerGroup.manageUsers.usersLabel"),
@@ -182,31 +172,29 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     }
 
     setSuccessMessage(translate("prayerGroup.manageUsers.updateSuccess"));
-    await sleep(1000);
 
-    const deletedUserIdsSet = new Set<number>(userIdsToDelete);
-    const adminUserIdsSet = new Set<number>(adminUserIds);
-
-    const updatedAdmins = prayerGroupDetails?.admins?.filter(
-      (admin) =>
-        !deletedUserIdsSet.has(admin.userId ?? -1) &&
-        adminUserIdsSet.has(admin.userId ?? -1)
+    const updatedPrayerGroupUser = response.value.prayerGroupUsers?.find(
+      (user) => {
+        return user.userId === userData?.userId;
+      }
     );
 
-    const userDeletedThemselves = deletedUserIdsSet.has(userData?.userId ?? -1);
-    const userSelfAdminRemoval = !adminUserIdsSet.has(userData?.userId ?? -1);
+    const updatedAdmins = response.value.prayerGroupUsers?.filter(
+      (prayerGroupUser) =>
+        prayerGroupUser.prayerGroupRole === PrayerGroupRole.Admin
+    );
 
-    const updatedUserRole = userSelfAdminRemoval
-      ? PrayerGroupRole.Member
-      : prayerGroupDetails?.prayerGroupRole;
+    const updatedUserRole = updatedPrayerGroupUser?.prayerGroupRole;
+
+    const userDeletedThemselves = !updatedPrayerGroupUser;
 
     setPrayerGroupDetails({
       ...prayerGroupDetails,
       admins: updatedAdmins,
-      userJoinStatus: userDeletedThemselves
+      userJoinStatus: !updatedPrayerGroupUser
         ? JoinStatus.NotJoined
         : JoinStatus.Joined,
-      prayerGroupRole: userDeletedThemselves ? undefined : updatedUserRole,
+      prayerGroupRole: updatedPrayerGroupUser ? updatedUserRole : undefined,
     });
 
     if (userDeletedThemselves) {
@@ -216,7 +204,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       setUserData({ ...userData, prayerGroups: updatedPrayerGroups });
     }
 
-    if (userDeletedThemselves || userSelfAdminRemoval) {
+    if (userDeletedThemselves || updatedUserRole != PrayerGroupRole.Admin) {
       router.push({
         pathname: "/prayergroup/[id]",
         params: { id: prayerGroupId },
@@ -224,8 +212,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       return;
     }
 
-    setPrayerGroupUsers(prayerGroupUsers);
-    setFilteredUsers(prayerGroupUsers);
+    setPrayerGroupUsers(response.value.prayerGroupUsers ?? []);
+    setFilteredUsers(response.value.prayerGroupUsers ?? []);
     setUserQuery("");
   };
 

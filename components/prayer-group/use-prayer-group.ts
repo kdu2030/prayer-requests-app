@@ -192,6 +192,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       prayerGroupId,
       userData.userId
     );
+
     setIsRemoveUserLoading(false);
 
     if (response.isError) {
@@ -205,7 +206,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     setPrayerGroupDetails({
       ...prayerGroupDetails,
-      userJoinStatus: JoinStatus.Joined,
+      userJoinStatus: JoinStatus.NotJoined,
       prayerGroupRole: undefined,
     });
 

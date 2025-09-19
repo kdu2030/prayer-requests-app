@@ -10,7 +10,7 @@ const deletePrayerGroupUser = async (
   prayerGroupId: number,
   userId: number
 ): Promise<BaseManagedErrorResponse> => {
-  const url = `${baseUrl}/prayergroup/${prayerGroupId}/user/${userId}`;
+  const url = `${baseUrl}/api/prayergroup/${prayerGroupId}/user/${userId}`;
 
   try {
     await fetch.delete(url);

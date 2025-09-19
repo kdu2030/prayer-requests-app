@@ -25,6 +25,7 @@ import {
 } from "../../types/prayer-request-types";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
+import { usePostPrayerGroupUser } from "../../api/post-prayer-group-user";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -63,7 +64,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const getPrayerGroup = useGetPrayerGroup();
   const deletePrayerGroupUsers = useDeletePrayerGroupUsers();
-  const postPrayerGroupUsers = usePostPrayerGroupUsers();
+  const postPrayerGroupUser = usePostPrayerGroupUser();
 
   const postPrayerRequestFilter = usePostPrayerRequestFilter();
 
@@ -159,13 +160,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       return;
     }
 
-    const userToAdd: PrayerGroupUserToAdd = {
-      id: userData.userId,
-      role: PrayerGroupRole.Member,
-    };
-
     setIsAddUserLoading(true);
-    const response = await postPrayerGroupUsers(prayerGroupId, [userToAdd]);
+    const response = await postPrayerGroupUser(prayerGroupId, userData.userId);
     setIsAddUserLoading(false);
 
     if (response.isError) {

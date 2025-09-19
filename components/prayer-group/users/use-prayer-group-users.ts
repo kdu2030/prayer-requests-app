@@ -173,13 +173,13 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
     setSuccessMessage(translate("prayerGroup.manageUsers.updateSuccess"));
 
-    const updatedPrayerGroupUser = response.value.prayerGroupUsers?.find(
-      (user) => {
-        return user.userId === userData?.userId;
-      }
-    );
+    const updatedPrayerGroupUsers = response.value.prayerGroupUsers ?? [];
 
-    const updatedAdmins = response.value.prayerGroupUsers?.filter(
+    const updatedPrayerGroupUser = updatedPrayerGroupUsers?.find((user) => {
+      return user.userId === userData?.userId;
+    });
+
+    const updatedAdmins = updatedPrayerGroupUsers?.filter(
       (prayerGroupUser) =>
         prayerGroupUser.prayerGroupRole === PrayerGroupRole.Admin
     );
@@ -212,8 +212,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       return;
     }
 
-    setPrayerGroupUsers(response.value.prayerGroupUsers ?? []);
-    setFilteredUsers(response.value.prayerGroupUsers ?? []);
+    setPrayerGroupUsers(updatedPrayerGroupUsers ?? []);
+    setFilteredUsers(updatedPrayerGroupUsers ?? []);
     setUserQuery("");
   };
 

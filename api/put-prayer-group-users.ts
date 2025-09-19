@@ -3,6 +3,7 @@ import { AxiosInstance } from "axios";
 import { PrayerGroupRole } from "../constants/prayer-group-constants";
 import { ManagedErrorResponse } from "../types/error-handling";
 import { handleApiErrors } from "../helpers/api-helpers";
+import { useApiDataContext } from "../hooks/use-api-data";
 
 export type PrayerGroupUserUpdateModel = {
   prayerGroupId?: number;
@@ -44,4 +45,14 @@ const putPrayerGroupUsers = async (
   } catch (error) {
     return handleApiErrors(error);
   }
+};
+
+export const usePutPrayerGroupUsers = () => {
+  const { fetch, baseUrl } = useApiDataContext();
+
+  return React.useCallback(
+    (prayerGroupId: number, prayerGroupUsers: PrayerGroupUserUpdateModel[]) =>
+      putPrayerGroupUsers(fetch, baseUrl, prayerGroupId, prayerGroupUsers),
+    []
+  );
 };

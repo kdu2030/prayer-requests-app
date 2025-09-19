@@ -17,6 +17,9 @@ import { DeletablePrayerGroupUser } from "../../../types/prayer-group-types";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { normalizeText } from "./prayer-group-user-helpers";
 
+import { usePostPrayerGroupUsersQuery } from "../../../api/post-prayer-group-users-query";
+import { PRAYER_GROUP_USERS_QUERY } from "./prayer-group-users-constants";
+
 export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const { translate } = useI18N();
 
@@ -49,7 +52,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] =
     React.useState<boolean>(false);
 
-  const getPrayerGroupUsers = useGetPrayerGroupUsers();
+  const postPrayerGroupUsersQuery = usePostPrayerGroupUsersQuery();
 
   const putPrayerGroupAdmins = usePutPrayerGroupAdmins();
   const deletePrayerGroupUsers = useDeletePrayerGroupUsers();
@@ -57,10 +60,10 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const loadPrayerGroupUsers = React.useCallback(async () => {
     setIsLoading(true);
 
-    const response = await getPrayerGroupUsers(prayerGroupId, [
-      PrayerGroupRole.Member,
-      PrayerGroupRole.Admin,
-    ]);
+    const response = await postPrayerGroupUsersQuery(
+      prayerGroupId,
+      PRAYER_GROUP_USERS_QUERY
+    );
     setIsLoading(false);
 
     if (response.isError) {
@@ -68,9 +71,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       return;
     }
 
-    const responseUsers = response.value.users.map((user) =>
-      mapPrayerGroupUser(user)
-    );
+    const responseUsers = response.value.prayerGroupUsers;
 
     setPrayerGroupUsers(responseUsers);
     setFilteredUsers(responseUsers);

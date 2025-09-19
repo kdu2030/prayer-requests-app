@@ -41,7 +41,7 @@ const postPrayerGroupUsersQuery = async (
   }
 };
 
-export const usePostGroupUsersQuery = () => {
+export const usePostPrayerGroupUsersQuery = () => {
   const { fetch, baseUrl } = useApiDataContext();
 
   return React.useCallback(

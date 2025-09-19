@@ -13,7 +13,10 @@ import { sleep } from "../../../helpers/utils";
 import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import { mapPrayerGroupUser } from "../../../mappers/map-prayer-group";
-import { DeletablePrayerGroupUser } from "../../../types/prayer-group-types";
+import {
+  DeletablePrayerGroupUser,
+  PrayerGroupUserSummary,
+} from "../../../types/prayer-group-types";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { normalizeText } from "./prayer-group-user-helpers";
 
@@ -27,10 +30,10 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const { userData, setUserData } = useApiDataContext();
 
   const [prayerGroupUsers, setPrayerGroupUsers] = React.useState<
-    DeletablePrayerGroupUser[]
+    PrayerGroupUserSummary[]
   >([]);
   const [filteredUsers, setFilteredUsers] = React.useState<
-    DeletablePrayerGroupUser[]
+    PrayerGroupUserSummary[]
   >([]);
 
   const [userQuery, setUserQuery] = React.useState<string>("");
@@ -113,16 +116,11 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       throw new Error("Cannot delete without a user to delete index.");
     }
 
-    const updatedPrayerGroupUsers = [...prayerGroupUsers];
+    const userToDelete = filteredUsers[userToDeleteIndex];
 
-    const userToDelete = { ...filteredUsers[userToDeleteIndex] };
-    const prayerGroupUsersIndex = prayerGroupUsers.findIndex(
-      (user) => user.userId === userToDelete.userId
+    const updatedPrayerGroupUsers = [...prayerGroupUsers].filter(
+      (prayerGroupUser) => prayerGroupUser.userId === userToDelete.userId
     );
-
-    userToDelete.isDeleted = true;
-
-    updatedPrayerGroupUsers[prayerGroupUsersIndex] = userToDelete;
 
     setPrayerGroupUsers(updatedPrayerGroupUsers);
     setFilteredUsers(updatedPrayerGroupUsers);
@@ -156,11 +154,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
         return;
       }
 
-      if (user.isDeleted) {
-        userIdsToDelete.push(user.userId);
-      }
-
-      if (user.prayerGroupRole === PrayerGroupRole.Admin && !user.isDeleted) {
+      if (user.prayerGroupRole === PrayerGroupRole.Admin) {
         adminUserIds.push(user.userId);
       }
     });
@@ -230,12 +224,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       return;
     }
 
-    const updatedPrayerGroupUsers = prayerGroupUsers.filter(
-      (user) => !user.isDeleted
-    );
-
-    setPrayerGroupUsers(updatedPrayerGroupUsers);
-    setFilteredUsers(updatedPrayerGroupUsers);
+    setPrayerGroupUsers(prayerGroupUsers);
+    setFilteredUsers(prayerGroupUsers);
     setUserQuery("");
   };
 

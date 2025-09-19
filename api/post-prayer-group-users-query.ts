@@ -16,7 +16,7 @@ export type GetPrayerGroupUsersResponse = {
   prayerGroupUsers: PrayerGroupUserSummary[];
 };
 
-const postPrayerGroupUsersSearch = async (
+const postPrayerGroupUsersQuery = async (
   fetch: AxiosInstance,
   baseUrl: string,
   prayerGroupId: number,
@@ -41,7 +41,7 @@ const postPrayerGroupUsersSearch = async (
   }
 };
 
-export const usePostGroupUsersSearch = () => {
+export const usePostGroupUsersQuery = () => {
   const { fetch, baseUrl } = useApiDataContext();
 
   return React.useCallback(
@@ -49,7 +49,7 @@ export const usePostGroupUsersSearch = () => {
       prayerGroupId: number,
       prayerGroupUsersRequest: GetPrayerGroupUsersRequest
     ) =>
-      postPrayerGroupUsersSearch(
+      postPrayerGroupUsersQuery(
         fetch,
         baseUrl,
         prayerGroupId,

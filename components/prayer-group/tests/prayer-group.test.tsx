@@ -204,7 +204,7 @@ describe(PrayerGroup, () => {
     fireEvent.press(leavePrayerGroupButton);
 
     await waitFor(() => {
-      expect(mockDeletePrayerGroupUser).toHaveBeenCalledWith(2, [1]);
+      expect(mockDeletePrayerGroupUser).toHaveBeenCalledWith(2, 1);
     });
   });
 

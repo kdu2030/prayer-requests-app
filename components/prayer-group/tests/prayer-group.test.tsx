@@ -8,15 +8,11 @@ import {
   waitFor,
 } from "@testing-library/react-native";
 
-import { PrayerGroupUserToAdd } from "../../../api/post-prayer-group-users";
-import {
-  JoinStatus,
-  PrayerGroupRole,
-} from "../../../constants/prayer-group-constants";
+import { JoinStatus } from "../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { SortOrder } from "../../../types/api-response-types";
 import { ManagedErrorResponse } from "../../../types/error-handling";
-import { RawPrayerGroupDetails } from "../../../types/prayer-group-types";
+import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import {
   PrayerRequestFilterCriteria,
   RawPrayerRequestGetResponse,
@@ -26,17 +22,17 @@ import { PrayerGroupHeaderTestIds } from "../header/tests/test-ids";
 import { PrayerGroup } from "../prayer-group";
 import { PrayerGroupContextProvider } from "../prayer-group-context";
 import {
+  mockPrayerGroupDetails,
   mockPrayerGroupDetails1,
   mockPrayerRequests,
-  mockPrayerGroupDetails,
   mockUserData,
 } from "./mock-data";
 
 let component: RenderResult;
 
 const mockGetPrayerGroup = jest.fn();
-const mockPostPrayerGroupUsers = jest.fn();
-const mockDeletePrayerGroupUsers = jest.fn();
+const mockPostPrayerGroupUser = jest.fn();
+const mockDeletePrayerGroupUser = jest.fn();
 const mockPostPrayerRequestFilter = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
@@ -50,15 +46,14 @@ jest.mock("../../../api/get-prayer-group", () => ({
   useGetPrayerGroup: () => () => mockGetPrayerGroup(),
 }));
 
-jest.mock("../../../api/post-prayer-group-users", () => ({
-  usePostPrayerGroupUsers:
-    () => (id: number, usersToAdd: PrayerGroupUserToAdd[]) =>
-      mockPostPrayerGroupUsers(id, usersToAdd),
+jest.mock("../../../api/post-prayer-group-user", () => ({
+  usePostPrayerGroupUser: () => (prayerGroupId: number, userId: number) =>
+    mockPostPrayerGroupUser(prayerGroupId, userId),
 }));
 
-jest.mock("../../../api/delete-prayer-group-users", () => ({
-  useDeletePrayerGroupUsers: () => (id: number, userIds: []) =>
-    mockDeletePrayerGroupUsers(id, userIds),
+jest.mock("../../../api/delete-prayer-group-user", () => ({
+  useDeletePrayerGroupUser: () => (prayerGroupId: number, userId: number) =>
+    mockDeletePrayerGroupUser(prayerGroupId, userId),
 }));
 
 jest.mock("../../../hooks/use-api-data", () => ({
@@ -73,12 +68,12 @@ jest.mock("../../../api/post-prayer-request-filter", () => ({
 }));
 
 const mountPrayerGroup = (
-  rawPrayerGroupDetails: RawPrayerGroupDetails,
+  prayerGroupDetails: PrayerGroupDetails,
   useCustomPostPrayerRequestMock: boolean = false
 ) => {
-  const mockGetResponse: ManagedErrorResponse<RawPrayerGroupDetails> = {
+  const mockGetResponse: ManagedErrorResponse<PrayerGroupDetails> = {
     isError: false,
-    value: rawPrayerGroupDetails,
+    value: prayerGroupDetails,
   };
 
   const mockPrayerRequestResponse: ManagedErrorResponse<RawPrayerRequestGetResponse> =
@@ -127,12 +122,12 @@ describe(PrayerGroup, () => {
   });
 
   test("Prayer group banner placeholder displays if banner is null", async () => {
-    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+    const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       bannerFile: undefined,
     };
 
-    component = mountPrayerGroup(rawPrayerGroupDetails);
+    component = mountPrayerGroup(prayerGroupDetails);
     const bannerPlaceholder = await component.findByTestId(
       PrayerGroupHeaderTestIds.bannerPlaceholder
     );
@@ -153,13 +148,13 @@ describe(PrayerGroup, () => {
   });
 
   test("Join prayer group button displays if user is not a member", async () => {
-    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+    const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       prayerGroupRole: undefined,
       userJoinStatus: JoinStatus.NotJoined,
     };
 
-    component = mountPrayerGroup(rawPrayerGroupDetails);
+    component = mountPrayerGroup(prayerGroupDetails);
 
     const joinPrayerGroupButton = await component.findByTestId(
       PrayerGroupHeaderTestIds.joinGroupButton
@@ -172,16 +167,16 @@ describe(PrayerGroup, () => {
     expect(aboutGroupButton).toBeTruthy();
   });
 
-  test("Post prayer group users gets called when the user presses the join button", async () => {
-    mockPostPrayerGroupUsers.mockReturnValue({ isError: false });
+  test("Post prayer group user gets called when the user presses the join button", async () => {
+    mockPostPrayerGroupUser.mockReturnValue({ isError: false });
 
-    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+    const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       prayerGroupRole: undefined,
       userJoinStatus: JoinStatus.NotJoined,
     };
 
-    component = mountPrayerGroup(rawPrayerGroupDetails);
+    component = mountPrayerGroup(prayerGroupDetails);
 
     const joinPrayerGroupButton = await component.findByTestId(
       PrayerGroupHeaderTestIds.joinGroupButton
@@ -189,18 +184,13 @@ describe(PrayerGroup, () => {
 
     fireEvent.press(joinPrayerGroupButton);
 
-    const prayerGroupUserToAdd = {
-      id: 1,
-      role: PrayerGroupRole.Member,
-    };
-
-    expect(mockPostPrayerGroupUsers).toHaveBeenCalledWith(2, [
-      prayerGroupUserToAdd,
-    ]);
+    await waitFor(() =>
+      expect(mockPostPrayerGroupUser).toHaveBeenCalledWith(2, 1)
+    );
   });
 
   test("Delete prayer group users gets called when user presses the leave button", async () => {
-    mockDeletePrayerGroupUsers.mockReturnValue({ isError: false });
+    mockDeletePrayerGroupUser.mockReturnValue({ isError: false });
     component = mountPrayerGroup(mockPrayerGroupDetails);
 
     const leavePrayerGroupButton = await component.findByTestId(
@@ -210,7 +200,7 @@ describe(PrayerGroup, () => {
     fireEvent.press(leavePrayerGroupButton);
 
     await waitFor(() => {
-      expect(mockDeletePrayerGroupUsers).toHaveBeenCalledWith(2, [1]);
+      expect(mockDeletePrayerGroupUser).toHaveBeenCalledWith(2, 1);
     });
   });
 
@@ -227,7 +217,7 @@ describe(PrayerGroup, () => {
     let prayerRequestFilterCriteria: PrayerRequestFilterCriteria = {
       sortConfig: {
         sortField: "createdDate",
-        sortOrder: SortOrder.Descending,
+        sortDirection: SortOrder.Descending,
       },
     };
 

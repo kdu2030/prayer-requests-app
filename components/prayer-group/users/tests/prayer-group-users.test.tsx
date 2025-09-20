@@ -9,27 +9,29 @@ import {
 } from "@testing-library/react-native";
 import * as React from "react";
 
-import { GetPrayerGroupUsersResponse } from "../../../../api/get-prayer-group-users";
+import {
+  GetPrayerGroupUsersRequest,
+  GetPrayerGroupUsersResponse,
+} from "../../../../api/post-prayer-group-users-query";
+import { PrayerGroupUserUpdateModel } from "../../../../api/put-prayer-group-users";
 import { PrayerGroupRole } from "../../../../constants/prayer-group-constants";
-
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import { ManagedErrorResponse } from "../../../../types/error-handling";
 import {
   PrayerGroupDetails,
-  RawPrayerGroupUserSummary,
+  PrayerGroupUserSummary,
 } from "../../../../types/prayer-group-types";
 import { mockPrayerGroupDetails, mockUserData } from "../../tests/mock-data";
 import { PrayerGroupUsers } from "../prayer-group-users";
-import { mockRawPrayerGroupUsers } from "./mock-data";
+import { mockPrayerGroupUsers } from "./mock-data";
 import { PrayerGroupUsersTestIds } from "./test-ids";
 
 let component: RenderResult;
 
 const mockUsePrayerGroupContext = jest.fn();
 
-const mockGetPrayerGroupUsers = jest.fn();
-const mockPutPrayerGroupAdmins = jest.fn();
-const mockDeletePrayerGroupUsers = jest.fn();
+const mockPostPrayerGroupUsersQuery = jest.fn();
+const mockPutPrayerGroupUsers = jest.fn();
 
 jest.mock("../../prayer-group-context", () => ({
   usePrayerGroupContext: () => mockUsePrayerGroupContext(),
@@ -43,19 +45,21 @@ jest.mock("../../../../hooks/use-api-data", () => ({
   }),
 }));
 
-jest.mock("../../../../api/get-prayer-group-users", () => ({
-  useGetPrayerGroupUsers: () => (id: number, roles: PrayerGroupRole[]) =>
-    mockGetPrayerGroupUsers(id, roles),
+jest.mock("../../../../api/post-prayer-group-users-query", () => ({
+  usePostPrayerGroupUsersQuery:
+    () =>
+    (
+      prayerGroupId: number,
+      prayerGroupUsersRequest: GetPrayerGroupUsersRequest
+    ) =>
+      mockPostPrayerGroupUsersQuery(prayerGroupId, prayerGroupUsersRequest),
 }));
 
-jest.mock("../../../../api/put-prayer-group-admins", () => ({
-  usePutPrayerGroupAdmins: () => (id: number, userIds: number[]) =>
-    mockPutPrayerGroupAdmins(id, userIds),
-}));
-
-jest.mock("../../../../api/delete-prayer-group-users", () => ({
-  useDeletePrayerGroupUsers: () => (id: number, userIds: number[]) =>
-    mockDeletePrayerGroupUsers(id, userIds),
+jest.mock("../../../../api/put-prayer-group-users", () => ({
+  usePutPrayerGroupUsers:
+    () =>
+    (prayerGroupId: number, prayerGroupUsers: PrayerGroupUserUpdateModel[]) =>
+      mockPutPrayerGroupUsers(prayerGroupId, prayerGroupUsers),
 }));
 
 jest.mock("expo-font");
@@ -63,21 +67,19 @@ jest.mock("expo-asset");
 
 const mountPrayerGroupUsers = (
   prayerGroupDetails: PrayerGroupDetails,
-  prayerGroupUsers: RawPrayerGroupUserSummary[]
+  prayerGroupUsers: PrayerGroupUserSummary[]
 ) => {
   mockUsePrayerGroupContext.mockReturnValue({
     prayerGroupDetails,
     setPrayerGroupDetails: jest.fn(),
   });
 
-  const getUsersResponse: ManagedErrorResponse<GetPrayerGroupUsersResponse> = {
+  const mockResponse: ManagedErrorResponse<GetPrayerGroupUsersResponse> = {
     isError: false,
-    value: {
-      users: prayerGroupUsers,
-    },
+    value: { prayerGroupUsers },
   };
 
-  mockGetPrayerGroupUsers.mockReturnValue(getUsersResponse);
+  mockPostPrayerGroupUsersQuery.mockReturnValue(mockResponse);
 
   return mountComponent(
     <PrayerGroupUsers
@@ -95,7 +97,7 @@ describe(PrayerGroupUsers, () => {
   test("Mount test", async () => {
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     await waitFor(() => {
@@ -106,7 +108,7 @@ describe(PrayerGroupUsers, () => {
   test("User can be searched by display name", async () => {
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     const searchBar = await component.findByTestId(
@@ -120,14 +122,14 @@ describe(PrayerGroupUsers, () => {
       `${PrayerGroupUsersTestIds.userDisplayName}[0]`
     );
     expect(userResultDisplayName).toHaveTextContent(
-      mockRawPrayerGroupUsers[0].fullName ?? ""
+      mockPrayerGroupUsers[0].fullName ?? ""
     );
   });
 
   test("User can be searched by username", async () => {
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     const searchBar = await component.findByTestId(
@@ -141,14 +143,14 @@ describe(PrayerGroupUsers, () => {
       `${PrayerGroupUsersTestIds.userDisplayName}[0]`
     );
     expect(userResultDisplayName).toHaveTextContent(
-      mockRawPrayerGroupUsers[1].fullName ?? ""
+      mockPrayerGroupUsers[1].fullName ?? ""
     );
   });
 
   test("Prayer group role gets updated when role change button is pressed", async () => {
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     const roleChangeButton = await component.findByTestId(
@@ -165,7 +167,7 @@ describe(PrayerGroupUsers, () => {
   test("User no longer displays after user is deleted", async () => {
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     const deleteButton = await component.findByTestId(
@@ -180,18 +182,34 @@ describe(PrayerGroupUsers, () => {
 
     await waitFor(() => {
       const deletedUser = component.queryByText(
-        mockRawPrayerGroupUsers[1].username ?? ""
+        mockPrayerGroupUsers[1].username ?? ""
       );
       expect(deletedUser).toBeFalsy();
     });
   });
 
   test("Role change gets saved properly", async () => {
-    mockPutPrayerGroupAdmins.mockReturnValue({ isError: false });
+    let targetPrayerGroup: number = -1;
+    let targetPrayerGroupUsers: PrayerGroupUserUpdateModel[] = [];
+
+    mockPutPrayerGroupUsers.mockImplementation(
+      (
+        prayerGroupId: number,
+        prayerGroupUsers: PrayerGroupUserUpdateModel[]
+      ) => {
+        targetPrayerGroup = prayerGroupId;
+        targetPrayerGroupUsers = prayerGroupUsers;
+
+        return {
+          isError: false,
+          value: { prayerGroupUsers: mockPrayerGroupUsers },
+        };
+      }
+    );
 
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     const roleChangeButton = await component.findByTestId(
@@ -205,17 +223,38 @@ describe(PrayerGroupUsers, () => {
     fireEvent.press(saveButton);
 
     await waitFor(() => {
-      expect(mockPutPrayerGroupAdmins).toHaveBeenCalledWith(2, [1, 3]);
+      expect(targetPrayerGroup).toBe(2);
+
+      const prayerGroupUser = targetPrayerGroupUsers.find(
+        (prayerGroupUser) =>
+          (prayerGroupUser.userId = mockPrayerGroupUsers[2].userId)
+      );
+      expect(prayerGroupUser?.prayerGroupRole).toBe(PrayerGroupRole.Admin);
     });
   });
 
   test("Delete user gets saved properly", async () => {
-    mockDeletePrayerGroupUsers.mockReturnValue({ isError: false });
-    mockPutPrayerGroupAdmins.mockReturnValue({ isError: false });
+    let targetPrayerGroup: number = -1;
+    let targetPrayerGroupUsers: PrayerGroupUserUpdateModel[] = [];
+
+    mockPutPrayerGroupUsers.mockImplementation(
+      (
+        prayerGroupId: number,
+        prayerGroupUsers: PrayerGroupUserUpdateModel[]
+      ) => {
+        targetPrayerGroup = prayerGroupId;
+        targetPrayerGroupUsers = prayerGroupUsers;
+
+        return {
+          isError: false,
+          value: { prayerGroupUsers: mockPrayerGroupUsers },
+        };
+      }
+    );
 
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     const deleteUserButton = await component.findByTestId(
@@ -234,7 +273,14 @@ describe(PrayerGroupUsers, () => {
     fireEvent.press(saveButton);
 
     await waitFor(() => {
-      expect(mockDeletePrayerGroupUsers).toHaveBeenCalledWith(2, [2]);
+      expect(targetPrayerGroup).toBe(2);
+
+      expect(
+        targetPrayerGroupUsers.find(
+          (prayerGroupUser) =>
+            prayerGroupUser.userId === mockPrayerGroupUsers[1].userId
+        )
+      ).toBeFalsy();
     });
   });
 });

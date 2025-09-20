@@ -5,7 +5,6 @@ import {
   PrayerGroupDetails,
   PrayerGroupSummary,
   PrayerGroupUserSummary,
-  RawPrayerGroupDetails,
   RawPrayerGroupSummary,
   RawPrayerGroupUserSummary,
 } from "../types/prayer-group-types";

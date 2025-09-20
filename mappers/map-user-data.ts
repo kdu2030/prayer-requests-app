@@ -1,5 +1,3 @@
-import { compact } from "lodash";
-
 import { GetUserSummaryResponse } from "../api/get-user-summary";
 import { decodeJwtToken } from "../components/authentication/jwt-helpers";
 import {

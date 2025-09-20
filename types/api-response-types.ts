@@ -28,13 +28,13 @@ export type ApiErrorResponse = {
 };
 
 export enum SortOrder {
-  Ascending = 1,
-  Descending = 2,
+  Ascending = "ASCENDING",
+  Descending = "DESCENDING",
 }
 
 export type SortConfig = {
   sortField: string;
-  sortOrder: SortOrder;
+  sortDirection: SortOrder;
 };
 
 export enum LoadStatus {

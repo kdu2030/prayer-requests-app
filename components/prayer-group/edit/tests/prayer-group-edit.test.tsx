@@ -8,6 +8,7 @@ import {
   waitFor,
 } from "@testing-library/react-native";
 
+import { GetPrayerGroupNameValidationResponse } from "../../../../api/get-prayer-group-name-validation";
 import { PutPrayerGroupRequest } from "../../../../api/put-prayer-group";
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import { UserData } from "../../../../types/context/api-data-context-type";
@@ -22,7 +23,6 @@ import {
 import { UNIQUE_GROUP_NAME_ERROR } from "../edit-prayer-group-constants";
 import { PrayerGroupEdit } from "../prayer-group-edit";
 import { PrayerGroupEditTestIds } from "./test-ids";
-import { GetPrayerGroupNameValidationResponse } from "../../../../api/get-prayer-group-name-validation";
 
 let component: RenderResult;
 

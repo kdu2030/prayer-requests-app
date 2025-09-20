@@ -2,7 +2,7 @@ import { setNestedObjectValues, useFormikContext } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
 import { View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { Text } from "react-native-paper";
 
 import { VisibilityLevel } from "../../constants/prayer-group-constants";
 import { useI18N } from "../../hooks/use-i18n";

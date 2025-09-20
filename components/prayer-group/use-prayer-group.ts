@@ -2,12 +2,9 @@ import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
 
-import { useDeletePrayerGroupUsers } from "../../api/delete-prayer-group-users";
+import { useDeletePrayerGroupUser } from "../../api/delete-prayer-group-user";
 import { useGetPrayerGroup } from "../../api/get-prayer-group";
-import {
-  PrayerGroupUserToAdd,
-  usePostPrayerGroupUsers,
-} from "../../api/post-prayer-group-users";
+import { usePostPrayerGroupUser } from "../../api/post-prayer-group-user";
 import { usePostPrayerRequestFilter } from "../../api/post-prayer-request-filter";
 import {
   JoinStatus,
@@ -15,7 +12,6 @@ import {
 } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
-
 import { mapPrayerRequests } from "../../mappers/map-prayer-request";
 import { LoadStatus } from "../../types/api-response-types";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
@@ -62,8 +58,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const { userData, setUserData } = useApiDataContext();
 
   const getPrayerGroup = useGetPrayerGroup();
-  const deletePrayerGroupUsers = useDeletePrayerGroupUsers();
-  const postPrayerGroupUsers = usePostPrayerGroupUsers();
+  const deletePrayerGroupUser = useDeletePrayerGroupUser();
+  const postPrayerGroupUser = usePostPrayerGroupUser();
 
   const postPrayerRequestFilter = usePostPrayerRequestFilter();
 
@@ -159,13 +155,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       return;
     }
 
-    const userToAdd: PrayerGroupUserToAdd = {
-      id: userData.userId,
-      role: PrayerGroupRole.Member,
-    };
-
     setIsAddUserLoading(true);
-    const response = await postPrayerGroupUsers(prayerGroupId, [userToAdd]);
+    const response = await postPrayerGroupUser(prayerGroupId, userData.userId);
     setIsAddUserLoading(false);
 
     if (response.isError) {
@@ -173,20 +164,26 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       return;
     }
 
-    const prayerGroupSummary: PrayerGroupSummary = {
+    const joinedPrayerGroupSummary: PrayerGroupSummary = {
       prayerGroupId,
       groupName: prayerGroupDetails?.groupName,
       avatarFile: prayerGroupDetails?.avatarFile,
     };
-
-    const prayerGroups = [...(userData.prayerGroups ?? []), prayerGroupSummary];
 
     setPrayerGroupDetails({
       ...prayerGroupDetails,
       userJoinStatus: JoinStatus.Joined,
       prayerGroupRole: PrayerGroupRole.Member,
     });
-    setUserData({ ...userData, prayerGroups });
+    setUserData((existingUserData) => {
+      const updatedPrayerGroups = existingUserData.prayerGroups?.concat(
+        joinedPrayerGroupSummary
+      );
+      return {
+        ...existingUserData,
+        prayerGroups: updatedPrayerGroups,
+      };
+    });
   };
 
   const onRemoveUser = async () => {
@@ -195,9 +192,11 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     }
 
     setIsRemoveUserLoading(true);
-    const response = await deletePrayerGroupUsers(prayerGroupId, [
-      userData?.userId,
-    ]);
+    const response = await deletePrayerGroupUser(
+      prayerGroupId,
+      userData.userId
+    );
+
     setIsRemoveUserLoading(false);
 
     if (response.isError) {
@@ -211,17 +210,16 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     setPrayerGroupDetails({
       ...prayerGroupDetails,
-      userJoinStatus: JoinStatus.Joined,
+      userJoinStatus: JoinStatus.NotJoined,
       prayerGroupRole: undefined,
     });
 
-    const prayerGroups = [...(userData.prayerGroups ?? [])];
-    const deletedPrayerGroupIndex = prayerGroups.findIndex(
-      (group) => group.prayerGroupId === prayerGroupId
-    );
-    prayerGroups.splice(deletedPrayerGroupIndex, 1);
-
-    setUserData({ ...userData, prayerGroups });
+    setUserData((existingUserData) => {
+      const prayerGroups = existingUserData.prayerGroups?.filter(
+        (prayerGroup) => prayerGroup.prayerGroupId !== prayerGroupId
+      );
+      return { ...existingUserData, prayerGroups };
+    });
   };
 
   const onRetry = () => {

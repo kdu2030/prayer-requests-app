@@ -18,7 +18,7 @@ const defaultApiData: ApiDataContextType = {
   setUserTokens: () => {},
 };
 
-const ApiDataContext = React.createContext(defaultApiData);
+export const ApiDataContext = React.createContext(defaultApiData);
 
 type Props = {
   children: React.ReactNode;

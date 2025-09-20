@@ -21,10 +21,6 @@ export type PrayerGroupUserSummary = {
   prayerGroupRole?: PrayerGroupRole;
 };
 
-export interface DeletablePrayerGroupUser extends PrayerGroupUserSummary {
-  isDeleted?: boolean;
-}
-
 export type RawPrayerGroupDetails = {
   prayerGroupId?: number;
   groupName?: string;

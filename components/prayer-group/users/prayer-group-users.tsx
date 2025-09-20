@@ -101,10 +101,6 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
               data={filteredUsers}
               className="flex-1"
               renderItem={({ item, index }) => {
-                if (item.isDeleted) {
-                  return null;
-                }
-
                 return (
                   <View
                     className="p-4 border-b flex-row justify-between"

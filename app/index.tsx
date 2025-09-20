@@ -16,7 +16,7 @@ import {
 } from "../components/authentication/auth-constants";
 import { decodeJwtToken } from "../components/authentication/jwt-helpers";
 import { ErrorSnackbar } from "../components/layouts/error-snackbar";
-import { sleep } from "../helpers/utils";
+
 import { useApiDataContext } from "../hooks/use-api-data";
 import { useI18N } from "../hooks/use-i18n";
 import { mapUserData, mapUserTokens } from "../mappers/map-user-data";
@@ -71,14 +71,6 @@ const AppContainer: React.FC = () => {
 
   const loadUserData = async () => {
     const response = await loadLanguage();
-    if (response.isError) {
-      setSnackbarError(
-        translate("toaster.failed.loadFailure", {
-          item: translate("loading.userData.label").toLocaleLowerCase(),
-        })
-      );
-      await sleep(1000);
-    }
 
     if (response.isError || response.value == null) {
       router.push("/language/language-picker");

@@ -227,7 +227,7 @@ describe(PrayerGroup, () => {
     let prayerRequestFilterCriteria: PrayerRequestFilterCriteria = {
       sortConfig: {
         sortField: "createdDate",
-        sortOrder: SortOrder.Descending,
+        sortDirection: SortOrder.Descending,
       },
     };
 

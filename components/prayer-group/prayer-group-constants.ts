@@ -11,6 +11,6 @@ export const DEFAULT_PRAYER_REQUEST_FILTERS: PrayerRequestFilterCriteria = {
   includeExpiredRequests: false,
   sortConfig: {
     sortField: PrayerRequestSortFields.CreatedDate,
-    sortOrder: SortOrder.Descending,
+    sortDirection: SortOrder.Descending,
   },
 };

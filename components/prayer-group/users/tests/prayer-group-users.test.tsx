@@ -19,16 +19,15 @@ import {
 } from "../../../../types/prayer-group-types";
 import { mockPrayerGroupDetails, mockUserData } from "../../tests/mock-data";
 import { PrayerGroupUsers } from "../prayer-group-users";
-import { mockRawPrayerGroupUsers } from "./mock-data";
+import { mockPrayerGroupUsers } from "./mock-data";
 import { PrayerGroupUsersTestIds } from "./test-ids";
+import { usePostPrayerGroupUsersQuery } from "../../../../api/post-prayer-group-users-query";
 
 let component: RenderResult;
 
 const mockUsePrayerGroupContext = jest.fn();
 
-const mockGetPrayerGroupUsers = jest.fn();
-const mockPutPrayerGroupAdmins = jest.fn();
-const mockDeletePrayerGroupUsers = jest.fn();
+const mockPostPrayerGroupUsersQuery = jest.fn();
 
 jest.mock("../../prayer-group-context", () => ({
   usePrayerGroupContext: () => mockUsePrayerGroupContext(),
@@ -42,20 +41,7 @@ jest.mock("../../../../hooks/use-api-data", () => ({
   }),
 }));
 
-jest.mock("../../../../api/get-prayer-group-users", () => ({
-  useGetPrayerGroupUsers: () => (id: number, roles: PrayerGroupRole[]) =>
-    mockGetPrayerGroupUsers(id, roles),
-}));
 
-jest.mock("../../../../api/put-prayer-group-admins", () => ({
-  usePutPrayerGroupAdmins: () => (id: number, userIds: number[]) =>
-    mockPutPrayerGroupAdmins(id, userIds),
-}));
-
-jest.mock("../../../../api/delete-prayer-group-users", () => ({
-  useDeletePrayerGroupUsers: () => (id: number, userIds: number[]) =>
-    mockDeletePrayerGroupUsers(id, userIds),
-}));
 
 jest.mock("expo-font");
 jest.mock("expo-asset");
@@ -89,7 +75,7 @@ describe(PrayerGroupUsers, () => {
   test("Mount test", async () => {
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     await waitFor(() => {
@@ -100,7 +86,7 @@ describe(PrayerGroupUsers, () => {
   test("User can be searched by display name", async () => {
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     const searchBar = await component.findByTestId(
@@ -114,14 +100,14 @@ describe(PrayerGroupUsers, () => {
       `${PrayerGroupUsersTestIds.userDisplayName}[0]`
     );
     expect(userResultDisplayName).toHaveTextContent(
-      mockRawPrayerGroupUsers[0].fullName ?? ""
+      mockPrayerGroupUsers[0].fullName ?? ""
     );
   });
 
   test("User can be searched by username", async () => {
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     const searchBar = await component.findByTestId(
@@ -135,14 +121,14 @@ describe(PrayerGroupUsers, () => {
       `${PrayerGroupUsersTestIds.userDisplayName}[0]`
     );
     expect(userResultDisplayName).toHaveTextContent(
-      mockRawPrayerGroupUsers[1].fullName ?? ""
+      mockPrayerGroupUsers[1].fullName ?? ""
     );
   });
 
   test("Prayer group role gets updated when role change button is pressed", async () => {
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     const roleChangeButton = await component.findByTestId(
@@ -159,7 +145,7 @@ describe(PrayerGroupUsers, () => {
   test("User no longer displays after user is deleted", async () => {
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     const deleteButton = await component.findByTestId(
@@ -174,7 +160,7 @@ describe(PrayerGroupUsers, () => {
 
     await waitFor(() => {
       const deletedUser = component.queryByText(
-        mockRawPrayerGroupUsers[1].username ?? ""
+        mockPrayerGroupUsers[1].username ?? ""
       );
       expect(deletedUser).toBeFalsy();
     });
@@ -185,7 +171,7 @@ describe(PrayerGroupUsers, () => {
 
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     const roleChangeButton = await component.findByTestId(
@@ -209,7 +195,7 @@ describe(PrayerGroupUsers, () => {
 
     component = mountPrayerGroupUsers(
       mockPrayerGroupDetails,
-      mockRawPrayerGroupUsers
+      mockPrayerGroupUsers
     );
 
     const deleteUserButton = await component.findByTestId(

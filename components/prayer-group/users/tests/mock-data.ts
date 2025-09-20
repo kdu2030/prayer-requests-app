@@ -1,7 +1,7 @@
 import { PrayerGroupRole } from "../../../../constants/prayer-group-constants";
-import { RawPrayerGroupUserSummary } from "../../../../types/prayer-group-types";
+import { PrayerGroupUserSummary } from "../../../../types/prayer-group-types";
 
-export const mockRawPrayerGroupUsers: RawPrayerGroupUserSummary[] = [
+export const mockPrayerGroupUsers: PrayerGroupUserSummary[] = [
   {
     fullName: "Jim Halpert",
     userId: 1,

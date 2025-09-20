@@ -6,6 +6,6 @@ export const PRAYER_GROUP_USERS_QUERY: GetPrayerGroupUsersRequest = {
   prayerGroupRoles: [PrayerGroupRole.Admin, PrayerGroupRole.Member],
   sortConfig: {
     sortField: "USERNAME",
-    sortOrder: SortOrder.Ascending,
+    sortDirection: SortOrder.Ascending,
   },
 };

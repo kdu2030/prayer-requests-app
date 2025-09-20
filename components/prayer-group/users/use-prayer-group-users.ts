@@ -64,6 +64,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       prayerGroupId,
       PRAYER_GROUP_USERS_QUERY
     );
+
     setIsLoading(false);
 
     if (response.isError) {

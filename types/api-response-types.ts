@@ -34,7 +34,7 @@ export enum SortOrder {
 
 export type SortConfig = {
   sortField: string;
-  sortOrder: SortOrder;
+  sortDirection: SortOrder;
 };
 
 export enum LoadStatus {

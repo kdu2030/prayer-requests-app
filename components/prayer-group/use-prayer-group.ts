@@ -9,7 +9,7 @@ import {
   JoinStatus,
   PrayerGroupRole,
 } from "../../constants/prayer-group-constants";
-import { ApiDataContext, useApiDataContext } from "../../hooks/use-api-data";
+import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 
 import { mapPrayerRequests } from "../../mappers/map-prayer-request";
@@ -57,7 +57,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     BottomSheetProps & BottomSheetMethods
   >(null);
 
-  const { userData, setUserData } = React.useContext(ApiDataContext);
+  const { userData, setUserData } = useApiDataContext();
 
   const getPrayerGroup = useGetPrayerGroup();
   const deletePrayerGroupUser = useDeletePrayerGroupUser();

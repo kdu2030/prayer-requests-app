@@ -35,8 +35,8 @@ import {
 let component: RenderResult;
 
 const mockGetPrayerGroup = jest.fn();
-const mockPostPrayerGroupUsers = jest.fn();
-const mockDeletePrayerGroupUsers = jest.fn();
+const mockPostPrayerGroupUser = jest.fn();
+const mockDeletePrayerGroupUser = jest.fn();
 const mockPostPrayerRequestFilter = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
@@ -50,15 +50,14 @@ jest.mock("../../../api/get-prayer-group", () => ({
   useGetPrayerGroup: () => () => mockGetPrayerGroup(),
 }));
 
-jest.mock("../../../api/post-prayer-group-users", () => ({
-  usePostPrayerGroupUsers:
-    () => (id: number, usersToAdd: PrayerGroupUserToAdd[]) =>
-      mockPostPrayerGroupUsers(id, usersToAdd),
+jest.mock("../../../api/post-prayer-group-user", () => ({
+  usePostPrayerGroupUser: () => (prayerGroupId: number, userId: number) =>
+    mockPostPrayerGroupUser(prayerGroupId, userId),
 }));
 
-jest.mock("../../../api/delete-prayer-group-users", () => ({
-  useDeletePrayerGroupUsers: () => (id: number, userIds: []) =>
-    mockDeletePrayerGroupUsers(id, userIds),
+jest.mock("../../../api/delete-prayer-group-user", () => ({
+  useDeletePrayerGroupUser: () => (prayerGroupId: number, userId: number) =>
+    mockDeletePrayerGroupUser(prayerGroupId, userId),
 }));
 
 jest.mock("../../../hooks/use-api-data", () => ({
@@ -73,12 +72,12 @@ jest.mock("../../../api/post-prayer-request-filter", () => ({
 }));
 
 const mountPrayerGroup = (
-  rawPrayerGroupDetails: RawPrayerGroupDetails,
+  prayerGroupDetails: RawPrayerGroupDetails,
   useCustomPostPrayerRequestMock: boolean = false
 ) => {
   const mockGetResponse: ManagedErrorResponse<RawPrayerGroupDetails> = {
     isError: false,
-    value: rawPrayerGroupDetails,
+    value: prayerGroupDetails,
   };
 
   const mockPrayerRequestResponse: ManagedErrorResponse<RawPrayerRequestGetResponse> =
@@ -172,8 +171,8 @@ describe(PrayerGroup, () => {
     expect(aboutGroupButton).toBeTruthy();
   });
 
-  test("Post prayer group users gets called when the user presses the join button", async () => {
-    mockPostPrayerGroupUsers.mockReturnValue({ isError: false });
+  test("Post prayer group user gets called when the user presses the join button", async () => {
+    mockPostPrayerGroupUser.mockReturnValue({ isError: false });
 
     const rawPrayerGroupDetails: RawPrayerGroupDetails = {
       ...mockPrayerGroupDetails,
@@ -189,18 +188,13 @@ describe(PrayerGroup, () => {
 
     fireEvent.press(joinPrayerGroupButton);
 
-    const prayerGroupUserToAdd = {
-      id: 1,
-      role: PrayerGroupRole.Member,
-    };
-
-    expect(mockPostPrayerGroupUsers).toHaveBeenCalledWith(2, [
-      prayerGroupUserToAdd,
-    ]);
+    await waitFor(() =>
+      expect(mockPostPrayerGroupUser).toHaveBeenCalledWith(2, 1)
+    );
   });
 
   test("Delete prayer group users gets called when user presses the leave button", async () => {
-    mockDeletePrayerGroupUsers.mockReturnValue({ isError: false });
+    mockDeletePrayerGroupUser.mockReturnValue({ isError: false });
     component = mountPrayerGroup(mockPrayerGroupDetails);
 
     const leavePrayerGroupButton = await component.findByTestId(
@@ -210,7 +204,7 @@ describe(PrayerGroup, () => {
     fireEvent.press(leavePrayerGroupButton);
 
     await waitFor(() => {
-      expect(mockDeletePrayerGroupUsers).toHaveBeenCalledWith(2, [1]);
+      expect(mockDeletePrayerGroupUser).toHaveBeenCalledWith(2, [1]);
     });
   });
 

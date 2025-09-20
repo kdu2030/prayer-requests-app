@@ -8,15 +8,11 @@ import {
   waitFor,
 } from "@testing-library/react-native";
 
-import { PrayerGroupUserToAdd } from "../../../api/post-prayer-group-users";
-import {
-  JoinStatus,
-  PrayerGroupRole,
-} from "../../../constants/prayer-group-constants";
+import { JoinStatus } from "../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { SortOrder } from "../../../types/api-response-types";
 import { ManagedErrorResponse } from "../../../types/error-handling";
-import { RawPrayerGroupDetails } from "../../../types/prayer-group-types";
+
 import {
   PrayerRequestFilterCriteria,
   RawPrayerRequestGetResponse,
@@ -31,6 +27,7 @@ import {
   mockPrayerGroupDetails,
   mockUserData,
 } from "./mock-data";
+import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 
 let component: RenderResult;
 
@@ -72,10 +69,10 @@ jest.mock("../../../api/post-prayer-request-filter", () => ({
 }));
 
 const mountPrayerGroup = (
-  prayerGroupDetails: RawPrayerGroupDetails,
+  prayerGroupDetails: PrayerGroupDetails,
   useCustomPostPrayerRequestMock: boolean = false
 ) => {
-  const mockGetResponse: ManagedErrorResponse<RawPrayerGroupDetails> = {
+  const mockGetResponse: ManagedErrorResponse<PrayerGroupDetails> = {
     isError: false,
     value: prayerGroupDetails,
   };
@@ -126,12 +123,12 @@ describe(PrayerGroup, () => {
   });
 
   test("Prayer group banner placeholder displays if banner is null", async () => {
-    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+    const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       bannerFile: undefined,
     };
 
-    component = mountPrayerGroup(rawPrayerGroupDetails);
+    component = mountPrayerGroup(prayerGroupDetails);
     const bannerPlaceholder = await component.findByTestId(
       PrayerGroupHeaderTestIds.bannerPlaceholder
     );
@@ -152,13 +149,13 @@ describe(PrayerGroup, () => {
   });
 
   test("Join prayer group button displays if user is not a member", async () => {
-    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+    const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       prayerGroupRole: undefined,
       userJoinStatus: JoinStatus.NotJoined,
     };
 
-    component = mountPrayerGroup(rawPrayerGroupDetails);
+    component = mountPrayerGroup(prayerGroupDetails);
 
     const joinPrayerGroupButton = await component.findByTestId(
       PrayerGroupHeaderTestIds.joinGroupButton
@@ -174,13 +171,13 @@ describe(PrayerGroup, () => {
   test("Post prayer group user gets called when the user presses the join button", async () => {
     mockPostPrayerGroupUser.mockReturnValue({ isError: false });
 
-    const rawPrayerGroupDetails: RawPrayerGroupDetails = {
+    const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       prayerGroupRole: undefined,
       userJoinStatus: JoinStatus.NotJoined,
     };
 
-    component = mountPrayerGroup(rawPrayerGroupDetails);
+    component = mountPrayerGroup(prayerGroupDetails);
 
     const joinPrayerGroupButton = await component.findByTestId(
       PrayerGroupHeaderTestIds.joinGroupButton

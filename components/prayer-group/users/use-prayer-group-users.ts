@@ -116,7 +116,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     const userToDelete = filteredUsers[userToDeleteIndex];
 
     const updatedPrayerGroupUsers = [...prayerGroupUsers].filter(
-      (prayerGroupUser) => prayerGroupUser.userId === userToDelete.userId
+      (prayerGroupUser) => prayerGroupUser.userId !== userToDelete.userId
     );
 
     setPrayerGroupUsers(updatedPrayerGroupUsers);

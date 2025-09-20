@@ -9,7 +9,6 @@ import {
 } from "@testing-library/react-native";
 import * as React from "react";
 
-import { GetPrayerGroupUsersResponse } from "../../../../api/get-prayer-group-users";
 import { PrayerGroupRole } from "../../../../constants/prayer-group-constants";
 
 import { mountComponent } from "../../../../tests/utils/test-utils";
@@ -70,12 +69,7 @@ const mountPrayerGroupUsers = (
     setPrayerGroupDetails: jest.fn(),
   });
 
-  const getUsersResponse: ManagedErrorResponse<GetPrayerGroupUsersResponse> = {
-    isError: false,
-    value: {
-      users: prayerGroupUsers,
-    },
-  };
+
 
   mockGetPrayerGroupUsers.mockReturnValue(getUsersResponse);
 

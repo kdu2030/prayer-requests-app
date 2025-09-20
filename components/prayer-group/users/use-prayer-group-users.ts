@@ -2,21 +2,15 @@ import { Href, router } from "expo-router";
 import { debounce } from "lodash";
 import * as React from "react";
 
-import { useDeletePrayerGroupUsers } from "../../../api/delete-prayer-group-users";
-import { useGetPrayerGroupUsers } from "../../../api/get-prayer-group-users";
-import { usePutPrayerGroupAdmins } from "../../../api/put-prayer-group-admins";
 import {
   JoinStatus,
   PrayerGroupRole,
 } from "../../../constants/prayer-group-constants";
-import { sleep } from "../../../helpers/utils";
+
 import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
-import { mapPrayerGroupUser } from "../../../mappers/map-prayer-group";
-import {
-  DeletablePrayerGroupUser,
-  PrayerGroupUserSummary,
-} from "../../../types/prayer-group-types";
+
+import { PrayerGroupUserSummary } from "../../../types/prayer-group-types";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import {
   mapPrayerGroupUsers,
@@ -60,9 +54,6 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     React.useState<boolean>(false);
 
   const postPrayerGroupUsersQuery = usePostPrayerGroupUsersQuery();
-
-  const putPrayerGroupAdmins = usePutPrayerGroupAdmins();
-  const deletePrayerGroupUsers = useDeletePrayerGroupUsers();
 
   const putPrayerGroupUsers = usePutPrayerGroupUsers();
 

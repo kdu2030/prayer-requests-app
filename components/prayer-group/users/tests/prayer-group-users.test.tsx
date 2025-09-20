@@ -16,7 +16,6 @@ import { ManagedErrorResponse } from "../../../../types/error-handling";
 import {
   PrayerGroupDetails,
   PrayerGroupUserSummary,
-  RawPrayerGroupUserSummary,
 } from "../../../../types/prayer-group-types";
 import { mockPrayerGroupDetails, mockUserData } from "../../tests/mock-data";
 import { PrayerGroupUsers } from "../prayer-group-users";

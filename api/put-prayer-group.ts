@@ -1,11 +1,11 @@
 import { AxiosInstance } from "axios";
 import * as React from "react";
 
+import { VisibilityLevel } from "../constants/prayer-group-constants";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
 import { RawPrayerGroupDetails } from "../types/prayer-group-types";
-import { VisibilityLevel } from "../constants/prayer-group-constants";
 
 export type PutPrayerGroupRequest = {
   groupName?: string;

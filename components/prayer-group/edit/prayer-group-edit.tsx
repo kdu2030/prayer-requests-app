@@ -10,6 +10,7 @@ import { TEXT_INPUT_MAX_LENGTH } from "../../../constants/input-constants";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { CultureCode } from "../../../types/languages";
+import { FormikSelect } from "../../inputs/formik-select";
 import { TextInput } from "../../inputs/text-input";
 import { ErrorSnackbar } from "../../layouts/error-snackbar";
 import { GroupPreview } from "../../layouts/group-preview";
@@ -20,7 +21,6 @@ import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section
 import { prayerGroupDetailsValidationSchema } from "./prayer-group-details-validation-schema";
 import { PrayerGroupEditTestIds } from "./tests/test-ids";
 import { usePrayerGroupEdit } from "./use-prayer-group-edit";
-import { FormikSelect } from "../../inputs/formik-select";
 
 export const PrayerGroupEdit: React.FC = () => {
   const theme = useTheme();

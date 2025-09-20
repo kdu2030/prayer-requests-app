@@ -9,8 +9,12 @@ import {
 } from "@testing-library/react-native";
 import * as React from "react";
 
+import {
+  GetPrayerGroupUsersRequest,
+  GetPrayerGroupUsersResponse,
+} from "../../../../api/post-prayer-group-users-query";
+import { PrayerGroupUserUpdateModel } from "../../../../api/put-prayer-group-users";
 import { PrayerGroupRole } from "../../../../constants/prayer-group-constants";
-
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import { ManagedErrorResponse } from "../../../../types/error-handling";
 import {
@@ -21,11 +25,6 @@ import { mockPrayerGroupDetails, mockUserData } from "../../tests/mock-data";
 import { PrayerGroupUsers } from "../prayer-group-users";
 import { mockPrayerGroupUsers } from "./mock-data";
 import { PrayerGroupUsersTestIds } from "./test-ids";
-import {
-  GetPrayerGroupUsersRequest,
-  GetPrayerGroupUsersResponse,
-} from "../../../../api/post-prayer-group-users-query";
-import { PrayerGroupUserUpdateModel } from "../../../../api/put-prayer-group-users";
 
 let component: RenderResult;
 

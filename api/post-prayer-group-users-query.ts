@@ -1,11 +1,12 @@
-import * as React from "react";
 import { AxiosInstance } from "axios";
+import * as React from "react";
+
 import { PrayerGroupRole } from "../constants/prayer-group-constants";
-import { SortConfig } from "../types/api-response-types";
-import { PrayerGroupUserSummary } from "../types/prayer-group-types";
-import { ManagedErrorResponse } from "../types/error-handling";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
+import { SortConfig } from "../types/api-response-types";
+import { ManagedErrorResponse } from "../types/error-handling";
+import { PrayerGroupUserSummary } from "../types/prayer-group-types";
 
 export type GetPrayerGroupUsersRequest = {
   prayerGroupRoles?: PrayerGroupRole[];

@@ -12,7 +12,7 @@ import { JoinStatus } from "../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { SortOrder } from "../../../types/api-response-types";
 import { ManagedErrorResponse } from "../../../types/error-handling";
-
+import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import {
   PrayerRequestFilterCriteria,
   RawPrayerRequestGetResponse,
@@ -22,12 +22,11 @@ import { PrayerGroupHeaderTestIds } from "../header/tests/test-ids";
 import { PrayerGroup } from "../prayer-group";
 import { PrayerGroupContextProvider } from "../prayer-group-context";
 import {
+  mockPrayerGroupDetails,
   mockPrayerGroupDetails1,
   mockPrayerRequests,
-  mockPrayerGroupDetails,
   mockUserData,
 } from "./mock-data";
-import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 
 let component: RenderResult;
 

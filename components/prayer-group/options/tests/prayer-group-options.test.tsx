@@ -4,7 +4,6 @@ import { renderHook, RenderResult } from "@testing-library/react-native";
 import { useRef } from "react";
 
 import { PrayerGroupRole } from "../../../../constants/prayer-group-constants";
-
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import {
   PrayerGroupDetails,

@@ -2,8 +2,9 @@ import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
 
+import { useDeletePrayerGroupUser } from "../../api/delete-prayer-group-user";
 import { useGetPrayerGroup } from "../../api/get-prayer-group";
-
+import { usePostPrayerGroupUser } from "../../api/post-prayer-group-user";
 import { usePostPrayerRequestFilter } from "../../api/post-prayer-request-filter";
 import {
   JoinStatus,
@@ -11,7 +12,6 @@ import {
 } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
-
 import { mapPrayerRequests } from "../../mappers/map-prayer-request";
 import { LoadStatus } from "../../types/api-response-types";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
@@ -21,8 +21,6 @@ import {
 } from "../../types/prayer-request-types";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
-import { usePostPrayerGroupUser } from "../../api/post-prayer-group-user";
-import { useDeletePrayerGroupUser } from "../../api/delete-prayer-group-user";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);

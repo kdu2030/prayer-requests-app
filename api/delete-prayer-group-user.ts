@@ -1,8 +1,9 @@
-import * as React from "react";
 import { AxiosInstance } from "axios";
+import * as React from "react";
+
 import { handleApiErrors } from "../helpers/api-helpers";
-import { BaseManagedErrorResponse } from "../types/error-handling";
 import { useApiDataContext } from "../hooks/use-api-data";
+import { BaseManagedErrorResponse } from "../types/error-handling";
 
 const deletePrayerGroupUser = async (
   fetch: AxiosInstance,

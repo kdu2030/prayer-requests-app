@@ -1,9 +1,10 @@
-import * as React from "react";
 import { AxiosInstance } from "axios";
+import * as React from "react";
+
 import { PrayerGroupRole } from "../constants/prayer-group-constants";
-import { ManagedErrorResponse } from "../types/error-handling";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
+import { ManagedErrorResponse } from "../types/error-handling";
 
 export type PrayerGroupUserUpdateModel = {
   userId?: number;

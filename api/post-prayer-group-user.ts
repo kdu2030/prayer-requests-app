@@ -1,10 +1,10 @@
 import { AxiosInstance } from "axios";
 import * as React from "react";
-import { MediaFile } from "../types/media-file-types";
+
 import { PrayerGroupRole } from "../constants/prayer-group-constants";
 import { handleApiErrors } from "../helpers/api-helpers";
-import { ManagedErrorResponse } from "../types/error-handling";
 import { useApiDataContext } from "../hooks/use-api-data";
+import { ManagedErrorResponse } from "../types/error-handling";
 
 export type PostPrayerGroupUserResponse = {
   userId?: number;

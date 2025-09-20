@@ -2,24 +2,21 @@ import { Href, router } from "expo-router";
 import { debounce } from "lodash";
 import * as React from "react";
 
+import { usePostPrayerGroupUsersQuery } from "../../../api/post-prayer-group-users-query";
+import { usePutPrayerGroupUsers } from "../../../api/put-prayer-group-users";
 import {
   JoinStatus,
   PrayerGroupRole,
 } from "../../../constants/prayer-group-constants";
-
 import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
-
 import { PrayerGroupUserSummary } from "../../../types/prayer-group-types";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import {
   mapPrayerGroupUsers,
   normalizeText,
 } from "./prayer-group-user-helpers";
-
-import { usePostPrayerGroupUsersQuery } from "../../../api/post-prayer-group-users-query";
 import { PRAYER_GROUP_USERS_QUERY } from "./prayer-group-users-constants";
-import { usePutPrayerGroupUsers } from "../../../api/put-prayer-group-users";
 
 export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const { translate } = useI18N();

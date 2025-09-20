@@ -4,8 +4,10 @@ import { FormikHelpers, FormikProps } from "formik";
 import * as React from "react";
 
 import { useDeleteFile } from "../../../api/delete-file";
+import { useGetPrayerGroupNameValidation } from "../../../api/get-prayer-group-name-validation";
 import { usePostFile } from "../../../api/post-file";
 import { usePutPrayerGroup } from "../../../api/put-prayer-group";
+import { VisibilityLevel } from "../../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import {
@@ -16,12 +18,10 @@ import {
   mapPrayerGroupSummaryFromPrayerGroupDetails,
   mapPrayerGroupToPutPrayerGroupRequest,
 } from "../../../mappers/map-prayer-group";
+import { DropdownOption } from "../../../types/inputs/dropdown";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { UNIQUE_GROUP_NAME_ERROR } from "./edit-prayer-group-constants";
-import { useGetPrayerGroupNameValidation } from "../../../api/get-prayer-group-name-validation";
-import { DropdownOption } from "../../../types/inputs/dropdown";
-import { VisibilityLevel } from "../../../constants/prayer-group-constants";
 
 export const usePrayerGroupEdit = () => {
   const { translate } = useI18N();

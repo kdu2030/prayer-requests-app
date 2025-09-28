@@ -3,7 +3,10 @@ import * as React from "react";
 import { View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 
-import { JoinStatus } from "../../../constants/prayer-group-constants";
+import {
+  JoinStatus,
+  VisibilityLevel,
+} from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { ProfilePicture } from "../../layouts/profile-picture";
@@ -29,6 +32,13 @@ export const PrayerGroupHeader: React.FC<Props> = ({
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
+
+  const showJoinedButton = React.useMemo(() => {
+    return (
+      prayerGroupDetails?.userJoinStatus != JoinStatus.Joined &&
+      prayerGroupDetails?.visibilityLevel === VisibilityLevel.Public
+    );
+  }, [prayerGroupDetails?.userJoinStatus, prayerGroupDetails?.visibilityLevel]);
 
   return (
     <View
@@ -69,7 +79,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
           </Button>
         )}
 
-        {prayerGroupDetails?.userJoinStatus != JoinStatus.Joined && (
+        {showJoinedButton && (
           <Button
             icon={"account-multiple-plus"}
             className="justify-self-end"

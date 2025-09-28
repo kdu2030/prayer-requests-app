@@ -5,10 +5,7 @@ import { useRef } from "react";
 
 import { PrayerGroupRole } from "../../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../../tests/utils/test-utils";
-import {
-  PrayerGroupDetails,
-  RawPrayerGroupDetails,
-} from "../../../../types/prayer-group-types";
+import { PrayerGroupDetails } from "../../../../types/prayer-group-types";
 import { mockPrayerGroupDetails } from "../../tests/mock-data";
 import { PrayerGroupOptions } from "../prayer-group-options";
 import { PrayerGroupOptionsTestIds } from "./test-ids";
@@ -60,7 +57,7 @@ describe(PrayerGroupOptions, () => {
   });
 
   test("If the user is not an admin, hide edit prayer group and manage users", async () => {
-    const prayerGroupDetails: RawPrayerGroupDetails = {
+    const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       prayerGroupRole: PrayerGroupRole.Member,
     };

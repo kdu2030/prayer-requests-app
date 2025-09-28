@@ -4,17 +4,17 @@ import * as React from "react";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
-import { RawPrayerGroupDetails } from "../types/prayer-group-types";
+import { PrayerGroupDetails } from "../types/prayer-group-types";
 
 const getPrayerGroup = async (
   fetch: AxiosInstance,
   baseUrl: string,
   prayerGroupId: number
-): Promise<ManagedErrorResponse<RawPrayerGroupDetails>> => {
+): Promise<ManagedErrorResponse<PrayerGroupDetails>> => {
   const url = `${baseUrl}/api/prayergroup/${prayerGroupId}`;
 
   try {
-    const response = await fetch.get<RawPrayerGroupDetails>(url);
+    const response = await fetch.get<PrayerGroupDetails>(url);
     return { isError: false, value: response.data };
   } catch (error) {
     return handleApiErrors(error);

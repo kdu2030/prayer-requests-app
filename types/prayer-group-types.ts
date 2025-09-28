@@ -21,19 +21,6 @@ export type PrayerGroupUserSummary = {
   prayerGroupRole?: PrayerGroupRole;
 };
 
-export type RawPrayerGroupDetails = {
-  prayerGroupId?: number;
-  groupName?: string;
-  description?: string;
-  rules?: string;
-  visibilityLevel?: VisibilityLevel;
-  userJoinStatus?: JoinStatus;
-  prayerGroupRole?: PrayerGroupRole;
-  admins?: PrayerGroupUserSummary[];
-  avatarFile?: MediaFile;
-  bannerFile?: MediaFile;
-};
-
 export type PrayerGroupDetails = {
   prayerGroupId?: number;
   groupName?: string;
@@ -45,6 +32,7 @@ export type PrayerGroupDetails = {
   admins?: PrayerGroupUserSummary[];
   avatarFile?: MediaFile;
   bannerFile?: MediaFile;
+  joinRequestCount?: number;
 };
 
 export type RawPrayerGroupSummary = {

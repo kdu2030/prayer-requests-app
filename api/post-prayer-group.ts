@@ -5,7 +5,7 @@ import { VisibilityLevel } from "../constants/prayer-group-constants";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
-import { RawPrayerGroupDetails } from "../types/prayer-group-types";
+import { PrayerGroupDetails } from "../types/prayer-group-types";
 
 export type PostCreatePrayerGroupRequest = {
   groupName?: string;
@@ -20,11 +20,11 @@ const postPrayerGroup = async (
   fetch: AxiosInstance,
   baseUrl: string,
   createPrayerGroupRequest: PostCreatePrayerGroupRequest
-): Promise<ManagedErrorResponse<RawPrayerGroupDetails>> => {
+): Promise<ManagedErrorResponse<PrayerGroupDetails>> => {
   try {
     const url = `${baseUrl}/api/prayergroup`;
 
-    const response = await fetch.post<RawPrayerGroupDetails>(
+    const response = await fetch.post<PrayerGroupDetails>(
       url,
       createPrayerGroupRequest,
       {

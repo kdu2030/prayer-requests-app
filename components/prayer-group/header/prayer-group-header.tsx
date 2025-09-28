@@ -48,7 +48,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
 
           <Text
             variant="titleLarge"
-            className="font-bold"
+            className="font-bold flex-shrink"
             numberOfLines={1}
             ellipsizeMode="tail"
           >

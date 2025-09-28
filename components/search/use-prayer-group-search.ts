@@ -2,15 +2,15 @@ import { usePathname } from "expo-router";
 import { compact, debounce } from "lodash";
 import * as React from "react";
 
-import { useGetPrayerGroupsBySearch } from "../../api/get-prayer-groups-by-search";
 import { SEARCH_MIN_CHARACTERS } from "../../constants/input-constants";
 import { useI18N } from "../../hooks/use-i18n";
-import { mapPrayerGroupSummary } from "../../mappers/map-prayer-group";
+
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
 import {
   DEBOUNCE_TIME,
   MAX_RESULT_COUNT,
 } from "./prayer-group-search-constants";
+import { usePostPrayerGroupSearch } from "../../api/post-prayer-group-search";
 
 export const usePrayerGroupSearch = () => {
   const { translate } = useI18N();
@@ -22,7 +22,7 @@ export const usePrayerGroupSearch = () => {
     PrayerGroupSummary[]
   >([]);
 
-  const getPrayerGroupsBySearch = useGetPrayerGroupsBySearch();
+  const postPrayerGroupSearch = usePostPrayerGroupSearch();
 
   const placeholderMessage = React.useMemo(() => {
     if (groupQuery.length < SEARCH_MIN_CHARACTERS) {
@@ -35,15 +35,13 @@ export const usePrayerGroupSearch = () => {
   }, [groupQuery.length, groupSearchResults.length, translate]);
 
   const loadPrayerGroups = React.useCallback(async (query: string) => {
-    const response = await getPrayerGroupsBySearch(query, MAX_RESULT_COUNT);
+    const response = await postPrayerGroupSearch(query, MAX_RESULT_COUNT);
 
     if (response.isError) {
       return;
     }
 
-    const prayerGroupSummaries = response.value.map((rawSummary) =>
-      mapPrayerGroupSummary(rawSummary)
-    );
+    const prayerGroupSummaries = response.value.prayerGroups ?? [];
     setGroupSearchResults(compact(prayerGroupSummaries));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

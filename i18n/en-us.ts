@@ -153,4 +153,9 @@ export const englishTranslations = {
   "prayerRequest.removeLike.failure": "Unable to remove prayer request like",
   "prayerRequest.prayerGroup.noPrayerRequests":
     "This prayer group does not have prayer requests yet.",
+
+  "prayerGroup.joinRequest.label":
+    "This is a private prayer group. To join, please submit a join request.",
+  "prayerGroup.joinRequest.submitJoinRequest": "Submit Join Request",
+  "prayerGroup.joinRequest.joinRequestSubmitted": "Join Request Submitted",
 };

@@ -17,6 +17,7 @@ export const usePrayerGroupSearch = () => {
 
   const pathname = usePathname();
 
+  const [isSearchLoading, setIsSearchLoading] = React.useState<boolean>(false);
   const [groupQuery, setGroupQuery] = React.useState<string>("");
   const [groupSearchResults, setGroupSearchResults] = React.useState<
     PrayerGroupSummary[]
@@ -29,6 +30,10 @@ export const usePrayerGroupSearch = () => {
       return translate("prayerGroup.search.prompt");
     }
 
+    if (isSearchLoading) {
+      return translate("prayerGroup.search.loading");
+    }
+
     if (groupSearchResults.length <= 0) {
       return translate("prayerGroup.search.noneFound");
     }
@@ -36,6 +41,7 @@ export const usePrayerGroupSearch = () => {
 
   const loadPrayerGroups = React.useCallback(async (query: string) => {
     const response = await postPrayerGroupSearch(query, MAX_RESULT_COUNT);
+    setIsSearchLoading(false);
 
     if (response.isError) {
       return;
@@ -43,7 +49,6 @@ export const usePrayerGroupSearch = () => {
 
     const prayerGroupSummaries = response.value.prayerGroups ?? [];
     setGroupSearchResults(compact(prayerGroupSummaries));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const debouncedLoadPrayerGroups = React.useMemo(
@@ -60,6 +65,7 @@ export const usePrayerGroupSearch = () => {
       return;
     }
 
+    setIsSearchLoading(true);
     debouncedLoadPrayerGroups(query);
   };
 

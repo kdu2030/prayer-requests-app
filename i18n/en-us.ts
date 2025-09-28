@@ -136,6 +136,7 @@ export const englishTranslations = {
   "prayerGroup.search.placeholder": "Search for prayer groups",
   "prayerGroup.search.prompt": "Type to search for prayer groups",
   "prayerGroup.search.noneFound": "No prayer groups found",
+  "prayerGroup.search.loading": "Loading prayer groups",
 
   "prayerGroup.request.title": "Title",
   "prayerGroup.request.expirationDate.header": "Prayer request visibility",

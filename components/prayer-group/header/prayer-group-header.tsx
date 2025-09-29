@@ -12,6 +12,7 @@ import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { PrayerGroupBanner } from "./prayer-group-banner";
 import { PrayerGroupHeaderTestIds } from "./tests/test-ids";
+import classNames from "classnames";
 
 type Props = {
   prayerGroupDetails: PrayerGroupDetails | undefined;
@@ -33,12 +34,16 @@ export const PrayerGroupHeader: React.FC<Props> = ({
   const { translate } = useI18N();
   const theme = useTheme();
 
-  const showJoinedButton = React.useMemo(() => {
+  const showJoinButton = React.useMemo(() => {
     return (
       prayerGroupDetails?.userJoinStatus != JoinStatus.Joined &&
       prayerGroupDetails?.visibilityLevel === VisibilityLevel.Public
     );
   }, [prayerGroupDetails?.userJoinStatus, prayerGroupDetails?.visibilityLevel]);
+
+  const showLeaveButton = React.useMemo(() => {
+    return prayerGroupDetails?.userJoinStatus === JoinStatus.Joined;
+  }, [prayerGroupDetails?.userJoinStatus]);
 
   return (
     <View
@@ -47,7 +52,11 @@ export const PrayerGroupHeader: React.FC<Props> = ({
     >
       <PrayerGroupBanner uri={prayerGroupDetails?.bannerFile?.fileUrl} />
       <View className="pt-4 px-4 flex-row items-center justify-between">
-        <View className="w-2/3 self-start flex-row items-center">
+        <View
+          className={classNames("self-start flex-row items-center", {
+            "w-2/3": showLeaveButton || showJoinButton,
+          })}
+        >
           <View className="mr-4">
             <ProfilePicture
               width={52}
@@ -66,7 +75,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
           </Text>
         </View>
 
-        {prayerGroupDetails?.userJoinStatus === JoinStatus.Joined && (
+        {showLeaveButton && (
           <Button
             icon={"check"}
             className="justify-self-end"
@@ -79,7 +88,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
           </Button>
         )}
 
-        {showJoinedButton && (
+        {showJoinButton && (
           <Button
             icon={"account-multiple-plus"}
             className="justify-self-end"

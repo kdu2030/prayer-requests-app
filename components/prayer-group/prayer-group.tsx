@@ -15,6 +15,7 @@ import { usePrayerGroupContext } from "./prayer-group-context";
 import { PrayerRequestPlaceholder } from "./prayer-request-placeholder";
 import { PrayerRequestSpinner } from "./spinners/prayer-request-spinner";
 import { usePrayerGroup } from "./use-prayer-group";
+import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
 
 type Props = {
   prayerGroupId: number;
@@ -90,32 +91,12 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         }}
       >
         {!showPrayerRequestList && (
-          <>
-            {prayerGroupHeader}
-            <View className="mt-32">
-              {prayerRequestLoadStatus === LoadStatus.Loading && (
-                <PrayerRequestSpinner
-                  textClassName="mt-5"
-                  labelVariant={"titleMedium"}
-                />
-              )}
-
-              {prayerRequestLoadStatus === LoadStatus.Error && (
-                <ErrorScreen
-                  errorLabel={translate("prayerRequest.loading.failure")}
-                  showSafeArea={false}
-                  fillContainer={false}
-                  onRetry={() =>
-                    loadNextPrayerRequestsForGroup(prayerGroupId, true)
-                  }
-                />
-              )}
-
-              {prayerRequestLoadStatus === LoadStatus.Success && (
-                <PrayerRequestPlaceholder />
-              )}
-            </View>
-          </>
+          <PrayerRequestPlaceholderBody
+            prayerGroupId={prayerGroupId}
+            prayerGroupHeader={prayerGroupHeader}
+            prayerRequestLoadStatus={prayerRequestLoadStatus}
+            loadNextPrayerRequestsForGroup={loadNextPrayerRequestsForGroup}
+          />
         )}
 
         {prayerRequestLoadStatus === LoadStatus.Success &&

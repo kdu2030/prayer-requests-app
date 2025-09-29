@@ -9,6 +9,7 @@ import { usePostPrayerRequestFilter } from "../../api/post-prayer-request-filter
 import {
   JoinStatus,
   PrayerGroupRole,
+  VisibilityLevel,
 } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
@@ -132,12 +133,21 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     }
 
     setPrayerGroupDetails(response.value);
+    return response.value;
   };
 
   const loadPrayerGroupData = async () => {
     cleanupPrayerRequests();
 
-    await loadPrayerGroup();
+    const prayerGroupDetails = await loadPrayerGroup();
+
+    if (
+      prayerGroupDetails?.visibilityLevel === VisibilityLevel.Private &&
+      prayerGroupDetails.userJoinStatus !== JoinStatus.Joined
+    ) {
+      return;
+    }
+
     await loadNextPrayerRequestsForGroup(
       prayerGroupId,
       true,

@@ -12,7 +12,7 @@ import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
 import { PrayerGroupOptions } from "./options/prayer-group-options";
 import { usePrayerGroupContext } from "./prayer-group-context";
-import { PrayerRequestPlaceholder } from "./prayer-request-placeholder";
+
 import { PrayerRequestSpinner } from "./spinners/prayer-request-spinner";
 import { usePrayerGroup } from "./use-prayer-group";
 import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";

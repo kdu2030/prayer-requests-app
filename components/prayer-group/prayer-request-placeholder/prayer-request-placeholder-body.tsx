@@ -5,6 +5,11 @@ import { PrayerRequestSpinner } from "../spinners/prayer-request-spinner";
 import { ErrorScreen } from "../../layouts/error-screen";
 import { PrayerRequestPlaceholder } from "../prayer-request-placeholder";
 import { useI18N } from "../../../hooks/use-i18n";
+import {
+  JoinStatus,
+  VisibilityLevel,
+} from "../../../constants/prayer-group-constants";
+import { PrivatePrayerGroupPlaceholder } from "./private-prayer-group-placeholder";
 
 type Props = {
   prayerGroupId: number;
@@ -14,6 +19,8 @@ type Props = {
     prayerGroupId: number,
     showCompleteSpinner: boolean
   ) => void;
+  visibilityLevel?: VisibilityLevel;
+  joinStatus?: JoinStatus;
 };
 
 export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
@@ -21,8 +28,15 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
   prayerGroupHeader,
   prayerRequestLoadStatus,
   loadNextPrayerRequestsForGroup,
+  visibilityLevel,
+  joinStatus,
 }) => {
   const { translate } = useI18N();
+
+  const isLoadingSuccessful = prayerRequestLoadStatus === LoadStatus.Success;
+  const showPrivatePrayerGroupPlaceholder =
+    visibilityLevel === VisibilityLevel.Private &&
+    joinStatus !== JoinStatus.Joined;
 
   return (
     <>
@@ -44,8 +58,14 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
           />
         )}
 
-        {prayerRequestLoadStatus === LoadStatus.Success && (
-          <PrayerRequestPlaceholder />
+        {isLoadingSuccessful && (
+          <>
+            {showPrivatePrayerGroupPlaceholder ? (
+              <PrivatePrayerGroupPlaceholder />
+            ) : (
+              <PrayerRequestPlaceholder />
+            )}
+          </>
         )}
       </View>
     </>

@@ -96,6 +96,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
             prayerGroupHeader={prayerGroupHeader}
             prayerRequestLoadStatus={prayerRequestLoadStatus}
             loadNextPrayerRequestsForGroup={loadNextPrayerRequestsForGroup}
+            visibilityLevel={prayerGroupDetails?.visibilityLevel}
+            joinStatus={prayerGroupDetails?.userJoinStatus}
           />
         )}
 

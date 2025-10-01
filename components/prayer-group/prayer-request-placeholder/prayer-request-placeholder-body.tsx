@@ -60,7 +60,12 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
 
         {isLoadingSuccessful && <PrayerRequestPlaceholder />}
 
-        {showPrivatePrayerGroupPlaceholder && <PrivatePrayerGroupPlaceholder />}
+        {showPrivatePrayerGroupPlaceholder && (
+          <PrivatePrayerGroupPlaceholder
+            prayerGroupId={prayerGroupId}
+            joinStatus={joinStatus ?? JoinStatus.NotJoined}
+          />
+        )}
       </View>
     </>
   );

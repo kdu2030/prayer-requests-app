@@ -16,6 +16,7 @@ import { usePrayerGroupContext } from "./prayer-group-context";
 import { PrayerRequestSpinner } from "./spinners/prayer-request-spinner";
 import { usePrayerGroup } from "./use-prayer-group";
 import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
+import { LeavePrayerGroupModal } from "./leave-prayer-group/leave-prayer-group-modal";
 
 type Props = {
   prayerGroupId: number;
@@ -143,6 +144,14 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           snackbarError={snackbarError}
           setSnackbarError={setSnackbarError}
         />
+
+        {showLeavePrayerGroupModal && (
+          <LeavePrayerGroupModal
+            isRemoveUserLoading={isRemoveUserLoading}
+            onRemoveUser={onRemoveUser}
+            onCancel={() => setShowLeavePrayerGroupModal(false)}
+          />
+        )}
       </View>
     </>
   );

@@ -28,7 +28,7 @@ export const LeavePrayerGroupModal: React.FC<Props> = ({
         {translate("prayerGroup.actions.leavePrayerGroup.confirmation")}
       </Text>
 
-      <View className="self-end gap-x-4 mt-6 flex-row">
+      <View className="self-end gap-x-2 mt-6 flex-row">
         <Button mode="outlined" onPress={onCancel}>
           {translate("common.actions.cancel")}
         </Button>

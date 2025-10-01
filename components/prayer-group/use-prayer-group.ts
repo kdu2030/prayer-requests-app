@@ -232,6 +232,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       );
       return { ...existingUserData, prayerGroups };
     });
+
+    setShowLeavePrayerGroupModal(false);
   };
 
   const onRetry = () => {

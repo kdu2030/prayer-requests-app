@@ -19,8 +19,8 @@ export const SelectedImageCard: React.FC<Props> = ({
       className="rounded-lg border p-4 mt-4"
       style={{ borderColor: theme.colors.outline }}
     >
-      <View className="flex flex-row items-center justify-between">
-        <Text numberOfLines={1} ellipsizeMode="tail">
+      <View className="flex flex-row items-center justify-between gap-2">
+        <Text className="w-4/5" numberOfLines={1} ellipsizeMode="tail">
           {fileName}
         </Text>
         <TouchableOpacity onPress={onRemoveImage}>

@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
@@ -22,12 +22,14 @@ import { PrayerGroupOptionsTestIds } from "./tests/test-ids";
 
 type Props = {
   prayerGroupDetails?: PrayerGroupDetails;
+  setShowLeavePrayerGroupModal: React.Dispatch<React.SetStateAction<boolean>>;
   bottomSheetRef: React.RefObject<BottomSheetProps & BottomSheetMethods>;
 };
 
 export const PrayerGroupOptions: React.FC<Props> = ({
   prayerGroupDetails,
   bottomSheetRef,
+  setShowLeavePrayerGroupModal,
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
@@ -96,6 +98,17 @@ export const PrayerGroupOptions: React.FC<Props> = ({
               icon={<MaterialCommunityIcons name="plus" size={24} />}
               onPress={() => {
                 onPressOption("/(drawer)/prayergroup/[id]/create");
+              }}
+            />
+          )}
+
+          {prayerGroupDetails?.userJoinStatus == JoinStatus.Joined && (
+            <PrayerGroupOptionButton
+              label={translate("prayerGroup.actions.leavePrayerGroup")}
+              icon={<MaterialIcons name="person-remove" size={24} />}
+              onPress={() => {
+                setShowLeavePrayerGroupModal(true);
+                bottomSheetRef.current?.close();
               }}
             />
           )}

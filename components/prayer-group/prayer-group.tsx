@@ -47,6 +47,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     setPrayerRequests,
     loadNextPrayerRequestsForGroup,
     showPrayerRequestList,
+    showLeavePrayerGroupModal,
+    setShowLeavePrayerGroupModal,
   } = usePrayerGroup(prayerGroupId);
 
   const prayerGroupHeader = React.useMemo(
@@ -133,6 +135,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
 
         <PrayerGroupOptions
           prayerGroupDetails={prayerGroupDetails}
+          setShowLeavePrayerGroupModal={setShowLeavePrayerGroupModal}
           bottomSheetRef={prayerGroupOptionsRef}
         />
 

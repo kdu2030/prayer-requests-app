@@ -26,6 +26,8 @@ import { usePrayerGroupContext } from "./prayer-group-context";
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [showErrorScreen, setShowErrorScreen] = React.useState<boolean>(false);
+  const [showLeavePrayerGroupModal, setShowLeavePrayerGroupModal] =
+    React.useState<boolean>(false);
 
   const [prayerRequestFilters, setPrayerRequestFilters] = React.useState<
     Omit<PrayerRequestFilterCriteria, "prayerGroupIds">
@@ -302,5 +304,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     nextPrayerRequestLoadStatus,
     prayerRequestLoadStatus,
     showPrayerRequestList,
+    showLeavePrayerGroupModal,
+    setShowLeavePrayerGroupModal,
   };
 };

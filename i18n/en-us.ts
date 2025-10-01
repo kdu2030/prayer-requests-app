@@ -7,6 +7,7 @@ export const englishTranslations = {
   "common.actions.preview": "Preview",
   "common.actions.cancel": "Cancel",
   "common.actions.retry": "Retry",
+  "common.actions.leave": "Leave",
 
   "loading.userData.text": "Loading user data",
   "loading.userData.label": "User Data",
@@ -98,6 +99,9 @@ export const englishTranslations = {
 
   "prayerGroup.actions.join": "Join Prayer Group",
   "prayerGroup.actions.joined": "Joined",
+  "prayerGroup.actions.leavePrayerGroup": "Leave Prayer Group",
+  "prayerGroup.actions.leavePrayerGroup.confirmation":
+    "Are you sure you want to leave the prayer group? This cannot be undone.",
   "prayerGroup.actions.addPrayerRequest": "Add Prayer Request",
   "prayerGroup.actions.groupOptions": "Group Options",
 

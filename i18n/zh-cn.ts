@@ -13,6 +13,7 @@ export const chineseTranslations: Translations = {
   "common.actions.preview": "预览",
   "common.actions.cancel": "取消",
   "common.actions.retry": "重试",
+  "common.actions.leave": "退出",
 
   "loading.userData.text": "加载用户数据",
   "loading.userData.label": "用户数据",
@@ -100,6 +101,9 @@ export const chineseTranslations: Translations = {
   "prayerGroup.actions.joined": "加入了",
   "prayerGroup.actions.addPrayerRequest": "添加祷告事项",
   "prayerGroup.actions.groupOptions": "小组选项",
+  "prayerGroup.actions.leavePrayerGroup": "退出祷告小组",
+  "prayerGroup.actions.leavePrayerGroup.confirmation":
+    "确定要退出祷告小组吗？退出后将无法回复。",
 
   "image.missing.label": "没有图片",
 

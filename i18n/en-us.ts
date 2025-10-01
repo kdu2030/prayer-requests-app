@@ -96,7 +96,7 @@ export const englishTranslations = {
   "createPrayerGroup.groupImageColorStep.unableToSelectImage":
     "Unable to select image.",
 
-  "prayerGroup.actions.join": "Join",
+  "prayerGroup.actions.join": "Join Prayer Group",
   "prayerGroup.actions.joined": "Joined",
   "prayerGroup.actions.addPrayerRequest": "Add Prayer Request",
   "prayerGroup.actions.groupOptions": "Group Options",

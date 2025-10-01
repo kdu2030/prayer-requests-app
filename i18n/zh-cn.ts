@@ -96,7 +96,7 @@ export const chineseTranslations: Translations = {
   "createPrayerGroup.groupImageColorStep.banner": "横幅图片",
   "createPrayerGroup.groupImageColorStep.unableToSelectImage": "无法选择图片",
 
-  "prayerGroup.actions.join": "加入",
+  "prayerGroup.actions.join": "加入祷告小组",
   "prayerGroup.actions.joined": "加入了",
   "prayerGroup.actions.addPrayerRequest": "添加祷告事项",
   "prayerGroup.actions.groupOptions": "小组选项",

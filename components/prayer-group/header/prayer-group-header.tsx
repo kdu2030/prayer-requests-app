@@ -52,11 +52,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
     >
       <PrayerGroupBanner uri={prayerGroupDetails?.bannerFile?.fileUrl} />
       <View className="pt-4 px-4 flex-row items-center justify-between">
-        <View
-          className={classNames("self-start flex-row items-center", {
-            "w-2/3": showLeaveButton || showJoinButton,
-          })}
-        >
+        <View className={classNames("self-start flex-row items-center")}>
           <View className="mr-4">
             <ProfilePicture
               width={52}
@@ -74,32 +70,6 @@ export const PrayerGroupHeader: React.FC<Props> = ({
             {prayerGroupDetails?.groupName}
           </Text>
         </View>
-
-        {showLeaveButton && (
-          <Button
-            icon={"check"}
-            className="justify-self-end"
-            mode={"outlined"}
-            onPress={onRemoveUser}
-            loading={isRemoveUserLoading}
-            testID={PrayerGroupHeaderTestIds.leaveGroupButton}
-          >
-            {translate("prayerGroup.actions.joined")}
-          </Button>
-        )}
-
-        {showJoinButton && (
-          <Button
-            icon={"account-multiple-plus"}
-            className="justify-self-end"
-            mode={"contained"}
-            onPress={onAddUser}
-            loading={isAddUserLoading}
-            testID={PrayerGroupHeaderTestIds.joinGroupButton}
-          >
-            {translate("prayerGroup.actions.join")}
-          </Button>
-        )}
       </View>
       <View className="mt-2 px-4">
         <Text variant="bodyMedium" numberOfLines={2}>
@@ -107,7 +77,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
         </Text>
 
         <View className="flex-row gap-x-4 mt-4">
-          {prayerGroupDetails?.userJoinStatus === JoinStatus.Joined ? (
+          {prayerGroupDetails?.userJoinStatus === JoinStatus.Joined && (
             <Button
               icon="plus"
               className="flex-1"
@@ -123,23 +93,40 @@ export const PrayerGroupHeader: React.FC<Props> = ({
             >
               {translate("prayerGroup.actions.addPrayerRequest")}
             </Button>
-          ) : (
+          )}
+
+          {prayerGroupDetails?.visibilityLevel === VisibilityLevel.Private &&
+            prayerGroupDetails.userJoinStatus !== JoinStatus.Joined && (
+              <Button
+                icon="information"
+                className="flex-1"
+                mode="contained"
+                testID={PrayerGroupHeaderTestIds.aboutGroupButton}
+                onPress={() => {
+                  prayerGroupDetails?.prayerGroupId &&
+                    router.push({
+                      pathname: "/(drawer)/prayergroup/[id]/about",
+                      params: { id: prayerGroupDetails?.prayerGroupId },
+                    });
+                }}
+              >
+                {translate("prayerGroup.options.about")}
+              </Button>
+            )}
+
+          {showJoinButton && (
             <Button
-              icon="information"
+              icon={"account-multiple-plus"}
               className="flex-1"
-              mode="contained"
-              testID={PrayerGroupHeaderTestIds.aboutGroupButton}
-              onPress={() => {
-                prayerGroupDetails?.prayerGroupId &&
-                  router.push({
-                    pathname: "/(drawer)/prayergroup/[id]/about",
-                    params: { id: prayerGroupDetails?.prayerGroupId },
-                  });
-              }}
+              mode={"contained"}
+              onPress={onAddUser}
+              loading={isAddUserLoading}
+              testID={PrayerGroupHeaderTestIds.joinGroupButton}
             >
-              {translate("prayerGroup.options.about")}
+              {translate("prayerGroup.actions.join")}
             </Button>
           )}
+
           <Button
             icon="dots-horizontal"
             className="flex-1"

@@ -20,6 +20,18 @@ export const ToasterSnackbar: React.FC<Props> = ({
   setToasterMessage,
 }) => {
   const theme = useTheme();
+  const [isVisible, setIsVisible] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (toasterMessage) {
+      setIsVisible(true);
+    }
+  }, [toasterMessage]);
+
+  const onDismiss = () => {
+    setIsVisible(false);
+    setTimeout(() => setToasterMessage(undefined), 2000);
+  };
 
   return (
     <Portal>
@@ -31,11 +43,9 @@ export const ToasterSnackbar: React.FC<Props> = ({
               : theme.colors.error,
         }}
         duration={3000}
-        visible={!!toasterMessage}
-        onDismiss={() => {
-          setToasterMessage(undefined);
-        }}
-        onIconPress={() => setToasterMessage(undefined)}
+        visible={isVisible}
+        onDismiss={onDismiss}
+        onIconPress={onDismiss}
       >
         <View className="flex flex-row items-center">
           {toasterMessage?.variant === "success" ? (

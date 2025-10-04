@@ -169,4 +169,6 @@ export const englishTranslations = {
 
   "toaster.joinPrayerGroup.success": "Successfully joined prayer group.",
   "toaster.joinPrayerGroup.failure": "Failed to join prayer group.",
+  "toaster.joinRequestSubmit.success": "Join request submitted.",
+  "toaster.joinRequestSubmit.failure": "Failed to submit join request.",
 };

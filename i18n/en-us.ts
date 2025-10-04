@@ -166,4 +166,7 @@ export const englishTranslations = {
     "This is a private prayer group. To join, please submit a join request.",
   "prayerGroup.joinRequest.submitJoinRequest": "Submit Join Request",
   "prayerGroup.joinRequest.joinRequestSubmitted": "Join Request Submitted",
+
+  "toaster.joinPrayerGroup.success": "Successfully joined prayer group.",
+  "toaster.joinPrayerGroup.failure": "Failed to join prayer group.",
 };

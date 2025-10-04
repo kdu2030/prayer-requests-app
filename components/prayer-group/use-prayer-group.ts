@@ -175,9 +175,17 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setIsAddUserLoading(false);
 
     if (response.isError) {
-      setSnackbarError(translate("toaster.failed.addUserFailure"));
+      setToasterMessage({
+        message: translate("toaster.joinPrayerGroup.failure"),
+        variant: "error",
+      });
       return;
     }
+
+    setToasterMessage({
+      message: translate("toaster.joinPrayerGroup.success"),
+      variant: "success",
+    });
 
     const joinedPrayerGroupSummary: PrayerGroupSummary = {
       prayerGroupId,

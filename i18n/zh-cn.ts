@@ -102,6 +102,8 @@ export const chineseTranslations: Translations = {
   "prayerGroup.actions.addPrayerRequest": "添加祷告事项",
   "prayerGroup.actions.groupOptions": "小组选项",
   "prayerGroup.actions.leavePrayerGroup": "退出祷告小组",
+  "prayerGroup.actions.leavePrayerGroup.success": "你已成功退出祷告小组。",
+  "prayerGroup.actions.leavePrayerGroup.failure": "退出祷告小组失败。",
   "prayerGroup.actions.leavePrayerGroup.confirmation":
     "确定要退出祷告小组吗？退出后将无法回复。",
 

@@ -102,6 +102,10 @@ export const englishTranslations = {
   "prayerGroup.actions.leavePrayerGroup": "Leave Prayer Group",
   "prayerGroup.actions.leavePrayerGroup.confirmation":
     "Are you sure you want to leave the prayer group? This cannot be undone.",
+  "prayerGroup.actions.leavePrayerGroup.success":
+    "Successfully left prayer group.",
+  "prayerGroup.actions.leavePrayerGroup.failure":
+    "Unable to leave prayer group.",
   "prayerGroup.actions.addPrayerRequest": "Add Prayer Request",
   "prayerGroup.actions.groupOptions": "Group Options",
 

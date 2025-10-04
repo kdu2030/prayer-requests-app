@@ -22,6 +22,7 @@ import {
 } from "../../types/prayer-request-types";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
+import { ToasterMessage } from "../layouts/toaster-snackbar";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -53,6 +54,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const [snackbarError, setSnackbarError] = React.useState<string | undefined>(
     undefined
   );
+
+  const [toasterMessage, setToasterMessage] = React.useState<ToasterMessage>();
 
   const prayerGroupOptionsRef = React.useRef<
     BottomSheetProps & BottomSheetMethods
@@ -212,13 +215,17 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setIsRemoveUserLoading(false);
 
     if (response.isError) {
-      setSnackbarError(
-        translate("toaster.failed.removeFailure", {
-          item: translate("common.user"),
-        })
-      );
+      setToasterMessage({
+        message: translate("prayerGroup.actions.leavePrayerGroup.failure"),
+        variant: "error",
+      });
       return;
     }
+
+    setToasterMessage({
+      message: translate("prayerGroup.actions.leavePrayerGroup.success"),
+      variant: "success",
+    });
 
     setPrayerGroupDetails({
       ...prayerGroupDetails,
@@ -316,5 +323,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     showLeavePrayerGroupModal,
     setShowLeavePrayerGroupModal,
     setUserJoinStatus,
+    setToasterMessage,
+    toasterMessage,
   };
 };

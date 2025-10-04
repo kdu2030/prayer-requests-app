@@ -8,6 +8,7 @@ import { JoinStatus } from "../../../constants/prayer-group-constants";
 type Props = {
   prayerGroupId: number;
   joinStatus: JoinStatus;
+  setUserJoinStatus: (joinStatus: JoinStatus) => void;
 };
 
 export const PrivatePrayerGroupPlaceholder: React.FC<Props> = ({

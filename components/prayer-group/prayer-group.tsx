@@ -50,6 +50,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     showPrayerRequestList,
     showLeavePrayerGroupModal,
     setShowLeavePrayerGroupModal,
+    setUserJoinStatus,
   } = usePrayerGroup(prayerGroupId);
 
   const prayerGroupHeader = React.useMemo(
@@ -101,6 +102,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
             loadNextPrayerRequestsForGroup={loadNextPrayerRequestsForGroup}
             visibilityLevel={prayerGroupDetails?.visibilityLevel}
             joinStatus={prayerGroupDetails?.userJoinStatus}
+            setUserJoinStatus={setUserJoinStatus}
           />
         )}
 

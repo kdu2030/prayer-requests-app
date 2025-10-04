@@ -283,6 +283,13 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     );
   }, [prayerRequestLoadStatus, prayerRequests.length]);
 
+  const setUserJoinStatus = (joinStatus: JoinStatus) => {
+    setPrayerGroupDetails((prayerGroupDetails) => ({
+      ...prayerGroupDetails,
+      userJoinStatus: joinStatus,
+    }));
+  };
+
   return {
     isLoading,
     setIsLoading,
@@ -308,5 +315,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     showPrayerRequestList,
     showLeavePrayerGroupModal,
     setShowLeavePrayerGroupModal,
+    setUserJoinStatus,
   };
 };

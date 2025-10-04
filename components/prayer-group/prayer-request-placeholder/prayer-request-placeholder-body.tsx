@@ -21,6 +21,7 @@ type Props = {
   ) => void;
   visibilityLevel?: VisibilityLevel;
   joinStatus?: JoinStatus;
+  setUserJoinStatus: (joinStatus: JoinStatus) => void;
 };
 
 export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
@@ -30,6 +31,7 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
   loadNextPrayerRequestsForGroup,
   visibilityLevel,
   joinStatus,
+  setUserJoinStatus,
 }) => {
   const { translate } = useI18N();
 
@@ -64,6 +66,7 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
           <PrivatePrayerGroupPlaceholder
             prayerGroupId={prayerGroupId}
             joinStatus={joinStatus ?? JoinStatus.NotJoined}
+            setUserJoinStatus={setUserJoinStatus}
           />
         )}
       </View>

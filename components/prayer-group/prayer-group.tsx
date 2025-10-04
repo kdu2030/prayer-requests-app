@@ -17,7 +17,8 @@ import { PrayerRequestSpinner } from "./spinners/prayer-request-spinner";
 import { usePrayerGroup } from "./use-prayer-group";
 import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
 import { LeavePrayerGroupModal } from "./leave-prayer-group/leave-prayer-group-modal";
-import { ToasterSnackbar } from "../layouts/toaster-snackbar";
+
+import { SuccessSnackbar } from "../layouts/success-snackbar";
 
 type Props = {
   prayerGroupId: number;
@@ -52,8 +53,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     showLeavePrayerGroupModal,
     setShowLeavePrayerGroupModal,
     setUserJoinStatus,
-    toasterMessage,
-    setToasterMessage,
+    successSnackbar,
+    setSuccessSnackbar,
   } = usePrayerGroup(prayerGroupId);
 
   const prayerGroupHeader = React.useMemo(
@@ -150,9 +151,9 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           setSnackbarError={setSnackbarError}
         />
 
-        <ToasterSnackbar
-          toasterMessage={toasterMessage}
-          setToasterMessage={setToasterMessage}
+        <SuccessSnackbar
+          successMessage={successSnackbar}
+          setSuccessMessage={setSuccessSnackbar}
         />
 
         {showLeavePrayerGroupModal && (

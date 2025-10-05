@@ -21,6 +21,7 @@ import { useApiDataContext } from "../hooks/use-api-data";
 import { useI18N } from "../hooks/use-i18n";
 import { mapUserData, mapUserTokens } from "../mappers/map-user-data";
 import { Token } from "../types/context/api-data-context-type";
+import { useToasterContext } from "../components/toasters/toaster-context";
 
 type StoredUserData = {
   refreshToken: string;
@@ -29,12 +30,11 @@ type StoredUserData = {
 
 const AppContainer: React.FC = () => {
   const { loadLanguage, translate } = useI18N();
-  const [snackbarError, setSnackbarError] = React.useState<
-    string | undefined
-  >();
   const { setUserTokens, userTokens, baseUrl, setUserData } =
     useApiDataContext();
   const theme = useTheme();
+
+  const { openToaster } = useToasterContext();
 
   const checkStoredUserDataValidity = async (): Promise<
     StoredUserData | undefined
@@ -91,11 +91,12 @@ const AppContainer: React.FC = () => {
     );
 
     if (userSummaryResponse.isError) {
-      setSnackbarError(
-        translate("toaster.failed.loadFailure", {
+      openToaster({
+        message: translate("toaster.failed.loadFailure", {
           item: translate("loading.userData.label").toLocaleLowerCase(),
-        })
-      );
+        }),
+        variant: "error",
+      });
       setTimeout(() => router.push("/auth/welcome"), 1000);
       return;
     }
@@ -126,11 +127,6 @@ const AppContainer: React.FC = () => {
           {translate("loading.userData.text")}
         </Text>
       </View>
-
-      <ErrorSnackbar
-        snackbarError={snackbarError}
-        setSnackbarError={setSnackbarError}
-      />
     </>
   );
 };

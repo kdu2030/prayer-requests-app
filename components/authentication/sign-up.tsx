@@ -12,7 +12,7 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SignupForm } from "../../types/forms/auth-forms";
 import { TextInput } from "../inputs/text-input";
-import { ErrorSnackbar } from "../layouts/error-snackbar";
+import { useToasterContext } from "../toasters/toaster-context";
 import { SignupTestIds } from "./auth-constants";
 import { handleSuccessfulAuthentication } from "./auth-helpers";
 import { AuthApiErrors } from "./auth-types";
@@ -23,9 +23,8 @@ const Signup: React.FC = () => {
   const theme = useTheme();
   const { baseUrl, setUserData, setUserTokens } = useApiDataContext();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [snackbarError, setSnackbarError] = React.useState<
-    string | undefined
-  >();
+
+  const { openToaster } = useToasterContext();
 
   const onSubmit = async (formProps: FormikProps<SignupForm>) => {
     if (isLoading) {
@@ -69,11 +68,13 @@ const Signup: React.FC = () => {
       );
       return;
     } else if (response.isError) {
-      setSnackbarError(
-        translate("toaster.failed.genericFailure", {
+      openToaster({
+        message: translate("toaster.failed.genericFailure", {
           item: translate("authScreen.signup.action"),
-        })
-      );
+        }),
+        variant: "error",
+      });
+
       return;
     }
 
@@ -191,11 +192,6 @@ const Signup: React.FC = () => {
               </Text>
             </View>
           </View>
-
-          <ErrorSnackbar
-            snackbarError={snackbarError}
-            setSnackbarError={setSnackbarError}
-          />
         </ScrollView>
       </SafeAreaView>
     </>

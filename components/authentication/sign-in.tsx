@@ -12,7 +12,7 @@ import { TextInput } from "../../components/inputs/text-input";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SigninForm } from "../../types/forms/auth-forms";
-import { ErrorSnackbar } from "../layouts/error-snackbar";
+import { useToasterContext } from "../toasters/toaster-context";
 import { SigninErrors, SigninTestIds } from "./auth-constants";
 import { handleSuccessfulAuthentication } from "./auth-helpers";
 import { signinValidationSchema } from "./signin-validation-schema";
@@ -21,9 +21,8 @@ export const Signin: React.FC = () => {
   const theme = useTheme();
   const { translate } = useI18N();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [snackbarError, setSnackbarError] = React.useState<
-    string | undefined
-  >();
+
+  const { openToaster } = useToasterContext();
   const { baseUrl, setUserData, setUserTokens } = useApiDataContext();
 
   const handleSubmit = async (formProps: FormikProps<SigninForm>) => {
@@ -65,11 +64,12 @@ export const Signin: React.FC = () => {
       );
       return;
     } else if (signinResponse.isError) {
-      setSnackbarError(
-        translate("toaster.failed.genericFailure", {
+      openToaster({
+        message: translate("toaster.failed.genericFailure", {
           item: translate("authScreen.signin.action"),
-        })
-      );
+        }),
+        variant: "error",
+      });
       return;
     }
 
@@ -165,11 +165,6 @@ export const Signin: React.FC = () => {
               </Text>
             </View>
           </View>
-
-          <ErrorSnackbar
-            snackbarError={snackbarError}
-            setSnackbarError={setSnackbarError}
-          />
         </ScrollView>
       </SafeAreaView>
     </>

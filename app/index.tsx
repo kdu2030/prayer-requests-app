@@ -15,7 +15,6 @@ import {
   USER_ID_STORAGE_KEY,
 } from "../components/authentication/auth-constants";
 import { decodeJwtToken } from "../components/authentication/jwt-helpers";
-import { ErrorSnackbar } from "../components/layouts/error-snackbar";
 
 import { useApiDataContext } from "../hooks/use-api-data";
 import { useI18N } from "../hooks/use-i18n";

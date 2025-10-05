@@ -26,7 +26,6 @@ type Props = {
 export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
   const { translate } = useI18N();
   const theme = useTheme();
-  const { prayerGroupDetails } = usePrayerGroupContext();
 
   const {
     isLoading,
@@ -44,10 +43,6 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
     isSaveLoading,
     onSavePrayerGroupUsers,
   } = usePrayerGroupUsers(prayerGroupId);
-
-  if (prayerGroupDetails?.prayerGroupRole !== PrayerGroupRole.Admin) {
-    return <PrayerGroupPermissionError />;
-  }
 
   return (
     <SafeAreaView className="flex-1">

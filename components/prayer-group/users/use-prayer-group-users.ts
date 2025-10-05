@@ -183,7 +183,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     setPrayerGroupDetails({
       ...prayerGroupDetails,
       admins: updatedAdmins,
-      userJoinStatus: !updatedPrayerGroupUser
+      userJoinStatus: updatedPrayerGroupUser
         ? JoinStatus.NotJoined
         : JoinStatus.Joined,
       prayerGroupRole: updatedPrayerGroupUser ? updatedUserRole : undefined,

@@ -5,15 +5,17 @@ import { usePostPrayerRequestLike } from "../../api/post-prayer-request-like";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
+import { useToasterContext } from "../toasters/toaster-context";
 
 export const usePrayerRequestCard = (
   prayerRequest: PrayerRequestModel,
   prayerRequests: PrayerRequestModel[],
-  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>,
-  setSnackbarError: React.Dispatch<React.SetStateAction<string | undefined>>
+  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>
 ) => {
   const [isLikeLoading, setIsLikeLoading] = React.useState<boolean>(false);
   const { translate } = useI18N();
+
+  const { openToaster } = useToasterContext();
 
   const postPrayerRequestLike = usePostPrayerRequestLike();
   const deletePrayerRequestLike = useDeletePrayerRequestLike();
@@ -30,7 +32,10 @@ export const usePrayerRequestCard = (
     const response = await postPrayerRequestLike(userId, prayerRequestId);
 
     if (response.isError) {
-      setSnackbarError(translate("prayerRequest.addLike.failure"));
+      openToaster({
+        message: translate("prayerRequest.addLike.failure"),
+        variant: "error",
+      });
       return;
     }
 
@@ -59,7 +64,10 @@ export const usePrayerRequestCard = (
     const response = await deletePrayerRequestLike(userId, prayerRequestId);
 
     if (response.isError) {
-      setSnackbarError(translate("prayerRequest.removeLike.failure"));
+      openToaster({
+        message: translate("prayerRequest.removeLike.failure"),
+        variant: "error",
+      });
       return;
     }
 

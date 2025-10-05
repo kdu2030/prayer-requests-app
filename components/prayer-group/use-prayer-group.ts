@@ -51,14 +51,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const [isAddUserLoading, setIsAddUserLoading] =
     React.useState<boolean>(false);
 
-  const [snackbarError, setSnackbarError] = React.useState<string | undefined>(
-    undefined
-  );
-
-  const [successSnackbar, setSuccessSnackbar] = React.useState<
-    string | undefined
-  >();
-
   const { openToaster } = useToasterContext();
 
   const prayerGroupOptionsRef = React.useRef<
@@ -109,7 +101,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       return;
     } else if (response.isError) {
       setLoadStatus(LoadStatus.Error);
-      setSnackbarError(translate("prayerRequest.loading.failure"));
+      openToaster({
+        message: translate("prayerRequest.loading.failure"),
+        variant: "error",
+      });
       return;
     }
 
@@ -179,11 +174,18 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setIsAddUserLoading(false);
 
     if (response.isError) {
-      setSnackbarError(translate("toaster.joinPrayerGroup.failure"));
+      openToaster({
+        message: translate("toaster.joinPrayerGroup.failure"),
+        variant: "error",
+      });
+
       return;
     }
 
-    setSuccessSnackbar(translate("toaster.joinPrayerGroup.success"));
+    openToaster({
+      message: translate("toaster.joinPrayerGroup.success"),
+      variant: "success",
+    });
 
     const joinedPrayerGroupSummary: PrayerGroupSummary = {
       prayerGroupId,
@@ -221,9 +223,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setIsRemoveUserLoading(false);
 
     if (response.isError) {
-      setSnackbarError(
-        translate("prayerGroup.actions.leavePrayerGroup.failure")
-      );
+      openToaster({
+        message: translate("prayerGroup.actions.leavePrayerGroup.failure"),
+        variant: "error",
+      });
 
       return;
     }
@@ -306,8 +309,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   return {
     isLoading,
     setIsLoading,
-    snackbarError,
-    setSnackbarError,
     onRemoveUser,
     isRemoveUserLoading,
     onAddUser,
@@ -329,7 +330,5 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     showLeavePrayerGroupModal,
     setShowLeavePrayerGroupModal,
     setUserJoinStatus,
-    setSuccessSnackbar,
-    successSnackbar,
   };
 };

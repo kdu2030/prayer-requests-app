@@ -33,8 +33,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
 
   const {
     isLoading,
-    snackbarError,
-    setSnackbarError,
     isRemoveUserLoading,
     onRemoveUser,
     onAddUser,
@@ -53,8 +51,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     showLeavePrayerGroupModal,
     setShowLeavePrayerGroupModal,
     setUserJoinStatus,
-    successSnackbar,
-    setSuccessSnackbar,
   } = usePrayerGroup(prayerGroupId);
 
   const prayerGroupHeader = React.useMemo(
@@ -120,7 +116,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                   prayerRequest={item}
                   prayerRequests={prayerRequests}
                   setPrayerRequests={setPrayerRequests}
-                  setSnackbarError={setSnackbarError}
                   key={item.prayerRequestId}
                 />
               )}
@@ -144,16 +139,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           prayerGroupDetails={prayerGroupDetails}
           setShowLeavePrayerGroupModal={setShowLeavePrayerGroupModal}
           bottomSheetRef={prayerGroupOptionsRef}
-        />
-
-        <ErrorSnackbar
-          snackbarError={snackbarError}
-          setSnackbarError={setSnackbarError}
-        />
-
-        <SuccessSnackbar
-          successMessage={successSnackbar}
-          setSuccessMessage={setSuccessSnackbar}
         />
 
         {showLeavePrayerGroupModal && (

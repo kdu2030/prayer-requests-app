@@ -7,13 +7,20 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { LIGHT_THEME } from "../constants/theme/theme";
 import { ApiDataContextProvider } from "../hooks/use-api-data";
+import { ToasterContextProvider } from "../components/toasters/toaster-context";
+import { ToasterPortal } from "../components/toasters/toaster-portal";
 
 const BaseStack: React.FC = () => {
   return (
     <SafeAreaProvider>
       <PaperProvider theme={LIGHT_THEME}>
         <ApiDataContextProvider>
-          <Stack screenOptions={{ headerShown: false }} />
+          <ToasterContextProvider>
+            <>
+              <Stack screenOptions={{ headerShown: false }} />
+              <ToasterPortal />
+            </>
+          </ToasterContextProvider>
         </ApiDataContextProvider>
       </PaperProvider>
     </SafeAreaProvider>

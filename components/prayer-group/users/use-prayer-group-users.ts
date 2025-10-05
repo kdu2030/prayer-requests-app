@@ -17,6 +17,7 @@ import {
   normalizeText,
 } from "./prayer-group-user-helpers";
 import { PRAYER_GROUP_USERS_QUERY } from "./prayer-group-users-constants";
+import { useToasterContext } from "../../toasters/toaster-context";
 
 export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const { translate } = useI18N();
@@ -38,14 +39,11 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
   const [isSaveLoading, setIsSaveLoading] = React.useState<boolean>(false);
 
-  const [saveError, setSaveError] = React.useState<string | undefined>();
-  const [successMessage, setSuccessMessage] = React.useState<
-    string | undefined
-  >();
-
   const [userToDeleteIndex, setUserToDeleteIndex] = React.useState<
     number | undefined
   >();
+
+  const { openToaster } = useToasterContext();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] =
     React.useState<boolean>(false);
@@ -152,15 +150,20 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     setIsSaveLoading(false);
 
     if (response.isError) {
-      setSaveError(
-        translate("toaster.failed.updateFailure", {
+      openToaster({
+        message: translate("toaster.failed.updateFailure", {
           item: translate("prayerGroup.manageUsers.usersLabel"),
-        })
-      );
+        }),
+        variant: "error",
+      });
+
       return;
     }
 
-    setSuccessMessage(translate("prayerGroup.manageUsers.updateSuccess"));
+    openToaster({
+      message: translate("prayerGroup.manageUsers.updateSuccess"),
+      variant: "success",
+    });
 
     const updatedPrayerGroupUsers = response.value.prayerGroupUsers ?? [];
 
@@ -222,10 +225,6 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     onDelete,
     onRoleChange,
     loadPrayerGroupUsers,
-    saveError,
-    setSaveError,
-    successMessage,
-    setSuccessMessage,
     isSaveLoading,
     onSavePrayerGroupUsers,
   };

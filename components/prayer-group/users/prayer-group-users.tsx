@@ -42,11 +42,7 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
     onRoleChange,
     loadPrayerGroupUsers,
     isSaveLoading,
-    setSaveError,
-    saveError,
     onSavePrayerGroupUsers,
-    successMessage,
-    setSuccessMessage,
   } = usePrayerGroupUsers(prayerGroupId);
 
   if (prayerGroupDetails?.prayerGroupRole !== PrayerGroupRole.Admin) {
@@ -185,20 +181,6 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
               ? filteredUsers[userToDeleteIndex]?.fullName
               : undefined
           }
-        />
-      )}
-
-      {!!saveError && (
-        <ErrorSnackbar
-          snackbarError={saveError}
-          setSnackbarError={setSaveError}
-        />
-      )}
-
-      {!!successMessage && (
-        <SuccessSnackbar
-          successMessage={successMessage}
-          setSuccessMessage={setSuccessMessage}
         />
       )}
     </SafeAreaView>

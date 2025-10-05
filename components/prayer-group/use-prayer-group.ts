@@ -22,6 +22,7 @@ import {
 } from "../../types/prayer-request-types";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
+import { useToasterContext } from "../toasters/toaster-context";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -57,6 +58,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const [successSnackbar, setSuccessSnackbar] = React.useState<
     string | undefined
   >();
+
+  const { openToaster } = useToasterContext();
 
   const prayerGroupOptionsRef = React.useRef<
     BottomSheetProps & BottomSheetMethods
@@ -225,9 +228,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       return;
     }
 
-    setSuccessSnackbar(
-      translate("prayerGroup.actions.leavePrayerGroup.success")
-    );
+    openToaster({
+      message: translate("prayerGroup.actions.leavePrayerGroup.success"),
+      variant: "success",
+    });
 
     setPrayerGroupDetails({
       ...prayerGroupDetails,

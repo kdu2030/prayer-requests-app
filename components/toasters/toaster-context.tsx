@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ToasterConfig } from "./toaster-type";
-import { randomUUID } from "expo-crypto";
+import { uniqueId } from "lodash";
 
 export type ToasterContextType = {
   toasters: ToasterConfig[];
@@ -22,7 +22,7 @@ export const ToasterContextProvider: React.FC<React.PropsWithChildren> = ({
   const openToaster = (toaster: Omit<ToasterConfig, "toasterId">) => {
     const toasterWithId: ToasterConfig = {
       ...toaster,
-      toasterId: randomUUID(),
+      toasterId: uniqueId(),
     };
 
     setToasters((existingToasters) => [...existingToasters, toasterWithId]);

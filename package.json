@@ -24,7 +24,6 @@
     "classnames": "^2.5.1",
     "color": "^3.2.1",
     "expo": "^50.0.20",
-    "expo-crypto": "^15.0.7",
     "expo-file-system": "~16.0.9",
     "expo-font": "~11.10.3",
     "expo-image-picker": "~14.7.1",

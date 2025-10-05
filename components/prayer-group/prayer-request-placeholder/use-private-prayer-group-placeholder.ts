@@ -4,20 +4,17 @@ import { useApiDataContext } from "../../../hooks/use-api-data";
 import { LoadStatus } from "../../../types/api-response-types";
 import { JoinStatus } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
+import { useToasterContext } from "../../toasters/toaster-context";
 
 export const usePrivatePrayerGroupPlaceholder = (
   prayerGroupId: number,
   setUserJoinStatus: (joinStatus: JoinStatus) => void
 ) => {
   const { translate } = useI18N();
+  const { openToaster } = useToasterContext();
 
   const [submitRequestLoadStatus, setSubmitRequestLoadStatus] =
     React.useState<LoadStatus>(LoadStatus.NotStarted);
-
-  const [successMessage, setSuccessMessage] = React.useState<
-    string | undefined
-  >();
-  const [errorMessage, setErrorMessage] = React.useState<string | undefined>();
 
   const postJoinRequest = usePostJoinRequest();
   const { userData } = useApiDataContext();
@@ -32,11 +29,18 @@ export const usePrivatePrayerGroupPlaceholder = (
 
     if (response.isError) {
       setSubmitRequestLoadStatus(LoadStatus.Error);
-      setErrorMessage(translate("toaster.joinRequestSubmit.failure"));
+      openToaster({
+        message: translate("toaster.joinRequestSubmit.failure"),
+        variant: "error",
+      });
+      return;
     }
 
     setSubmitRequestLoadStatus(LoadStatus.Success);
-    setSuccessMessage(translate("toaster.joinRequestSubmit.success"));
+    openToaster({
+      message: translate("toaster.joinRequestSubmit.success"),
+      variant: "success",
+    });
 
     setUserJoinStatus(JoinStatus.RequestSubmitted);
   };
@@ -44,9 +48,5 @@ export const usePrivatePrayerGroupPlaceholder = (
   return {
     submitRequestLoadStatus,
     onSubmitJoinRequest,
-    errorMessage,
-    successMessage,
-    setErrorMessage,
-    setSuccessMessage,
   };
 };

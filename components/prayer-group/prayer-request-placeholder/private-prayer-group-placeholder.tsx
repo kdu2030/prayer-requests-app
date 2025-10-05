@@ -5,8 +5,7 @@ import { Foundation } from "@expo/vector-icons";
 import { Button, Text } from "react-native-paper";
 import { JoinStatus } from "../../../constants/prayer-group-constants";
 import { usePrivatePrayerGroupPlaceholder } from "./use-private-prayer-group-placeholder";
-import { ErrorSnackbar } from "../../layouts/error-snackbar";
-import { SuccessSnackbar } from "../../layouts/success-snackbar";
+
 import { LoadStatus } from "../../../types/api-response-types";
 
 type Props = {
@@ -21,14 +20,8 @@ export const PrivatePrayerGroupPlaceholder: React.FC<Props> = ({
   setUserJoinStatus,
 }) => {
   const { translate } = useI18N();
-  const {
-    errorMessage,
-    setErrorMessage,
-    successMessage,
-    setSuccessMessage,
-    onSubmitJoinRequest,
-    submitRequestLoadStatus,
-  } = usePrivatePrayerGroupPlaceholder(prayerGroupId, setUserJoinStatus);
+  const { onSubmitJoinRequest, submitRequestLoadStatus } =
+    usePrivatePrayerGroupPlaceholder(prayerGroupId, setUserJoinStatus);
 
   return (
     <>
@@ -54,16 +47,6 @@ export const PrivatePrayerGroupPlaceholder: React.FC<Props> = ({
           )}
         </View>
       </View>
-
-      <ErrorSnackbar
-        snackbarError={errorMessage}
-        setSnackbarError={setErrorMessage}
-      />
-
-      <SuccessSnackbar
-        successMessage={successMessage}
-        setSuccessMessage={setSuccessMessage}
-      />
     </>
   );
 };

@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
-import { ErrorSnackbar } from "../layouts/error-snackbar";
+
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
@@ -17,8 +17,6 @@ import { PrayerRequestSpinner } from "./spinners/prayer-request-spinner";
 import { usePrayerGroup } from "./use-prayer-group";
 import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
 import { LeavePrayerGroupModal } from "./leave-prayer-group/leave-prayer-group-modal";
-
-import { SuccessSnackbar } from "../layouts/success-snackbar";
 
 type Props = {
   prayerGroupId: number;

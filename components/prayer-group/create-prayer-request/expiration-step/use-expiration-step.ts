@@ -7,6 +7,7 @@ import { useApiDataContext } from "../../../../hooks/use-api-data";
 import { useI18N } from "../../../../hooks/use-i18n";
 import { mapCreatePrayerRequest } from "../../../../mappers/map-create-prayer-request";
 import { DropdownOption } from "../../../../types/inputs/dropdown";
+import { useToasterContext } from "../../../toasters/toaster-context";
 import { usePrayerGroupContext } from "../../prayer-group-context";
 import {
   CreatePrayerRequestForm,
@@ -16,9 +17,7 @@ import {
 export const useExpirationStep = () => {
   const { translate } = useI18N();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [snackbarError, setSnackbarError] = React.useState<
-    string | undefined
-  >();
+  const { openToaster } = useToasterContext();
 
   const { validateForm, setTouched, setErrors, touched, values } =
     useFormikContext<CreatePrayerRequestForm>();
@@ -77,11 +76,12 @@ export const useExpirationStep = () => {
     setIsLoading(false);
 
     if (response.isError) {
-      setSnackbarError(
-        translate("toaster.failed.saveFailure", {
+      openToaster({
+        message: translate("toaster.failed.saveFailure", {
           item: translate("prayerRequest.label"),
-        })
-      );
+        }),
+        variant: "error",
+      });
       return;
     }
 
@@ -91,8 +91,6 @@ export const useExpirationStep = () => {
   return {
     expirationDateOptions,
     onSavePrayerRequest,
-    snackbarError,
     isLoading,
-    setSnackbarError,
   };
 };

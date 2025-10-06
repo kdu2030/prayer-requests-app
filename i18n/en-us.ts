@@ -119,6 +119,7 @@ export const englishTranslations = {
 
   "prayerGroup.edit.header": "Edit {{groupName}}",
   "prayerGroup.edit.images": "Images",
+  "prayerGroup.edit.success": "Edited prayer group",
 
   "prayerGroup.manageUsers.label": "Manage Users",
   "prayerGroup.manageUsers.loading": "Loading prayer group users",

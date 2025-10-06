@@ -117,6 +117,7 @@ export const chineseTranslations: Translations = {
 
   "prayerGroup.edit.header": "编辑{{groupName}}",
   "prayerGroup.edit.images": "图片",
+  "prayerGroup.edit.success": "已编辑祷告小组",
 
   "prayerGroup.manageUsers.label": "管理用户",
   "prayerGroup.manageUsers.loading": "加载祷告小组用户",

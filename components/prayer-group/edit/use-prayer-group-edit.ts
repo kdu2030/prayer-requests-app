@@ -1,5 +1,5 @@
 import * as ImagePicker from "expo-image-picker";
-import { Href, router, usePathname } from "expo-router";
+import { usePathname } from "expo-router";
 import { FormikHelpers, FormikProps } from "formik";
 import * as React from "react";
 
@@ -266,10 +266,12 @@ export const usePrayerGroupEdit = () => {
     setPrayerGroupDetails(updatedPrayerGroupDetails);
     setUserData({ ...userData, prayerGroups: prayerGroupSummaries });
 
-    router.push({
-      pathname: "/(drawer)/prayergroup/[id]",
-      params: { id: updatedPrayerGroupDetails.prayerGroupId },
-    } as Href<any>);
+    formikRef.current?.resetForm({ values: updatedPrayerGroupDetails });
+
+    openToaster({
+      message: translate("prayerGroup.edit.success"),
+      variant: "success",
+    });
   };
 
   return {

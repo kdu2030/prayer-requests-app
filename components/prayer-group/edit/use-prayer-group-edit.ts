@@ -20,6 +20,7 @@ import {
 } from "../../../mappers/map-prayer-group";
 import { DropdownOption } from "../../../types/inputs/dropdown";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
+import { useToasterContext } from "../../toasters/toaster-context";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { UNIQUE_GROUP_NAME_ERROR } from "./edit-prayer-group-constants";
 
@@ -37,9 +38,8 @@ export const usePrayerGroupEdit = () => {
   const deleteFile = useDeleteFile();
   const getGroupNameValidation = useGetPrayerGroupNameValidation();
 
-  const [snackbarError, setSnackbarError] = React.useState<
-    string | undefined
-  >();
+  const { openToaster } = useToasterContext();
+
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -57,7 +57,7 @@ export const usePrayerGroupEdit = () => {
         value: VisibilityLevel.Private,
       },
     ],
-    []
+    [translate]
   );
 
   const selectImage = async (fieldName: string, aspect: [number, number]) => {
@@ -84,9 +84,12 @@ export const usePrayerGroupEdit = () => {
       setFieldValue(fieldName, mapMediaFileFromImagePickerAsset(imageResult));
       setTimeout(() => setFieldTouched(fieldName, true), 0);
     } catch (error) {
-      setSnackbarError(
-        translate("createPrayerGroup.groupImageColorStep.unableToSelectImage")
-      );
+      openToaster({
+        message: translate(
+          "createPrayerGroup.groupImageColorStep.unableToSelectImage"
+        ),
+        variant: "error",
+      });
     }
   };
 
@@ -190,21 +193,23 @@ export const usePrayerGroupEdit = () => {
     }
 
     if (imageFileResponse?.isError) {
-      setSnackbarError(
-        translate("toaster.failed.saveFailure", {
+      openToaster({
+        message: translate("toaster.failed.saveFailure", {
           item: translate("createPrayerGroup.groupImageColorStep.image"),
-        })
-      );
+        }),
+        variant: "error",
+      });
       setIsLoading(false);
       return;
     }
 
     if (bannerImageResponse?.isError) {
-      setSnackbarError(
-        translate("toaster.failed.saveFailure", {
+      openToaster({
+        message: translate("toaster.failed.saveFailure", {
           item: translate("createPrayerGroup.groupImageColorStep.banner"),
-        })
-      );
+        }),
+        variant: "error",
+      });
       setIsLoading(false);
       return;
     }
@@ -224,11 +229,12 @@ export const usePrayerGroupEdit = () => {
     setIsLoading(false);
 
     if (putPrayerGroupResponse.isError) {
-      setSnackbarError(
-        translate("toaster.failed.updateFailure", {
+      openToaster({
+        message: translate("toaster.failed.updateFailure", {
           item: translate("prayerGroup.label"),
-        })
-      );
+        }),
+        variant: "error",
+      });
       return;
     }
 
@@ -268,8 +274,6 @@ export const usePrayerGroupEdit = () => {
 
   return {
     formikRef,
-    snackbarError,
-    setSnackbarError,
     selectImage,
     clearField,
     isLoading,

@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as React from "react";
 import { useTranslation } from "react-i18next";
 
 import { CULTURE_CODES, LANGUAGE_STORAGE_KEY } from "../constants/languages";
@@ -31,10 +32,13 @@ export const useI18N = () => {
     }
   };
 
-  const translate = (key: TranslationKey, options?: any): string => {
-    // This wrapper is for typing purposes
-    return resources.t(key, options) as string;
-  };
+  const translate = React.useCallback(
+    (key: TranslationKey, options?: any): string => {
+      // This wrapper is for typing purposes
+      return resources.t(key, options) as string;
+    },
+    [resources]
+  );
 
   const setLanguage = async (language: CultureCode) => {
     await resources.i18n.changeLanguage(language);

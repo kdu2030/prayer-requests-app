@@ -120,6 +120,8 @@ export const englishTranslations = {
   "prayerGroup.edit.header": "Edit {{groupName}}",
   "prayerGroup.edit.images": "Images",
   "prayerGroup.edit.success": "Edited prayer group",
+  "prayerGroup.edit.visibilityLevel.cannotSetToPublic":
+    "Visibility level cannot be set to public with active join requests.",
 
   "prayerGroup.manageUsers.label": "Manage Users",
   "prayerGroup.manageUsers.loading": "Loading prayer group users",

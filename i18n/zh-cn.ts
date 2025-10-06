@@ -78,7 +78,7 @@ export const chineseTranslations: Translations = {
     "小组名字验证失败",
   "createPrayerGroup.rules.title": "内容规则和可见性",
   "createPrayerGroup.visibilityLevel.label": "可见性",
-  "createPrayerGroup.visibilityLevel.public": "公共",
+  "createPrayerGroup.visibilityLevel.public": "公开",
   "createPrayerGroup.visibilityLevel.private": "私密",
   "createPrayerGroup.visibilityLevel.public.description":
     "任何人都可以加入你的祷告小组并查看小组的祷告事项。",
@@ -118,6 +118,8 @@ export const chineseTranslations: Translations = {
   "prayerGroup.edit.header": "编辑{{groupName}}",
   "prayerGroup.edit.images": "图片",
   "prayerGroup.edit.success": "已编辑祷告小组",
+  "prayerGroup.edit.visibilityLevel.cannotSetToPublic":
+    "若有进行中的加入请求，则无法将可见性设为公开。",
 
   "prayerGroup.manageUsers.label": "管理用户",
   "prayerGroup.manageUsers.loading": "加载祷告小组用户",

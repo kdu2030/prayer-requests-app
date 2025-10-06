@@ -18,15 +18,13 @@ import {
 } from "../../../mappers/map-prayer-group";
 import { ManagedErrorResponse } from "../../../types/error-handling";
 import { MediaFile } from "../../../types/media-file-types";
+import { useToasterContext } from "../../toasters/toaster-context";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 
 export const useGroupImageColorStep = () => {
   const { translate } = useI18N();
 
-  const [snackbarError, setSnackbarError] = React.useState<
-    string | undefined
-  >();
-
+  const { openToaster } = useToasterContext();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const {
@@ -62,9 +60,12 @@ export const useGroupImageColorStep = () => {
       setFieldValue(fieldName, mapMediaFileFromImagePickerAsset(imageResult));
       setTimeout(() => setFieldTouched(fieldName, true), 0);
     } catch (error) {
-      setSnackbarError(
-        translate("createPrayerGroup.groupImageColorStep.unableToSelectImage")
-      );
+      openToaster({
+        message: translate(
+          "createPrayerGroup.groupImageColorStep.unableToSelectImage"
+        ),
+        variant: "error",
+      });
     }
   };
 
@@ -106,11 +107,12 @@ export const useGroupImageColorStep = () => {
     ]);
 
     if (imageUploadResponse.isError || bannerImageUploadResponse.isError) {
-      setSnackbarError(
-        translate("toaster.failed.saveFailure", {
+      openToaster({
+        message: translate("toaster.failed.saveFailure", {
           item: translate("createPrayerGroup.groupImageColorStep.image"),
-        })
-      );
+        }),
+        variant: "error",
+      });
       setIsLoading(false);
       return;
     }
@@ -130,11 +132,12 @@ export const useGroupImageColorStep = () => {
     setIsLoading(false);
 
     if (createPrayerGroupResponse.isError) {
-      setSnackbarError(
-        translate("toaster.failed.saveFailure", {
+      openToaster({
+        message: translate("toaster.failed.saveFailure", {
           item: translate("prayerGroup.label"),
-        })
-      );
+        }),
+        variant: "error",
+      });
       return;
     }
 
@@ -161,8 +164,6 @@ export const useGroupImageColorStep = () => {
     selectImage,
     onRemoveSelectedImage,
     savePrayerGroup,
-    snackbarError,
-    setSnackbarError,
     isLoading,
     setIsLoading,
   };

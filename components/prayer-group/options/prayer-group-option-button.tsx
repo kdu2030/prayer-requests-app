@@ -5,6 +5,7 @@ import { Text, TouchableRipple } from "react-native-paper";
 type Props = {
   label: string;
   icon: React.ReactNode;
+  endAdornment?: React.ReactNode;
   onPress: () => void;
   testID?: string;
 };
@@ -13,6 +14,7 @@ export const PrayerGroupOptionButton: React.FC<Props> = ({
   label,
   icon,
   onPress,
+  endAdornment,
   testID,
 }) => {
   return (
@@ -26,6 +28,7 @@ export const PrayerGroupOptionButton: React.FC<Props> = ({
       <View className="flex-row gap-x-3 items-center py-4 px-2">
         {icon}
         <Text variant="bodyMedium">{label}</Text>
+        {endAdornment}
       </View>
     </TouchableRipple>
   );

@@ -9,14 +9,16 @@ import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { Href, router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
-import { useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 
 import {
   JoinStatus,
   PrayerGroupRole,
   VisibilityLevel,
 } from "../../../constants/prayer-group-constants";
+import { formatNumber } from "../../../helpers/formatting-helpers";
 import { useI18N } from "../../../hooks/use-i18n";
+import { CultureCode } from "../../../types/languages";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { PrayerGroupOptionButton } from "./prayer-group-option-button";
 import { PrayerGroupOptionsTestIds } from "./tests/test-ids";
@@ -32,9 +34,16 @@ export const PrayerGroupOptions: React.FC<Props> = ({
   bottomSheetRef,
   setShowLeavePrayerGroupModal,
 }) => {
-  const { translate } = useI18N();
+  const { translate, i18n } = useI18N();
   const theme = useTheme();
   const isAdmin = prayerGroupDetails?.prayerGroupRole === PrayerGroupRole.Admin;
+
+  const formattedJoinRequestCount = prayerGroupDetails?.joinRequestCount
+    ? formatNumber(
+        prayerGroupDetails.joinRequestCount,
+        i18n.language as CultureCode
+      )
+    : undefined;
 
   const renderBackdrop = React.useCallback(
     (props: BottomSheetBackdropProps) => (
@@ -97,6 +106,18 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                   label={translate("prayerGroup.joinRequest.manage")}
                   icon={<MaterialIcons name="manage-accounts" size={24} />}
                   onPress={() => {}}
+                  endAdornment={
+                    formattedJoinRequestCount ? (
+                      <View
+                        className="px-4 rounded-full font-bold"
+                        style={{ backgroundColor: theme.colors.primary }}
+                      >
+                        <Text variant="bodyLarge" className="text-white">
+                          {formattedJoinRequestCount}
+                        </Text>
+                      </View>
+                    ) : null
+                  }
                 />
               )}
             </>

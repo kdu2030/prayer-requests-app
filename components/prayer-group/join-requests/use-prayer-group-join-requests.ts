@@ -31,7 +31,7 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
 
     console.log(response.value.joinRequests);
     setJoinRequests(response.value.joinRequests ?? []);
-  }, [openToaster, prayerGroupId, postJoinRequestsSearch]);
+  }, [openToaster, prayerGroupId, postJoinRequestsSearch, translate]);
 
   React.useEffect(() => {
     loadJoinRequests();

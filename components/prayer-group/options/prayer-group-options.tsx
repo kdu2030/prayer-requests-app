@@ -105,7 +105,9 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                 <PrayerGroupOptionButton
                   label={translate("prayerGroup.joinRequest.manage")}
                   icon={<MaterialIcons name="manage-accounts" size={24} />}
-                  onPress={() => {}}
+                  onPress={() => {
+                    onPressOption("/(drawer)/prayergroup/[id]/join-requests");
+                  }}
                   endAdornment={
                     formattedJoinRequestCount ? (
                       <View

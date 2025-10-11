@@ -29,7 +29,6 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
       return;
     }
 
-    console.log(response.value.joinRequests);
     setJoinRequests(response.value.joinRequests ?? []);
   }, [openToaster, prayerGroupId, postJoinRequestsSearch, translate]);
 

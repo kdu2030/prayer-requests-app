@@ -14,6 +14,7 @@ import { useTheme } from "react-native-paper";
 import {
   JoinStatus,
   PrayerGroupRole,
+  VisibilityLevel,
 } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
@@ -89,6 +90,15 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                 }
                 testID={PrayerGroupOptionsTestIds.manageUsersButton}
               />
+
+              {prayerGroupDetails.visibilityLevel ===
+                VisibilityLevel.Private && (
+                <PrayerGroupOptionButton
+                  label={translate("prayerGroup.joinRequest.manage")}
+                  icon={<MaterialIcons name="manage-accounts" size={24} />}
+                  onPress={() => {}}
+                />
+              )}
             </>
           )}
 

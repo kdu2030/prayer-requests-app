@@ -171,6 +171,7 @@ export const englishTranslations = {
   "prayerGroup.joinRequest.joinRequestSubmitted": "Join Request Submitted",
   "prayerGroup.joinRequest.manage": "Manage Join Requests",
   "prayerGroup.joinRequest.unableToLoad": "Failed to load join requests.",
+  "prayerGroup.joinRequest.loadingJoinRequests": "Loading join requests",
 
   "toaster.joinPrayerGroup.success": "Successfully joined prayer group.",
   "toaster.joinPrayerGroup.failure": "Failed to join prayer group.",

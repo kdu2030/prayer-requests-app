@@ -166,7 +166,8 @@ export const chineseTranslations: Translations = {
   "prayerGroup.joinRequest.submitJoinRequest": "提交加入请求",
   "prayerGroup.joinRequest.joinRequestSubmitted": "加入请求已提交",
   "prayerGroup.joinRequest.manage": "管理加入请求",
-  "prayerGroup.joinRequest.unableToLoad": "如载加入请求失败了。",
+  "prayerGroup.joinRequest.unableToLoad": "加载加入请求失败了。",
+  "prayerGroup.joinRequest.loadingJoinRequests": "加载加入请求",
 
   "toaster.joinPrayerGroup.success": "你已成功加入祷告小组。",
   "toaster.joinPrayerGroup.failure": "加入祷告小组失败。",

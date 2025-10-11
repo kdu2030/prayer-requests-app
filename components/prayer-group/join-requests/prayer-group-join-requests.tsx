@@ -1,4 +1,6 @@
 import * as React from "react";
+import { View } from "react-native";
+import { TextInput, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../../hooks/use-i18n";
@@ -14,6 +16,7 @@ type Props = {
 
 export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
   const { translate } = useI18N();
+  const theme = useTheme();
 
   const { joinRequestLoadStatus, loadJoinRequests } =
     usePrayerGroupJoinRequests(prayerGroupId);
@@ -38,6 +41,27 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
           errorLabel={translate("prayerGroup.joinRequest.unableToLoad")}
           onRetry={loadJoinRequests}
         />
+      )}
+
+      {joinRequestLoadStatus === LoadStatus.Success && (
+        <View
+          className="flex-1"
+          style={{ backgroundColor: theme.colors.background }}
+        >
+          <View
+            className="p-4 border-b"
+            style={{ borderBottomColor: theme.colors.outline }}
+          >
+            <TextInput
+              mode="outlined"
+              left={<TextInput.Icon icon="magnify" size={24} />}
+              label={translate("prayerGroup.manageUsers.searchForUsers")}
+              placeholder={translate(
+                "prayerGroup.manageUsers.searchPlaceholder"
+              )}
+            />
+          </View>
+        </View>
       )}
     </SafeAreaView>
   );

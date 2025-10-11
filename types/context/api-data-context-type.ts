@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 import * as React from "react";
 
 import { MediaFile } from "../media-file-types";
@@ -30,4 +31,5 @@ export type ApiDataContextType = {
   >;
   userData?: UserData;
   setUserData: React.Dispatch<React.SetStateAction<UserData>>;
+  fetch: AxiosInstance
 };

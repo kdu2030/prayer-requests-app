@@ -12,13 +12,16 @@ import {
   UserTokenPair,
 } from "../types/context/api-data-context-type";
 
-const defaultApiData: ApiDataContextType = {
+const defaultApiData = {
   baseUrl: "https://prayerappservices.onrender.com",
   setUserData: () => {},
   setUserTokens: () => {},
+  fetch: () => {},
 };
 
-export const ApiDataContext = React.createContext(defaultApiData);
+export const ApiDataContext = React.createContext<ApiDataContextType>(
+  defaultApiData as unknown as ApiDataContextType
+);
 
 type Props = {
   children: React.ReactNode;
@@ -30,28 +33,9 @@ export const ApiDataContextProvider: React.FC<Props> = ({ children }) => {
   const [userTokens, setUserTokens] = React.useState<
     UserTokenPair | undefined
   >();
-
-  return (
-    <ApiDataContext.Provider
-      value={{
-        baseUrl,
-        userData,
-        setUserData,
-        userTokens,
-        setUserTokens,
-      }}
-    >
-      {children}
-    </ApiDataContext.Provider>
-  );
-};
-
-export const useApiDataContext = () => {
-  const apiDataContext = React.useContext(ApiDataContext);
   const fetchRef = React.useRef<AxiosInstance>(axios.create());
 
-  const refreshTokens = async () => {
-    const { baseUrl, userTokens, setUserTokens } = apiDataContext;
+  const refreshTokens = React.useCallback(async () => {
     const response = await getUserTokenPair(
       baseUrl,
       userTokens?.refreshToken?.token ?? ""
@@ -76,11 +60,11 @@ export const useApiDataContext = () => {
 
     setUserTokens(newUserTokens);
     return newUserTokens;
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [baseUrl]);
 
   const addAuthorizationHeader = React.useCallback(
     async (config: InternalAxiosRequestConfig) => {
-      const { userTokens } = apiDataContext;
       let tokensToUse = userTokens;
 
       if (!isTokenValid(userTokens?.refreshToken)) {
@@ -113,8 +97,20 @@ export const useApiDataContext = () => {
     };
   }, [addAuthorizationHeader]);
 
-  return {
-    ...apiDataContext,
-    fetch: fetchRef.current,
-  };
+  return (
+    <ApiDataContext.Provider
+      value={{
+        baseUrl,
+        userData,
+        setUserData,
+        userTokens,
+        setUserTokens,
+        fetch: fetchRef.current,
+      }}
+    >
+      {children}
+    </ApiDataContext.Provider>
+  );
 };
+
+export const useApiDataContext = () => React.useContext(ApiDataContext);

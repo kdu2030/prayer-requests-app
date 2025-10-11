@@ -2,15 +2,14 @@ import { usePathname } from "expo-router";
 import { compact, debounce } from "lodash";
 import * as React from "react";
 
+import { usePostPrayerGroupSearch } from "../../api/post-prayer-group-search";
 import { SEARCH_MIN_CHARACTERS } from "../../constants/input-constants";
 import { useI18N } from "../../hooks/use-i18n";
-
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
 import {
   DEBOUNCE_TIME,
   MAX_RESULT_COUNT,
 } from "./prayer-group-search-constants";
-import { usePostPrayerGroupSearch } from "../../api/post-prayer-group-search";
 
 export const usePrayerGroupSearch = () => {
   const { translate } = useI18N();

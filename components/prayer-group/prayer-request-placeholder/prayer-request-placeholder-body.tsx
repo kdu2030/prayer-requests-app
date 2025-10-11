@@ -1,14 +1,15 @@
 import * as React from "react";
-import { LoadStatus } from "../../../types/api-response-types";
 import { View } from "react-native";
-import { PrayerRequestSpinner } from "../spinners/prayer-request-spinner";
-import { ErrorScreen } from "../../layouts/error-screen";
-import { PrayerRequestPlaceholder } from "../prayer-request-placeholder";
-import { useI18N } from "../../../hooks/use-i18n";
+
 import {
   JoinStatus,
   VisibilityLevel,
 } from "../../../constants/prayer-group-constants";
+import { useI18N } from "../../../hooks/use-i18n";
+import { LoadStatus } from "../../../types/api-response-types";
+import { ErrorScreen } from "../../layouts/error-screen";
+import { PrayerRequestPlaceholder } from "../prayer-request-placeholder";
+import { PrayerRequestSpinner } from "../spinners/prayer-request-spinner";
 import { PrivatePrayerGroupPlaceholder } from "./private-prayer-group-placeholder";
 
 type Props = {

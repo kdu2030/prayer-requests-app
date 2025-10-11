@@ -11,13 +11,13 @@ import {
 import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupUserSummary } from "../../../types/prayer-group-types";
+import { useToasterContext } from "../../toasters/toaster-context";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import {
   mapPrayerGroupUsers,
   normalizeText,
 } from "./prayer-group-user-helpers";
 import { PRAYER_GROUP_USERS_QUERY } from "./prayer-group-users-constants";
-import { useToasterContext } from "../../toasters/toaster-context";
 
 export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const { translate } = useI18N();

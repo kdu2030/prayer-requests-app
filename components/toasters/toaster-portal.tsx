@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useToasterContext } from "./toaster-context";
 import { Portal } from "react-native-paper";
+
+import { useToasterContext } from "./toaster-context";
 import { ToasterSnackbar } from "./toaster-snackbar";
 
 export const ToasterPortal: React.FC = () => {

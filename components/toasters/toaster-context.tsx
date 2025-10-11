@@ -1,6 +1,7 @@
-import * as React from "react";
-import { ToasterConfig } from "./toaster-type";
 import { uniqueId } from "lodash";
+import * as React from "react";
+
+import { ToasterConfig } from "./toaster-type";
 
 export type ToasterContextType = {
   toasters: ToasterConfig[];

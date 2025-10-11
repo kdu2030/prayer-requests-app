@@ -20,9 +20,9 @@ import {
   PrayerRequestFilterCriteria,
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
+import { useToasterContext } from "../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
-import { useToasterContext } from "../toasters/toaster-context";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);

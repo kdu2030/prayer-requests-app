@@ -1,5 +1,4 @@
 import { PrayerGroupUserUpdateModel } from "../../../api/put-prayer-group-users";
-
 import { PrayerGroupUserSummary } from "../../../types/prayer-group-types";
 
 export const normalizeText = (text: string | undefined): string => {

@@ -10,6 +10,6 @@ export type JoinRequestUserSummary = {
 export type JoinRequestModel = {
   joinRequestId?: number;
   prayerGroupId?: number;
-  userSummary?: JoinRequestUserSummary;
+  user?: JoinRequestUserSummary;
   submittedDate?: string;
 };

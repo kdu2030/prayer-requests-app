@@ -26,13 +26,9 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
     (query: string) => {
       const normalizedQuery = normalizeText(query);
       const filteredUsers = joinRequests.filter((joinRequest) => {
-        const normalizedFullName = normalizeText(
-          joinRequest.userSummary?.fullName
-        );
+        const normalizedFullName = normalizeText(joinRequest.user?.fullName);
 
-        const normalizedUsername = normalizeText(
-          joinRequest.userSummary?.username
-        );
+        const normalizedUsername = normalizeText(joinRequest.user?.username);
 
         if (!normalizedFullName || !normalizedUsername) {
           return false;
@@ -69,6 +65,8 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
 
     setJoinRequests(response.value.joinRequests ?? []);
     setFilteredJoinRequests(response.value.joinRequests ?? []);
+
+    console.log(response.value.joinRequests);
 
     setJoinRequestLoadStatus(LoadStatus.Success);
   }, [prayerGroupId, postJoinRequestsSearch]);

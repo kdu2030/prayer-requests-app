@@ -123,6 +123,19 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
               }}
             />
           )}
+
+          {filteredJoinRequests.length === 0 && (
+            <View
+              className="p-4 border-b flex-row justify-center mt-16 flex-1"
+              style={{ borderBottomColor: theme.colors.outline }}
+            >
+              <View>
+                <Text variant="titleMedium">
+                  {translate("prayerGroup.joinRequest.noActiveJoinRequests")}
+                </Text>
+              </View>
+            </View>
+          )}
         </View>
       )}
     </SafeAreaView>

@@ -57,6 +57,6 @@ export const usePostPrayerGroupUsersQuery = () => {
         prayerGroupId,
         prayerGroupUsersRequest
       ),
-    []
+    [baseUrl, fetch]
   );
 };

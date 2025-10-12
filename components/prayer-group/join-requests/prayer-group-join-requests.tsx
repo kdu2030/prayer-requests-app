@@ -84,7 +84,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                     className="p-4 border-b flex-row justify-between"
                     style={{ borderBottomColor: theme.colors.outline }}
                   >
-                    <View className="flex-row items-center w-3/5">
+                    <View className="flex-row items-center w-1/2">
                       <ProfilePicture
                         url={item.user?.image?.fileUrl}
                         width={40}

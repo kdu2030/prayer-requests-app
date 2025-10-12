@@ -8,7 +8,7 @@ export const JoinRequestActions: React.FC = () => {
   const { translate } = useI18N();
 
   return (
-    <View className="flex flex-row items-center gap-x-2 flex-1 bg-blue-200">
+    <View className="flex flex-row items-center gap-x-1 flex-1">
       <View className="flex-1">
         <Button mode="text" icon={"check"}>
           {translate("common.actions.approve")}

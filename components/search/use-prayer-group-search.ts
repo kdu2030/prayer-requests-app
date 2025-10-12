@@ -36,19 +36,27 @@ export const usePrayerGroupSearch = () => {
     if (groupSearchResults.length <= 0) {
       return translate("prayerGroup.search.noneFound");
     }
-  }, [groupQuery.length, groupSearchResults.length, translate]);
+  }, [
+    groupQuery.length,
+    groupSearchResults.length,
+    isSearchLoading,
+    translate,
+  ]);
 
-  const loadPrayerGroups = React.useCallback(async (query: string) => {
-    const response = await postPrayerGroupSearch(query, MAX_RESULT_COUNT);
-    setIsSearchLoading(false);
+  const loadPrayerGroups = React.useCallback(
+    async (query: string) => {
+      const response = await postPrayerGroupSearch(query, MAX_RESULT_COUNT);
+      setIsSearchLoading(false);
 
-    if (response.isError) {
-      return;
-    }
+      if (response.isError) {
+        return;
+      }
 
-    const prayerGroupSummaries = response.value.prayerGroups ?? [];
-    setGroupSearchResults(compact(prayerGroupSummaries));
-  }, []);
+      const prayerGroupSummaries = response.value.prayerGroups ?? [];
+      setGroupSearchResults(compact(prayerGroupSummaries));
+    },
+    [postPrayerGroupSearch]
+  );
 
   const debouncedLoadPrayerGroups = React.useMemo(
     () => debounce((query: string) => loadPrayerGroups(query), DEBOUNCE_TIME),

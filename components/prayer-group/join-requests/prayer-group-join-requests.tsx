@@ -18,8 +18,12 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
   const { translate } = useI18N();
   const theme = useTheme();
 
-  const { joinRequestLoadStatus, loadJoinRequests } =
-    usePrayerGroupJoinRequests(prayerGroupId);
+  const {
+    joinRequestLoadStatus,
+    loadJoinRequests,
+    searchJoinRequests,
+    joinRequestQuery,
+  } = usePrayerGroupJoinRequests(prayerGroupId);
 
   return (
     <SafeAreaView className="flex-1">
@@ -54,11 +58,13 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
           >
             <TextInput
               mode="outlined"
+              value={joinRequestQuery}
               left={<TextInput.Icon icon="magnify" size={24} />}
               label={translate("prayerGroup.manageUsers.searchForUsers")}
               placeholder={translate(
                 "prayerGroup.manageUsers.searchPlaceholder"
               )}
+              onChangeText={searchJoinRequests}
             />
           </View>
         </View>

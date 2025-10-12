@@ -8,6 +8,8 @@ export const englishTranslations = {
   "common.actions.cancel": "Cancel",
   "common.actions.retry": "Retry",
   "common.actions.leave": "Leave",
+  "common.actions.approve": "Approve",
+  "common.actions.reject": "Reject",
 
   "loading.userData.text": "Loading user data",
   "loading.userData.label": "User Data",

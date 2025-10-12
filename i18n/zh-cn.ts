@@ -14,6 +14,8 @@ export const chineseTranslations: Translations = {
   "common.actions.cancel": "取消",
   "common.actions.retry": "重试",
   "common.actions.leave": "退出",
+  "common.actions.approve": "同意",
+  "common.actions.reject": "拒绝",
 
   "loading.userData.text": "加载用户数据",
   "loading.userData.label": "用户数据",

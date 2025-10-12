@@ -38,6 +38,7 @@ const postPrayerGroupUsersQuery = async (
 
     return { isError: false, value: response.data };
   } catch (error) {
+    console.log(error);
     return handleApiErrors(error);
   }
 };

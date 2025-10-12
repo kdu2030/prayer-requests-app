@@ -119,6 +119,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                         )}
                       </View>
                     </View>
+
                     <JoinRequestActions />
                   </View>
                 );

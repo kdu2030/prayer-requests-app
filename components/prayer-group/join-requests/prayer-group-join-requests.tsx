@@ -12,6 +12,7 @@ import { ErrorScreen } from "../../layouts/error-screen";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { SpinnerScreen } from "../../layouts/spinner-screen";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
+import { JoinRequestActions } from "./join-request-actions";
 import { usePrayerGroupJoinRequests } from "./use-prayer-group-join-requests";
 
 type Props = {
@@ -118,6 +119,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                         )}
                       </View>
                     </View>
+                    <JoinRequestActions />
                   </View>
                 );
               }}

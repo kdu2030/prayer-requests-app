@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FlatList, View } from "react-native";
-import { Text, TextInput, useTheme } from "react-native-paper";
+import { Button, Text, TextInput, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { formatDate } from "../../../helpers/formatting-helpers";
@@ -136,6 +136,13 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
               </View>
             </View>
           )}
+
+          <View
+            className="p-4 border-t"
+            style={{ borderTopColor: theme.colors.outline }}
+          >
+            <Button mode="contained">{translate("common.actions.save")}</Button>
+          </View>
         </View>
       )}
     </SafeAreaView>

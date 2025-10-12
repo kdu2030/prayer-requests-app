@@ -66,8 +66,6 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
     setJoinRequests(response.value.joinRequests ?? []);
     setFilteredJoinRequests(response.value.joinRequests ?? []);
 
-    console.log(response.value.joinRequests);
-
     setJoinRequestLoadStatus(LoadStatus.Success);
   }, [prayerGroupId, postJoinRequestsSearch]);
 

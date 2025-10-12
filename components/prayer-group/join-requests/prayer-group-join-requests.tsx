@@ -3,8 +3,11 @@ import { FlatList, View } from "react-native";
 import { Text, TextInput, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { formatDate } from "../../../helpers/formatting-helpers";
 import { useI18N } from "../../../hooks/use-i18n";
+import i18n from "../../../i18n/i18n";
 import { LoadStatus } from "../../../types/api-response-types";
+import { CultureCode } from "../../../types/languages";
 import { ErrorScreen } from "../../layouts/error-screen";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { SpinnerScreen } from "../../layouts/spinner-screen";
@@ -86,7 +89,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                         width={40}
                         height={40}
                       />
-                      <View className="ml-4">
+                      <View className="flex flex-col ml-4">
                         <Text
                           variant="bodyLarge"
                           ellipsizeMode="tail"
@@ -101,6 +104,18 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                         >
                           @ {item.user?.username}
                         </Text>
+
+                        {item.submittedDate && (
+                          <Text
+                            variant="bodySmall"
+                            className="text-gray-500 mt-1"
+                          >
+                            {formatDate(
+                              item.submittedDate,
+                              i18n.language as CultureCode
+                            )}
+                          </Text>
+                        )}
                       </View>
                     </View>
                   </View>

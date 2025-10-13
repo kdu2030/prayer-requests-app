@@ -98,8 +98,13 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
       return;
     }
 
+    const updatedRejectedJoinRequestIds =
+      joinRequestForm.rejectedJoinRequestIds.filter((rejectedJoinRequestId) => {
+        return rejectedJoinRequestId !== joinRequestId;
+      });
+
     setJoinRequestForm({
-      ...joinRequestForm,
+      rejectedJoinRequestIds: updatedRejectedJoinRequestIds,
       approvedJoinRequestIds: currentApprovedJoinRequests.concat(joinRequestId),
     });
   };

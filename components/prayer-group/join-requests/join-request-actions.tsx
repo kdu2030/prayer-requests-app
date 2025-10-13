@@ -1,3 +1,4 @@
+import color from "color";
 import * as React from "react";
 import { View } from "react-native";
 import { Button, useTheme } from "react-native-paper";
@@ -11,14 +12,32 @@ type JoinRequestActionsProps = {
   approveJoinRequest: (joinRequestId: number) => void;
 };
 
-export const JoinRequestActions: React.FC<JoinRequestActionsProps> = () => {
+export const JoinRequestActions: React.FC<JoinRequestActionsProps> = ({
+  joinRequestId,
+  joinRequestForm,
+  approveJoinRequest,
+}) => {
   const { translate } = useI18N();
   const theme = useTheme();
+
+  const selectedColor = React.useMemo(
+    () => color(theme.colors.primary).alpha(0.12).rgb().toString(),
+    [theme.colors.primary]
+  );
+
+  const isSelected = React.useMemo(() => {
+    return joinRequestForm.approvedJoinRequestIds.includes(joinRequestId);
+  }, [joinRequestForm.approvedJoinRequestIds, joinRequestId]);
 
   return (
     <View className="flex flex-row items-center gap-x-1 flex-1">
       <View className="flex-1">
-        <Button mode="text" icon={"check"}>
+        <Button
+          mode="text"
+          icon={"check"}
+          buttonColor={isSelected ? selectedColor : undefined}
+          onPress={() => approveJoinRequest(joinRequestId)}
+        >
           {translate("common.actions.approve")}
         </Button>
       </View>

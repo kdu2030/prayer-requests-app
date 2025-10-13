@@ -104,6 +104,24 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
     });
   };
 
+  const rejectJoinRequest = (joinRequestId: number) => {
+    const rejectedJoinRequestIds = joinRequestForm.rejectedJoinRequestIds ?? [];
+
+    if (rejectedJoinRequestIds.includes(joinRequestId)) {
+      return;
+    }
+
+    const updatedApprovedJoinRequestIds =
+      joinRequestForm.approvedJoinRequestIds.filter((approvedJoinRequestId) => {
+        return approvedJoinRequestId !== joinRequestId;
+      });
+
+    setJoinRequestForm({
+      approvedJoinRequestIds: updatedApprovedJoinRequestIds,
+      rejectedJoinRequestIds: rejectedJoinRequestIds.concat(joinRequestId),
+    });
+  };
+
   return {
     joinRequests,
     joinRequestLoadStatus,
@@ -113,5 +131,6 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
     filteredJoinRequests,
     joinRequestForm,
     approveJoinRequest,
+    rejectJoinRequest,
   };
 };

@@ -10,12 +10,14 @@ type JoinRequestActionsProps = {
   joinRequestId: number;
   joinRequestForm: JoinRequestForm;
   approveJoinRequest: (joinRequestId: number) => void;
+  rejectJoinRequest: (joinRequestId: number) => void;
 };
 
 export const JoinRequestActions: React.FC<JoinRequestActionsProps> = ({
   joinRequestId,
   joinRequestForm,
   approveJoinRequest,
+  rejectJoinRequest,
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
@@ -28,6 +30,10 @@ export const JoinRequestActions: React.FC<JoinRequestActionsProps> = ({
   const isSelected = React.useMemo(() => {
     return joinRequestForm.approvedJoinRequestIds.includes(joinRequestId);
   }, [joinRequestForm.approvedJoinRequestIds, joinRequestId]);
+
+  const isRejected = React.useMemo(() => {
+    return joinRequestForm.rejectedJoinRequestIds.includes(joinRequestId);
+  }, [joinRequestForm.rejectedJoinRequestIds, joinRequestId]);
 
   return (
     <View className="flex flex-row items-center gap-x-1 flex-1">
@@ -48,6 +54,8 @@ export const JoinRequestActions: React.FC<JoinRequestActionsProps> = ({
           icon={"close"}
           textColor={theme.colors.error}
           rippleColor={theme.colors.errorContainer}
+          buttonColor={isRejected ? theme.colors.errorContainer : undefined}
+          onPress={() => rejectJoinRequest(joinRequestId)}
         >
           {translate("common.actions.reject")}
         </Button>

@@ -31,6 +31,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
     filteredJoinRequests,
     approveJoinRequest,
     joinRequestForm,
+    rejectJoinRequest,
   } = usePrayerGroupJoinRequests(prayerGroupId);
 
   return (
@@ -126,6 +127,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                       joinRequestId={item.joinRequestId ?? -1}
                       joinRequestForm={joinRequestForm}
                       approveJoinRequest={approveJoinRequest}
+                      rejectJoinRequest={rejectJoinRequest}
                     />
                   </View>
                 );

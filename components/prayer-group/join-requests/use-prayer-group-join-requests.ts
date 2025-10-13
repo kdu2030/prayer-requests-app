@@ -3,7 +3,10 @@ import * as React from "react";
 
 import { usePostJoinRequestsSearch } from "../../../api/post-join-requests-search";
 import { LoadStatus } from "../../../types/api-response-types";
-import { JoinRequestModel } from "../../../types/join-request-types";
+import {
+  JoinRequestForm,
+  JoinRequestModel,
+} from "../../../types/join-request-types";
 import { DEBOUNCE_TIME } from "../../search/prayer-group-search-constants";
 import { normalizeText } from "../users/prayer-group-user-helpers";
 import { JOIN_REQUEST_SORT_CONFIG } from "./join-request-constants";
@@ -19,6 +22,10 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
   const [joinRequestLoadStatus, setJoinRequestLoadStatus] =
     React.useState<LoadStatus>(LoadStatus.NotStarted);
   const [joinRequestQuery, setJoinRequestQuery] = React.useState<string>();
+
+  const [joinRequestForm, setJoinRequestForm] = React.useState<JoinRequestForm>(
+    { approvedJoinRequestIds: [], rejectedJoinRequestIds: [] }
+  );
 
   const postJoinRequestsSearch = usePostJoinRequestsSearch();
 
@@ -84,6 +91,19 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
     debouncedLoadFilteredJoinRequests(query);
   };
 
+  const approveJoinRequest = (joinRequestId: number) => {
+    const currentApprovedJoinRequests = joinRequestForm.approvedJoinRequestIds;
+
+    if (currentApprovedJoinRequests.includes(joinRequestId)) {
+      return;
+    }
+
+    setJoinRequestForm({
+      ...joinRequestForm,
+      approvedJoinRequestIds: currentApprovedJoinRequests.concat(joinRequestId),
+    });
+  };
+
   return {
     joinRequests,
     joinRequestLoadStatus,
@@ -91,5 +111,7 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
     searchJoinRequests,
     joinRequestQuery,
     filteredJoinRequests,
+    joinRequestForm,
+    approveJoinRequest,
   };
 };

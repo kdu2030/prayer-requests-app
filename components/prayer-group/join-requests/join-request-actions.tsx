@@ -3,8 +3,15 @@ import { View } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
+import { JoinRequestForm } from "../../../types/join-request-types";
 
-export const JoinRequestActions: React.FC = () => {
+type JoinRequestActionsProps = {
+  joinRequestId: number;
+  joinRequestForm: JoinRequestForm;
+  approveJoinRequest: (joinRequestId: number) => void;
+};
+
+export const JoinRequestActions: React.FC<JoinRequestActionsProps> = () => {
   const { translate } = useI18N();
   const theme = useTheme();
 

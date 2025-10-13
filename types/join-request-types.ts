@@ -13,3 +13,8 @@ export type JoinRequestModel = {
   user?: JoinRequestUserSummary;
   submittedDate?: string;
 };
+
+export type JoinRequestForm = {
+  approvedJoinRequestIds: number[];
+  rejectedJoinRequestIds: number[];
+};

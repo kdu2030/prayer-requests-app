@@ -178,6 +178,7 @@ export const englishTranslations = {
     "There are no active join requests.",
   "prayerGroup.joinRequest.unableToSaveJoinRequestUpdates":
     "Failed to save join request updates.",
+  "prayerGroup.joinRequest.saved": "Saved join request updates.",
 
   "toaster.joinPrayerGroup.success": "Successfully joined prayer group.",
   "toaster.joinPrayerGroup.failure": "Failed to join prayer group.",

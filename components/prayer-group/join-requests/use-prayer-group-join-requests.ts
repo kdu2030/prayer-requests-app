@@ -89,7 +89,8 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
     setFilteredJoinRequests(response.value.joinRequests ?? []);
 
     setJoinRequestLoadStatus(LoadStatus.Success);
-  }, [prayerGroupId, postJoinRequestsSearch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prayerGroupId, postJoinRequestsSearch, openToaster]);
 
   React.useEffect(() => {
     loadJoinRequests();
@@ -159,6 +160,29 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
       ]);
 
       setIsSaveLoading(false);
+
+      const removedJoinRequestsSet = new Set<number>([
+        ...joinRequestIdsToApprove,
+        ...joinRequestIdsToReject,
+      ]);
+
+      const updatedJoinRequests = joinRequests.filter(
+        (joinRequest) =>
+          !removedJoinRequestsSet.has(joinRequest.joinRequestId ?? -1)
+      );
+
+      setJoinRequests(updatedJoinRequests);
+      setFilteredJoinRequests(updatedJoinRequests);
+
+      setJoinRequestForm({
+        approvedJoinRequestIds: [],
+        rejectedJoinRequestIds: [],
+      });
+
+      openToaster({
+        message: translate("prayerGroup.joinRequest.saved"),
+        variant: "success",
+      });
     } catch (error) {
       openToaster({
         message: translate(
@@ -179,5 +203,7 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
     joinRequestForm,
     approveJoinRequest,
     rejectJoinRequest,
+    isSaveLoading,
+    saveManageJoinRequests,
   };
 };

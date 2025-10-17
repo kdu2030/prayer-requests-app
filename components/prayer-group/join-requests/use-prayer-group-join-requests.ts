@@ -1,17 +1,24 @@
 import { debounce } from "lodash";
 import * as React from "react";
 
+import { useDeleteJoinRequests } from "../../../api/delete-join-requests";
+import { usePostApproveJoinRequests } from "../../../api/post-approve-join-requests";
 import { usePostJoinRequestsSearch } from "../../../api/post-join-requests-search";
+import { useI18N } from "../../../hooks/use-i18n";
 import { LoadStatus } from "../../../types/api-response-types";
 import {
   JoinRequestForm,
   JoinRequestModel,
 } from "../../../types/join-request-types";
 import { DEBOUNCE_TIME } from "../../search/prayer-group-search-constants";
+import { useToasterContext } from "../../toasters/toaster-context";
 import { normalizeText } from "../users/prayer-group-user-helpers";
 import { JOIN_REQUEST_SORT_CONFIG } from "./join-request-constants";
 
 export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
+  const { translate } = useI18N();
+  const { openToaster } = useToasterContext();
+
   const [joinRequests, setJoinRequests] = React.useState<JoinRequestModel[]>(
     []
   );
@@ -27,7 +34,11 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
     { approvedJoinRequestIds: [], rejectedJoinRequestIds: [] }
   );
 
+  const [isSaveLoading, setIsSaveLoading] = React.useState<boolean>(false);
+
   const postJoinRequestsSearch = usePostJoinRequestsSearch();
+  const deleteJoinRequests = useDeleteJoinRequests();
+  const postApproveJoinRequests = usePostApproveJoinRequests();
 
   const loadFilteredJoinRequests = React.useCallback(
     (query: string) => {
@@ -66,6 +77,10 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
     );
 
     if (response.isError) {
+      openToaster({
+        message: translate("prayerGroup.joinRequest.unableToLoad"),
+        variant: "error",
+      });
       setJoinRequestLoadStatus(LoadStatus.Error);
       return;
     }
@@ -125,6 +140,33 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
       approvedJoinRequestIds: updatedApprovedJoinRequestIds,
       rejectedJoinRequestIds: rejectedJoinRequestIds.concat(joinRequestId),
     });
+  };
+
+  const saveManageJoinRequests = async () => {
+    try {
+      setIsSaveLoading(true);
+
+      const joinRequestIdsToApprove = joinRequestForm.approvedJoinRequestIds;
+      const joinRequestIdsToReject = joinRequestForm.rejectedJoinRequestIds;
+
+      await Promise.all([
+        joinRequestIdsToApprove.length > 0
+          ? postApproveJoinRequests(prayerGroupId, joinRequestIdsToApprove)
+          : undefined,
+        joinRequestIdsToReject.length > 0
+          ? deleteJoinRequests(prayerGroupId, joinRequestIdsToReject)
+          : undefined,
+      ]);
+
+      setIsSaveLoading(false);
+    } catch (error) {
+      openToaster({
+        message: translate(
+          "prayerGroup.joinRequest.unableToSaveJoinRequestUpdates"
+        ),
+        variant: "error",
+      });
+    }
   };
 
   return {

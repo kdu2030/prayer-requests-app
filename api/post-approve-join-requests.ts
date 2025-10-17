@@ -7,7 +7,7 @@ export type PostApproveJoinRequestBody = {
   joinRequestIds: number[];
 };
 
-const postApproveJoinRequest = async (
+const postApproveJoinRequests = async (
   fetch: AxiosInstance,
   baseUrl: string,
   prayerGroupId: number,
@@ -26,12 +26,12 @@ const postApproveJoinRequest = async (
   });
 };
 
-export const usePostApproveJoinRequest = () => {
+export const usePostApproveJoinRequests = () => {
   const { baseUrl, fetch } = useApiDataContext();
 
   return React.useCallback(
     (prayerGroupId: number, joinRequestIds: number[]) =>
-      postApproveJoinRequest(fetch, baseUrl, prayerGroupId, joinRequestIds),
+      postApproveJoinRequests(fetch, baseUrl, prayerGroupId, joinRequestIds),
     [baseUrl, fetch]
   );
 };

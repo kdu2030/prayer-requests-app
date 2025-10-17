@@ -32,6 +32,8 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
     approveJoinRequest,
     joinRequestForm,
     rejectJoinRequest,
+    saveManageJoinRequests,
+    isSaveLoading,
   } = usePrayerGroupJoinRequests(prayerGroupId);
 
   return (
@@ -152,7 +154,13 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
             className="p-4 border-t"
             style={{ borderTopColor: theme.colors.outline }}
           >
-            <Button mode="contained">{translate("common.actions.save")}</Button>
+            <Button
+              mode="contained"
+              onPress={saveManageJoinRequests}
+              loading={isSaveLoading}
+            >
+              {translate("common.actions.save")}
+            </Button>
           </View>
         </View>
       )}

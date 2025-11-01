@@ -6,7 +6,6 @@ import {
 } from "@testing-library/react-native";
 
 import { getArrayTestId } from "../../../helpers/utils";
-import { mapPrayerRequests } from "../../../mappers/map-prayer-request";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { PrayerRequestModel } from "../../../types/prayer-request-types";
 import {
@@ -48,7 +47,6 @@ const mountPrayerRequestCard = (
       prayerRequest={prayerRequest}
       prayerRequests={prayerRequests}
       setPrayerRequests={mockSetPrayerRequests}
-      setSnackbarError={jest.fn()}
       showCreatedUser
     />
   );
@@ -61,9 +59,10 @@ describe(PrayerRequestCard, () => {
   });
 
   test("Mount test", () => {
-    const prayerRequests = mapPrayerRequests(mockPrayerRequests);
-
-    component = mountPrayerRequestCard(prayerRequests[0], prayerRequests);
+    component = mountPrayerRequestCard(
+      mockPrayerRequests[0],
+      mockPrayerRequests
+    );
     expect(component).toBeTruthy();
   });
 
@@ -78,9 +77,10 @@ describe(PrayerRequestCard, () => {
 
     mockPostPrayerRequestLike.mockReturnValue({ isError: false });
 
-    const prayerRequests = mapPrayerRequests(mockPrayerRequests);
-
-    component = mountPrayerRequestCard(prayerRequests[0], prayerRequests);
+    component = mountPrayerRequestCard(
+      mockPrayerRequests[0],
+      mockPrayerRequests
+    );
 
     const likeButton = component.getByTestId(
       getArrayTestId(PrayerRequestCardTestIds.likeButton, 9)
@@ -106,8 +106,10 @@ describe(PrayerRequestCard, () => {
 
     mockDeletePrayerRequestLike.mockReturnValue({ isError: false });
 
-    const prayerRequests = mapPrayerRequests(mockPrayerRequests);
-    component = mountPrayerRequestCard(prayerRequests[1], prayerRequests);
+    component = mountPrayerRequestCard(
+      mockPrayerRequests[1],
+      mockPrayerRequests
+    );
 
     const likeButton = component.getByTestId(
       getArrayTestId(PrayerRequestCardTestIds.likeButton, 8)

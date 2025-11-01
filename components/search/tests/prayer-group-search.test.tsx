@@ -87,7 +87,7 @@ describe(PrayerGroupSearch, () => {
     await waitFor(() => {
       expect(mockRouterPush).toHaveBeenCalledWith({
         pathname: "/prayergroup/[id]",
-        params: { id: mockPrayerGroupSearchResults[0].id },
+        params: { id: mockPrayerGroupSearchResults[0].prayerGroupId },
       });
     });
   });

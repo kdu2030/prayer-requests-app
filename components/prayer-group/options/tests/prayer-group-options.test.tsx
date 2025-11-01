@@ -28,6 +28,7 @@ const mountPrayerGroupOptions = (prayerGroupDetails: PrayerGroupDetails) => {
     <PrayerGroupOptions
       prayerGroupDetails={prayerGroupDetails}
       bottomSheetRef={bottomSheetRef}
+      setShowLeavePrayerGroupModal={() => {}}
     />
   );
 };

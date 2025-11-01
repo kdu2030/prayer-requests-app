@@ -15,7 +15,7 @@ import { ManagedErrorResponse } from "../../../types/error-handling";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import {
   PrayerRequestFilterCriteria,
-  RawPrayerRequestGetResponse,
+  PrayerRequestGetResponse,
 } from "../../../types/prayer-request-types";
 import { PrayerRequestCardTestIds } from "../../prayer-request/tests/test-ids";
 import { PrayerGroupHeaderTestIds } from "../header/tests/test-ids";
@@ -76,7 +76,7 @@ const mountPrayerGroup = (
     value: prayerGroupDetails,
   };
 
-  const mockPrayerRequestResponse: ManagedErrorResponse<RawPrayerRequestGetResponse> =
+  const mockPrayerRequestResponse: ManagedErrorResponse<PrayerRequestGetResponse> =
     {
       isError: false,
       value: {
@@ -205,7 +205,7 @@ describe(PrayerGroup, () => {
   });
 
   test("Prayer requests for prayer group show up on mount", async () => {
-    const mockPrayerRequestFilterResponse: ManagedErrorResponse<RawPrayerRequestGetResponse> =
+    const mockPrayerRequestFilterResponse: ManagedErrorResponse<PrayerRequestGetResponse> =
       {
         isError: false,
         value: {

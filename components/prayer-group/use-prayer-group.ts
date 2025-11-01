@@ -13,16 +13,15 @@ import {
 } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
-import { mapPrayerRequests } from "../../mappers/map-prayer-request";
 import { LoadStatus } from "../../types/api-response-types";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
 import {
   PrayerRequestFilterCriteria,
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
+import { useToasterContext } from "../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
-import { useToasterContext } from "../toasters/toaster-context";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -90,7 +89,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     setLoadStatus(LoadStatus.Loading);
 
-    const response = await postPrayerRequestFilter(userData.userId, {
+    const response = await postPrayerRequestFilter({
       ...filters,
       prayerGroupIds: [prayerGroupId],
     });
@@ -112,7 +111,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     // We don't want to get rid of the current existing prayer requests unless group ID changes.
     setPrayerRequests((existingRequests) => [
       ...existingRequests,
-      ...mapPrayerRequests(response.value.prayerRequests ?? []),
+      ...(response.value.prayerRequests ?? []),
     ]);
     prayerRequestTotalCount.current = response.value.totalCount;
 

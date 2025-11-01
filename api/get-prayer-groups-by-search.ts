@@ -4,7 +4,7 @@ import * as React from "react";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
-import { RawPrayerGroupSummary } from "../types/prayer-group-types";
+import { PrayerGroupSummary } from "../types/prayer-group-types";
 
 export type GetPrayerGroupsBySearchParams = {
   name: string;
@@ -16,7 +16,7 @@ const getPrayerGroupsBySearch = async (
   baseUrl: string,
   groupNameQuery: string,
   maxResults: number
-): Promise<ManagedErrorResponse<RawPrayerGroupSummary[]>> => {
+): Promise<ManagedErrorResponse<PrayerGroupSummary[]>> => {
   const url = `${baseUrl}/api/v1/prayergroup/search`;
 
   const params: GetPrayerGroupsBySearchParams = {
@@ -25,7 +25,7 @@ const getPrayerGroupsBySearch = async (
   };
 
   try {
-    const response = await fetch.get<RawPrayerGroupSummary[]>(url, {
+    const response = await fetch.get<PrayerGroupSummary[]>(url, {
       params,
       headers: {
         "Content-Type": "application/json",

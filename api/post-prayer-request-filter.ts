@@ -6,24 +6,20 @@ import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
 import {
   PrayerRequestFilterCriteria,
-  RawPrayerRequestGetResponse,
+  PrayerRequestGetResponse,
 } from "../types/prayer-request-types";
 
 const postPrayerRequestFilter = async (
   fetch: AxiosInstance,
   baseUrl: string,
-  userId: number,
   filterCriteria: PrayerRequestFilterCriteria
-): Promise<ManagedErrorResponse<RawPrayerRequestGetResponse>> => {
+): Promise<ManagedErrorResponse<PrayerRequestGetResponse>> => {
   try {
-    const url = `${baseUrl}/api/v1/prayer-request/filter`;
+    const url = `${baseUrl}/api/prayerrequest/filter`;
 
-    const response = await fetch.post<RawPrayerRequestGetResponse>(
+    const response = await fetch.post<PrayerRequestGetResponse>(
       url,
-      {
-        userId,
-        filterCriteria,
-      },
+      filterCriteria,
       {
         headers: {
           "Content-Type": "application/json",
@@ -40,8 +36,8 @@ export const usePostPrayerRequestFilter = () => {
   const { baseUrl, fetch } = useApiDataContext();
 
   return React.useCallback(
-    (userId: number, filterCriteria: PrayerRequestFilterCriteria) =>
-      postPrayerRequestFilter(fetch, baseUrl, userId, filterCriteria),
+    (filterCriteria: PrayerRequestFilterCriteria) =>
+      postPrayerRequestFilter(fetch, baseUrl, filterCriteria),
     [baseUrl, fetch]
   );
 };

@@ -89,8 +89,6 @@ describe(PrayerRequestCard, () => {
 
     await waitFor(() => {
       expect(mockPostPrayerRequestLike).toHaveBeenCalledWith(1, 9);
-
-      expect(updatedPrayerRequests[0].isUserLiked).toBeTruthy();
       expect(updatedPrayerRequests[0].likeCount).toBe(2);
     });
   });
@@ -118,8 +116,6 @@ describe(PrayerRequestCard, () => {
 
     await waitFor(() => {
       expect(mockDeletePrayerRequestLike).toHaveBeenCalledWith(1, 8);
-
-      expect(updatedPrayerRequests[1].isUserLiked).toBeFalsy();
       expect(updatedPrayerRequests[1].likeCount).toBe(0);
     });
   });

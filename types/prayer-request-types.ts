@@ -31,9 +31,10 @@ export type PrayerRequestModel = {
   commentCount?: number;
   prayedCount?: number;
   expirationDate?: string;
-  isUserPrayed?: boolean;
-  isUserLiked?: boolean;
-  isUserCommented?: boolean;
+  userLikeId?: number;
+  userCommentId?: number;
+  userBookmarkId?: number;
+  userPrayerSessionId?: number;
 };
 
 export enum PrayerRequestSortFields {

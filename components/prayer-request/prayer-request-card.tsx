@@ -122,7 +122,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
 
           <Button
             mode="outlined"
-            icon={prayerRequest.isUserCommented ? "comment" : "comment-outline"}
+            icon={prayerRequest.userCommentId ? "comment" : "comment-outline"}
             testID={getArrayTestId(
               PrayerRequestCardTestIds.commentButton,
               prayerRequest.prayerRequestId
@@ -139,7 +139,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
         <Button
           mode="outlined"
           icon={
-            prayerRequest.isUserPrayed
+            prayerRequest.userPrayerSessionId
               ? "account-heart"
               : "account-heart-outline"
           }

@@ -93,7 +93,7 @@ export const usePrayerRequestCard = (
 
     setIsLikeLoading(true);
 
-    if (!prayerRequest.isUserLiked) {
+    if (!prayerRequest.userLikeId) {
       await addPrayerRequestLike(prayerRequest.prayerRequestId);
     } else {
       await removePrayerRequestLike(prayerRequest.prayerRequestId);
@@ -106,8 +106,8 @@ export const usePrayerRequestCard = (
     if (isLikeLoading) {
       return undefined;
     }
-    return prayerRequest.isUserLiked ? "heart" : "heart-outline";
-  }, [isLikeLoading, prayerRequest.isUserLiked]);
+    return prayerRequest.userLikeId ? "heart" : "heart-outline";
+  }, [isLikeLoading, prayerRequest.userLikeId]);
 
   return {
     isLikeLoading,

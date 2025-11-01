@@ -92,8 +92,18 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
     setFilteredJoinRequests(response.value.joinRequests ?? []);
 
     setJoinRequestLoadStatus(LoadStatus.Success);
+
+    setPrayerGroupDetails((prayerGroupDetails) => ({
+      ...prayerGroupDetails,
+      joinRequestCount: (response.value.joinRequests ?? []).length,
+    }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prayerGroupId, postJoinRequestsSearch, openToaster]);
+  }, [
+    postJoinRequestsSearch,
+    prayerGroupId,
+    setPrayerGroupDetails,
+    openToaster,
+  ]);
 
   React.useEffect(() => {
     loadJoinRequests();

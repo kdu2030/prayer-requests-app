@@ -9,6 +9,10 @@ const PrayerGroupLayout: React.FC = () => {
       <Drawer screenOptions={{ headerShown: false }} backBehavior="history">
         <Drawer.Screen name="users" options={{ unmountOnBlur: true }} />
         <Drawer.Screen name="create" />
+        <Drawer.Screen name="join-requests" />
+        <Drawer.Screen name="edit" />
+        <Drawer.Screen name="about" />
+        <Drawer.Screen name="index" />
       </Drawer>
     </PrayerGroupContextProvider>
   );

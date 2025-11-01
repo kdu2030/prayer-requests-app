@@ -12,12 +12,15 @@ import {
 } from "../../../types/join-request-types";
 import { DEBOUNCE_TIME } from "../../search/prayer-group-search-constants";
 import { useToasterContext } from "../../toasters/toaster-context";
+import { usePrayerGroupContext } from "../prayer-group-context";
 import { normalizeText } from "../users/prayer-group-user-helpers";
 import { JOIN_REQUEST_SORT_CONFIG } from "./join-request-constants";
 
 export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
   const { translate } = useI18N();
   const { openToaster } = useToasterContext();
+
+  const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
 
   const [joinRequests, setJoinRequests] = React.useState<JoinRequestModel[]>(
     []
@@ -182,6 +185,11 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
       openToaster({
         message: translate("prayerGroup.joinRequest.saved"),
         variant: "success",
+      });
+
+      setPrayerGroupDetails({
+        ...prayerGroupDetails,
+        joinRequestCount: updatedJoinRequests.length,
       });
     } catch (error) {
       openToaster({

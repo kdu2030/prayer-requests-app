@@ -8,6 +8,8 @@ export const englishTranslations = {
   "common.actions.cancel": "Cancel",
   "common.actions.retry": "Retry",
   "common.actions.leave": "Leave",
+  "common.actions.approve": "Approve",
+  "common.actions.reject": "Reject",
 
   "loading.userData.text": "Loading user data",
   "loading.userData.label": "User Data",
@@ -169,6 +171,14 @@ export const englishTranslations = {
     "This is a private prayer group. To join, please submit a join request.",
   "prayerGroup.joinRequest.submitJoinRequest": "Submit Join Request",
   "prayerGroup.joinRequest.joinRequestSubmitted": "Join Request Submitted",
+  "prayerGroup.joinRequest.manage": "Manage Join Requests",
+  "prayerGroup.joinRequest.unableToLoad": "Failed to load join requests.",
+  "prayerGroup.joinRequest.loadingJoinRequests": "Loading join requests",
+  "prayerGroup.joinRequest.noActiveJoinRequests":
+    "There are no active join requests.",
+  "prayerGroup.joinRequest.unableToSaveJoinRequestUpdates":
+    "Failed to save join request updates.",
+  "prayerGroup.joinRequest.saved": "Saved join request updates.",
 
   "toaster.joinPrayerGroup.success": "Successfully joined prayer group.",
   "toaster.joinPrayerGroup.failure": "Failed to join prayer group.",

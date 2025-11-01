@@ -15,12 +15,11 @@ import {
   USER_ID_STORAGE_KEY,
 } from "../components/authentication/auth-constants";
 import { decodeJwtToken } from "../components/authentication/jwt-helpers";
-
+import { useToasterContext } from "../components/toasters/toaster-context";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { useI18N } from "../hooks/use-i18n";
 import { mapUserData, mapUserTokens } from "../mappers/map-user-data";
 import { Token } from "../types/context/api-data-context-type";
-import { useToasterContext } from "../components/toasters/toaster-context";
 
 type StoredUserData = {
   refreshToken: string;

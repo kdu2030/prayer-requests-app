@@ -37,7 +37,8 @@ export const useI18N = () => {
       // This wrapper is for typing purposes
       return resources.t(key, options) as string;
     },
-    [resources]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 
   const setLanguage = async (language: CultureCode) => {

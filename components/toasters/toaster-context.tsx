@@ -1,6 +1,7 @@
-import * as React from "react";
-import { ToasterConfig } from "./toaster-type";
 import { uniqueId } from "lodash";
+import * as React from "react";
+
+import { ToasterConfig } from "./toaster-type";
 
 export type ToasterContextType = {
   toasters: ToasterConfig[];
@@ -19,22 +20,25 @@ export const ToasterContextProvider: React.FC<React.PropsWithChildren> = ({
 }) => {
   const [toasters, setToasters] = React.useState<ToasterConfig[]>([]);
 
-  const openToaster = (toaster: Omit<ToasterConfig, "toasterId">) => {
-    const toasterWithId: ToasterConfig = {
-      ...toaster,
-      toasterId: uniqueId(),
-    };
+  const openToaster = React.useCallback(
+    (toaster: Omit<ToasterConfig, "toasterId">) => {
+      const toasterWithId: ToasterConfig = {
+        ...toaster,
+        toasterId: uniqueId(),
+      };
 
-    setToasters((existingToasters) => [...existingToasters, toasterWithId]);
-  };
+      setToasters((existingToasters) => [...existingToasters, toasterWithId]);
+    },
+    []
+  );
 
-  const removeToaster = (toasterId: string) => {
+  const removeToaster = React.useCallback((toasterId: string) => {
     setToasters((existingToasters) => {
       return existingToasters.filter(
         (toaster) => toaster.toasterId !== toasterId
       );
     });
-  };
+  }, []);
 
   return (
     <ToasterContext.Provider value={{ toasters, openToaster, removeToaster }}>

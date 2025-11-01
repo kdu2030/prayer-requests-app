@@ -28,7 +28,7 @@ export const UserActions: React.FC<Props> = ({
 
   return (
     <>
-      <View className="flex flex-row items-center gap-x-2  flex-1">
+      <View className="flex flex-row items-center gap-x-2 flex-1">
         <View className="flex-1">
           {role === PrayerGroupRole.Admin ? (
             <Button

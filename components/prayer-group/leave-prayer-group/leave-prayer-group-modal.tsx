@@ -1,8 +1,9 @@
 import * as React from "react";
+import { View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
+
 import { useI18N } from "../../../hooks/use-i18n";
 import { RoundedModal } from "../../modals/rounded-modal";
-import { View } from "react-native";
 
 type Props = {
   isRemoveUserLoading: boolean;

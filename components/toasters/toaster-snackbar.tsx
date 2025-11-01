@@ -2,8 +2,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
 import { View } from "react-native";
 import { Snackbar, Text, useTheme } from "react-native-paper";
-import { ToasterConfig } from "./toaster-type";
+
 import { useToasterContext } from "./toaster-context";
+import { ToasterConfig } from "./toaster-type";
 
 type Props = {
   toaster: ToasterConfig;

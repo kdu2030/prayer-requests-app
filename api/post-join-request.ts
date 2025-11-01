@@ -1,9 +1,10 @@
 import { AxiosInstance } from "axios";
 import * as React from "react";
+
 import { handleApiErrors } from "../helpers/api-helpers";
-import { JoinRequestModel } from "../types/join-request-model";
-import { ManagedErrorResponse } from "../types/error-handling";
 import { useApiDataContext } from "../hooks/use-api-data";
+import { ManagedErrorResponse } from "../types/error-handling";
+import { JoinRequestModel } from "../types/join-request-types";
 
 export type JoinRequestCreateRequest = {
   userId: number;

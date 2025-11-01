@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
@@ -12,12 +13,9 @@ import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { PrayerGroupBanner } from "./prayer-group-banner";
 import { PrayerGroupHeaderTestIds } from "./tests/test-ids";
-import classNames from "classnames";
 
 type Props = {
   prayerGroupDetails: PrayerGroupDetails | undefined;
-  onRemoveUser: () => void;
-  isRemoveUserLoading: boolean;
   onAddUser: () => void;
   isAddUserLoading: boolean;
   onOpenOptions: () => void;
@@ -25,8 +23,6 @@ type Props = {
 
 export const PrayerGroupHeader: React.FC<Props> = ({
   prayerGroupDetails,
-  onRemoveUser,
-  isRemoveUserLoading,
   onAddUser,
   isAddUserLoading,
   onOpenOptions,
@@ -40,10 +36,6 @@ export const PrayerGroupHeader: React.FC<Props> = ({
       prayerGroupDetails?.visibilityLevel === VisibilityLevel.Public
     );
   }, [prayerGroupDetails?.userJoinStatus, prayerGroupDetails?.visibilityLevel]);
-
-  const showLeaveButton = React.useMemo(() => {
-    return prayerGroupDetails?.userJoinStatus === JoinStatus.Joined;
-  }, [prayerGroupDetails?.userJoinStatus]);
 
   return (
     <View

@@ -1,9 +1,10 @@
-import * as React from "react";
 import { AxiosInstance } from "axios";
-import { PrayerGroupSummary } from "../types/prayer-group-types";
-import { ManagedErrorResponse } from "../types/error-handling";
+import * as React from "react";
+
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
+import { ManagedErrorResponse } from "../types/error-handling";
+import { PrayerGroupSummary } from "../types/prayer-group-types";
 
 export type PostPrayerGroupSearchRequest = {
   groupNameQuery: string;

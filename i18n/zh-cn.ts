@@ -14,6 +14,8 @@ export const chineseTranslations: Translations = {
   "common.actions.cancel": "取消",
   "common.actions.retry": "重试",
   "common.actions.leave": "退出",
+  "common.actions.approve": "同意",
+  "common.actions.reject": "拒绝",
 
   "loading.userData.text": "加载用户数据",
   "loading.userData.label": "用户数据",
@@ -165,6 +167,13 @@ export const chineseTranslations: Translations = {
     "这是一个私密的祷告小组。要加入，请提交加入请求。",
   "prayerGroup.joinRequest.submitJoinRequest": "提交加入请求",
   "prayerGroup.joinRequest.joinRequestSubmitted": "加入请求已提交",
+  "prayerGroup.joinRequest.manage": "管理加入请求",
+  "prayerGroup.joinRequest.unableToLoad": "加载加入请求失败了。",
+  "prayerGroup.joinRequest.loadingJoinRequests": "加载加入请求",
+  "prayerGroup.joinRequest.noActiveJoinRequests": "没有进行的加入请求。",
+  "prayerGroup.joinRequest.unableToSaveJoinRequestUpdates":
+    "保存加入恳求的编辑失败。",
+  "prayerGroup.joinRequest.saved": "加入恳求的编辑已保存",
 
   "toaster.joinPrayerGroup.success": "你已成功加入祷告小组。",
   "toaster.joinPrayerGroup.failure": "加入祷告小组失败。",

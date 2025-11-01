@@ -184,8 +184,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       ...prayerGroupDetails,
       admins: updatedAdmins,
       userJoinStatus: updatedPrayerGroupUser
-        ? JoinStatus.NotJoined
-        : JoinStatus.Joined,
+        ? JoinStatus.Joined
+        : JoinStatus.NotJoined,
       prayerGroupRole: updatedPrayerGroupUser ? updatedUserRole : undefined,
     }));
 

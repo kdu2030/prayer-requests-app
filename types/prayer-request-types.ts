@@ -37,8 +37,8 @@ export type PrayerRequestModel = {
 };
 
 export enum PrayerRequestSortFields {
-  CreatedDate = "CreatedDate",
-  LikeCount = "LikeCount",
-  CommentCount = "CommentCount",
-  PrayedCount = "PrayedCount",
+  CreatedDate = "CREATED_DATE",
+  LikeCount = "LIKE_COUNT",
+  CommentCount = "COMMENT_COUNT",
+  PrayedCount = "PRAYED_COUNT",
 }

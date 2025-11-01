@@ -180,6 +180,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
     const userDeletedThemselves = !updatedPrayerGroupUser;
 
+    // FIXME: Need to clear out prayer requests if the user deleted themselves and the prayer group is private
+
     setPrayerGroupDetails((prayerGroupDetails) => ({
       ...prayerGroupDetails,
       admins: updatedAdmins,

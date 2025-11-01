@@ -180,14 +180,14 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
     const userDeletedThemselves = !updatedPrayerGroupUser;
 
-    setPrayerGroupDetails({
+    setPrayerGroupDetails((prayerGroupDetails) => ({
       ...prayerGroupDetails,
       admins: updatedAdmins,
       userJoinStatus: updatedPrayerGroupUser
         ? JoinStatus.NotJoined
         : JoinStatus.Joined,
       prayerGroupRole: updatedPrayerGroupUser ? updatedUserRole : undefined,
-    });
+    }));
 
     if (userDeletedThemselves) {
       const updatedPrayerGroups = [...(userData?.prayerGroups ?? [])].filter(

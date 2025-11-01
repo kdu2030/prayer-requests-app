@@ -20,7 +20,7 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
   const { translate } = useI18N();
   const { openToaster } = useToasterContext();
 
-  const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
+  const { setPrayerGroupDetails } = usePrayerGroupContext();
 
   const [joinRequests, setJoinRequests] = React.useState<JoinRequestModel[]>(
     []
@@ -187,10 +187,10 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
         variant: "success",
       });
 
-      setPrayerGroupDetails({
+      setPrayerGroupDetails((prayerGroupDetails) => ({
         ...prayerGroupDetails,
         joinRequestCount: updatedJoinRequests.length,
-      });
+      }));
     } catch (error) {
       openToaster({
         message: translate(

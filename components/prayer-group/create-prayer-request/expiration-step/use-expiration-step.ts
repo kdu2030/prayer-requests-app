@@ -65,14 +65,12 @@ export const useExpirationStep = () => {
 
     const createPrayerRequestForm = mapCreatePrayerRequest(
       userData.userId,
+      prayerGroupDetails.prayerGroupId,
       values
     );
 
     setIsLoading(true);
-    const response = await postPrayerRequest(
-      prayerGroupDetails.prayerGroupId,
-      createPrayerRequestForm
-    );
+    const response = await postPrayerRequest(createPrayerRequestForm);
     setIsLoading(false);
 
     if (response.isError) {

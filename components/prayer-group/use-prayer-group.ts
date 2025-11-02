@@ -5,7 +5,6 @@ import * as React from "react";
 import { useDeletePrayerGroupUser } from "../../api/delete-prayer-group-user";
 import { useGetPrayerGroup } from "../../api/get-prayer-group";
 import { usePostPrayerGroupUser } from "../../api/post-prayer-group-user";
-import { usePostPrayerRequestFilter } from "../../api/post-prayer-request-filter";
 import {
   JoinStatus,
   PrayerGroupRole,
@@ -15,10 +14,8 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
-import {
-  PrayerRequestFilterCriteria,
-  PrayerRequestModel,
-} from "../../types/prayer-request-types";
+import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
+import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
 import { useToasterContext } from "../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
@@ -29,19 +26,17 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const [showLeavePrayerGroupModal, setShowLeavePrayerGroupModal] =
     React.useState<boolean>(false);
 
-  const [prayerRequestFilters, setPrayerRequestFilters] = React.useState<
-    Omit<PrayerRequestFilterCriteria, "prayerGroupIds">
-  >(DEFAULT_PRAYER_REQUEST_FILTERS);
-
-  const [prayerRequests, setPrayerRequests] = React.useState<
-    PrayerRequestModel[]
-  >([]);
-  const prayerRequestTotalCount = React.useRef<number | null>();
-
-  const [prayerRequestLoadStatus, setPrayerRequestLoadStatus] =
-    React.useState<LoadStatus>(LoadStatus.NotStarted);
-  const [nextPrayerRequestLoadStatus, setNextPrayerRequestLoadStatus] =
-    React.useState<LoadStatus>(LoadStatus.NotStarted);
+  const {
+    prayerRequestFilters,
+    setPrayerRequestFilters,
+    prayerRequests,
+    setPrayerRequests,
+    prayerRequestMetadata,
+    cleanupPrayerRequests,
+    loadNextPrayerRequestsForGroup,
+    prayerRequestLoadStatus,
+    nextPrayerRequestsLoadStatus,
+  } = usePrayerRequestContext();
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
 
@@ -62,61 +57,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const deletePrayerGroupUser = useDeletePrayerGroupUser();
   const postPrayerGroupUser = usePostPrayerGroupUser();
 
-  const postPrayerRequestFilter = usePostPrayerRequestFilter();
-
   const { translate } = useI18N();
-
-  const cleanupPrayerRequests = async () => {
-    setPrayerRequestFilters(DEFAULT_PRAYER_REQUEST_FILTERS);
-    setPrayerRequests([]);
-    prayerRequestTotalCount.current = null;
-  };
-
-  const loadNextPrayerRequestsForGroup = async (
-    prayerGroupId: number,
-    showCompleteSpinner: boolean,
-    customFilters?: PrayerRequestFilterCriteria
-  ) => {
-    const setLoadStatus = showCompleteSpinner
-      ? setPrayerRequestLoadStatus
-      : setNextPrayerRequestLoadStatus;
-
-    const filters = customFilters ?? prayerRequestFilters;
-
-    if (!userData?.userId) {
-      return;
-    }
-
-    setLoadStatus(LoadStatus.Loading);
-
-    const response = await postPrayerRequestFilter({
-      ...filters,
-      prayerGroupIds: [prayerGroupId],
-    });
-
-    if (response.isError && showCompleteSpinner) {
-      setLoadStatus(LoadStatus.Error);
-      setPrayerRequests([]);
-      return;
-    } else if (response.isError) {
-      setLoadStatus(LoadStatus.Error);
-      openToaster({
-        message: translate("prayerRequest.loading.failure"),
-        variant: "error",
-      });
-      return;
-    }
-
-    // Since prayer requests can be infinitely scrolled
-    // We don't want to get rid of the current existing prayer requests unless group ID changes.
-    setPrayerRequests((existingRequests) => [
-      ...existingRequests,
-      ...(response.value.prayerRequests ?? []),
-    ]);
-    prayerRequestTotalCount.current = response.value.totalCount;
-
-    setLoadStatus(LoadStatus.Success);
-  };
 
   const loadPrayerGroup = async () => {
     setPrayerGroupDetails(undefined);
@@ -266,15 +207,15 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const onEndReached = async () => {
     if (
-      nextPrayerRequestLoadStatus === LoadStatus.Loading ||
+      nextPrayerRequestsLoadStatus === LoadStatus.Loading ||
       prayerRequestLoadStatus === LoadStatus.Loading
     ) {
       return;
     }
 
     if (
-      prayerRequestTotalCount.current == null ||
-      prayerRequests.length >= prayerRequestTotalCount.current
+      prayerRequestMetadata.totalCount == null ||
+      prayerRequests.length >= prayerRequestMetadata.totalCount
     ) {
       return;
     }
@@ -323,7 +264,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     onEndReached,
     setPrayerRequests,
     loadNextPrayerRequestsForGroup,
-    nextPrayerRequestLoadStatus,
+    nextPrayerRequestsLoadStatus,
     prayerRequestLoadStatus,
     showPrayerRequestList,
     showLeavePrayerGroupModal,

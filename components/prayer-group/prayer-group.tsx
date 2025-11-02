@@ -37,7 +37,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     onRetry,
     prayerGroupOptionsRef,
     onOpenOptions,
-    nextPrayerRequestLoadStatus,
+    nextPrayerRequestsLoadStatus,
     prayerRequestLoadStatus,
     prayerRequests,
     onEndReached,
@@ -114,7 +114,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                 />
               )}
               ListFooterComponent={
-                nextPrayerRequestLoadStatus === LoadStatus.Loading ? (
+                nextPrayerRequestsLoadStatus === LoadStatus.Loading ? (
                   <View className="py-6">
                     <PrayerRequestSpinner
                       size={48}

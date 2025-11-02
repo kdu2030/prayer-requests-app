@@ -99,8 +99,6 @@ export const mockPrayerRequests: PrayerRequestModel[] = [
     commentCount: 0,
     prayedCount: 0,
     expirationDate: "2025-07-19T01:11:26.271Z",
-    isUserLiked: false,
-    isUserCommented: false,
   },
   {
     prayerRequestId: 8,
@@ -127,8 +125,7 @@ export const mockPrayerRequests: PrayerRequestModel[] = [
     commentCount: 0,
     prayedCount: 0,
     expirationDate: "2025-07-19T01:06:51.026Z",
-    isUserLiked: true,
-    isUserCommented: false,
+    userLikeId: 787,
   },
   {
     prayerRequestId: 7,
@@ -155,7 +152,5 @@ export const mockPrayerRequests: PrayerRequestModel[] = [
     commentCount: 0,
     prayedCount: 0,
     expirationDate: "2025-07-14T19:58:29.314Z",
-    isUserLiked: false,
-    isUserCommented: false,
   },
 ];

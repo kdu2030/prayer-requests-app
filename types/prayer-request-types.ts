@@ -13,6 +13,12 @@ export type PrayerRequestFilterCriteria = {
   sortConfig: SortConfig;
 };
 
+export type PrayerRequestMetadata = {
+  totalCount?: number;
+  numberOfPages?: number;
+  pageIndex?: number;
+};
+
 export type PrayerRequestGetResponse = {
   prayerRequests?: PrayerRequestModel[];
   totalCount?: number;

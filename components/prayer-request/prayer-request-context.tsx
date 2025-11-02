@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { LoadStatus } from "../../types/api-response-types";
 import {
   PrayerRequestFilterCriteria,
   PrayerRequestMetadata,
@@ -21,6 +22,12 @@ export type PrayerRequestContextType = {
   setPrayerRequestMetadata: React.Dispatch<
     React.SetStateAction<PrayerRequestMetadata>
   >;
+  prayerRequestLoadStatus: LoadStatus;
+  setPrayerRequestLoadStatus: React.Dispatch<React.SetStateAction<LoadStatus>>;
+  nextPrayerRequestsLoadStatus: LoadStatus;
+  setNextPrayerRequestsLoadStatus: React.Dispatch<
+    React.SetStateAction<LoadStatus>
+  >;
 };
 
 const PrayerRequestContext = React.createContext<PrayerRequestContextType>({
@@ -30,6 +37,10 @@ const PrayerRequestContext = React.createContext<PrayerRequestContextType>({
   setPrayerRequests: () => {},
   prayerRequestMetadata: DEFAULT_PRAYER_REQUEST_METADATA,
   setPrayerRequestMetadata: () => {},
+  prayerRequestLoadStatus: LoadStatus.NotStarted,
+  setPrayerRequestLoadStatus: () => {},
+  nextPrayerRequestsLoadStatus: LoadStatus.NotStarted,
+  setNextPrayerRequestsLoadStatus: () => {},
 });
 
 type Props = {
@@ -44,6 +55,10 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
   >([]);
   const [prayerRequestMetadata, setPrayerRequestMetadata] =
     React.useState<PrayerRequestMetadata>(DEFAULT_PRAYER_REQUEST_METADATA);
+  const [prayerRequestLoadStatus, setPrayerRequestLoadStatus] =
+    React.useState<LoadStatus>(LoadStatus.NotStarted);
+  const [nextPrayerRequestsLoadStatus, setNextPrayerRequestsLoadStatus] =
+    React.useState<LoadStatus>(LoadStatus.NotStarted);
 
   return (
     <PrayerRequestContext.Provider
@@ -54,9 +69,16 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
         setPrayerRequests,
         prayerRequestMetadata,
         setPrayerRequestMetadata,
+        prayerRequestLoadStatus,
+        setPrayerRequestLoadStatus,
+        nextPrayerRequestsLoadStatus,
+        setNextPrayerRequestsLoadStatus,
       }}
     >
       {children}
     </PrayerRequestContext.Provider>
   );
 };
+
+export const usePrayerRequestContext = () =>
+  React.useContext(PrayerRequestContext);

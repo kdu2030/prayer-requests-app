@@ -31,3 +31,32 @@ const PrayerRequestContext = React.createContext<PrayerRequestContextType>({
   prayerRequestMetadata: DEFAULT_PRAYER_REQUEST_METADATA,
   setPrayerRequestMetadata: () => {},
 });
+
+type Props = {
+  children: React.ReactNode;
+};
+
+export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
+  const [prayerRequestFilters, setPrayerRequestFilters] =
+    React.useState<PrayerRequestFilterCriteria>(DEFAULT_PRAYER_REQUEST_FILTERS);
+  const [prayerRequests, setPrayerRequests] = React.useState<
+    PrayerRequestModel[]
+  >([]);
+  const [prayerRequestMetadata, setPrayerRequestMetadata] =
+    React.useState<PrayerRequestMetadata>(DEFAULT_PRAYER_REQUEST_METADATA);
+
+  return (
+    <PrayerRequestContext.Provider
+      value={{
+        prayerRequestFilters,
+        setPrayerRequestFilters,
+        prayerRequests,
+        setPrayerRequests,
+        prayerRequestMetadata,
+        setPrayerRequestMetadata,
+      }}
+    >
+      {children}
+    </PrayerRequestContext.Provider>
+  );
+};

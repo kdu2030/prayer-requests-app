@@ -40,6 +40,7 @@ const mountPrayerGroupJoinRequests = (prayerGroupId: number) => {
 describe(PrayerGroupJoinRequests, () => {
   afterEach(() => {
     component?.unmount();
+    jest.clearAllMocks();
   });
 
   test("Join requests are fetched on initial mount", async () => {

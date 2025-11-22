@@ -113,6 +113,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                       <View
                         className="px-4 rounded-full font-bold"
                         style={{ backgroundColor: theme.colors.primary }}
+                        testID={PrayerGroupOptionsTestIds.joinRequestsCount}
                       >
                         <Text variant="bodyLarge" className="text-white">
                           {formattedJoinRequestCount}
@@ -120,6 +121,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                       </View>
                     ) : null
                   }
+                  testID={PrayerGroupOptionsTestIds.manageJoinRequestsButton}
                 />
               )}
             </>

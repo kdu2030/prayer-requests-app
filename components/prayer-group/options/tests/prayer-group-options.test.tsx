@@ -1,9 +1,16 @@
+import "@testing-library/jest-native/extend-expect";
+import "@testing-library/jest-native";
+
 import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { renderHook, RenderResult } from "@testing-library/react-native";
 import { useRef } from "react";
 
-import { PrayerGroupRole } from "../../../../constants/prayer-group-constants";
+import {
+  JoinStatus,
+  PrayerGroupRole,
+  VisibilityLevel,
+} from "../../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import { PrayerGroupDetails } from "../../../../types/prayer-group-types";
 import { mockPrayerGroupDetails } from "../../tests/mock-data";
@@ -75,5 +82,27 @@ describe(PrayerGroupOptions, () => {
 
     expect(editPrayerGroupButton).toBeFalsy();
     expect(manageUsersButton).toBeFalsy();
+  });
+
+  test("If the user is an admin, show manage join requests", () => {
+    const prayerGroupDetails: PrayerGroupDetails = {
+      ...mockPrayerGroupDetails,
+      joinRequestCount: 5,
+      visibilityLevel: VisibilityLevel.Private,
+      userJoinStatus: JoinStatus.Joined,
+    };
+
+    component = mountPrayerGroupOptions(prayerGroupDetails);
+
+    const manageJoinRequests = component.getByTestId(
+      PrayerGroupOptionsTestIds.manageJoinRequestsButton
+    );
+
+    const joinRequestsCount = component.getByTestId(
+      PrayerGroupOptionsTestIds.joinRequestsCount
+    );
+
+    expect(manageJoinRequests).toBeTruthy();
+    expect(joinRequestsCount).toHaveTextContent("5");
   });
 });

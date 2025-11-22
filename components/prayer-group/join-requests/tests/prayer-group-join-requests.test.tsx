@@ -12,12 +12,15 @@ import { mockJoinRequests } from "./mock-data";
 
 const mockPostJoinRequestsSearch = jest.fn();
 
+const mockPostJoinRequestsSearchCallback = jest.fn(
+  (prayerGroupId: number, sortConfig: SortConfig) =>
+    mockPostJoinRequestsSearch(prayerGroupId, sortConfig)
+);
+
 let component: RenderResult;
 
 jest.mock("../../../../api/post-join-requests-search", () => ({
-  usePostJoinRequestsSearch:
-    () => (prayerGroupId: number, sortConfig: SortConfig) =>
-      mockPostJoinRequestsSearch(prayerGroupId, sortConfig),
+  usePostJoinRequestsSearch: () => mockPostJoinRequestsSearchCallback,
 }));
 
 const mountPrayerGroupJoinRequests = (prayerGroupId: number) => {

@@ -108,5 +108,7 @@ describe(PrayerGroupJoinRequests, () => {
     );
 
     expect(usernameValue).toHaveTextContent(mockJoinRequests[1].user.username);
+
+    jest.useRealTimers();
   });
 });

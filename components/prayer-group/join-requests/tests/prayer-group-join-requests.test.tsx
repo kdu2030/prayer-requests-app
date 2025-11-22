@@ -103,17 +103,10 @@ describe(PrayerGroupJoinRequests, () => {
     fireEvent.changeText(searchInput, "dmeagle");
     await act(() => jest.runAllTimers());
 
-    await waitFor(() => {
-      const expectedUser = component.queryByText(
-        mockJoinRequests[1].user.username
-      );
+    const usernameValue = await component.findByTestId(
+      `${JoinRequestTestIds.usernameValue}[0]`
+    );
 
-      const expectedHiddenUser = component.queryByText(
-        mockJoinRequests[0].user.username
-      );
-
-      expect(expectedUser).toBeTruthy();
-      expect(expectedHiddenUser).toBeFalsy();
-    });
+    expect(usernameValue).toHaveTextContent(mockJoinRequests[1].user.username);
   });
 });

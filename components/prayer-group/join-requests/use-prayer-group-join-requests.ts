@@ -61,6 +61,7 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
         );
       });
 
+      console.log(filteredUsers);
       setFilteredJoinRequests(filteredUsers);
     },
     [joinRequests]

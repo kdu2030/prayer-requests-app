@@ -173,4 +173,44 @@ describe(PrayerGroupJoinRequests, () => {
       mockJoinRequests[1].user.fullName
     );
   });
+
+  test("After rejecting join requests and saving, the rejected join request is no longer visible", async () => {
+    const joinRequestsResponse: ManagedErrorResponse<PostJoinRequestsSearchResponse> =
+      {
+        isError: false,
+        value: {
+          joinRequests: mockJoinRequests,
+        },
+      };
+
+    mockPostJoinRequestsSearch.mockReturnValue(joinRequestsResponse);
+    mockDeleteJoinRequests.mockReturnValue({ isError: false });
+
+    component = mountPrayerGroupJoinRequests(1);
+
+    const rejectButton = await component.findByTestId(
+      `${JoinRequestTestIds.rejectButton}[0]`
+    );
+
+    await act(() => fireEvent.press(rejectButton));
+
+    const saveButton = await component.findByTestId(
+      JoinRequestTestIds.saveButton
+    );
+
+    await act(() => fireEvent.press(saveButton));
+
+    const remainingJoinRequestFullName = await component.findByTestId(
+      `${JoinRequestTestIds.fullNameValue}[0]`
+    );
+
+    expect(mockDeleteJoinRequests).toHaveBeenCalledWith(1, [
+      mockJoinRequests[0].joinRequestId,
+    ]);
+    expect(mockPostApproveJoinRequests).not.toHaveBeenCalled();
+
+    expect(remainingJoinRequestFullName).toHaveTextContent(
+      mockJoinRequests[1].user.fullName
+    );
+  });
 });

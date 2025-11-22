@@ -13,6 +13,7 @@ import { ProfilePicture } from "../../layouts/profile-picture";
 import { SpinnerScreen } from "../../layouts/spinner-screen";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
 import { JoinRequestActions } from "./join-request-actions";
+import { JoinRequestTestIds } from "./tests/test-id";
 import { usePrayerGroupJoinRequests } from "./use-prayer-group-join-requests";
 
 type Props = {
@@ -76,6 +77,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                 "prayerGroup.manageUsers.searchPlaceholder"
               )}
               onChangeText={searchJoinRequests}
+              testID={JoinRequestTestIds.joinRequestSearchInput}
             />
           </View>
 
@@ -94,12 +96,14 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                         url={item.user?.image?.fileUrl}
                         width={40}
                         height={40}
+                        testID={JoinRequestTestIds.profilePicture}
                       />
                       <View className="flex flex-col ml-4">
                         <Text
                           variant="bodyLarge"
                           ellipsizeMode="tail"
                           numberOfLines={1}
+                          testID={JoinRequestTestIds.fullNameValue}
                         >
                           {item.user?.fullName}
                         </Text>
@@ -107,6 +111,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                           variant="bodySmall"
                           ellipsizeMode="tail"
                           numberOfLines={1}
+                          testID={JoinRequestTestIds.usernameValue}
                         >
                           @ {item.user?.username}
                         </Text>
@@ -115,6 +120,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                           <Text
                             variant="bodySmall"
                             className="text-gray-500 mt-1"
+                            testID={JoinRequestTestIds.submittedDateValue}
                           >
                             {formatDate(
                               item.submittedDate,

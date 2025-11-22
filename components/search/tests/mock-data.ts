@@ -1,3 +1,4 @@
+import { PostPrayerGroupSearchResponse } from "../../../api/post-prayer-group-search";
 import { FileType } from "../../../types/media-file-types";
 import { PrayerGroupSummary } from "../../../types/prayer-group-types";
 
@@ -36,3 +37,7 @@ export const mockPrayerGroupSearchResults: PrayerGroupSummary[] = [
     },
   },
 ];
+
+export const mockPrayerGroupSearchResponse: PostPrayerGroupSearchResponse = {
+  prayerGroups: mockPrayerGroupSearchResults,
+};

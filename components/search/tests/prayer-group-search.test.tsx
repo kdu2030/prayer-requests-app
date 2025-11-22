@@ -11,17 +11,21 @@ import { Href } from "expo-router";
 
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { PrayerGroupSearch } from "../prayer-group-search";
-import { mockPrayerGroupSearchResults } from "./mock-data";
+import {
+  mockPrayerGroupSearchResponse,
+  mockPrayerGroupSearchResults,
+} from "./mock-data";
 import { PrayerGroupSearchTestIds } from "./test-ids";
 
 let component: RenderResult;
 
-const mockGetPrayerGroupsBySearch = jest.fn();
+const mockPostPrayerGroupSearch = jest.fn();
 const mockRouterPush = jest.fn();
 
-jest.mock("../../../api/get-prayer-groups-by-search", () => ({
-  useGetPrayerGroupsBySearch: () => (query: string, maxResults: number) =>
-    mockGetPrayerGroupsBySearch(query, maxResults),
+jest.mock("../../../api/post-prayer-group-search", () => ({
+  usePostPrayerGroupSearch:
+    () => (groupNameQuery: string, maxNumResults?: number) =>
+      mockPostPrayerGroupSearch(groupNameQuery, maxNumResults),
 }));
 
 jest.mock("expo-router", () => ({
@@ -42,9 +46,9 @@ describe(PrayerGroupSearch, () => {
   });
 
   test("Prayer group search results display", async () => {
-    mockGetPrayerGroupsBySearch.mockReturnValue({
+    mockPostPrayerGroupSearch.mockReturnValue({
       isError: false,
-      value: mockPrayerGroupSearchResults,
+      value: mockPrayerGroupSearchResponse,
     });
 
     component = mountComponent(<PrayerGroupSearch />);
@@ -66,9 +70,9 @@ describe(PrayerGroupSearch, () => {
   });
 
   test("Clicking on a prayer group search result navigates to the prayer group", async () => {
-    mockGetPrayerGroupsBySearch.mockReturnValue({
+    mockPostPrayerGroupSearch.mockReturnValue({
       isError: false,
-      value: mockPrayerGroupSearchResults,
+      value: mockPrayerGroupSearchResponse,
     });
 
     component = mountComponent(<PrayerGroupSearch />);

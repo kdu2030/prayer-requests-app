@@ -61,7 +61,9 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
           />
         )}
 
-        {isLoadingSuccessful && <PrayerRequestPlaceholder />}
+        {isLoadingSuccessful && !showPrivatePrayerGroupPlaceholder && (
+          <PrayerRequestPlaceholder />
+        )}
 
         {showPrivatePrayerGroupPlaceholder && (
           <PrivatePrayerGroupPlaceholder

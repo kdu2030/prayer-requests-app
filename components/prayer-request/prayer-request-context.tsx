@@ -83,6 +83,9 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
     setPrayerRequestFilters(DEFAULT_PRAYER_REQUEST_FILTERS);
     setPrayerRequests([]);
     setPrayerRequestMetadata(DEFAULT_PRAYER_REQUEST_METADATA);
+
+    setPrayerRequestLoadStatus(LoadStatus.NotStarted);
+    setNextPrayerRequestsLoadStatus(LoadStatus.NotStarted);
   };
 
   const loadNextPrayerRequestsForGroup = async (

@@ -6,6 +6,7 @@ import { Button, Text } from "react-native-paper";
 import { JoinStatus } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { LoadStatus } from "../../../types/api-response-types";
+import { PrayerRequestPlaceholderBodyTestIds } from "./tests/test-ids";
 import { usePrivatePrayerGroupPlaceholder } from "./use-private-prayer-group-placeholder";
 
 type Props = {
@@ -37,6 +38,9 @@ export const PrivatePrayerGroupPlaceholder: React.FC<Props> = ({
               mode="contained"
               onPress={onSubmitJoinRequest}
               loading={submitRequestLoadStatus === LoadStatus.Loading}
+              testID={
+                PrayerRequestPlaceholderBodyTestIds.submitJoinRequestButton
+              }
             >
               {translate("prayerGroup.joinRequest.submitJoinRequest")}
             </Button>

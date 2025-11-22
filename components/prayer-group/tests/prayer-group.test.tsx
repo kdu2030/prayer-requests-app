@@ -8,7 +8,10 @@ import {
   waitFor,
 } from "@testing-library/react-native";
 
-import { JoinStatus } from "../../../constants/prayer-group-constants";
+import {
+  JoinStatus,
+  VisibilityLevel,
+} from "../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { SortOrder } from "../../../types/api-response-types";
 import { ManagedErrorResponse } from "../../../types/error-handling";
@@ -22,6 +25,7 @@ import { PrayerRequestCardTestIds } from "../../prayer-request/tests/test-ids";
 import { PrayerGroupHeaderTestIds } from "../header/tests/test-ids";
 import { PrayerGroup } from "../prayer-group";
 import { PrayerGroupContextProvider } from "../prayer-group-context";
+import { PrayerRequestPlaceholderBodyTestIds } from "../prayer-request-placeholder/tests/test-ids";
 import {
   mockPrayerGroupDetails,
   mockPrayerGroupDetails1,
@@ -227,5 +231,22 @@ describe(PrayerGroup, () => {
     expect(prayerRequest).toBeTruthy();
     expect(prayerRequestFilterCriteria?.pageIndex).toBe(0);
     expect(prayerRequestFilterCriteria?.prayerGroupIds).toStrictEqual([2]);
+  });
+
+  test("Submit join request button shows up when the user is not joined on a private prayer group", async () => {
+    const prayerGroupDetails: PrayerGroupDetails = {
+      ...mockPrayerGroupDetails,
+      userJoinStatus: JoinStatus.NotJoined,
+      visibilityLevel: VisibilityLevel.Private,
+    };
+
+    component = mountPrayerGroup(prayerGroupDetails);
+
+    const joinRequestPlaceholder = await component.findByTestId(
+      PrayerRequestPlaceholderBodyTestIds.submitJoinRequestButton
+    );
+
+    expect(joinRequestPlaceholder).toBeTruthy();
+    expect(mockPostPrayerRequestFilter).not.toHaveBeenCalled();
   });
 });

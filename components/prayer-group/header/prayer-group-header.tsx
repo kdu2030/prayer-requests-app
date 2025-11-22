@@ -124,6 +124,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
             className="flex-1"
             mode={"outlined"}
             onPress={onOpenOptions}
+            testID={PrayerGroupHeaderTestIds.optionsButton}
           >
             {translate("prayerGroup.actions.groupOptions")}
           </Button>

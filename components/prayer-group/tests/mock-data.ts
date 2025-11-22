@@ -1,6 +1,7 @@
 import {
   JoinStatus,
   PrayerGroupRole,
+  VisibilityLevel,
 } from "../../../constants/prayer-group-constants";
 import { UserData } from "../../../types/context/api-data-context-type";
 import { FileType, MediaFile } from "../../../types/media-file-types";
@@ -28,6 +29,7 @@ export const mockPrayerGroupDetails: PrayerGroupDetails = {
   },
   userJoinStatus: JoinStatus.Joined,
   prayerGroupRole: PrayerGroupRole.Admin,
+  visibilityLevel: VisibilityLevel.Public,
 };
 
 export const mockPrayerGroupDetails1: PrayerGroupDetails = {

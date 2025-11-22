@@ -140,7 +140,7 @@ describe(PrayerGroup, () => {
   test("Correct buttons display if user is a member", async () => {
     component = mountPrayerGroup(mockPrayerGroupDetails);
     const leaveGroupButton = await component.findByTestId(
-      PrayerGroupHeaderTestIds.leaveGroupButton
+      PrayerGroupHeaderTestIds.optionsButton
     );
     const addPrayerRequestButton = await component.findByTestId(
       PrayerGroupHeaderTestIds.addPrayerRequestButton
@@ -163,7 +163,7 @@ describe(PrayerGroup, () => {
       PrayerGroupHeaderTestIds.joinGroupButton
     );
     const aboutGroupButton = await component.findByTestId(
-      PrayerGroupHeaderTestIds.aboutGroupButton
+      PrayerGroupHeaderTestIds.optionsButton
     );
 
     expect(joinPrayerGroupButton).toBeTruthy();

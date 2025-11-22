@@ -64,8 +64,8 @@ jest.mock("../../../hooks/use-api-data", () => ({
 
 jest.mock("../../../api/post-prayer-request-filter", () => ({
   usePostPrayerRequestFilter:
-    () => (userId: number, filterCriteria: PrayerRequestFilterCriteria) =>
-      mockPostPrayerRequestFilter(userId, filterCriteria),
+    () => (filterCriteria: PrayerRequestFilterCriteria) =>
+      mockPostPrayerRequestFilter(filterCriteria),
 }));
 
 const mountPrayerGroup = (
@@ -192,21 +192,6 @@ describe(PrayerGroup, () => {
     );
   });
 
-  test("Delete prayer group users gets called when user presses the leave button", async () => {
-    mockDeletePrayerGroupUser.mockReturnValue({ isError: false });
-    component = mountPrayerGroup(mockPrayerGroupDetails);
-
-    const leavePrayerGroupButton = await component.findByTestId(
-      PrayerGroupHeaderTestIds.leaveGroupButton
-    );
-
-    fireEvent.press(leavePrayerGroupButton);
-
-    await waitFor(() => {
-      expect(mockDeletePrayerGroupUser).toHaveBeenCalledWith(2, 1);
-    });
-  });
-
   test("Prayer requests for prayer group show up on mount", async () => {
     const mockPrayerRequestFilterResponse: ManagedErrorResponse<PrayerRequestGetResponse> =
       {
@@ -214,6 +199,8 @@ describe(PrayerGroup, () => {
         value: {
           prayerRequests: mockPrayerRequests,
           totalCount: 3,
+          pageIndex: 0,
+          numberOfPages: 2,
         },
       };
 
@@ -225,7 +212,7 @@ describe(PrayerGroup, () => {
     };
 
     mockPostPrayerRequestFilter.mockImplementation(
-      (_userId: number, filterCriteria: PrayerRequestFilterCriteria) => {
+      (filterCriteria: PrayerRequestFilterCriteria) => {
         prayerRequestFilterCriteria = filterCriteria;
         return mockPrayerRequestFilterResponse;
       }

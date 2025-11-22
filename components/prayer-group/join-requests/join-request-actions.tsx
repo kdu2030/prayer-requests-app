@@ -11,6 +11,8 @@ type JoinRequestActionsProps = {
   joinRequestForm: JoinRequestForm;
   approveJoinRequest: (joinRequestId: number) => void;
   rejectJoinRequest: (joinRequestId: number) => void;
+  approveTestID?: string;
+  rejectTestID?: string;
 };
 
 export const JoinRequestActions: React.FC<JoinRequestActionsProps> = ({
@@ -18,6 +20,8 @@ export const JoinRequestActions: React.FC<JoinRequestActionsProps> = ({
   joinRequestForm,
   approveJoinRequest,
   rejectJoinRequest,
+  approveTestID,
+  rejectTestID,
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
@@ -43,6 +47,7 @@ export const JoinRequestActions: React.FC<JoinRequestActionsProps> = ({
           icon={"check"}
           buttonColor={isSelected ? selectedColor : undefined}
           onPress={() => approveJoinRequest(joinRequestId)}
+          testID={approveTestID}
         >
           {translate("common.actions.approve")}
         </Button>
@@ -56,6 +61,7 @@ export const JoinRequestActions: React.FC<JoinRequestActionsProps> = ({
           rippleColor={theme.colors.errorContainer}
           buttonColor={isRejected ? theme.colors.errorContainer : undefined}
           onPress={() => rejectJoinRequest(joinRequestId)}
+          testID={rejectTestID}
         >
           {translate("common.actions.reject")}
         </Button>

@@ -86,7 +86,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
             <FlatList
               data={filteredJoinRequests}
               className="flex-1"
-              renderItem={({ item }) => {
+              renderItem={({ item, index }) => {
                 return (
                   <View
                     className="p-4 border-b flex-row justify-between"
@@ -97,14 +97,14 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                         url={item.user?.image?.fileUrl}
                         width={40}
                         height={40}
-                        testID={JoinRequestTestIds.profilePicture}
+                        testID={`${JoinRequestTestIds.profilePicture}[${index}]`}
                       />
                       <View className="flex flex-col ml-4">
                         <Text
                           variant="bodyLarge"
                           ellipsizeMode="tail"
                           numberOfLines={1}
-                          testID={JoinRequestTestIds.fullNameValue}
+                          testID={`${JoinRequestTestIds.fullNameValue}[${index}]`}
                         >
                           {item.user?.fullName}
                         </Text>
@@ -112,7 +112,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                           variant="bodySmall"
                           ellipsizeMode="tail"
                           numberOfLines={1}
-                          testID={JoinRequestTestIds.usernameValue}
+                          testID={`${JoinRequestTestIds.usernameValue}[${index}]`}
                         >
                           @ {item.user?.username}
                         </Text>
@@ -121,7 +121,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                           <Text
                             variant="bodySmall"
                             className="text-gray-500 mt-1"
-                            testID={JoinRequestTestIds.submittedDateValue}
+                            testID={`${JoinRequestTestIds.submittedDateValue}[${index}]`}
                           >
                             {formatDate(
                               item.submittedDate,
@@ -137,6 +137,8 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                       joinRequestForm={joinRequestForm}
                       approveJoinRequest={approveJoinRequest}
                       rejectJoinRequest={rejectJoinRequest}
+                      approveTestID={`${JoinRequestTestIds.approveButton}[${index}]`}
+                      rejectTestID={`${JoinRequestTestIds.rejectButton}[${index}]`}
                     />
                   </View>
                 );
@@ -148,6 +150,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
             <View
               className="p-4 border-b flex-row justify-center mt-16 flex-1"
               style={{ borderBottomColor: theme.colors.outline }}
+              testID={JoinRequestTestIds.joinRequestsPlaceholder}
             >
               <View>
                 <Text variant="titleMedium">
@@ -167,6 +170,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
               mode="contained"
               onPress={saveManageJoinRequests}
               loading={isSaveLoading}
+              testID={JoinRequestTestIds.saveButton}
             >
               {translate("common.actions.save")}
             </Button>

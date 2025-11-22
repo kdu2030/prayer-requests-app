@@ -11,6 +11,7 @@ import {
 import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupUserSummary } from "../../../types/prayer-group-types";
+import { usePrayerRequestContext } from "../../prayer-request/prayer-request-context";
 import { useToasterContext } from "../../toasters/toaster-context";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import {
@@ -23,6 +24,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const { translate } = useI18N();
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
+  const { cleanupPrayerRequests } = usePrayerRequestContext();
+
   const { userData, setUserData } = useApiDataContext();
 
   const [prayerGroupUsers, setPrayerGroupUsers] = React.useState<
@@ -180,7 +183,9 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
     const userDeletedThemselves = !updatedPrayerGroupUser;
 
-    // FIXME: Need to clear out prayer requests if the user deleted themselves and the prayer group is private
+    if (userDeletedThemselves) {
+      cleanupPrayerRequests();
+    }
 
     setPrayerGroupDetails((prayerGroupDetails) => ({
       ...prayerGroupDetails,

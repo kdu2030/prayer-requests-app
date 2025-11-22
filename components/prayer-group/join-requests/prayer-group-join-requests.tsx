@@ -29,6 +29,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
     loadJoinRequests,
     searchJoinRequests,
     joinRequestQuery,
+    joinRequests,
     filteredJoinRequests,
     approveJoinRequest,
     joinRequestForm,
@@ -150,7 +151,9 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
             >
               <View>
                 <Text variant="titleMedium">
-                  {translate("prayerGroup.joinRequest.noActiveJoinRequests")}
+                  {joinRequests.length === 0
+                    ? translate("prayerGroup.joinRequest.noActiveJoinRequests")
+                    : translate("prayerGroup.joinRequest.noMatches")}
                 </Text>
               </View>
             </View>

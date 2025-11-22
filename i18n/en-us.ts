@@ -176,6 +176,8 @@ export const englishTranslations = {
   "prayerGroup.joinRequest.loadingJoinRequests": "Loading join requests",
   "prayerGroup.joinRequest.noActiveJoinRequests":
     "There are no active join requests.",
+  "prayerGroup.joinRequest.noMatches":
+    "There are no join requests that matched your search.",
   "prayerGroup.joinRequest.unableToSaveJoinRequestUpdates":
     "Failed to save join request updates.",
   "prayerGroup.joinRequest.saved": "Saved join request updates.",

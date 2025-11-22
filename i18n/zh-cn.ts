@@ -171,6 +171,7 @@ export const chineseTranslations: Translations = {
   "prayerGroup.joinRequest.unableToLoad": "加载加入请求失败了。",
   "prayerGroup.joinRequest.loadingJoinRequests": "加载加入请求",
   "prayerGroup.joinRequest.noActiveJoinRequests": "没有进行的加入请求。",
+  "prayerGroup.joinRequest.noMatches": "没有符合你的搜索条件的加入亲求。",
   "prayerGroup.joinRequest.unableToSaveJoinRequestUpdates":
     "保存加入恳求的编辑失败。",
   "prayerGroup.joinRequest.saved": "加入恳求的编辑已保存",

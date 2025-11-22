@@ -17,6 +17,7 @@ import {
   PrayerRequestFilterCriteria,
   PrayerRequestGetResponse,
 } from "../../../types/prayer-request-types";
+import { PrayerRequestContextProvider } from "../../prayer-request/prayer-request-context";
 import { PrayerRequestCardTestIds } from "../../prayer-request/tests/test-ids";
 import { PrayerGroupHeaderTestIds } from "../header/tests/test-ids";
 import { PrayerGroup } from "../prayer-group";
@@ -93,7 +94,9 @@ const mountPrayerGroup = (
 
   return mountComponent(
     <PrayerGroupContextProvider>
-      <PrayerGroup prayerGroupId={2} />
+      <PrayerRequestContextProvider>
+        <PrayerGroup prayerGroupId={2} />
+      </PrayerRequestContextProvider>
     </PrayerGroupContextProvider>
   );
 };

@@ -72,12 +72,16 @@ export const usePrayerGroupJoinRequests = (prayerGroupId: number) => {
   );
 
   const loadJoinRequests = React.useCallback(async () => {
+    console.log("LOAD JOIN REQUESTS CALLED!");
+
     setJoinRequestLoadStatus(LoadStatus.Loading);
 
     const response = await postJoinRequestsSearch(
       prayerGroupId,
       JOIN_REQUEST_SORT_CONFIG
     );
+
+    console.log(JSON.stringify(response));
 
     if (response.isError) {
       openToaster({

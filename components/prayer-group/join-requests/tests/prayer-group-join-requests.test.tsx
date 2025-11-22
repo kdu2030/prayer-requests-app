@@ -26,10 +26,32 @@ const mockPostJoinRequestsSearchCallback = jest.fn(
     mockPostJoinRequestsSearch(prayerGroupId, sortConfig)
 );
 
+const mockPostApproveJoinRequests = jest.fn();
+
+const mockPostApproveJoinRequestsCallback = jest.fn(
+  (prayerGroupId: number, joinRequestIds: number[]) =>
+    mockPostApproveJoinRequests(prayerGroupId, joinRequestIds)
+);
+
+const mockDeleteJoinRequests = jest.fn();
+
+const mockDeleteJoinRequestsCallback = jest.fn(
+  (prayerGroupId: number, joinRequestIds: number[]) =>
+    mockDeleteJoinRequests(prayerGroupId, joinRequestIds)
+);
+
 let component: RenderResult;
 
 jest.mock("../../../../api/post-join-requests-search", () => ({
   usePostJoinRequestsSearch: () => mockPostJoinRequestsSearchCallback,
+}));
+
+jest.mock("../../../../api/post-approve-join-requests", () => ({
+  usePostApproveJoinRequests: () => mockPostApproveJoinRequestsCallback,
+}));
+
+jest.mock("../../../../api/delete-join-requests", () => ({
+  useDeleteJoinRequests: () => mockDeleteJoinRequestsCallback,
 }));
 
 const mountPrayerGroupJoinRequests = (prayerGroupId: number) => {
@@ -110,5 +132,41 @@ describe(PrayerGroupJoinRequests, () => {
     expect(usernameValue).toHaveTextContent(mockJoinRequests[1].user.username);
 
     jest.useRealTimers();
+  });
+
+  test("After approving join requests and saving, approved join request is no longer visible", async () => {
+    const joinRequestsResponse: ManagedErrorResponse<PostJoinRequestsSearchResponse> =
+      {
+        isError: false,
+        value: {
+          joinRequests: mockJoinRequests,
+        },
+      };
+
+    mockPostJoinRequestsSearch.mockReturnValue(joinRequestsResponse);
+    mockPostApproveJoinRequests.mockReturnValue({ isError: false });
+
+    component = mountPrayerGroupJoinRequests(1);
+
+    const approveButton = await component.findByTestId(
+      `${JoinRequestTestIds.approveButton}[0]`
+    );
+
+    await act(() => fireEvent.press(approveButton));
+
+    const saveButton = await component.findByTestId(
+      JoinRequestTestIds.saveButton
+    );
+
+    await act(() => fireEvent.press(saveButton));
+
+    const remainingJoinRequestFullName = await component.findByTestId(
+      `${JoinRequestTestIds.fullNameValue}[0]`
+    );
+
+    expect(mockDeleteJoinRequests).not.toHaveBeenCalled();
+    expect(remainingJoinRequestFullName).toHaveTextContent(
+      mockJoinRequests[1].user.fullName
+    );
   });
 });

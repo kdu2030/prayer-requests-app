@@ -84,7 +84,7 @@ describe(PrayerGroupOptions, () => {
     expect(manageUsersButton).toBeFalsy();
   });
 
-  test("If the user is an admin, show manage join requests", () => {
+  test("If the user is an admin on a private prayer group, show manage join requests", () => {
     const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       joinRequestCount: 5,
@@ -104,5 +104,14 @@ describe(PrayerGroupOptions, () => {
 
     expect(manageJoinRequests).toBeTruthy();
     expect(joinRequestsCount).toHaveTextContent("5");
+  });
+
+  test("If the user is already joined, show the leave prayer group button", () => {
+    component = mountPrayerGroupOptions(mockPrayerGroupDetails);
+
+    const leavePrayerGroupButton = component.queryByTestId(
+      PrayerGroupOptionsTestIds.leavePrayerGroupButton
+    );
+    expect(leavePrayerGroupButton).toBeTruthy();
   });
 });

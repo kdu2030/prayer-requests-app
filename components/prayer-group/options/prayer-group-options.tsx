@@ -145,6 +145,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                 setShowLeavePrayerGroupModal(true);
                 bottomSheetRef.current?.close();
               }}
+              testID={PrayerGroupOptionsTestIds.leavePrayerGroupButton}
             />
           )}
         </View>

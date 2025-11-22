@@ -1,7 +1,12 @@
 import "@testing-library/jest-native/extend-expect";
 import "@testing-library/jest-native";
 
-import { RenderResult, waitFor } from "@testing-library/react-native";
+import {
+  act,
+  fireEvent,
+  RenderResult,
+  waitFor,
+} from "@testing-library/react-native";
 import * as React from "react";
 
 import { PostJoinRequestsSearchResponse } from "../../../../api/post-join-requests-search";
@@ -74,6 +79,41 @@ describe(PrayerGroupJoinRequests, () => {
       expect(joinRequestUsername).toHaveTextContent(
         expectedJoinRequestUsername
       );
+    });
+  });
+
+  test("Join requests are searchable by username", async () => {
+    jest.useFakeTimers();
+
+    const joinRequestsResponse: ManagedErrorResponse<PostJoinRequestsSearchResponse> =
+      {
+        isError: false,
+        value: {
+          joinRequests: mockJoinRequests,
+        },
+      };
+
+    mockPostJoinRequestsSearch.mockReturnValue(joinRequestsResponse);
+    component = mountPrayerGroupJoinRequests(1);
+
+    const searchInput = await component.findByTestId(
+      JoinRequestTestIds.joinRequestSearchInput
+    );
+
+    fireEvent.changeText(searchInput, "dmeagle");
+    await act(() => jest.runAllTimers());
+
+    await waitFor(() => {
+      const expectedUser = component.queryByText(
+        mockJoinRequests[1].user.username
+      );
+
+      const expectedHiddenUser = component.queryByText(
+        mockJoinRequests[0].user.username
+      );
+
+      expect(expectedUser).toBeTruthy();
+      expect(expectedHiddenUser).toBeFalsy();
     });
   });
 });

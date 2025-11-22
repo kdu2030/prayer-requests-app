@@ -14,6 +14,7 @@ import { mountComponent } from "../../../../tests/utils/test-utils";
 import { SortConfig, SortOrder } from "../../../../types/api-response-types";
 import { ManagedErrorResponse } from "../../../../types/error-handling";
 import { PrayerRequestContextProvider } from "../../../prayer-request/prayer-request-context";
+import { DEBOUNCE_TIME } from "../../../search/prayer-group-search-constants";
 import { PrayerGroupContextProvider } from "../../prayer-group-context";
 import { PrayerGroupJoinRequests } from "../prayer-group-join-requests";
 import { mockJoinRequests } from "./mock-data";
@@ -105,8 +106,6 @@ describe(PrayerGroupJoinRequests, () => {
   });
 
   test("Join requests are searchable by username", async () => {
-    jest.useFakeTimers();
-
     const joinRequestsResponse: ManagedErrorResponse<PostJoinRequestsSearchResponse> =
       {
         isError: false,
@@ -123,15 +122,14 @@ describe(PrayerGroupJoinRequests, () => {
     );
 
     fireEvent.changeText(searchInput, "dmeagle");
-    await act(() => jest.runAllTimers());
+
+    act(() => jest.advanceTimersByTime(DEBOUNCE_TIME));
 
     const usernameValue = await component.findByTestId(
       `${JoinRequestTestIds.usernameValue}[0]`
     );
 
     expect(usernameValue).toHaveTextContent(mockJoinRequests[1].user.username);
-
-    jest.useRealTimers();
   });
 
   test("After approving join requests and saving, approved join request is no longer visible", async () => {
@@ -152,13 +150,13 @@ describe(PrayerGroupJoinRequests, () => {
       `${JoinRequestTestIds.approveButton}[0]`
     );
 
-    await act(() => fireEvent.press(approveButton));
+    fireEvent.press(approveButton);
 
     const saveButton = await component.findByTestId(
       JoinRequestTestIds.saveButton
     );
 
-    await act(() => fireEvent.press(saveButton));
+    fireEvent.press(saveButton);
 
     const remainingJoinRequestFullName = await component.findByTestId(
       `${JoinRequestTestIds.fullNameValue}[0]`
@@ -192,13 +190,13 @@ describe(PrayerGroupJoinRequests, () => {
       `${JoinRequestTestIds.rejectButton}[0]`
     );
 
-    await act(() => fireEvent.press(rejectButton));
+    fireEvent.press(rejectButton);
 
     const saveButton = await component.findByTestId(
       JoinRequestTestIds.saveButton
     );
 
-    await act(() => fireEvent.press(saveButton));
+    fireEvent.press(saveButton);
 
     const remainingJoinRequestFullName = await component.findByTestId(
       `${JoinRequestTestIds.fullNameValue}[0]`

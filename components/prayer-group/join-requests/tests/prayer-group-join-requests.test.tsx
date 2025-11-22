@@ -164,7 +164,11 @@ describe(PrayerGroupJoinRequests, () => {
       `${JoinRequestTestIds.fullNameValue}[0]`
     );
 
+    expect(mockPostApproveJoinRequests).toHaveBeenCalledWith(1, [
+      mockJoinRequests[0].joinRequestId,
+    ]);
     expect(mockDeleteJoinRequests).not.toHaveBeenCalled();
+
     expect(remainingJoinRequestFullName).toHaveTextContent(
       mockJoinRequests[1].user.fullName
     );

@@ -21,8 +21,8 @@ import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [showErrorScreen, setShowErrorScreen] = React.useState<boolean>(false);
+  const [prayerGroupLoadStatus, setPrayerGroupLoadStatus] =
+    React.useState<LoadStatus>(LoadStatus.NotStarted);
   const [showLeavePrayerGroupModal, setShowLeavePrayerGroupModal] =
     React.useState<boolean>(false);
 
@@ -61,15 +61,16 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const loadPrayerGroup = async () => {
     setPrayerGroupDetails(undefined);
-    setIsLoading(true);
+    setPrayerGroupLoadStatus(LoadStatus.Loading);
 
     const response = await getPrayerGroup(prayerGroupId);
-    setIsLoading(false);
 
     if (response.isError) {
-      setShowErrorScreen(true);
+      setPrayerGroupLoadStatus(LoadStatus.Error);
       return;
     }
+
+    setPrayerGroupLoadStatus(LoadStatus.Success);
 
     if (response.value.prayerGroupId !== prayerGroupId) {
       // This could happen if the user switches prayer groups in the middle of loading
@@ -193,7 +194,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   };
 
   const onRetry = () => {
-    setShowErrorScreen(false);
     loadPrayerGroup();
   };
 
@@ -247,14 +247,12 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   };
 
   return {
-    isLoading,
-    setIsLoading,
+    prayerGroupLoadStatus,
+    setPrayerGroupLoadStatus,
     onRemoveUser,
     isRemoveUserLoading,
     onAddUser,
     isAddUserLoading,
-    showErrorScreen,
-    setShowErrorScreen,
     onRetry,
     prayerGroupOptionsRef,
     onOpenOptions,

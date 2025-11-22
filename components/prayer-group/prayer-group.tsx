@@ -28,12 +28,11 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
   const { prayerGroupDetails } = usePrayerGroupContext();
 
   const {
-    isLoading,
+    prayerGroupLoadStatus,
     isRemoveUserLoading,
     onRemoveUser,
     onAddUser,
     isAddUserLoading,
-    showErrorScreen,
     onRetry,
     prayerGroupOptionsRef,
     onOpenOptions,
@@ -62,13 +61,16 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     [isAddUserLoading, isRemoveUserLoading, prayerGroupDetails]
   );
 
-  if (isLoading) {
+  if (
+    prayerGroupLoadStatus === LoadStatus.NotStarted ||
+    prayerGroupLoadStatus === LoadStatus.Loading
+  ) {
     return (
       <SpinnerScreen loadingLabel={translate("loading.prayerGroup.text")} />
     );
   }
 
-  if (showErrorScreen) {
+  if (prayerGroupLoadStatus === LoadStatus.Error) {
     return (
       <ErrorScreen
         errorLabel={translate("loading.prayerGroup.error")}

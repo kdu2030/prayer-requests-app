@@ -47,6 +47,9 @@ jest.mock("@gorhom/bottom-sheet", () => ({
   ...require("@gorhom/bottom-sheet/mock"),
 }));
 
+jest.mock("expo-font");
+jest.mock("expo-asset");
+
 jest.mock("../../../api/get-prayer-group", () => ({
   useGetPrayerGroup: () => () => mockGetPrayerGroup(),
 }));

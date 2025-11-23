@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 
+import { VisibilityLevel } from "../../../constants/prayer-group-constants";
 import { validateFileSizeFromFilePath } from "../../../helpers/file-helpers";
 import { formatNumber } from "../../../helpers/formatting-helpers";
 import { CultureCode, TranslationKey } from "../../../types/languages";
@@ -39,7 +40,22 @@ export const prayerGroupDetailsValidationSchema = (
   return Yup.object().shape({
     prayerGroupId: Yup.number().nullable(),
     rules: Yup.string().nullable(),
-    visibilityLevel: Yup.string().nullable(),
+    visibilityLevel: Yup.string()
+      .nullable()
+      .test(
+        "activeJoinRequests",
+        translate("prayerGroup.edit.visibilityLevel.cannotSetToPublic"),
+        (value, context) => {
+          if (!value || value === VisibilityLevel.Private) {
+            return true;
+          }
+
+          const prayerGroup: PrayerGroupDetails | undefined =
+            context.options.context;
+
+          return !prayerGroup?.joinRequestCount;
+        }
+      ),
     groupName: Yup.string().required(groupNameRequiredError),
     description: Yup.string().required(descriptionRequiredError),
     avatarFile: Yup.object()

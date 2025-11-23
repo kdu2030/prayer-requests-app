@@ -15,7 +15,6 @@ type Props = {
   prayerRequest: PrayerRequestModel;
   prayerRequests: PrayerRequestModel[];
   setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>;
-  setSnackbarError: React.Dispatch<React.SetStateAction<string | undefined>>;
   showCreatedUser?: boolean;
 };
 
@@ -23,7 +22,6 @@ export const PrayerRequestCard: React.FC<Props> = ({
   prayerRequest,
   prayerRequests,
   setPrayerRequests,
-  setSnackbarError,
   showCreatedUser = true,
 }) => {
   const theme = useTheme();
@@ -33,8 +31,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
   const { isLikeLoading, onLikePress, likeIcon } = usePrayerRequestCard(
     prayerRequest,
     prayerRequests,
-    setPrayerRequests,
-    setSnackbarError
+    setPrayerRequests
   );
 
   return (
@@ -125,7 +122,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
 
           <Button
             mode="outlined"
-            icon={prayerRequest.isUserCommented ? "comment" : "comment-outline"}
+            icon={prayerRequest.userCommentId ? "comment" : "comment-outline"}
             testID={getArrayTestId(
               PrayerRequestCardTestIds.commentButton,
               prayerRequest.prayerRequestId
@@ -142,7 +139,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
         <Button
           mode="outlined"
           icon={
-            prayerRequest.isUserPrayed
+            prayerRequest.userPrayerSessionId
               ? "account-heart"
               : "account-heart-outline"
           }

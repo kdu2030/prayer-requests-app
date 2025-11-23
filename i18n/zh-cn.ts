@@ -13,6 +13,9 @@ export const chineseTranslations: Translations = {
   "common.actions.preview": "预览",
   "common.actions.cancel": "取消",
   "common.actions.retry": "重试",
+  "common.actions.leave": "退出",
+  "common.actions.approve": "同意",
+  "common.actions.reject": "拒绝",
 
   "loading.userData.text": "加载用户数据",
   "loading.userData.label": "用户数据",
@@ -77,7 +80,7 @@ export const chineseTranslations: Translations = {
     "小组名字验证失败",
   "createPrayerGroup.rules.title": "内容规则和可见性",
   "createPrayerGroup.visibilityLevel.label": "可见性",
-  "createPrayerGroup.visibilityLevel.public": "公共",
+  "createPrayerGroup.visibilityLevel.public": "公开",
   "createPrayerGroup.visibilityLevel.private": "私密",
   "createPrayerGroup.visibilityLevel.public.description":
     "任何人都可以加入你的祷告小组并查看小组的祷告事项。",
@@ -96,10 +99,15 @@ export const chineseTranslations: Translations = {
   "createPrayerGroup.groupImageColorStep.banner": "横幅图片",
   "createPrayerGroup.groupImageColorStep.unableToSelectImage": "无法选择图片",
 
-  "prayerGroup.actions.join": "加入",
+  "prayerGroup.actions.join": "加入祷告小组",
   "prayerGroup.actions.joined": "加入了",
   "prayerGroup.actions.addPrayerRequest": "添加祷告事项",
   "prayerGroup.actions.groupOptions": "小组选项",
+  "prayerGroup.actions.leavePrayerGroup": "退出祷告小组",
+  "prayerGroup.actions.leavePrayerGroup.success": "你已成功退出祷告小组。",
+  "prayerGroup.actions.leavePrayerGroup.failure": "退出祷告小组失败。",
+  "prayerGroup.actions.leavePrayerGroup.confirmation":
+    "确定要退出祷告小组吗？退出后将无法回复。",
 
   "image.missing.label": "没有图片",
 
@@ -111,6 +119,9 @@ export const chineseTranslations: Translations = {
 
   "prayerGroup.edit.header": "编辑{{groupName}}",
   "prayerGroup.edit.images": "图片",
+  "prayerGroup.edit.success": "已编辑祷告小组",
+  "prayerGroup.edit.visibilityLevel.cannotSetToPublic":
+    "若有进行中的加入请求，则无法将可见性设为公开。",
 
   "prayerGroup.manageUsers.label": "管理用户",
   "prayerGroup.manageUsers.loading": "加载祷告小组用户",
@@ -135,6 +146,7 @@ export const chineseTranslations: Translations = {
   "prayerGroup.search.placeholder": "搜索祷告小组",
   "prayerGroup.search.prompt": "输入以搜索祷告小组",
   "prayerGroup.search.noneFound": "没有找到相关祷告小组",
+  "prayerGroup.search.loading": "下载祷告小组",
 
   "prayerGroup.request.title": "标题",
   "prayerGroup.request.expirationDate.header": "祷告事项可见时间",
@@ -150,4 +162,22 @@ export const chineseTranslations: Translations = {
   "prayerRequest.addLike.failure": "无法点赞祷告事项",
   "prayerRequest.removeLike.failure": "无法删除祷告事项点赞",
   "prayerRequest.prayerGroup.noPrayerRequests": "这个祷告小组还没有祷告事项。",
+
+  "prayerGroup.joinRequest.label":
+    "这是一个私密的祷告小组。要加入，请提交加入请求。",
+  "prayerGroup.joinRequest.submitJoinRequest": "提交加入请求",
+  "prayerGroup.joinRequest.joinRequestSubmitted": "加入请求已提交",
+  "prayerGroup.joinRequest.manage": "管理加入请求",
+  "prayerGroup.joinRequest.unableToLoad": "加载加入请求失败了。",
+  "prayerGroup.joinRequest.loadingJoinRequests": "加载加入请求",
+  "prayerGroup.joinRequest.noActiveJoinRequests": "没有进行的加入请求。",
+  "prayerGroup.joinRequest.noMatches": "没有符合你的搜索条件的加入亲求。",
+  "prayerGroup.joinRequest.unableToSaveJoinRequestUpdates":
+    "保存加入恳求的编辑失败。",
+  "prayerGroup.joinRequest.saved": "加入恳求的编辑已保存",
+
+  "toaster.joinPrayerGroup.success": "你已成功加入祷告小组。",
+  "toaster.joinPrayerGroup.failure": "加入祷告小组失败。",
+  "toaster.joinRequestSubmit.success": "加如请求已提交。",
+  "toaster.joinRequestSubmit.failure": "提交加入请求失败了。",
 };

@@ -9,10 +9,9 @@ import { BaseManagedErrorResponse } from "../types/error-handling";
 export const postPrayerRequest = async (
   fetch: AxiosInstance,
   baseUrl: string,
-  prayerGroupId: number,
   createPrayerRequestForm: RawCreatePrayerRequestForm
 ): Promise<BaseManagedErrorResponse> => {
-  const url = `${baseUrl}/api/v1/prayergroup/${prayerGroupId}/prayer-request`;
+  const url = `${baseUrl}/api/prayerrequest`;
 
   try {
     await fetch.post(url, createPrayerRequestForm, {
@@ -31,11 +30,8 @@ export const usePostPrayerRequest = () => {
   const { fetch, baseUrl } = useApiDataContext();
 
   return React.useCallback(
-    (
-      prayerGroupId: number,
-      createPrayerRequestForm: RawCreatePrayerRequestForm
-    ) =>
-      postPrayerRequest(fetch, baseUrl, prayerGroupId, createPrayerRequestForm),
+    (createPrayerRequestForm: RawCreatePrayerRequestForm) =>
+      postPrayerRequest(fetch, baseUrl, createPrayerRequestForm),
     [baseUrl, fetch]
   );
 };

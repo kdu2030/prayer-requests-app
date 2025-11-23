@@ -32,7 +32,7 @@ export const DeleteUserConfirmationModal: React.FC<Props> = ({
         })}
       </Text>
 
-      <View className="self-end gap-x-4 mt-6 flex-row">
+      <View className="self-end gap-x-2 mt-6 flex-row">
         <Button
           mode="outlined"
           onPress={onCancel}

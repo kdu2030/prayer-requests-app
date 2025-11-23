@@ -12,6 +12,7 @@ export type CreatePrayerRequestForm = {
 
 export type RawCreatePrayerRequestForm = {
   userId?: number;
+  prayerGroupId?: number;
   requestTitle?: string;
   requestDescription?: string;
   expirationDate?: string;

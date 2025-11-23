@@ -4,7 +4,6 @@ import { Text } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { TextInput } from "../inputs/text-input";
-import { ErrorSnackbar } from "../layouts/error-snackbar";
 import { WizardHeader } from "../layouts/wizard-header";
 import {
   CreatePrayerGroupWizardStep,
@@ -24,8 +23,7 @@ export const GroupNameDescriptionStep: React.FC<Props> = ({
   setWizardStep,
 }) => {
   const { translate } = useI18N();
-  const { isLoading, snackbarError, setSnackbarError, onNext } =
-    usePrayerGroupDescriptionStep(setWizardStep);
+  const { isLoading, onNext } = usePrayerGroupDescriptionStep(setWizardStep);
 
   return (
     <>
@@ -60,11 +58,6 @@ export const GroupNameDescriptionStep: React.FC<Props> = ({
           numberOfLines={5}
           required
           testID={GroupNameDescriptionStepTestIds.descriptionInput}
-        />
-
-        <ErrorSnackbar
-          snackbarError={snackbarError}
-          setSnackbarError={setSnackbarError}
         />
       </View>
     </>

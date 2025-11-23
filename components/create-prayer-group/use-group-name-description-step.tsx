@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { useGetPrayerGroupNameValidation } from "../../api/get-prayer-group-name-validation";
 import { useI18N } from "../../hooks/use-i18n";
+import { useToasterContext } from "../toasters/toaster-context";
 import {
   CreatePrayerGroupWizardStep,
   PRAYER_GROUP_NAME_EXISTS,
@@ -16,9 +17,7 @@ export const usePrayerGroupDescriptionStep = (
   >
 ) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [snackbarError, setSnackbarError] = React.useState<
-    string | undefined
-  >();
+  const { openToaster } = useToasterContext();
 
   const { translate } = useI18N();
 
@@ -49,9 +48,12 @@ export const usePrayerGroupDescriptionStep = (
     setIsLoading(false);
 
     if (response.isError) {
-      setSnackbarError(
-        translate("createPrayerGroup.groupNameDescription.validateGroupFailed")
-      );
+      openToaster({
+        message: translate(
+          "createPrayerGroup.groupNameDescription.validateGroupFailed"
+        ),
+        variant: "error",
+      });
       return false;
     }
 
@@ -88,7 +90,5 @@ export const usePrayerGroupDescriptionStep = (
   return {
     isLoading,
     onNext,
-    snackbarError,
-    setSnackbarError,
   };
 };

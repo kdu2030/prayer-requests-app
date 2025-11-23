@@ -7,6 +7,9 @@ export const englishTranslations = {
   "common.actions.preview": "Preview",
   "common.actions.cancel": "Cancel",
   "common.actions.retry": "Retry",
+  "common.actions.leave": "Leave",
+  "common.actions.approve": "Approve",
+  "common.actions.reject": "Reject",
 
   "loading.userData.text": "Loading user data",
   "loading.userData.label": "User Data",
@@ -96,8 +99,15 @@ export const englishTranslations = {
   "createPrayerGroup.groupImageColorStep.unableToSelectImage":
     "Unable to select image.",
 
-  "prayerGroup.actions.join": "Join",
+  "prayerGroup.actions.join": "Join Prayer Group",
   "prayerGroup.actions.joined": "Joined",
+  "prayerGroup.actions.leavePrayerGroup": "Leave Prayer Group",
+  "prayerGroup.actions.leavePrayerGroup.confirmation":
+    "Are you sure you want to leave the prayer group? This cannot be undone.",
+  "prayerGroup.actions.leavePrayerGroup.success":
+    "Successfully left prayer group.",
+  "prayerGroup.actions.leavePrayerGroup.failure":
+    "Unable to leave prayer group.",
   "prayerGroup.actions.addPrayerRequest": "Add Prayer Request",
   "prayerGroup.actions.groupOptions": "Group Options",
 
@@ -111,6 +121,9 @@ export const englishTranslations = {
 
   "prayerGroup.edit.header": "Edit {{groupName}}",
   "prayerGroup.edit.images": "Images",
+  "prayerGroup.edit.success": "Edited prayer group",
+  "prayerGroup.edit.visibilityLevel.cannotSetToPublic":
+    "Visibility level cannot be set to public with active join requests.",
 
   "prayerGroup.manageUsers.label": "Manage Users",
   "prayerGroup.manageUsers.loading": "Loading prayer group users",
@@ -136,6 +149,7 @@ export const englishTranslations = {
   "prayerGroup.search.placeholder": "Search for prayer groups",
   "prayerGroup.search.prompt": "Type to search for prayer groups",
   "prayerGroup.search.noneFound": "No prayer groups found",
+  "prayerGroup.search.loading": "Loading prayer groups",
 
   "prayerGroup.request.title": "Title",
   "prayerGroup.request.expirationDate.header": "Prayer request visibility",
@@ -152,4 +166,24 @@ export const englishTranslations = {
   "prayerRequest.removeLike.failure": "Unable to remove prayer request like",
   "prayerRequest.prayerGroup.noPrayerRequests":
     "This prayer group does not have prayer requests yet.",
+
+  "prayerGroup.joinRequest.label":
+    "This is a private prayer group. To join, please submit a join request.",
+  "prayerGroup.joinRequest.submitJoinRequest": "Submit Join Request",
+  "prayerGroup.joinRequest.joinRequestSubmitted": "Join Request Submitted",
+  "prayerGroup.joinRequest.manage": "Manage Join Requests",
+  "prayerGroup.joinRequest.unableToLoad": "Failed to load join requests.",
+  "prayerGroup.joinRequest.loadingJoinRequests": "Loading join requests",
+  "prayerGroup.joinRequest.noActiveJoinRequests":
+    "There are no active join requests.",
+  "prayerGroup.joinRequest.noMatches":
+    "There are no join requests that matched your search.",
+  "prayerGroup.joinRequest.unableToSaveJoinRequestUpdates":
+    "Failed to save join request updates.",
+  "prayerGroup.joinRequest.saved": "Saved join request updates.",
+
+  "toaster.joinPrayerGroup.success": "Successfully joined prayer group.",
+  "toaster.joinPrayerGroup.failure": "Failed to join prayer group.",
+  "toaster.joinRequestSubmit.success": "Join request submitted.",
+  "toaster.joinRequestSubmit.failure": "Failed to submit join request.",
 };

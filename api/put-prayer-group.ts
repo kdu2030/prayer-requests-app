@@ -5,7 +5,7 @@ import { VisibilityLevel } from "../constants/prayer-group-constants";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
-import { RawPrayerGroupDetails } from "../types/prayer-group-types";
+import { PrayerGroupDetails } from "../types/prayer-group-types";
 
 export type PutPrayerGroupRequest = {
   groupName?: string;
@@ -21,11 +21,11 @@ const putPrayerGroup = async (
   baseUrl: string,
   prayerGroupId: number,
   request: PutPrayerGroupRequest
-): Promise<ManagedErrorResponse<RawPrayerGroupDetails>> => {
+): Promise<ManagedErrorResponse<PrayerGroupDetails>> => {
   const url = `${baseUrl}/api/prayergroup/${prayerGroupId}`;
 
   try {
-    const response = await fetch.put<RawPrayerGroupDetails>(url, request, {
+    const response = await fetch.put<PrayerGroupDetails>(url, request, {
       headers: {
         "Content-Type": "application/json",
       },

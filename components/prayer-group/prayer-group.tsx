@@ -6,13 +6,13 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
-import { ErrorSnackbar } from "../layouts/error-snackbar";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
+import { LeavePrayerGroupModal } from "./leave-prayer-group/leave-prayer-group-modal";
 import { PrayerGroupOptions } from "./options/prayer-group-options";
 import { usePrayerGroupContext } from "./prayer-group-context";
-import { PrayerRequestPlaceholder } from "./prayer-request-placeholder";
+import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
 import { PrayerRequestSpinner } from "./spinners/prayer-request-spinner";
 import { usePrayerGroup } from "./use-prayer-group";
 
@@ -28,24 +28,24 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
   const { prayerGroupDetails } = usePrayerGroupContext();
 
   const {
-    isLoading,
-    snackbarError,
-    setSnackbarError,
+    prayerGroupLoadStatus,
     isRemoveUserLoading,
     onRemoveUser,
     onAddUser,
     isAddUserLoading,
-    showErrorScreen,
     onRetry,
     prayerGroupOptionsRef,
     onOpenOptions,
-    nextPrayerRequestLoadStatus,
+    nextPrayerRequestsLoadStatus,
     prayerRequestLoadStatus,
     prayerRequests,
     onEndReached,
     setPrayerRequests,
     loadNextPrayerRequestsForGroup,
     showPrayerRequestList,
+    showLeavePrayerGroupModal,
+    setShowLeavePrayerGroupModal,
+    setUserJoinStatus,
   } = usePrayerGroup(prayerGroupId);
 
   const prayerGroupHeader = React.useMemo(
@@ -53,9 +53,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
       <PrayerGroupHeader
         prayerGroupDetails={prayerGroupDetails}
         isAddUserLoading={isAddUserLoading}
-        isRemoveUserLoading={isRemoveUserLoading}
         onAddUser={onAddUser}
-        onRemoveUser={onRemoveUser}
         onOpenOptions={onOpenOptions}
       />
     ),
@@ -63,13 +61,16 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     [isAddUserLoading, isRemoveUserLoading, prayerGroupDetails]
   );
 
-  if (isLoading) {
+  if (
+    prayerGroupLoadStatus === LoadStatus.NotStarted ||
+    prayerGroupLoadStatus === LoadStatus.Loading
+  ) {
     return (
       <SpinnerScreen loadingLabel={translate("loading.prayerGroup.text")} />
     );
   }
 
-  if (showErrorScreen) {
+  if (prayerGroupLoadStatus === LoadStatus.Error) {
     return (
       <ErrorScreen
         errorLabel={translate("loading.prayerGroup.error")}
@@ -90,32 +91,15 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         }}
       >
         {!showPrayerRequestList && (
-          <>
-            {prayerGroupHeader}
-            <View className="mt-32">
-              {prayerRequestLoadStatus === LoadStatus.Loading && (
-                <PrayerRequestSpinner
-                  textClassName="mt-5"
-                  labelVariant={"titleMedium"}
-                />
-              )}
-
-              {prayerRequestLoadStatus === LoadStatus.Error && (
-                <ErrorScreen
-                  errorLabel={translate("prayerRequest.loading.failure")}
-                  showSafeArea={false}
-                  fillContainer={false}
-                  onRetry={() =>
-                    loadNextPrayerRequestsForGroup(prayerGroupId, true)
-                  }
-                />
-              )}
-
-              {prayerRequestLoadStatus === LoadStatus.Success && (
-                <PrayerRequestPlaceholder />
-              )}
-            </View>
-          </>
+          <PrayerRequestPlaceholderBody
+            prayerGroupId={prayerGroupId}
+            prayerGroupHeader={prayerGroupHeader}
+            prayerRequestLoadStatus={prayerRequestLoadStatus}
+            loadNextPrayerRequestsForGroup={loadNextPrayerRequestsForGroup}
+            visibilityLevel={prayerGroupDetails?.visibilityLevel}
+            joinStatus={prayerGroupDetails?.userJoinStatus}
+            setUserJoinStatus={setUserJoinStatus}
+          />
         )}
 
         {prayerRequestLoadStatus === LoadStatus.Success &&
@@ -128,12 +112,11 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                   prayerRequest={item}
                   prayerRequests={prayerRequests}
                   setPrayerRequests={setPrayerRequests}
-                  setSnackbarError={setSnackbarError}
                   key={item.prayerRequestId}
                 />
               )}
               ListFooterComponent={
-                nextPrayerRequestLoadStatus === LoadStatus.Loading ? (
+                nextPrayerRequestsLoadStatus === LoadStatus.Loading ? (
                   <View className="py-6">
                     <PrayerRequestSpinner
                       size={48}
@@ -150,13 +133,17 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
 
         <PrayerGroupOptions
           prayerGroupDetails={prayerGroupDetails}
+          setShowLeavePrayerGroupModal={setShowLeavePrayerGroupModal}
           bottomSheetRef={prayerGroupOptionsRef}
         />
 
-        <ErrorSnackbar
-          snackbarError={snackbarError}
-          setSnackbarError={setSnackbarError}
-        />
+        {showLeavePrayerGroupModal && (
+          <LeavePrayerGroupModal
+            isRemoveUserLoading={isRemoveUserLoading}
+            onRemoveUser={onRemoveUser}
+            onCancel={() => setShowLeavePrayerGroupModal(false)}
+          />
+        )}
       </View>
     </>
   );

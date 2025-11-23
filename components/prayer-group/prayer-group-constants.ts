@@ -1,11 +1,11 @@
 import { SortOrder } from "../../types/api-response-types";
 import {
   PrayerRequestFilterCriteria,
+  PrayerRequestMetadata,
   PrayerRequestSortFields,
 } from "../../types/prayer-request-types";
 
 export const DEFAULT_PRAYER_REQUEST_FILTERS: PrayerRequestFilterCriteria = {
-  creatorUserIds: [],
   pageIndex: 0,
   pageSize: 10,
   includeExpiredRequests: false,
@@ -13,4 +13,10 @@ export const DEFAULT_PRAYER_REQUEST_FILTERS: PrayerRequestFilterCriteria = {
     sortField: PrayerRequestSortFields.CreatedDate,
     sortDirection: SortOrder.Descending,
   },
+};
+
+export const DEFAULT_PRAYER_REQUEST_METADATA: PrayerRequestMetadata = {
+  numberOfPages: 0,
+  totalCount: 0,
+  pageIndex: 0,
 };

@@ -5,7 +5,6 @@ import { View } from "react-native";
 import { Button, HelperText, Text } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
-import { ErrorSnackbar } from "../../layouts/error-snackbar";
 import { GroupPreview } from "../../layouts/group-preview";
 import { SelectedImageCard } from "../../layouts/selected-image-card";
 import { WizardHeader } from "../../layouts/wizard-header";
@@ -27,14 +26,8 @@ type Props = {
 export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
   const { values, errors } = useFormikContext<CreatePrayerGroupForm>();
-  const {
-    selectImage,
-    onRemoveSelectedImage,
-    savePrayerGroup,
-    snackbarError,
-    setSnackbarError,
-    isLoading,
-  } = useGroupImageColorStep();
+  const { selectImage, onRemoveSelectedImage, savePrayerGroup, isLoading } =
+    useGroupImageColorStep();
 
   const imageError = get(errors, "avatarFile.filePath");
   const bannerImageError = get(errors, "bannerFile.filePath");
@@ -125,11 +118,6 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
           )}
         </>
       )}
-
-      <ErrorSnackbar
-        snackbarError={snackbarError}
-        setSnackbarError={setSnackbarError}
-      />
     </>
   );
 };

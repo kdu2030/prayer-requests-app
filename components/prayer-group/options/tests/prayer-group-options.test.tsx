@@ -1,14 +1,18 @@
+import "@testing-library/jest-native/extend-expect";
+import "@testing-library/jest-native";
+
 import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { renderHook, RenderResult } from "@testing-library/react-native";
 import { useRef } from "react";
 
-import { PrayerGroupRole } from "../../../../constants/prayer-group-constants";
-import { mountComponent } from "../../../../tests/utils/test-utils";
 import {
-  PrayerGroupDetails,
-  RawPrayerGroupDetails,
-} from "../../../../types/prayer-group-types";
+  JoinStatus,
+  PrayerGroupRole,
+  VisibilityLevel,
+} from "../../../../constants/prayer-group-constants";
+import { mountComponent } from "../../../../tests/utils/test-utils";
+import { PrayerGroupDetails } from "../../../../types/prayer-group-types";
 import { mockPrayerGroupDetails } from "../../tests/mock-data";
 import { PrayerGroupOptions } from "../prayer-group-options";
 import { PrayerGroupOptionsTestIds } from "./test-ids";
@@ -31,6 +35,7 @@ const mountPrayerGroupOptions = (prayerGroupDetails: PrayerGroupDetails) => {
     <PrayerGroupOptions
       prayerGroupDetails={prayerGroupDetails}
       bottomSheetRef={bottomSheetRef}
+      setShowLeavePrayerGroupModal={() => {}}
     />
   );
 };
@@ -60,7 +65,7 @@ describe(PrayerGroupOptions, () => {
   });
 
   test("If the user is not an admin, hide edit prayer group and manage users", async () => {
-    const prayerGroupDetails: RawPrayerGroupDetails = {
+    const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       prayerGroupRole: PrayerGroupRole.Member,
     };
@@ -77,5 +82,36 @@ describe(PrayerGroupOptions, () => {
 
     expect(editPrayerGroupButton).toBeFalsy();
     expect(manageUsersButton).toBeFalsy();
+  });
+
+  test("If the user is an admin on a private prayer group, show manage join requests", () => {
+    const prayerGroupDetails: PrayerGroupDetails = {
+      ...mockPrayerGroupDetails,
+      joinRequestCount: 5,
+      visibilityLevel: VisibilityLevel.Private,
+      userJoinStatus: JoinStatus.Joined,
+    };
+
+    component = mountPrayerGroupOptions(prayerGroupDetails);
+
+    const manageJoinRequests = component.getByTestId(
+      PrayerGroupOptionsTestIds.manageJoinRequestsButton
+    );
+
+    const joinRequestsCount = component.getByTestId(
+      PrayerGroupOptionsTestIds.joinRequestsCount
+    );
+
+    expect(manageJoinRequests).toBeTruthy();
+    expect(joinRequestsCount).toHaveTextContent("5");
+  });
+
+  test("If the user is already joined, show the leave prayer group button", () => {
+    component = mountPrayerGroupOptions(mockPrayerGroupDetails);
+
+    const leavePrayerGroupButton = component.queryByTestId(
+      PrayerGroupOptionsTestIds.leavePrayerGroupButton
+    );
+    expect(leavePrayerGroupButton).toBeTruthy();
   });
 });

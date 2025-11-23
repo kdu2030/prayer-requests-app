@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
@@ -9,29 +9,41 @@ import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { Href, router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
-import { useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 
 import {
   JoinStatus,
   PrayerGroupRole,
+  VisibilityLevel,
 } from "../../../constants/prayer-group-constants";
+import { formatNumber } from "../../../helpers/formatting-helpers";
 import { useI18N } from "../../../hooks/use-i18n";
+import { CultureCode } from "../../../types/languages";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { PrayerGroupOptionButton } from "./prayer-group-option-button";
 import { PrayerGroupOptionsTestIds } from "./tests/test-ids";
 
 type Props = {
   prayerGroupDetails?: PrayerGroupDetails;
+  setShowLeavePrayerGroupModal: React.Dispatch<React.SetStateAction<boolean>>;
   bottomSheetRef: React.RefObject<BottomSheetProps & BottomSheetMethods>;
 };
 
 export const PrayerGroupOptions: React.FC<Props> = ({
   prayerGroupDetails,
   bottomSheetRef,
+  setShowLeavePrayerGroupModal,
 }) => {
-  const { translate } = useI18N();
+  const { translate, i18n } = useI18N();
   const theme = useTheme();
   const isAdmin = prayerGroupDetails?.prayerGroupRole === PrayerGroupRole.Admin;
+
+  const formattedJoinRequestCount = prayerGroupDetails?.joinRequestCount
+    ? formatNumber(
+        prayerGroupDetails.joinRequestCount,
+        i18n.language as CultureCode
+      )
+    : undefined;
 
   const renderBackdrop = React.useCallback(
     (props: BottomSheetBackdropProps) => (
@@ -87,6 +99,31 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                 }
                 testID={PrayerGroupOptionsTestIds.manageUsersButton}
               />
+
+              {prayerGroupDetails.visibilityLevel ===
+                VisibilityLevel.Private && (
+                <PrayerGroupOptionButton
+                  label={translate("prayerGroup.joinRequest.manage")}
+                  icon={<MaterialIcons name="manage-accounts" size={24} />}
+                  onPress={() => {
+                    onPressOption("/(drawer)/prayergroup/[id]/join-requests");
+                  }}
+                  endAdornment={
+                    formattedJoinRequestCount ? (
+                      <View
+                        className="px-4 rounded-full font-bold"
+                        style={{ backgroundColor: theme.colors.primary }}
+                        testID={PrayerGroupOptionsTestIds.joinRequestsCount}
+                      >
+                        <Text variant="bodyLarge" className="text-white">
+                          {formattedJoinRequestCount}
+                        </Text>
+                      </View>
+                    ) : null
+                  }
+                  testID={PrayerGroupOptionsTestIds.manageJoinRequestsButton}
+                />
+              )}
             </>
           )}
 
@@ -97,6 +134,18 @@ export const PrayerGroupOptions: React.FC<Props> = ({
               onPress={() => {
                 onPressOption("/(drawer)/prayergroup/[id]/create");
               }}
+            />
+          )}
+
+          {prayerGroupDetails?.userJoinStatus == JoinStatus.Joined && (
+            <PrayerGroupOptionButton
+              label={translate("prayerGroup.actions.leavePrayerGroup")}
+              icon={<MaterialIcons name="person-remove" size={24} />}
+              onPress={() => {
+                setShowLeavePrayerGroupModal(true);
+                bottomSheetRef.current?.close();
+              }}
+              testID={PrayerGroupOptionsTestIds.leavePrayerGroupButton}
             />
           )}
         </View>

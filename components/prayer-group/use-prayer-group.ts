@@ -5,40 +5,38 @@ import * as React from "react";
 import { useDeletePrayerGroupUser } from "../../api/delete-prayer-group-user";
 import { useGetPrayerGroup } from "../../api/get-prayer-group";
 import { usePostPrayerGroupUser } from "../../api/post-prayer-group-user";
-import { usePostPrayerRequestFilter } from "../../api/post-prayer-request-filter";
 import {
   JoinStatus,
   PrayerGroupRole,
+  VisibilityLevel,
 } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
-import { mapPrayerRequests } from "../../mappers/map-prayer-request";
 import { LoadStatus } from "../../types/api-response-types";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
-import {
-  PrayerRequestFilterCriteria,
-  PrayerRequestModel,
-} from "../../types/prayer-request-types";
+import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
+import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
+import { useToasterContext } from "../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [showErrorScreen, setShowErrorScreen] = React.useState<boolean>(false);
-
-  const [prayerRequestFilters, setPrayerRequestFilters] = React.useState<
-    Omit<PrayerRequestFilterCriteria, "prayerGroupIds">
-  >(DEFAULT_PRAYER_REQUEST_FILTERS);
-
-  const [prayerRequests, setPrayerRequests] = React.useState<
-    PrayerRequestModel[]
-  >([]);
-  const prayerRequestTotalCount = React.useRef<number | null>();
-
-  const [prayerRequestLoadStatus, setPrayerRequestLoadStatus] =
+  const [prayerGroupLoadStatus, setPrayerGroupLoadStatus] =
     React.useState<LoadStatus>(LoadStatus.NotStarted);
-  const [nextPrayerRequestLoadStatus, setNextPrayerRequestLoadStatus] =
-    React.useState<LoadStatus>(LoadStatus.NotStarted);
+  const [showLeavePrayerGroupModal, setShowLeavePrayerGroupModal] =
+    React.useState<boolean>(false);
+
+  const {
+    prayerRequestFilters,
+    setPrayerRequestFilters,
+    prayerRequests,
+    setPrayerRequests,
+    prayerRequestMetadata,
+    cleanupPrayerRequests,
+    loadNextPrayerRequestsForGroup,
+    prayerRequestLoadStatus,
+    nextPrayerRequestsLoadStatus,
+  } = usePrayerRequestContext();
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
 
@@ -47,9 +45,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const [isAddUserLoading, setIsAddUserLoading] =
     React.useState<boolean>(false);
 
-  const [snackbarError, setSnackbarError] = React.useState<string | undefined>(
-    undefined
-  );
+  const { openToaster } = useToasterContext();
 
   const prayerGroupOptionsRef = React.useRef<
     BottomSheetProps & BottomSheetMethods
@@ -61,70 +57,20 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const deletePrayerGroupUser = useDeletePrayerGroupUser();
   const postPrayerGroupUser = usePostPrayerGroupUser();
 
-  const postPrayerRequestFilter = usePostPrayerRequestFilter();
-
   const { translate } = useI18N();
-
-  const cleanupPrayerRequests = async () => {
-    setPrayerRequestFilters(DEFAULT_PRAYER_REQUEST_FILTERS);
-    setPrayerRequests([]);
-    prayerRequestTotalCount.current = null;
-  };
-
-  const loadNextPrayerRequestsForGroup = async (
-    prayerGroupId: number,
-    showCompleteSpinner: boolean,
-    customFilters?: PrayerRequestFilterCriteria
-  ) => {
-    const setLoadStatus = showCompleteSpinner
-      ? setPrayerRequestLoadStatus
-      : setNextPrayerRequestLoadStatus;
-
-    const filters = customFilters ?? prayerRequestFilters;
-
-    if (!userData?.userId) {
-      return;
-    }
-
-    setLoadStatus(LoadStatus.Loading);
-
-    const response = await postPrayerRequestFilter(userData.userId, {
-      ...filters,
-      prayerGroupIds: [prayerGroupId],
-    });
-
-    if (response.isError && showCompleteSpinner) {
-      setLoadStatus(LoadStatus.Error);
-      setPrayerRequests([]);
-      return;
-    } else if (response.isError) {
-      setLoadStatus(LoadStatus.Error);
-      setSnackbarError(translate("prayerRequest.loading.failure"));
-      return;
-    }
-
-    // Since prayer requests can be infinitely scrolled
-    // We don't want to get rid of the current existing prayer requests unless group ID changes.
-    setPrayerRequests((existingRequests) => [
-      ...existingRequests,
-      ...mapPrayerRequests(response.value.prayerRequests ?? []),
-    ]);
-    prayerRequestTotalCount.current = response.value.totalCount;
-
-    setLoadStatus(LoadStatus.Success);
-  };
 
   const loadPrayerGroup = async () => {
     setPrayerGroupDetails(undefined);
-    setIsLoading(true);
+    setPrayerGroupLoadStatus(LoadStatus.Loading);
 
     const response = await getPrayerGroup(prayerGroupId);
-    setIsLoading(false);
 
     if (response.isError) {
-      setShowErrorScreen(true);
+      setPrayerGroupLoadStatus(LoadStatus.Error);
       return;
     }
+
+    setPrayerGroupLoadStatus(LoadStatus.Success);
 
     if (response.value.prayerGroupId !== prayerGroupId) {
       // This could happen if the user switches prayer groups in the middle of loading
@@ -132,12 +78,21 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     }
 
     setPrayerGroupDetails(response.value);
+    return response.value;
   };
 
   const loadPrayerGroupData = async () => {
     cleanupPrayerRequests();
 
-    await loadPrayerGroup();
+    const prayerGroupDetails = await loadPrayerGroup();
+
+    if (
+      prayerGroupDetails?.visibilityLevel === VisibilityLevel.Private &&
+      prayerGroupDetails.userJoinStatus !== JoinStatus.Joined
+    ) {
+      return;
+    }
+
     await loadNextPrayerRequestsForGroup(
       prayerGroupId,
       true,
@@ -160,9 +115,18 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setIsAddUserLoading(false);
 
     if (response.isError) {
-      setSnackbarError(translate("toaster.failed.addUserFailure"));
+      openToaster({
+        message: translate("toaster.joinPrayerGroup.failure"),
+        variant: "error",
+      });
+
       return;
     }
+
+    openToaster({
+      message: translate("toaster.joinPrayerGroup.success"),
+      variant: "success",
+    });
 
     const joinedPrayerGroupSummary: PrayerGroupSummary = {
       prayerGroupId,
@@ -200,13 +164,18 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setIsRemoveUserLoading(false);
 
     if (response.isError) {
-      setSnackbarError(
-        translate("toaster.failed.removeFailure", {
-          item: translate("common.user"),
-        })
-      );
+      openToaster({
+        message: translate("prayerGroup.actions.leavePrayerGroup.failure"),
+        variant: "error",
+      });
+
       return;
     }
+
+    openToaster({
+      message: translate("prayerGroup.actions.leavePrayerGroup.success"),
+      variant: "success",
+    });
 
     setPrayerGroupDetails({
       ...prayerGroupDetails,
@@ -220,10 +189,11 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       );
       return { ...existingUserData, prayerGroups };
     });
+
+    setShowLeavePrayerGroupModal(false);
   };
 
   const onRetry = () => {
-    setShowErrorScreen(false);
     loadPrayerGroup();
   };
 
@@ -237,15 +207,15 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const onEndReached = async () => {
     if (
-      nextPrayerRequestLoadStatus === LoadStatus.Loading ||
+      nextPrayerRequestsLoadStatus === LoadStatus.Loading ||
       prayerRequestLoadStatus === LoadStatus.Loading
     ) {
       return;
     }
 
     if (
-      prayerRequestTotalCount.current == null ||
-      prayerRequests.length >= prayerRequestTotalCount.current
+      prayerRequestMetadata.totalCount == null ||
+      prayerRequests.length >= prayerRequestMetadata.totalCount
     ) {
       return;
     }
@@ -269,17 +239,20 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     );
   }, [prayerRequestLoadStatus, prayerRequests.length]);
 
+  const setUserJoinStatus = (joinStatus: JoinStatus) => {
+    setPrayerGroupDetails((prayerGroupDetails) => ({
+      ...prayerGroupDetails,
+      userJoinStatus: joinStatus,
+    }));
+  };
+
   return {
-    isLoading,
-    setIsLoading,
-    snackbarError,
-    setSnackbarError,
+    prayerGroupLoadStatus,
+    setPrayerGroupLoadStatus,
     onRemoveUser,
     isRemoveUserLoading,
     onAddUser,
     isAddUserLoading,
-    showErrorScreen,
-    setShowErrorScreen,
     onRetry,
     prayerGroupOptionsRef,
     onOpenOptions,
@@ -289,8 +262,11 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     onEndReached,
     setPrayerRequests,
     loadNextPrayerRequestsForGroup,
-    nextPrayerRequestLoadStatus,
+    nextPrayerRequestsLoadStatus,
     prayerRequestLoadStatus,
     showPrayerRequestList,
+    showLeavePrayerGroupModal,
+    setShowLeavePrayerGroupModal,
+    setUserJoinStatus,
   };
 };

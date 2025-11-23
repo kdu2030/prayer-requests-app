@@ -12,7 +12,6 @@ import { useI18N } from "../../../hooks/use-i18n";
 import { CultureCode } from "../../../types/languages";
 import { FormikSelect } from "../../inputs/formik-select";
 import { TextInput } from "../../inputs/text-input";
-import { ErrorSnackbar } from "../../layouts/error-snackbar";
 import { GroupPreview } from "../../layouts/group-preview";
 import { SelectedImageCard } from "../../layouts/selected-image-card";
 import { PrayerGroupPermissionError } from "../error-screens/user-permission-error";
@@ -29,8 +28,6 @@ export const PrayerGroupEdit: React.FC = () => {
 
   const {
     formikRef,
-    snackbarError,
-    setSnackbarError,
     selectImage,
     clearField,
     isLoading,
@@ -198,11 +195,6 @@ export const PrayerGroupEdit: React.FC = () => {
               </>
             )}
           </Formik>
-
-          <ErrorSnackbar
-            snackbarError={snackbarError}
-            setSnackbarError={setSnackbarError}
-          />
         </View>
       </ScrollView>
     </SafeAreaView>

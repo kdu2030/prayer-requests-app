@@ -1,9 +1,10 @@
+import { PostPrayerGroupSearchResponse } from "../../../api/post-prayer-group-search";
 import { FileType } from "../../../types/media-file-types";
-import { RawPrayerGroupSummary } from "../../../types/prayer-group-types";
+import { PrayerGroupSummary } from "../../../types/prayer-group-types";
 
-export const mockPrayerGroupSearchResults: RawPrayerGroupSummary[] = [
+export const mockPrayerGroupSearchResults: PrayerGroupSummary[] = [
   {
-    id: 1,
+    prayerGroupId: 1,
     groupName: "Prayer Group 1",
     avatarFile: {
       mediaFileId: 1,
@@ -14,7 +15,7 @@ export const mockPrayerGroupSearchResults: RawPrayerGroupSummary[] = [
     },
   },
   {
-    id: 2,
+    prayerGroupId: 2,
     groupName: "Prayer Group 2",
     avatarFile: {
       mediaFileId: 4,
@@ -25,7 +26,7 @@ export const mockPrayerGroupSearchResults: RawPrayerGroupSummary[] = [
     },
   },
   {
-    id: 3,
+    prayerGroupId: 3,
     groupName: "Prayer Group 3",
     avatarFile: {
       mediaFileId: 6,
@@ -36,3 +37,7 @@ export const mockPrayerGroupSearchResults: RawPrayerGroupSummary[] = [
     },
   },
 ];
+
+export const mockPrayerGroupSearchResponse: PostPrayerGroupSearchResponse = {
+  prayerGroups: mockPrayerGroupSearchResults,
+};

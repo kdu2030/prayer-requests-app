@@ -5,4 +5,5 @@ export enum PrayerGroupHeaderTestIds {
   joinGroupButton = "prayer-group-header-join-group-button",
   addPrayerRequestButton = "prayer-group-header-add-prayer-request-button",
   aboutGroupButton = "prayer-group-header-about-group-button",
+  optionsButton = "prayer-group-header-options-button",
 }

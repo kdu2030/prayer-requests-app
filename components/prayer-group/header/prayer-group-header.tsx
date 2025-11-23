@@ -1,9 +1,13 @@
+import classNames from "classnames";
 import { router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 
-import { JoinStatus } from "../../../constants/prayer-group-constants";
+import {
+  JoinStatus,
+  VisibilityLevel,
+} from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import { ProfilePicture } from "../../layouts/profile-picture";
@@ -12,8 +16,6 @@ import { PrayerGroupHeaderTestIds } from "./tests/test-ids";
 
 type Props = {
   prayerGroupDetails: PrayerGroupDetails | undefined;
-  onRemoveUser: () => void;
-  isRemoveUserLoading: boolean;
   onAddUser: () => void;
   isAddUserLoading: boolean;
   onOpenOptions: () => void;
@@ -21,14 +23,19 @@ type Props = {
 
 export const PrayerGroupHeader: React.FC<Props> = ({
   prayerGroupDetails,
-  onRemoveUser,
-  isRemoveUserLoading,
   onAddUser,
   isAddUserLoading,
   onOpenOptions,
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
+
+  const showJoinButton = React.useMemo(() => {
+    return (
+      prayerGroupDetails?.userJoinStatus != JoinStatus.Joined &&
+      prayerGroupDetails?.visibilityLevel === VisibilityLevel.Public
+    );
+  }, [prayerGroupDetails?.userJoinStatus, prayerGroupDetails?.visibilityLevel]);
 
   return (
     <View
@@ -37,7 +44,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
     >
       <PrayerGroupBanner uri={prayerGroupDetails?.bannerFile?.fileUrl} />
       <View className="pt-4 px-4 flex-row items-center justify-between">
-        <View className="w-2/3 self-start flex-row items-center">
+        <View className={classNames("self-start flex-row items-center")}>
           <View className="mr-4">
             <ProfilePicture
               width={52}
@@ -48,39 +55,13 @@ export const PrayerGroupHeader: React.FC<Props> = ({
 
           <Text
             variant="titleLarge"
-            className="font-bold"
+            className="font-bold flex-shrink"
             numberOfLines={1}
             ellipsizeMode="tail"
           >
             {prayerGroupDetails?.groupName}
           </Text>
         </View>
-
-        {prayerGroupDetails?.userJoinStatus === JoinStatus.Joined && (
-          <Button
-            icon={"check"}
-            className="justify-self-end"
-            mode={"outlined"}
-            onPress={onRemoveUser}
-            loading={isRemoveUserLoading}
-            testID={PrayerGroupHeaderTestIds.leaveGroupButton}
-          >
-            {translate("prayerGroup.actions.joined")}
-          </Button>
-        )}
-
-        {prayerGroupDetails?.userJoinStatus != JoinStatus.Joined && (
-          <Button
-            icon={"account-multiple-plus"}
-            className="justify-self-end"
-            mode={"contained"}
-            onPress={onAddUser}
-            loading={isAddUserLoading}
-            testID={PrayerGroupHeaderTestIds.joinGroupButton}
-          >
-            {translate("prayerGroup.actions.join")}
-          </Button>
-        )}
       </View>
       <View className="mt-2 px-4">
         <Text variant="bodyMedium" numberOfLines={2}>
@@ -88,7 +69,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
         </Text>
 
         <View className="flex-row gap-x-4 mt-4">
-          {prayerGroupDetails?.userJoinStatus === JoinStatus.Joined ? (
+          {prayerGroupDetails?.userJoinStatus === JoinStatus.Joined && (
             <Button
               icon="plus"
               className="flex-1"
@@ -104,28 +85,46 @@ export const PrayerGroupHeader: React.FC<Props> = ({
             >
               {translate("prayerGroup.actions.addPrayerRequest")}
             </Button>
-          ) : (
+          )}
+
+          {prayerGroupDetails?.visibilityLevel === VisibilityLevel.Private &&
+            prayerGroupDetails.userJoinStatus !== JoinStatus.Joined && (
+              <Button
+                icon="information"
+                className="flex-1"
+                mode="contained"
+                testID={PrayerGroupHeaderTestIds.aboutGroupButton}
+                onPress={() => {
+                  prayerGroupDetails?.prayerGroupId &&
+                    router.push({
+                      pathname: "/(drawer)/prayergroup/[id]/about",
+                      params: { id: prayerGroupDetails?.prayerGroupId },
+                    });
+                }}
+              >
+                {translate("prayerGroup.options.about")}
+              </Button>
+            )}
+
+          {showJoinButton && (
             <Button
-              icon="information"
+              icon={"account-multiple-plus"}
               className="flex-1"
-              mode="contained"
-              testID={PrayerGroupHeaderTestIds.aboutGroupButton}
-              onPress={() => {
-                prayerGroupDetails?.prayerGroupId &&
-                  router.push({
-                    pathname: "/(drawer)/prayergroup/[id]/about",
-                    params: { id: prayerGroupDetails?.prayerGroupId },
-                  });
-              }}
+              mode={"contained"}
+              onPress={onAddUser}
+              loading={isAddUserLoading}
+              testID={PrayerGroupHeaderTestIds.joinGroupButton}
             >
-              {translate("prayerGroup.options.about")}
+              {translate("prayerGroup.actions.join")}
             </Button>
           )}
+
           <Button
             icon="dots-horizontal"
             className="flex-1"
             mode={"outlined"}
             onPress={onOpenOptions}
+            testID={PrayerGroupHeaderTestIds.optionsButton}
           >
             {translate("prayerGroup.actions.groupOptions")}
           </Button>

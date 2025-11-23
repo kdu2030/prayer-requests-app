@@ -8,23 +8,22 @@ import { useI18N } from "../../hooks/use-i18n";
 import { CultureCode } from "../../types/languages";
 import { AuthContainer } from "../authentication/auth-container";
 import { Select } from "../inputs/select";
-import { ErrorSnackbar } from "../layouts/error-snackbar";
+import { useToasterContext } from "../toasters/toaster-context";
 import { getLanguageDropdownOptions } from "./helpers/language-helper";
 
 export const LanguageForm: React.FC = () => {
   const { translate, i18n, setLanguage, storeLanguage } = useI18N();
-  const [snackbarError, setSnackbarError] = React.useState<
-    string | undefined
-  >();
+  const { openToaster } = useToasterContext();
 
   const onClick = async () => {
     const response = await storeLanguage(i18n.language as CultureCode);
     if (response.isError) {
-      setSnackbarError(
-        translate("toaster.failed.saveFailure", {
+      openToaster({
+        message: translate("toaster.failed.saveFailure", {
           item: translate("language.setting.label").toLocaleLowerCase(),
-        })
-      );
+        }),
+        variant: "error",
+      });
       return;
     }
     router.push("/auth/welcome");
@@ -56,11 +55,6 @@ export const LanguageForm: React.FC = () => {
           {translate("common.actions.save")}
         </Button>
       </AuthContainer>
-
-      <ErrorSnackbar
-        snackbarError={snackbarError}
-        setSnackbarError={setSnackbarError}
-      />
     </>
   );
 };

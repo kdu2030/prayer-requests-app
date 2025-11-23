@@ -11,6 +11,8 @@ import {
 import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupUserSummary } from "../../../types/prayer-group-types";
+import { usePrayerRequestContext } from "../../prayer-request/prayer-request-context";
+import { useToasterContext } from "../../toasters/toaster-context";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import {
   mapPrayerGroupUsers,
@@ -22,6 +24,8 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const { translate } = useI18N();
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
+  const { cleanupPrayerRequests } = usePrayerRequestContext();
+
   const { userData, setUserData } = useApiDataContext();
 
   const [prayerGroupUsers, setPrayerGroupUsers] = React.useState<
@@ -38,14 +42,11 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
   const [isSaveLoading, setIsSaveLoading] = React.useState<boolean>(false);
 
-  const [saveError, setSaveError] = React.useState<string | undefined>();
-  const [successMessage, setSuccessMessage] = React.useState<
-    string | undefined
-  >();
-
   const [userToDeleteIndex, setUserToDeleteIndex] = React.useState<
     number | undefined
   >();
+
+  const { openToaster } = useToasterContext();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] =
     React.useState<boolean>(false);
@@ -152,15 +153,20 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     setIsSaveLoading(false);
 
     if (response.isError) {
-      setSaveError(
-        translate("toaster.failed.updateFailure", {
+      openToaster({
+        message: translate("toaster.failed.updateFailure", {
           item: translate("prayerGroup.manageUsers.usersLabel"),
-        })
-      );
+        }),
+        variant: "error",
+      });
+
       return;
     }
 
-    setSuccessMessage(translate("prayerGroup.manageUsers.updateSuccess"));
+    openToaster({
+      message: translate("prayerGroup.manageUsers.updateSuccess"),
+      variant: "success",
+    });
 
     const updatedPrayerGroupUsers = response.value.prayerGroupUsers ?? [];
 
@@ -177,14 +183,18 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
     const userDeletedThemselves = !updatedPrayerGroupUser;
 
-    setPrayerGroupDetails({
+    if (userDeletedThemselves) {
+      cleanupPrayerRequests();
+    }
+
+    setPrayerGroupDetails((prayerGroupDetails) => ({
       ...prayerGroupDetails,
       admins: updatedAdmins,
-      userJoinStatus: !updatedPrayerGroupUser
-        ? JoinStatus.NotJoined
-        : JoinStatus.Joined,
+      userJoinStatus: updatedPrayerGroupUser
+        ? JoinStatus.Joined
+        : JoinStatus.NotJoined,
       prayerGroupRole: updatedPrayerGroupUser ? updatedUserRole : undefined,
-    });
+    }));
 
     if (userDeletedThemselves) {
       const updatedPrayerGroups = [...(userData?.prayerGroups ?? [])].filter(
@@ -222,10 +232,6 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     onDelete,
     onRoleChange,
     loadPrayerGroupUsers,
-    saveError,
-    setSaveError,
-    successMessage,
-    setSuccessMessage,
     isSaveLoading,
     onSavePrayerGroupUsers,
   };

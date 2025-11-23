@@ -4,15 +4,10 @@ import { FlatList } from "react-native-gesture-handler";
 import { Button, Text, TextInput, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { ErrorScreen } from "../../layouts/error-screen";
-import { ErrorSnackbar } from "../../layouts/error-snackbar";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { SpinnerScreen } from "../../layouts/spinner-screen";
-import { SuccessSnackbar } from "../../layouts/success-snackbar";
-import { PrayerGroupPermissionError } from "../error-screens/user-permission-error";
-import { usePrayerGroupContext } from "../prayer-group-context";
 import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
 import { DeleteUserConfirmationModal } from "./delete-user-confirmation-modal";
 import { PrayerGroupUsersTestIds } from "./tests/test-ids";
@@ -26,7 +21,6 @@ type Props = {
 export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
   const { translate } = useI18N();
   const theme = useTheme();
-  const { prayerGroupDetails } = usePrayerGroupContext();
 
   const {
     isLoading,
@@ -42,16 +36,8 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
     onRoleChange,
     loadPrayerGroupUsers,
     isSaveLoading,
-    setSaveError,
-    saveError,
     onSavePrayerGroupUsers,
-    successMessage,
-    setSuccessMessage,
   } = usePrayerGroupUsers(prayerGroupId);
-
-  if (prayerGroupDetails?.prayerGroupRole !== PrayerGroupRole.Admin) {
-    return <PrayerGroupPermissionError />;
-  }
 
   return (
     <SafeAreaView className="flex-1">
@@ -185,20 +171,6 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
               ? filteredUsers[userToDeleteIndex]?.fullName
               : undefined
           }
-        />
-      )}
-
-      {!!saveError && (
-        <ErrorSnackbar
-          snackbarError={saveError}
-          setSnackbarError={setSaveError}
-        />
-      )}
-
-      {!!successMessage && (
-        <SuccessSnackbar
-          successMessage={successMessage}
-          setSuccessMessage={setSuccessMessage}
         />
       )}
     </SafeAreaView>

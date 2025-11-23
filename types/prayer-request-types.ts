@@ -2,13 +2,10 @@ import { SortConfig } from "./api-response-types";
 import {
   PrayerGroupSummary,
   PrayerGroupUserSummary,
-  RawPrayerGroupSummary,
-  RawPrayerGroupUserSummary,
 } from "./prayer-group-types";
 
 export type PrayerRequestFilterCriteria = {
   prayerGroupIds?: number[];
-  creatorUserIds?: number[];
   pageIndex?: number;
   pageSize?: number;
   bookmarkedByUserId?: number;
@@ -16,25 +13,17 @@ export type PrayerRequestFilterCriteria = {
   sortConfig: SortConfig;
 };
 
-export type RawPrayerRequestModel = {
-  id?: number;
-  requestTitle?: string;
-  requestDescription?: string;
-  createdDate?: string;
-  prayerGroup?: RawPrayerGroupSummary;
-  user?: RawPrayerGroupUserSummary;
-  likeCount?: number;
-  commentCount?: number;
-  prayedCount?: number;
-  expirationDate?: string;
-  isUserPrayed?: boolean;
-  isUserLiked?: boolean;
-  isUserCommented?: boolean;
+export type PrayerRequestMetadata = {
+  totalCount?: number;
+  numberOfPages?: number;
+  pageIndex?: number;
 };
 
-export type RawPrayerRequestGetResponse = {
-  prayerRequests?: RawPrayerRequestModel[];
+export type PrayerRequestGetResponse = {
+  prayerRequests?: PrayerRequestModel[];
   totalCount?: number;
+  numberOfPages?: number;
+  pageIndex?: number;
 };
 
 export type PrayerRequestModel = {
@@ -48,14 +37,15 @@ export type PrayerRequestModel = {
   commentCount?: number;
   prayedCount?: number;
   expirationDate?: string;
-  isUserPrayed?: boolean;
-  isUserLiked?: boolean;
-  isUserCommented?: boolean;
+  userLikeId?: number;
+  userCommentId?: number;
+  userBookmarkId?: number;
+  userPrayerSessionId?: number;
 };
 
 export enum PrayerRequestSortFields {
-  CreatedDate = "CreatedDate",
-  LikeCount = "LikeCount",
-  CommentCount = "CommentCount",
-  PrayedCount = "PrayedCount",
+  CreatedDate = "CREATED_DATE",
+  LikeCount = "LIKE_COUNT",
+  CommentCount = "COMMENT_COUNT",
+  PrayedCount = "PRAYED_COUNT",
 }

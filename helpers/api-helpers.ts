@@ -7,6 +7,7 @@ import { ManagedErrorResponse } from "../types/error-handling";
 export const handleApiErrors = <TResponse>(
   error: any
 ): ManagedErrorResponse<TResponse> => {
+  console.log(JSON.stringify(error));
   const axiosError = error as AxiosError;
   return { isError: true, error: axiosError?.response?.data };
 };

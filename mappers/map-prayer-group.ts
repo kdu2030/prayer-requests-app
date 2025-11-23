@@ -4,9 +4,6 @@ import { CreatePrayerGroupForm } from "../components/create-prayer-group/create-
 import {
   PrayerGroupDetails,
   PrayerGroupSummary,
-  PrayerGroupUserSummary,
-  RawPrayerGroupSummary,
-  RawPrayerGroupUserSummary,
 } from "../types/prayer-group-types";
 
 export const mapCreatePrayerGroupRequest = (
@@ -21,32 +18,6 @@ export const mapCreatePrayerGroupRequest = (
     visibilityLevel: createPrayerGroupForm.visibilityLevel,
     avatarFileId: avatarFileId,
     bannerFileId: bannerFileId,
-  };
-};
-
-export const mapPrayerGroupSummary = (
-  rawPrayerGroupSummary: RawPrayerGroupSummary | undefined
-): PrayerGroupSummary | undefined => {
-  if (!rawPrayerGroupSummary) {
-    return;
-  }
-
-  return {
-    ...rawPrayerGroupSummary,
-    prayerGroupId: rawPrayerGroupSummary.id,
-    avatarFile: rawPrayerGroupSummary.avatarFile,
-  };
-};
-
-export const mapPrayerGroupUser = (
-  rawPrayerGroupUser: RawPrayerGroupUserSummary
-): PrayerGroupUserSummary => {
-  return {
-    userId: rawPrayerGroupUser.userId,
-    image: rawPrayerGroupUser.image,
-    fullName: rawPrayerGroupUser.fullName,
-    username: rawPrayerGroupUser.username,
-    prayerGroupRole: rawPrayerGroupUser.prayerGroupRole,
   };
 };
 

@@ -1,11 +1,12 @@
 import {
   JoinStatus,
   PrayerGroupRole,
+  VisibilityLevel,
 } from "../../../constants/prayer-group-constants";
 import { UserData } from "../../../types/context/api-data-context-type";
 import { FileType, MediaFile } from "../../../types/media-file-types";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
-import { RawPrayerRequestModel } from "../../../types/prayer-request-types";
+import { PrayerRequestModel } from "../../../types/prayer-request-types";
 
 export const mockPrayerGroupDetails: PrayerGroupDetails = {
   admins: [{ fullName: "Jim Halpert", userId: 1 }],
@@ -28,6 +29,7 @@ export const mockPrayerGroupDetails: PrayerGroupDetails = {
   },
   userJoinStatus: JoinStatus.Joined,
   prayerGroupRole: PrayerGroupRole.Admin,
+  visibilityLevel: VisibilityLevel.Public,
 };
 
 export const mockPrayerGroupDetails1: PrayerGroupDetails = {
@@ -73,14 +75,14 @@ export const mockMediaFile: MediaFile = {
     "https://prayerappfileservices.pythonanywhere.com/static/36a668ca-633e-471c-8e80-a272152303ef.jpeg",
 };
 
-export const mockPrayerRequests: RawPrayerRequestModel[] = [
+export const mockPrayerRequests: PrayerRequestModel[] = [
   {
-    id: 9,
+    prayerRequestId: 9,
     requestTitle: "Test",
     requestDescription: "Test",
     createdDate: "2025-07-04T01:11:35.907537Z",
     prayerGroup: {
-      id: 1,
+      prayerGroupId: 1,
       groupName: "Grace Christian Fellowship",
       avatarFile: {
         mediaFileId: 2,
@@ -99,16 +101,14 @@ export const mockPrayerRequests: RawPrayerRequestModel[] = [
     commentCount: 0,
     prayedCount: 0,
     expirationDate: "2025-07-19T01:11:26.271Z",
-    isUserLiked: false,
-    isUserCommented: false,
   },
   {
-    id: 8,
+    prayerRequestId: 8,
     requestTitle: "Prayer Request 7",
     requestDescription: "Prayer Request 7",
     createdDate: "2025-07-04T01:07:01.975895Z",
     prayerGroup: {
-      id: 1,
+      prayerGroupId: 1,
       groupName: "Grace Christian Fellowship",
       avatarFile: {
         mediaFileId: 2,
@@ -127,16 +127,15 @@ export const mockPrayerRequests: RawPrayerRequestModel[] = [
     commentCount: 0,
     prayedCount: 0,
     expirationDate: "2025-07-19T01:06:51.026Z",
-    isUserLiked: true,
-    isUserCommented: false,
+    userLikeId: 787,
   },
   {
-    id: 7,
+    prayerRequestId: 7,
     requestTitle: "Prayer Request 6",
     requestDescription: "Prayer request 7",
     createdDate: "2025-06-29T19:58:27.283659Z",
     prayerGroup: {
-      id: 1,
+      prayerGroupId: 1,
       groupName: "Grace Christian Fellowship",
       avatarFile: {
         mediaFileId: 2,
@@ -155,7 +154,5 @@ export const mockPrayerRequests: RawPrayerRequestModel[] = [
     commentCount: 0,
     prayedCount: 0,
     expirationDate: "2025-07-14T19:58:29.314Z",
-    isUserLiked: false,
-    isUserCommented: false,
   },
 ];

@@ -5,6 +5,7 @@ import {
 
 export const mapCreatePrayerRequest = (
   userId: number,
+  prayerGroupId: number,
   createPrayerRequestForm: CreatePrayerRequestForm
 ): RawCreatePrayerRequestForm => {
   const expirationDate = new Date();
@@ -13,6 +14,7 @@ export const mapCreatePrayerRequest = (
 
   return {
     userId,
+    prayerGroupId,
     requestTitle: createPrayerRequestForm.requestTitle,
     requestDescription: createPrayerRequestForm.requestDescription,
     expirationDate: expirationDate.toISOString(),

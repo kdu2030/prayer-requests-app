@@ -45,7 +45,7 @@ export const PrayerGroupSearch: React.FC = () => {
           </View>
         </View>
 
-        {placeholderMessage && (
+        {placeholderMessage && groupSearchResults.length === 0 && (
           <View className="flex flex-row items-center justify-center mt-16">
             <Text
               variant="bodyLarge"

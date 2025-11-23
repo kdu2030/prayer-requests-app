@@ -8,19 +8,24 @@ import {
   waitFor,
 } from "@testing-library/react-native";
 
-import { JoinStatus } from "../../../constants/prayer-group-constants";
+import {
+  JoinStatus,
+  VisibilityLevel,
+} from "../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { SortOrder } from "../../../types/api-response-types";
 import { ManagedErrorResponse } from "../../../types/error-handling";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import {
   PrayerRequestFilterCriteria,
-  RawPrayerRequestGetResponse,
+  PrayerRequestGetResponse,
 } from "../../../types/prayer-request-types";
+import { PrayerRequestContextProvider } from "../../prayer-request/prayer-request-context";
 import { PrayerRequestCardTestIds } from "../../prayer-request/tests/test-ids";
 import { PrayerGroupHeaderTestIds } from "../header/tests/test-ids";
 import { PrayerGroup } from "../prayer-group";
 import { PrayerGroupContextProvider } from "../prayer-group-context";
+import { PrayerRequestPlaceholderBodyTestIds } from "../prayer-request-placeholder/tests/test-ids";
 import {
   mockPrayerGroupDetails,
   mockPrayerGroupDetails1,
@@ -41,6 +46,9 @@ jest.mock("@gorhom/bottom-sheet", () => ({
   __esModule: true,
   ...require("@gorhom/bottom-sheet/mock"),
 }));
+
+jest.mock("expo-font");
+jest.mock("expo-asset");
 
 jest.mock("../../../api/get-prayer-group", () => ({
   useGetPrayerGroup: () => () => mockGetPrayerGroup(),
@@ -63,8 +71,8 @@ jest.mock("../../../hooks/use-api-data", () => ({
 
 jest.mock("../../../api/post-prayer-request-filter", () => ({
   usePostPrayerRequestFilter:
-    () => (userId: number, filterCriteria: PrayerRequestFilterCriteria) =>
-      mockPostPrayerRequestFilter(userId, filterCriteria),
+    () => (filterCriteria: PrayerRequestFilterCriteria) =>
+      mockPostPrayerRequestFilter(filterCriteria),
 }));
 
 const mountPrayerGroup = (
@@ -76,7 +84,7 @@ const mountPrayerGroup = (
     value: prayerGroupDetails,
   };
 
-  const mockPrayerRequestResponse: ManagedErrorResponse<RawPrayerRequestGetResponse> =
+  const mockPrayerRequestResponse: ManagedErrorResponse<PrayerRequestGetResponse> =
     {
       isError: false,
       value: {
@@ -93,7 +101,9 @@ const mountPrayerGroup = (
 
   return mountComponent(
     <PrayerGroupContextProvider>
-      <PrayerGroup prayerGroupId={2} />
+      <PrayerRequestContextProvider>
+        <PrayerGroup prayerGroupId={2} />
+      </PrayerRequestContextProvider>
     </PrayerGroupContextProvider>
   );
 };
@@ -137,7 +147,7 @@ describe(PrayerGroup, () => {
   test("Correct buttons display if user is a member", async () => {
     component = mountPrayerGroup(mockPrayerGroupDetails);
     const leaveGroupButton = await component.findByTestId(
-      PrayerGroupHeaderTestIds.leaveGroupButton
+      PrayerGroupHeaderTestIds.optionsButton
     );
     const addPrayerRequestButton = await component.findByTestId(
       PrayerGroupHeaderTestIds.addPrayerRequestButton
@@ -160,7 +170,7 @@ describe(PrayerGroup, () => {
       PrayerGroupHeaderTestIds.joinGroupButton
     );
     const aboutGroupButton = await component.findByTestId(
-      PrayerGroupHeaderTestIds.aboutGroupButton
+      PrayerGroupHeaderTestIds.optionsButton
     );
 
     expect(joinPrayerGroupButton).toBeTruthy();
@@ -189,28 +199,15 @@ describe(PrayerGroup, () => {
     );
   });
 
-  test("Delete prayer group users gets called when user presses the leave button", async () => {
-    mockDeletePrayerGroupUser.mockReturnValue({ isError: false });
-    component = mountPrayerGroup(mockPrayerGroupDetails);
-
-    const leavePrayerGroupButton = await component.findByTestId(
-      PrayerGroupHeaderTestIds.leaveGroupButton
-    );
-
-    fireEvent.press(leavePrayerGroupButton);
-
-    await waitFor(() => {
-      expect(mockDeletePrayerGroupUser).toHaveBeenCalledWith(2, 1);
-    });
-  });
-
   test("Prayer requests for prayer group show up on mount", async () => {
-    const mockPrayerRequestFilterResponse: ManagedErrorResponse<RawPrayerRequestGetResponse> =
+    const mockPrayerRequestFilterResponse: ManagedErrorResponse<PrayerRequestGetResponse> =
       {
         isError: false,
         value: {
           prayerRequests: mockPrayerRequests,
           totalCount: 3,
+          pageIndex: 0,
+          numberOfPages: 2,
         },
       };
 
@@ -222,7 +219,7 @@ describe(PrayerGroup, () => {
     };
 
     mockPostPrayerRequestFilter.mockImplementation(
-      (_userId: number, filterCriteria: PrayerRequestFilterCriteria) => {
+      (filterCriteria: PrayerRequestFilterCriteria) => {
         prayerRequestFilterCriteria = filterCriteria;
         return mockPrayerRequestFilterResponse;
       }
@@ -237,5 +234,22 @@ describe(PrayerGroup, () => {
     expect(prayerRequest).toBeTruthy();
     expect(prayerRequestFilterCriteria?.pageIndex).toBe(0);
     expect(prayerRequestFilterCriteria?.prayerGroupIds).toStrictEqual([2]);
+  });
+
+  test("Submit join request button shows up when the user is not joined on a private prayer group", async () => {
+    const prayerGroupDetails: PrayerGroupDetails = {
+      ...mockPrayerGroupDetails,
+      userJoinStatus: JoinStatus.NotJoined,
+      visibilityLevel: VisibilityLevel.Private,
+    };
+
+    component = mountPrayerGroup(prayerGroupDetails);
+
+    const joinRequestPlaceholder = await component.findByTestId(
+      PrayerRequestPlaceholderBodyTestIds.submitJoinRequestButton
+    );
+
+    expect(joinRequestPlaceholder).toBeTruthy();
+    expect(mockPostPrayerRequestFilter).not.toHaveBeenCalled();
   });
 });

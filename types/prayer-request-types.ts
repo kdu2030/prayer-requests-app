@@ -61,3 +61,10 @@ export type PrayerRequestLikeModel = {
   submittedUserId?: number;
   submittedDate?: string;
 };
+
+export type PrayerRequestBookmarkModel = {
+  prayerRequestBookmarkId?: number;
+  prayerRequestId?: number;
+  submittedUserId?: number;
+  submittedDate?: string;
+};

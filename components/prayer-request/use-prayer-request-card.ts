@@ -55,7 +55,7 @@ export const usePrayerRequestCard = (
 
       return {
         ...prayerRequest,
-        userLikeId: response.value.prayerRequestId,
+        userLikeId: response.value.prayerRequestLikeId,
         likeCount: (prayerRequest.likeCount ?? 0) + 1,
       };
     });

@@ -31,7 +31,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
   const { isLikeLoading, onLikePress, likeIcon } = usePrayerRequestCard(
     prayerRequest,
     prayerRequests,
-    setPrayerRequests
+    setPrayerRequests,
   );
 
   return (
@@ -51,7 +51,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
               height={24}
               testID={getArrayTestId(
                 PrayerRequestCardTestIds.userProfilePicture,
-                prayerRequest.prayerRequestId
+                prayerRequest.prayerRequestId,
               )}
             />
             <Text className="ml-2" variant="bodyMedium">
@@ -66,12 +66,12 @@ export const PrayerRequestCard: React.FC<Props> = ({
             className="ml-4 text-gray-500"
             testID={getArrayTestId(
               PrayerRequestCardTestIds.createdDate,
-              prayerRequest.prayerRequestId
+              prayerRequest.prayerRequestId,
             )}
           >
             {formatDate(
               prayerRequest.createdDate,
-              i18n.language as CultureCode
+              i18n.language as CultureCode,
             )}
           </Text>
         )}
@@ -83,7 +83,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
         numberOfLines={1}
         testID={getArrayTestId(
           PrayerRequestCardTestIds.requestTitle,
-          prayerRequest.prayerRequestId
+          prayerRequest.prayerRequestId,
         )}
       >
         {prayerRequest.requestTitle}
@@ -95,7 +95,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
         numberOfLines={3}
         testID={getArrayTestId(
           PrayerRequestCardTestIds.requestDescription,
-          prayerRequest.prayerRequestId
+          prayerRequest.prayerRequestId,
         )}
       >
         {prayerRequest.requestDescription}
@@ -110,13 +110,13 @@ export const PrayerRequestCard: React.FC<Props> = ({
             onPress={onLikePress}
             testID={getArrayTestId(
               PrayerRequestCardTestIds.likeButton,
-              prayerRequest.prayerRequestId
+              prayerRequest.prayerRequestId,
             )}
           >
             {formatNumber(
               prayerRequest.likeCount ?? 0,
               i18n.language as CultureCode,
-              { notation: "compact", compactDisplay: "short" }
+              { notation: "compact", compactDisplay: "short" },
             )}
           </Button>
 
@@ -125,13 +125,13 @@ export const PrayerRequestCard: React.FC<Props> = ({
             icon={prayerRequest.userCommentId ? "comment" : "comment-outline"}
             testID={getArrayTestId(
               PrayerRequestCardTestIds.commentButton,
-              prayerRequest.prayerRequestId
+              prayerRequest.prayerRequestId,
             )}
           >
             {formatNumber(
               prayerRequest.commentCount ?? 0,
               i18n.language as CultureCode,
-              { notation: "compact", compactDisplay: "short" }
+              { notation: "compact", compactDisplay: "short" },
             )}
           </Button>
         </View>
@@ -145,13 +145,13 @@ export const PrayerRequestCard: React.FC<Props> = ({
           }
           testID={getArrayTestId(
             PrayerRequestCardTestIds.prayedButton,
-            prayerRequest.prayerRequestId
+            prayerRequest.prayerRequestId,
           )}
         >
           {formatNumber(
             prayerRequest.prayedCount ?? 0,
             i18n.language as CultureCode,
-            { notation: "compact", compactDisplay: "short" }
+            { notation: "compact", compactDisplay: "short" },
           )}
         </Button>
       </View>

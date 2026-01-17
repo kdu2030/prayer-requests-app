@@ -6,7 +6,7 @@ import {
 export const mapCreatePrayerRequest = (
   userId: number,
   prayerGroupId: number,
-  createPrayerRequestForm: CreatePrayerRequestForm
+  createPrayerRequestForm: CreatePrayerRequestForm,
 ): RawCreatePrayerRequestForm => {
   const expirationDate = new Date();
   const numDaysToAdd = createPrayerRequestForm.timeToLive ?? 0;
@@ -18,5 +18,6 @@ export const mapCreatePrayerRequest = (
     requestTitle: createPrayerRequestForm.requestTitle,
     requestDescription: createPrayerRequestForm.requestDescription,
     expirationDate: expirationDate.toISOString(),
+    createdDate: new Date().toISOString(),
   };
 };

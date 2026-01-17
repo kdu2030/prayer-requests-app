@@ -1,13 +1,13 @@
 import { AxiosInstance } from "axios";
 import * as React from "react";
 
-import {
-  PrayerRequestActionCreateRequest,
-  PrayerRequestLikeModel,
-} from "../components/prayer-request/prayer-request-types";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
 import { ManagedErrorResponse } from "../types/error-handling";
+import {
+  PrayerRequestActionCreateRequest,
+  PrayerRequestLikeModel,
+} from "../types/prayer-request-types";
 
 const postPrayerRequestLike = async (
   fetch: AxiosInstance,

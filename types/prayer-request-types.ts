@@ -49,3 +49,15 @@ export enum PrayerRequestSortFields {
   CommentCount = "COMMENT_COUNT",
   PrayedCount = "PRAYED_COUNT",
 }
+
+export type PrayerRequestActionCreateRequest = {
+  userId: number;
+  submittedDate: string;
+};
+
+export type PrayerRequestLikeModel = {
+  prayerRequestLikeId?: number;
+  prayerRequestId?: number;
+  submittedUserId?: number;
+  submittedDate?: string;
+};

@@ -4,9 +4,11 @@ import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like
 import { usePostPrayerRequestLike } from "../../api/post-prayer-request-like";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
-import { PrayerRequestModel } from "../../types/prayer-request-types";
+import {
+  PrayerRequestActionCreateRequest,
+  PrayerRequestModel,
+} from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
-import { PrayerRequestActionCreateRequest } from "./prayer-request-types";
 
 export const usePrayerRequestCard = (
   prayerRequest: PrayerRequestModel,

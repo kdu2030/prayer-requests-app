@@ -10,7 +10,7 @@ const deletePrayerRequestLike = async (
   baseUrl: string,
   prayerRequestLikeId: number,
 ): Promise<BaseManagedErrorResponse> => {
-  const url = `${baseUrl}/api/prayerrequest/${prayerRequestLikeId}/like`;
+  const url = `${baseUrl}/api/prayerrequest/like/${prayerRequestLikeId}`;
 
   try {
     await fetch.delete(url);

@@ -60,14 +60,18 @@ export const usePrayerRequestCard = (
     setPrayerRequests(updatedPrayerRequests);
   };
 
-  const removePrayerRequestLike = async (prayerRequestId: number) => {
+  const removePrayerRequestLike = async () => {
     const userId = userData?.userId;
 
-    if (!userId) {
+    if (
+      !userId ||
+      !prayerRequest.userLikeId ||
+      !prayerRequest.prayerRequestId
+    ) {
       return;
     }
 
-    const response = await deletePrayerRequestLike(userId, prayerRequestId);
+    const response = await deletePrayerRequestLike(prayerRequest.userLikeId);
 
     if (response.isError) {
       openToaster({
@@ -78,13 +82,13 @@ export const usePrayerRequestCard = (
     }
 
     const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-      if (prayerRequest.prayerRequestId !== prayerRequestId) {
+      if (prayerRequest.prayerRequestId !== prayerRequest.prayerRequestId) {
         return prayerRequest;
       }
 
       return {
         ...prayerRequest,
-        isUserLiked: false,
+        userLikeId: undefined,
         likeCount: prayerRequest.likeCount ? prayerRequest.likeCount - 1 : 0,
       };
     });
@@ -102,7 +106,7 @@ export const usePrayerRequestCard = (
     if (!prayerRequest.userLikeId) {
       await addPrayerRequestLike(prayerRequest.prayerRequestId);
     } else {
-      await removePrayerRequestLike(prayerRequest.prayerRequestId);
+      await removePrayerRequestLike();
     }
 
     setIsLikeLoading(false);

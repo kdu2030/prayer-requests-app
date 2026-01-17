@@ -6,11 +6,12 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
+import { PrayerRequestActionCreateRequest } from "./prayer-request-types";
 
 export const usePrayerRequestCard = (
   prayerRequest: PrayerRequestModel,
   prayerRequests: PrayerRequestModel[],
-  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>
+  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>,
 ) => {
   const [isLikeLoading, setIsLikeLoading] = React.useState<boolean>(false);
   const { translate } = useI18N();
@@ -29,7 +30,12 @@ export const usePrayerRequestCard = (
       return;
     }
 
-    const response = await postPrayerRequestLike(userId, prayerRequestId);
+    const createRequest: PrayerRequestActionCreateRequest = {
+      userId,
+      submittedDate: new Date().toISOString(),
+    };
+
+    const response = await postPrayerRequestLike(userId, createRequest);
 
     if (response.isError) {
       openToaster({
@@ -46,7 +52,7 @@ export const usePrayerRequestCard = (
 
       return {
         ...prayerRequest,
-        isUserLiked: true,
+        userLikeId: response.value.prayerRequestId,
         likeCount: (prayerRequest.likeCount ?? 0) + 1,
       };
     });

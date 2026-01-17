@@ -1,25 +1,33 @@
 import { AxiosInstance } from "axios";
 import * as React from "react";
 
+import {
+  PrayerRequestActionCreateRequest,
+  PrayerRequestLikeModel,
+} from "../components/prayer-request/prayer-request-types";
 import { handleApiErrors } from "../helpers/api-helpers";
 import { useApiDataContext } from "../hooks/use-api-data";
-import { BaseManagedErrorResponse } from "../types/error-handling";
+import { ManagedErrorResponse } from "../types/error-handling";
 
 const postPrayerRequestLike = async (
   fetch: AxiosInstance,
   baseUrl: string,
-  userId: number,
-  prayerRequestId: number
-): Promise<BaseManagedErrorResponse> => {
-  const url = `${baseUrl}/api/v1/prayer-request/${prayerRequestId}/like`;
+  prayerRequestId: number,
+  createRequest: PrayerRequestActionCreateRequest,
+): Promise<ManagedErrorResponse<PrayerRequestLikeModel>> => {
+  const url = `${baseUrl}/api/prayerrequest/${prayerRequestId}/like`;
 
   try {
-    await fetch.post(url, undefined, {
-      params: {
-        userId,
+    const response = await fetch.post<PrayerRequestLikeModel>(
+      url,
+      createRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
-    return { isError: false };
+    );
+    return { isError: false, value: response.data };
   } catch (error) {
     return handleApiErrors(error);
   }
@@ -29,9 +37,17 @@ export const usePostPrayerRequestLike = () => {
   const { baseUrl, fetch } = useApiDataContext();
 
   return React.useCallback(
-    (userId: number, prayerRequestId: number) => {
-      return postPrayerRequestLike(fetch, baseUrl, userId, prayerRequestId);
+    (
+      prayerRequestId: number,
+      createRequest: PrayerRequestActionCreateRequest,
+    ) => {
+      return postPrayerRequestLike(
+        fetch,
+        baseUrl,
+        prayerRequestId,
+        createRequest,
+      );
     },
-    [baseUrl, fetch]
+    [baseUrl, fetch],
   );
 };

@@ -35,7 +35,10 @@ export const usePrayerRequestCard = (
       submittedDate: new Date().toISOString(),
     };
 
-    const response = await postPrayerRequestLike(userId, createRequest);
+    const response = await postPrayerRequestLike(
+      prayerRequestId,
+      createRequest,
+    );
 
     if (response.isError) {
       openToaster({
@@ -60,14 +63,10 @@ export const usePrayerRequestCard = (
     setPrayerRequests(updatedPrayerRequests);
   };
 
-  const removePrayerRequestLike = async () => {
+  const removePrayerRequestLike = async (prayerRequestId: number) => {
     const userId = userData?.userId;
 
-    if (
-      !userId ||
-      !prayerRequest.userLikeId ||
-      !prayerRequest.prayerRequestId
-    ) {
+    if (!userId || !prayerRequest.userLikeId) {
       return;
     }
 
@@ -82,7 +81,7 @@ export const usePrayerRequestCard = (
     }
 
     const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-      if (prayerRequest.prayerRequestId !== prayerRequest.prayerRequestId) {
+      if (prayerRequest.prayerRequestId !== prayerRequestId) {
         return prayerRequest;
       }
 
@@ -106,7 +105,7 @@ export const usePrayerRequestCard = (
     if (!prayerRequest.userLikeId) {
       await addPrayerRequestLike(prayerRequest.prayerRequestId);
     } else {
-      await removePrayerRequestLike();
+      await removePrayerRequestLike(prayerRequest.prayerRequestId);
     }
 
     setIsLikeLoading(false);

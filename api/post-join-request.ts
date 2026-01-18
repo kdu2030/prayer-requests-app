@@ -15,7 +15,7 @@ const postJoinRequest = async (
   fetch: AxiosInstance,
   baseUrl: string,
   prayerGroupId: number,
-  userId: number
+  userId: number,
 ): Promise<ManagedErrorResponse<JoinRequestModel>> => {
   const url = `${baseUrl}/api/prayergroup/${prayerGroupId}/joinrequest`;
 
@@ -41,6 +41,6 @@ export const usePostJoinRequest = () => {
   return React.useCallback(
     (prayerGroupId: number, userId: number) =>
       postJoinRequest(fetch, baseUrl, prayerGroupId, userId),
-    []
+    [baseUrl, fetch],
   );
 };

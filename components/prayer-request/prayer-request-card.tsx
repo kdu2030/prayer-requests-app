@@ -138,11 +138,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
 
         <Button
           mode="outlined"
-          icon={
-            prayerRequest.userPrayerSessionId
-              ? "account-heart"
-              : "account-heart-outline"
-          }
+          icon={prayerRequest.userPrayerSessionId ? "cross" : "cross-outline"}
           testID={getArrayTestId(
             PrayerRequestCardTestIds.prayedButton,
             prayerRequest.prayerRequestId,

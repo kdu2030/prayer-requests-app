@@ -66,7 +66,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
 
   return (
     <BottomSheet
-      snapPoints={["50%"]}
+      enableDynamicSizing
       index={-1}
       enablePanDownToClose
       ref={bottomSheetRef}
@@ -74,7 +74,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
       backdropComponent={renderBackdrop}
     >
       <BottomSheetView>
-        <View className="px-4">
+        <View className="p-4">
           <PrayerGroupOptionButton
             label={translate("prayerGroup.options.about")}
             icon={<MaterialCommunityIcons name="information" size={24} />}

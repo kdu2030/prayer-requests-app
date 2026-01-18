@@ -10,25 +10,22 @@ import { DrawerContent } from "../../components/navigation/drawer-content";
 import { DrawerHeader } from "../../components/navigation/drawer-header";
 
 const DrawerLayout: React.FC = () => {
-  const getDrawerContent = React.useCallback(
+  const renderDrawerContent = React.useCallback(
     (props: DrawerContentComponentProps) => {
       return <DrawerContent {...props} />;
     },
     [],
   );
 
-  const screenOptions = React.useMemo(() => {
-    return {
-      lazy: true,
-      header: (props: DrawerHeaderProps) => <DrawerHeader {...props} />,
-    };
-  }, []);
-
   return (
     <GestureHandlerRootView>
       <Drawer
-        screenOptions={screenOptions}
-        drawerContent={getDrawerContent}
+        screenOptions={{
+          lazy: true,
+          header: (props: DrawerHeaderProps) => <DrawerHeader {...props} />,
+          drawerType: "front",
+        }}
+        drawerContent={renderDrawerContent}
         backBehavior="history"
       >
         <Drawer.Screen

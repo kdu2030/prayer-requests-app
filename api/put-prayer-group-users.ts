@@ -23,7 +23,7 @@ const putPrayerGroupUsers = async (
   fetch: AxiosInstance,
   baseUrl: string,
   prayerGroupId: number,
-  prayerGroupUsers: PrayerGroupUserUpdateModel[]
+  prayerGroupUsers: PrayerGroupUserUpdateModel[],
 ): Promise<ManagedErrorResponse<PutPrayerGroupUserUpdateResponse>> => {
   const url = `${baseUrl}/api/prayergroup/${prayerGroupId}/users`;
 
@@ -39,7 +39,7 @@ const putPrayerGroupUsers = async (
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     return { isError: false, value: response.data };
@@ -54,6 +54,6 @@ export const usePutPrayerGroupUsers = () => {
   return React.useCallback(
     (prayerGroupId: number, prayerGroupUsers: PrayerGroupUserUpdateModel[]) =>
       putPrayerGroupUsers(fetch, baseUrl, prayerGroupId, prayerGroupUsers),
-    []
+    [baseUrl, fetch],
   );
 };

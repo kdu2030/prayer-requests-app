@@ -36,8 +36,10 @@ export const FormikSelect = <TValue,>({
         label={required ? `${label}*` : label}
         options={options}
         value={field.value}
-        setValue={(value) => helpers.setValue(value)}
-        onDismiss={() => setTimeout(() => helpers.setTouched(true, true), 0)}
+        setValue={(value) => {
+          helpers.setValue(value);
+          setTimeout(() => helpers.setTouched(true, true), 0);
+        }}
         error={isError}
       />
 

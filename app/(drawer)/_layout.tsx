@@ -11,7 +11,7 @@ import { DrawerHeader } from "../../components/navigation/drawer-header";
 
 const DrawerLayout: React.FC = () => {
   return (
-    <GestureHandlerRootView className="flex-1">
+    <GestureHandlerRootView>
       <Drawer
         screenOptions={{
           lazy: true,
@@ -24,7 +24,7 @@ const DrawerLayout: React.FC = () => {
       >
         <Drawer.Screen
           name="prayergroup/[id]"
-          options={{ unmountOnBlur: true }}
+          options={{ popToTopOnBlur: true }}
         />
         <Drawer.Screen name="search" options={{ headerShown: false }} />
       </Drawer>

@@ -6,7 +6,7 @@ import BottomSheet, {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
-import { Href, router } from "expo-router";
+import { RelativePathString, router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
@@ -41,7 +41,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
   const formattedJoinRequestCount = prayerGroupDetails?.joinRequestCount
     ? formatNumber(
         prayerGroupDetails.joinRequestCount,
-        i18n.language as CultureCode
+        i18n.language as CultureCode,
       )
     : undefined;
 
@@ -53,15 +53,15 @@ export const PrayerGroupOptions: React.FC<Props> = ({
         disappearsOnIndex={-1}
       />
     ),
-    []
+    [],
   );
 
   const onPressOption = (route: string) => {
     prayerGroupDetails?.prayerGroupId &&
       router.push({
-        pathname: route,
+        pathname: route as RelativePathString,
         params: { id: prayerGroupDetails?.prayerGroupId },
-      } as Href<any>);
+      });
   };
 
   return (

@@ -60,7 +60,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
     const response = await postPrayerGroupUsersQuery(
       prayerGroupId,
-      PRAYER_GROUP_USERS_QUERY
+      PRAYER_GROUP_USERS_QUERY,
     );
 
     setIsLoading(false);
@@ -88,12 +88,12 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       const newFilteredUsers = prayerGroupUsers.filter(
         (user) =>
           normalizeText(user.fullName).includes(normalizedQuery) ||
-          normalizeText(user.username).includes(normalizedQuery)
+          normalizeText(user.username).includes(normalizedQuery),
       );
 
       setFilteredUsers(newFilteredUsers);
     },
-    [prayerGroupUsers]
+    [prayerGroupUsers],
   );
 
   const onQueryChange = (query: string) => {
@@ -115,7 +115,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     const userToDelete = filteredUsers[userToDeleteIndex];
 
     const updatedPrayerGroupUsers = [...prayerGroupUsers].filter(
-      (prayerGroupUser) => prayerGroupUser.userId !== userToDelete.userId
+      (prayerGroupUser) => prayerGroupUser.userId !== userToDelete.userId,
     );
 
     setPrayerGroupUsers(updatedPrayerGroupUsers);
@@ -128,7 +128,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
   const onRoleChange = (index: number, role: PrayerGroupRole) => {
     const userToChange = filteredUsers[index];
     const prayerGroupUsersIndex = prayerGroupUsers.findIndex(
-      (user) => user.userId === userToChange.userId
+      (user) => user.userId === userToChange.userId,
     );
 
     const updatedFilteredUsers = [...filteredUsers];
@@ -147,7 +147,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
     const prayerGroupUserUpdateModels = mapPrayerGroupUsers(prayerGroupUsers);
     const response = await putPrayerGroupUsers(
       prayerGroupId,
-      prayerGroupUserUpdateModels
+      prayerGroupUserUpdateModels,
     );
 
     setIsSaveLoading(false);
@@ -176,7 +176,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
     const updatedAdmins = updatedPrayerGroupUsers?.filter(
       (prayerGroupUser) =>
-        prayerGroupUser.prayerGroupRole === PrayerGroupRole.Admin
+        prayerGroupUser.prayerGroupRole === PrayerGroupRole.Admin,
     );
 
     const updatedUserRole = updatedPrayerGroupUser?.prayerGroupRole;
@@ -198,7 +198,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
 
     if (userDeletedThemselves) {
       const updatedPrayerGroups = [...(userData?.prayerGroups ?? [])].filter(
-        (group) => group.prayerGroupId !== prayerGroupDetails?.prayerGroupId
+        (group) => group.prayerGroupId !== prayerGroupDetails?.prayerGroupId,
       );
       setUserData({ ...userData, prayerGroups: updatedPrayerGroups });
     }
@@ -207,7 +207,7 @@ export const usePrayerGroupUsers = (prayerGroupId: number) => {
       router.push({
         pathname: "/prayergroup/[id]",
         params: { id: prayerGroupId },
-      } as Href<any>);
+      });
       return;
     }
 

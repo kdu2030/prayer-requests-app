@@ -23,7 +23,7 @@ export const PrayerGroupPermissionError: React.FC = () => {
     router.push({
       pathname: "/prayergroup/[id]",
       params: { id: prayerGroupDetails.prayerGroupId },
-    } as Href<any>);
+    });
   };
 
   return (

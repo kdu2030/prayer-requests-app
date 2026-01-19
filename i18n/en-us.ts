@@ -168,6 +168,7 @@ export const englishTranslations = {
     "This prayer group does not have prayer requests yet.",
   "prayerRequest.actions.prayForRequest": "Pray for request",
   "prayerRequest.actions.savePrayerRequest": "Save prayer request",
+  "prayerRequest.actions.unsavePrayerRequest": "Unsave prayer request",
 
   "prayerGroup.joinRequest.label":
     "This is a private prayer group. To join, please submit a join request.",
@@ -188,4 +189,6 @@ export const englishTranslations = {
   "toaster.joinPrayerGroup.failure": "Failed to join prayer group.",
   "toaster.joinRequestSubmit.success": "Join request submitted.",
   "toaster.joinRequestSubmit.failure": "Failed to submit join request.",
+  "toaster.savePrayerRequest.success": "Prayer request saved.",
+  "toaster.savePrayerRequest.failure": "Failed to save prayer request.",
 };

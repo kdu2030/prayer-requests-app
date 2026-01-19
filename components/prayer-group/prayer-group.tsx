@@ -7,6 +7,7 @@ import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
+import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
 import { LeavePrayerGroupModal } from "./leave-prayer-group/leave-prayer-group-modal";
@@ -15,6 +16,7 @@ import { usePrayerGroupContext } from "./prayer-group-context";
 import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
 import { PrayerRequestSpinner } from "./spinners/prayer-request-spinner";
 import { usePrayerGroup } from "./use-prayer-group";
+import { usePrayerGroupActions } from "./use-prayer-group-actions";
 
 type Props = {
   prayerGroupId: number;
@@ -48,6 +50,9 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     setUserJoinStatus,
   } = usePrayerGroup(prayerGroupId);
 
+  const { prayerRequestActionsRef, openPrayerRequestActions } =
+    usePrayerGroupActions();
+
   const prayerGroupHeader = React.useMemo(
     () => (
       <PrayerGroupHeader
@@ -58,7 +63,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
       />
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isAddUserLoading, isRemoveUserLoading, prayerGroupDetails]
+    [isAddUserLoading, isRemoveUserLoading, prayerGroupDetails],
   );
 
   if (
@@ -112,6 +117,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                   prayerRequest={item}
                   prayerRequests={prayerRequests}
                   setPrayerRequests={setPrayerRequests}
+                  openPrayerRequestActions={openPrayerRequestActions}
                   key={item.prayerRequestId}
                 />
               )}
@@ -136,6 +142,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           setShowLeavePrayerGroupModal={setShowLeavePrayerGroupModal}
           bottomSheetRef={prayerGroupOptionsRef}
         />
+
+        <PrayerRequestActions bottomSheetRef={prayerRequestActionsRef} />
 
         {showLeavePrayerGroupModal && (
           <LeavePrayerGroupModal

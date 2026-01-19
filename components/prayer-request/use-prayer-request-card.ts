@@ -1,4 +1,3 @@
-import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
 
 import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like";
@@ -16,8 +15,6 @@ export const usePrayerRequestCard = (
   prayerRequests: PrayerRequestModel[],
   setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>,
 ) => {
-  const prayerRequestActionsRef = React.useRef<BottomSheetMethods>(null);
-
   const [isLikeLoading, setIsLikeLoading] = React.useState<boolean>(false);
   const { translate } = useI18N();
 
@@ -123,15 +120,9 @@ export const usePrayerRequestCard = (
     return prayerRequest.userLikeId ? "heart" : "heart-outline";
   }, [isLikeLoading, prayerRequest.userLikeId]);
 
-  const openPrayerRequestActions = () => {
-    prayerRequestActionsRef.current?.snapToIndex(0);
-  };
-
   return {
     isLikeLoading,
     onLikePress,
     likeIcon,
-    prayerRequestActionsRef,
-    openPrayerRequestActions,
   };
 };

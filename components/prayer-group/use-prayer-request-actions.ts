@@ -73,13 +73,13 @@ export const usePrayerRequestActions = (
 
     setPrayerRequests((prayerRequests) => {
       const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-        if (prayerRequest.prayerRequestId !== response.value.prayerRequestId) {
+        if (prayerRequest.prayerRequestId !== prayerRequestId) {
           return prayerRequest;
         }
 
         return {
           ...prayerRequest,
-          userBookmarkId: prayerRequest.userBookmarkId,
+          userBookmarkId: response.value.prayerRequestBookmarkId,
         };
       });
 

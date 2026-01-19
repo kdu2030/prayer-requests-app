@@ -16,7 +16,7 @@ import { usePrayerGroupContext } from "./prayer-group-context";
 import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
 import { PrayerRequestSpinner } from "./spinners/prayer-request-spinner";
 import { usePrayerGroup } from "./use-prayer-group";
-import { usePrayerGroupActions } from "./use-prayer-group-actions";
+import { usePrayerRequestActions } from "./use-prayer-request-actions";
 
 type Props = {
   prayerGroupId: number;
@@ -51,7 +51,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
   } = usePrayerGroup(prayerGroupId);
 
   const { prayerRequestActionsRef, openPrayerRequestActions } =
-    usePrayerGroupActions();
+    usePrayerRequestActions();
 
   const prayerGroupHeader = React.useMemo(
     () => (

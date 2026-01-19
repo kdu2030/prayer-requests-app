@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 
-export const usePrayerGroupActions = () => {
+export const usePrayerRequestActions = () => {
   const prayerRequestActionsRef = React.useRef<BottomSheetMethods>(null);
   const [selectedPrayerRequest, setSelectedPrayerRequest] = React.useState<
     PrayerRequestModel | undefined

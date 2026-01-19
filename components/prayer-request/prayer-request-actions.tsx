@@ -10,13 +10,21 @@ import { View } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { PrayerGroupOptionButton } from "../prayer-group/options/prayer-group-option-button";
 
 type Props = {
+  selectedPrayerRequest: PrayerRequestModel | undefined;
+  isToggleBookmarkLoading: boolean;
+  toggleBookmark: () => void;
   bottomSheetRef: React.RefObject<BottomSheetMethods>;
 };
 
-export const PrayerRequestActions: React.FC<Props> = ({ bottomSheetRef }) => {
+export const PrayerRequestActions: React.FC<Props> = ({
+  bottomSheetRef,
+  isToggleBookmarkLoading,
+  toggleBookmark,
+}) => {
   const theme = useTheme();
   const { translate } = useI18N();
 
@@ -52,7 +60,8 @@ export const PrayerRequestActions: React.FC<Props> = ({ bottomSheetRef }) => {
           <PrayerGroupOptionButton
             icon={<MaterialIcons name="bookmark-outline" size={24} />}
             label={translate("prayerRequest.actions.savePrayerRequest")}
-            onPress={() => {}}
+            onPress={toggleBookmark}
+            isLoading={isToggleBookmarkLoading}
           />
         </View>
       </BottomSheetView>

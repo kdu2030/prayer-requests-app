@@ -51,7 +51,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
   } = usePrayerGroup(prayerGroupId);
 
   const { prayerRequestActionsRef, openPrayerRequestActions } =
-    usePrayerRequestActions();
+    usePrayerRequestActions(setPrayerRequests);
 
   const prayerGroupHeader = React.useMemo(
     () => (

@@ -11,7 +11,9 @@ import {
 } from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
 
-export const usePrayerRequestActions = () => {
+export const usePrayerRequestActions = (
+  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>,
+) => {
   const { translate } = useI18N();
 
   const prayerRequestActionsRef = React.useRef<BottomSheetMethods>(null);
@@ -52,10 +54,14 @@ export const usePrayerRequestActions = () => {
       submittedDate: new Date().toISOString(),
     };
 
+    setIsToggleBookmarkLoading(true);
+
     const response = await postPrayerRequestBookmark(
       prayerRequestId,
       createRequest,
     );
+
+    setIsToggleBookmarkLoading(false);
 
     if (response.isError) {
       openToaster({
@@ -64,6 +70,21 @@ export const usePrayerRequestActions = () => {
       });
       return;
     }
+
+    setPrayerRequests((prayerRequests) => {
+      const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
+        if (prayerRequest.prayerRequestId != response.value.prayerRequestId) {
+          return prayerRequest;
+        }
+
+        return {
+          ...prayerRequest,
+          userBookmarkId: prayerRequest.userBookmarkId,
+        };
+      });
+
+      return updatedPrayerRequests;
+    });
 
     closePrayerRequestActions();
 
@@ -77,6 +98,10 @@ export const usePrayerRequestActions = () => {
     if (!selectedPrayerRequest?.prayerRequestId) {
       return;
     }
+
+    if (!selectedPrayerRequest.userBookmarkId) {
+      await addPrayerRequestBookmark(selectedPrayerRequest.prayerRequestId);
+    }
   };
 
   return {
@@ -84,5 +109,7 @@ export const usePrayerRequestActions = () => {
     openPrayerRequestActions,
     closePrayerRequestActions,
     prayerRequestActionsRef,
+    toggleBookmark,
+    isToggleBookmarkLoading,
   };
 };

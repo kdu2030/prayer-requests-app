@@ -162,6 +162,8 @@ export const chineseTranslations: Translations = {
   "prayerRequest.addLike.failure": "无法点赞祷告事项",
   "prayerRequest.removeLike.failure": "无法删除祷告事项点赞",
   "prayerRequest.prayerGroup.noPrayerRequests": "这个祷告小组还没有祷告事项。",
+  "prayerRequest.actions.prayForRequest": "为事项祷告",
+  "prayerRequest.actions.savePrayerRequest": "保存祷告事项",
 
   "prayerGroup.joinRequest.label":
     "这是一个私密的祷告小组。要加入，请提交加入请求。",

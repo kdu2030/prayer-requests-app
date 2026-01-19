@@ -56,6 +56,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     openPrayerRequestActions,
     isToggleBookmarkLoading,
     toggleBookmark,
+    setSelectedPrayerRequest,
   } = usePrayerRequestActions(setPrayerRequests);
 
   const prayerGroupHeader = React.useMemo(
@@ -153,6 +154,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           isToggleBookmarkLoading={isToggleBookmarkLoading}
           toggleBookmark={toggleBookmark}
           bottomSheetRef={prayerRequestActionsRef}
+          setSelectedPrayerRequest={setSelectedPrayerRequest}
         />
 
         {showLeavePrayerGroupModal && (

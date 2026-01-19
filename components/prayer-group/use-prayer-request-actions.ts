@@ -111,5 +111,6 @@ export const usePrayerRequestActions = (
     prayerRequestActionsRef,
     toggleBookmark,
     isToggleBookmarkLoading,
+    setSelectedPrayerRequest,
   };
 };

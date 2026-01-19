@@ -17,13 +17,18 @@ type Props = {
   selectedPrayerRequest: PrayerRequestModel | undefined;
   isToggleBookmarkLoading: boolean;
   toggleBookmark: () => void;
+  setSelectedPrayerRequest: React.Dispatch<
+    React.SetStateAction<PrayerRequestModel | undefined>
+  >;
   bottomSheetRef: React.RefObject<BottomSheetMethods>;
 };
 
 export const PrayerRequestActions: React.FC<Props> = ({
+  selectedPrayerRequest,
   bottomSheetRef,
   isToggleBookmarkLoading,
   toggleBookmark,
+  setSelectedPrayerRequest,
 }) => {
   const theme = useTheme();
   const { translate } = useI18N();
@@ -47,6 +52,7 @@ export const PrayerRequestActions: React.FC<Props> = ({
       index={-1}
       backdropComponent={renderBackdrop}
       backgroundStyle={{ backgroundColor: theme.colors.background }}
+      onClose={() => setSelectedPrayerRequest(undefined)}
       ref={bottomSheetRef}
     >
       <BottomSheetView>
@@ -58,8 +64,21 @@ export const PrayerRequestActions: React.FC<Props> = ({
           />
 
           <PrayerGroupOptionButton
-            icon={<MaterialIcons name="bookmark-outline" size={24} />}
-            label={translate("prayerRequest.actions.savePrayerRequest")}
+            icon={
+              <MaterialIcons
+                name={
+                  selectedPrayerRequest?.userBookmarkId
+                    ? "bookmark"
+                    : "bookmark-outline"
+                }
+                size={24}
+              />
+            }
+            label={
+              selectedPrayerRequest?.userBookmarkId
+                ? translate("prayerRequest.actions.unsavePrayerRequest")
+                : translate("prayerRequest.actions.savePrayerRequest")
+            }
             onPress={toggleBookmark}
             isLoading={isToggleBookmarkLoading}
           />

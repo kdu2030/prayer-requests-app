@@ -15,7 +15,7 @@ const postPrayerRequestBookmark = async (
   prayerRequestId: number,
   createRequest: PrayerRequestActionCreateRequest,
 ): Promise<ManagedErrorResponse<PrayerRequestBookmarkModel>> => {
-  const url = `${baseUrl}/api/${prayerRequestId}/bookmark`;
+  const url = `${baseUrl}/api/prayerrequest/${prayerRequestId}/bookmark`;
 
   try {
     const response = await fetch.post(url, createRequest, {

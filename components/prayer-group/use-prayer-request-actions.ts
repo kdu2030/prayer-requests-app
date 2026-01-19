@@ -90,7 +90,7 @@ export const usePrayerRequestActions = (
 
     openToaster({
       message: translate("toaster.savePrayerRequest.success"),
-      variant: "error",
+      variant: "success",
     });
   };
 

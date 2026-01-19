@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
@@ -46,6 +46,12 @@ export const PrayerRequestActions: React.FC<Props> = ({ bottomSheetRef }) => {
           <PrayerGroupOptionButton
             icon={<MaterialCommunityIcons name="cross" size={24} />}
             label={translate("prayerRequest.actions.prayForRequest")}
+            onPress={() => {}}
+          />
+
+          <PrayerGroupOptionButton
+            icon={<MaterialIcons name="bookmark-outline" size={24} />}
+            label={translate("prayerRequest.actions.savePrayerRequest")}
             onPress={() => {}}
           />
         </View>

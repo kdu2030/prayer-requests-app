@@ -191,4 +191,6 @@ export const englishTranslations = {
   "toaster.joinRequestSubmit.failure": "Failed to submit join request.",
   "toaster.savePrayerRequest.success": "Prayer request saved.",
   "toaster.savePrayerRequest.failure": "Failed to save prayer request.",
+  "toaster.unsavePrayerRequest.success": "Prayer request unsaved.",
+  "toaster.unsavePrayerRequest.failure": "Failed to unsave prayer request.",
 };

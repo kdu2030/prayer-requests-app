@@ -73,7 +73,7 @@ export const usePrayerRequestActions = (
 
     setPrayerRequests((prayerRequests) => {
       const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-        if (prayerRequest.prayerRequestId != response.value.prayerRequestId) {
+        if (prayerRequest.prayerRequestId !== response.value.prayerRequestId) {
           return prayerRequest;
         }
 
@@ -94,6 +94,47 @@ export const usePrayerRequestActions = (
     });
   };
 
+  const removePrayerRequestBookmark = async (
+    prayerRequestBookmarkId: number,
+  ) => {
+    setIsToggleBookmarkLoading(true);
+
+    const response = await deletePrayerRequestBookmark(prayerRequestBookmarkId);
+
+    setIsToggleBookmarkLoading(false);
+
+    if (response.isError) {
+      openToaster({
+        message: translate("toaster.unsavePrayerRequest.failure"),
+        variant: "error",
+      });
+
+      return;
+    }
+
+    setPrayerRequests((prayerRequests) => {
+      const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
+        if (
+          prayerRequest.prayerRequestId !==
+          selectedPrayerRequest?.prayerRequestId
+        ) {
+          return prayerRequest;
+        }
+
+        return { ...prayerRequest, userBookmarkId: undefined };
+      });
+
+      return updatedPrayerRequests;
+    });
+
+    closePrayerRequestActions();
+
+    openToaster({
+      message: translate("toaster.unsavePrayerRequest.success"),
+      variant: "success",
+    });
+  };
+
   const toggleBookmark = async () => {
     if (!selectedPrayerRequest?.prayerRequestId) {
       return;
@@ -101,7 +142,10 @@ export const usePrayerRequestActions = (
 
     if (!selectedPrayerRequest.userBookmarkId) {
       await addPrayerRequestBookmark(selectedPrayerRequest.prayerRequestId);
+      return;
     }
+
+    await removePrayerRequestBookmark(selectedPrayerRequest.userBookmarkId);
   };
 
   return {

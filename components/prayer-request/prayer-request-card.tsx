@@ -8,7 +8,6 @@ import { useI18N } from "../../hooks/use-i18n";
 import { CultureCode } from "../../types/languages";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { ProfilePicture } from "../layouts/profile-picture";
-import { PrayerRequestSkeleton } from "./prayer-request-skeleton";
 import { PrayerRequestCardTestIds } from "./tests/test-ids";
 import { usePrayerRequestCard } from "./use-prayer-request-card";
 
@@ -157,8 +156,6 @@ export const PrayerRequestCard: React.FC<Props> = ({
           </Button>
         </View>
       </View>
-
-      <PrayerRequestSkeleton />
     </>
   );
 };

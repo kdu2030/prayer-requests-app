@@ -9,6 +9,7 @@ import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
+import { PrayerRequestSkeletonList } from "../prayer-request/prayer-request-skeleton-list";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
 import { LeavePrayerGroupModal } from "./leave-prayer-group/leave-prayer-group-modal";
 import { PrayerGroupOptions } from "./options/prayer-group-options";
@@ -38,7 +39,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     onRetry,
     prayerGroupOptionsRef,
     onOpenOptions,
-    nextPrayerRequestsLoadStatus,
     prayerRequestLoadStatus,
     prayerRequests,
     onEndReached,
@@ -48,6 +48,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     showLeavePrayerGroupModal,
     setShowLeavePrayerGroupModal,
     setUserJoinStatus,
+    numNotLoadedRequests,
   } = usePrayerGroup(prayerGroupId);
 
   const {
@@ -128,15 +129,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                 />
               )}
               ListFooterComponent={
-                nextPrayerRequestsLoadStatus === LoadStatus.Loading ? (
-                  <View className="py-6">
-                    <PrayerRequestSpinner
-                      size={48}
-                      textClassName="mt-3"
-                      labelVariant="titleSmall"
-                    />
-                  </View>
-                ) : undefined
+                <PrayerRequestSkeletonList numCards={numNotLoadedRequests} />
               }
               onEndReachedThreshold={0.8}
               onEndReached={onEndReached}

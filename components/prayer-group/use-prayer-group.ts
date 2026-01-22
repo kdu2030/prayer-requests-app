@@ -36,6 +36,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     loadNextPrayerRequestsForGroup,
     prayerRequestLoadStatus,
     nextPrayerRequestsLoadStatus,
+    numNotLoadedRequests,
   } = usePrayerRequestContext();
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
@@ -96,7 +97,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     await loadNextPrayerRequestsForGroup(
       prayerGroupId,
       true,
-      DEFAULT_PRAYER_REQUEST_FILTERS
+      DEFAULT_PRAYER_REQUEST_FILTERS,
     );
   };
 
@@ -141,7 +142,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     });
     setUserData((existingUserData) => {
       const updatedPrayerGroups = existingUserData.prayerGroups?.concat(
-        joinedPrayerGroupSummary
+        joinedPrayerGroupSummary,
       );
       return {
         ...existingUserData,
@@ -158,7 +159,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setIsRemoveUserLoading(true);
     const response = await deletePrayerGroupUser(
       prayerGroupId,
-      userData.userId
+      userData.userId,
     );
 
     setIsRemoveUserLoading(false);
@@ -185,7 +186,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     setUserData((existingUserData) => {
       const prayerGroups = existingUserData.prayerGroups?.filter(
-        (prayerGroup) => prayerGroup.prayerGroupId !== prayerGroupId
+        (prayerGroup) => prayerGroup.prayerGroupId !== prayerGroupId,
       );
       return { ...existingUserData, prayerGroups };
     });
@@ -228,7 +229,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     await loadNextPrayerRequestsForGroup(
       prayerGroupId,
       false,
-      updatedPrayerRequestFilters
+      updatedPrayerRequestFilters,
     );
   };
 
@@ -268,5 +269,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     showLeavePrayerGroupModal,
     setShowLeavePrayerGroupModal,
     setUserJoinStatus,
+    numNotLoadedRequests,
   };
 };

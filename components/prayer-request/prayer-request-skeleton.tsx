@@ -22,6 +22,10 @@ export const PrayerRequestSkeleton: React.FC = () => {
           </View>
         </View>
       </View>
+
+      <View className="mt-4">
+        <Skeleton width={164} height={20} colorMode="light" />
+      </View>
     </View>
   );
 };

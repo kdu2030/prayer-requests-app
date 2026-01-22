@@ -50,6 +50,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     setUserJoinStatus,
     numNotLoadedRequests,
     prayerRequestFilters,
+    nextPrayerRequestsLoadStatus,
   } = usePrayerGroup(prayerGroupId);
 
   const {
@@ -130,12 +131,14 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                 />
               )}
               ListFooterComponent={
-                <PrayerRequestSkeletonList
-                  numCards={min([
-                    numNotLoadedRequests,
-                    prayerRequestFilters.pageSize ?? 0,
-                  ])}
-                />
+                nextPrayerRequestsLoadStatus === LoadStatus.Loading ? (
+                  <PrayerRequestSkeletonList
+                    numCards={min([
+                      numNotLoadedRequests,
+                      prayerRequestFilters.pageSize ?? 0,
+                    ])}
+                  />
+                ) : undefined
               }
               onEndReachedThreshold={0.8}
               onEndReached={onEndReached}

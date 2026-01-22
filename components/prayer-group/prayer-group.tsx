@@ -1,3 +1,4 @@
+import { min } from "lodash";
 import * as React from "react";
 import { FlatList, View } from "react-native";
 import { useTheme } from "react-native-paper";
@@ -15,7 +16,6 @@ import { LeavePrayerGroupModal } from "./leave-prayer-group/leave-prayer-group-m
 import { PrayerGroupOptions } from "./options/prayer-group-options";
 import { usePrayerGroupContext } from "./prayer-group-context";
 import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
-import { PrayerRequestSpinner } from "./spinners/prayer-request-spinner";
 import { usePrayerGroup } from "./use-prayer-group";
 import { usePrayerRequestActions } from "./use-prayer-request-actions";
 
@@ -49,6 +49,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     setShowLeavePrayerGroupModal,
     setUserJoinStatus,
     numNotLoadedRequests,
+    prayerRequestFilters,
   } = usePrayerGroup(prayerGroupId);
 
   const {
@@ -129,7 +130,12 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                 />
               )}
               ListFooterComponent={
-                <PrayerRequestSkeletonList numCards={numNotLoadedRequests} />
+                <PrayerRequestSkeletonList
+                  numCards={min([
+                    numNotLoadedRequests,
+                    prayerRequestFilters.pageSize ?? 0,
+                  ])}
+                />
               }
               onEndReachedThreshold={0.8}
               onEndReached={onEndReached}

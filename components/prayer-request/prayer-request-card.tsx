@@ -16,7 +16,10 @@ type Props = {
   prayerRequest: PrayerRequestModel;
   prayerRequests: PrayerRequestModel[];
   setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>;
-  openPrayerRequestActions: (prayerRequest: PrayerRequestModel) => void;
+  openPrayerRequestActions: (
+    prayerRequest: PrayerRequestModel,
+    showExtendedOptions?: boolean,
+  ) => void;
   showCreatedUser?: boolean;
 };
 
@@ -84,7 +87,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
             <TouchableRipple
               rippleColor={"rgba(0, 0, 0, 0.12)"}
               style={{ borderRadius: 9999 }}
-              onPress={() => openPrayerRequestActions(prayerRequest)}
+              onPress={() => openPrayerRequestActions(prayerRequest, true)}
               borderless
             >
               <MaterialIcons size={24} name="more-vert" />

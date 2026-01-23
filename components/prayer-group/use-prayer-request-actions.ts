@@ -17,6 +17,10 @@ export const usePrayerRequestActions = (
   const { translate } = useI18N();
 
   const prayerRequestActionsRef = React.useRef<BottomSheetMethods>(null);
+
+  const [showExtendedActions, setShowExtendedActions] =
+    React.useState<boolean>(false);
+
   const [selectedPrayerRequest, setSelectedPrayerRequest] = React.useState<
     PrayerRequestModel | undefined
   >();
@@ -30,18 +34,23 @@ export const usePrayerRequestActions = (
 
   const { userData } = useApiDataContext();
 
-  const openPrayerRequestActions = (prayerRequest: PrayerRequestModel) => {
+  const openPrayerRequestActions = (
+    prayerRequest: PrayerRequestModel,
+    showExtended: boolean = false,
+  ) => {
     if (!prayerRequestActionsRef.current) {
       return;
     }
 
     prayerRequestActionsRef.current.snapToIndex(0);
     setSelectedPrayerRequest(prayerRequest);
+    setShowExtendedActions(showExtended);
   };
 
   const closePrayerRequestActions = () => {
     prayerRequestActionsRef.current?.close();
     setSelectedPrayerRequest(undefined);
+    setShowExtendedActions(false);
   };
 
   const addPrayerRequestBookmark = async (prayerRequestId: number) => {
@@ -156,5 +165,6 @@ export const usePrayerRequestActions = (
     toggleBookmark,
     isToggleBookmarkLoading,
     setSelectedPrayerRequest,
+    showExtendedActions,
   };
 };

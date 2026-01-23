@@ -14,6 +14,7 @@ import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { PrayerGroupOptionButton } from "../prayer-group/options/prayer-group-option-button";
 
 type Props = {
+  showExtendedActions: boolean;
   selectedPrayerRequest: PrayerRequestModel | undefined;
   isToggleBookmarkLoading: boolean;
   toggleBookmark: () => void;

@@ -1,6 +1,3 @@
-import "@testing-library/jest-native/extend-expect";
-import "@testing-library/jest-native";
-
 import {
   fireEvent,
   renderHook,
@@ -20,7 +17,7 @@ let component: RenderResult;
 
 const mountRequestBody = (formValues?: CreatePrayerRequestForm) => {
   const { result: requestBodyValidationSchemaRef } = renderHook(() =>
-    useRequestBodyValidationSchema()
+    useRequestBodyValidationSchema(),
   );
 
   return mountComponent(
@@ -30,7 +27,7 @@ const mountRequestBody = (formValues?: CreatePrayerRequestForm) => {
       onSubmit={() => {}}
     >
       <RequestBodyStep setWizardStep={() => {}} />
-    </Formik>
+    </Formik>,
   );
 };
 
@@ -51,10 +48,10 @@ describe(RequestBodyStep, () => {
     fireEvent.press(nextButton);
 
     const requestTitleContainer = await component.findByTestId(
-      `${RequestBodyTestIds.requestTitleInput}-container`
+      `${RequestBodyTestIds.requestTitleInput}-container`,
     );
     const requestDescriptionContainer = await component.findByTestId(
-      `${RequestBodyTestIds.requestDescriptionInput}-container`
+      `${RequestBodyTestIds.requestDescriptionInput}-container`,
     );
 
     expect(requestTitleContainer).toHaveTextContent("required");
@@ -70,16 +67,16 @@ describe(RequestBodyStep, () => {
     }
 
     const requestTitleInput = component.getByTestId(
-      RequestBodyTestIds.requestTitleInput
+      RequestBodyTestIds.requestTitleInput,
     );
     fireEvent.changeText(requestTitleInput, mockRequestTitle);
     fireEvent(requestTitleInput, "blur");
 
     const requestTitleContainer = await component.findByTestId(
-      `${RequestBodyTestIds.requestTitleInput}-container`
+      `${RequestBodyTestIds.requestTitleInput}-container`,
     );
     expect(requestTitleContainer).toHaveTextContent(
-      "must be less than 255 characters"
+      "must be less than 255 characters",
     );
   });
 });

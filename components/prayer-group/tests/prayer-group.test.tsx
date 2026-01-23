@@ -1,7 +1,3 @@
-import "@testing-library/jest-native/extend-expect";
-import "@testing-library/jest-native";
-
-import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import {
   fireEvent,
   RenderResult,
@@ -40,15 +36,10 @@ const mockPostPrayerGroupUser = jest.fn();
 const mockDeletePrayerGroupUser = jest.fn();
 const mockPostPrayerRequestFilter = jest.fn();
 
-jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
-
 jest.mock("@gorhom/bottom-sheet", () => ({
   __esModule: true,
   ...require("@gorhom/bottom-sheet/mock"),
 }));
-
-jest.mock("expo-font");
-jest.mock("expo-asset");
 
 jest.mock("../../../api/get-prayer-group", () => ({
   useGetPrayerGroup: () => () => mockGetPrayerGroup(),
@@ -77,7 +68,7 @@ jest.mock("../../../api/post-prayer-request-filter", () => ({
 
 const mountPrayerGroup = (
   prayerGroupDetails: PrayerGroupDetails,
-  useCustomPostPrayerRequestMock: boolean = false
+  useCustomPostPrayerRequestMock: boolean = false,
 ) => {
   const mockGetResponse: ManagedErrorResponse<PrayerGroupDetails> = {
     isError: false,
@@ -104,7 +95,7 @@ const mountPrayerGroup = (
       <PrayerRequestContextProvider>
         <PrayerGroup prayerGroupId={2} />
       </PrayerRequestContextProvider>
-    </PrayerGroupContextProvider>
+    </PrayerGroupContextProvider>,
   );
 };
 
@@ -124,7 +115,7 @@ describe(PrayerGroup, () => {
   test("Prayer group banner displays if not null", async () => {
     component = mountPrayerGroup(mockPrayerGroupDetails);
     const prayerGroupBanner = await component.findByTestId(
-      PrayerGroupHeaderTestIds.imageBanner
+      PrayerGroupHeaderTestIds.imageBanner,
     );
     expect(prayerGroupBanner).toHaveProp("source", {
       uri: mockPrayerGroupDetails.bannerFile?.fileUrl,
@@ -139,7 +130,7 @@ describe(PrayerGroup, () => {
 
     component = mountPrayerGroup(prayerGroupDetails);
     const bannerPlaceholder = await component.findByTestId(
-      PrayerGroupHeaderTestIds.bannerPlaceholder
+      PrayerGroupHeaderTestIds.bannerPlaceholder,
     );
     expect(bannerPlaceholder).toBeTruthy();
   });
@@ -147,10 +138,10 @@ describe(PrayerGroup, () => {
   test("Correct buttons display if user is a member", async () => {
     component = mountPrayerGroup(mockPrayerGroupDetails);
     const leaveGroupButton = await component.findByTestId(
-      PrayerGroupHeaderTestIds.optionsButton
+      PrayerGroupHeaderTestIds.optionsButton,
     );
     const addPrayerRequestButton = await component.findByTestId(
-      PrayerGroupHeaderTestIds.addPrayerRequestButton
+      PrayerGroupHeaderTestIds.addPrayerRequestButton,
     );
 
     expect(leaveGroupButton).toBeTruthy();
@@ -167,10 +158,10 @@ describe(PrayerGroup, () => {
     component = mountPrayerGroup(prayerGroupDetails);
 
     const joinPrayerGroupButton = await component.findByTestId(
-      PrayerGroupHeaderTestIds.joinGroupButton
+      PrayerGroupHeaderTestIds.joinGroupButton,
     );
     const aboutGroupButton = await component.findByTestId(
-      PrayerGroupHeaderTestIds.optionsButton
+      PrayerGroupHeaderTestIds.optionsButton,
     );
 
     expect(joinPrayerGroupButton).toBeTruthy();
@@ -189,13 +180,13 @@ describe(PrayerGroup, () => {
     component = mountPrayerGroup(prayerGroupDetails);
 
     const joinPrayerGroupButton = await component.findByTestId(
-      PrayerGroupHeaderTestIds.joinGroupButton
+      PrayerGroupHeaderTestIds.joinGroupButton,
     );
 
     fireEvent.press(joinPrayerGroupButton);
 
     await waitFor(() =>
-      expect(mockPostPrayerGroupUser).toHaveBeenCalledWith(2, 1)
+      expect(mockPostPrayerGroupUser).toHaveBeenCalledWith(2, 1),
     );
   });
 
@@ -222,13 +213,13 @@ describe(PrayerGroup, () => {
       (filterCriteria: PrayerRequestFilterCriteria) => {
         prayerRequestFilterCriteria = filterCriteria;
         return mockPrayerRequestFilterResponse;
-      }
+      },
     );
 
     component = mountPrayerGroup(mockPrayerGroupDetails1, true);
 
     const prayerRequest = await component.findByTestId(
-      `${PrayerRequestCardTestIds.requestTitle}-${9}`
+      `${PrayerRequestCardTestIds.requestTitle}-${9}`,
     );
 
     expect(prayerRequest).toBeTruthy();
@@ -246,7 +237,7 @@ describe(PrayerGroup, () => {
     component = mountPrayerGroup(prayerGroupDetails);
 
     const joinRequestPlaceholder = await component.findByTestId(
-      PrayerRequestPlaceholderBodyTestIds.submitJoinRequestButton
+      PrayerRequestPlaceholderBodyTestIds.submitJoinRequestButton,
     );
 
     expect(joinRequestPlaceholder).toBeTruthy();

@@ -1,6 +1,3 @@
-import "@testing-library/jest-native/extend-expect";
-import "@testing-library/jest-native";
-
 import {
   act,
   fireEvent,
@@ -24,21 +21,21 @@ const mockPostJoinRequestsSearch = jest.fn();
 
 const mockPostJoinRequestsSearchCallback = jest.fn(
   (prayerGroupId: number, sortConfig: SortConfig) =>
-    mockPostJoinRequestsSearch(prayerGroupId, sortConfig)
+    mockPostJoinRequestsSearch(prayerGroupId, sortConfig),
 );
 
 const mockPostApproveJoinRequests = jest.fn();
 
 const mockPostApproveJoinRequestsCallback = jest.fn(
   (prayerGroupId: number, joinRequestIds: number[]) =>
-    mockPostApproveJoinRequests(prayerGroupId, joinRequestIds)
+    mockPostApproveJoinRequests(prayerGroupId, joinRequestIds),
 );
 
 const mockDeleteJoinRequests = jest.fn();
 
 const mockDeleteJoinRequestsCallback = jest.fn(
   (prayerGroupId: number, joinRequestIds: number[]) =>
-    mockDeleteJoinRequests(prayerGroupId, joinRequestIds)
+    mockDeleteJoinRequests(prayerGroupId, joinRequestIds),
 );
 
 let component: RenderResult;
@@ -61,7 +58,7 @@ const mountPrayerGroupJoinRequests = (prayerGroupId: number) => {
       <PrayerRequestContextProvider>
         <PrayerGroupJoinRequests prayerGroupId={prayerGroupId} />
       </PrayerRequestContextProvider>
-    </PrayerGroupContextProvider>
+    </PrayerGroupContextProvider>,
   );
 };
 
@@ -90,17 +87,17 @@ describe(PrayerGroupJoinRequests, () => {
 
     const expectedJoinRequestUsername = mockJoinRequests[0].user.username;
     const joinRequestUsername = await component.findByTestId(
-      `${JoinRequestTestIds.usernameValue}[0]`
+      `${JoinRequestTestIds.usernameValue}[0]`,
     );
 
     await waitFor(() => {
       expect(mockPostJoinRequestsSearch).toHaveBeenCalledWith(
         1,
-        expectedSortConfig
+        expectedSortConfig,
       );
 
       expect(joinRequestUsername).toHaveTextContent(
-        expectedJoinRequestUsername
+        expectedJoinRequestUsername,
       );
     });
   });
@@ -118,7 +115,7 @@ describe(PrayerGroupJoinRequests, () => {
     component = mountPrayerGroupJoinRequests(1);
 
     const searchInput = await component.findByTestId(
-      JoinRequestTestIds.joinRequestSearchInput
+      JoinRequestTestIds.joinRequestSearchInput,
     );
 
     fireEvent.changeText(searchInput, "dmeagle");
@@ -126,7 +123,7 @@ describe(PrayerGroupJoinRequests, () => {
     act(() => jest.advanceTimersByTime(DEBOUNCE_TIME));
 
     const usernameValue = await component.findByTestId(
-      `${JoinRequestTestIds.usernameValue}[0]`
+      `${JoinRequestTestIds.usernameValue}[0]`,
     );
 
     expect(usernameValue).toHaveTextContent(mockJoinRequests[1].user.username);
@@ -147,19 +144,19 @@ describe(PrayerGroupJoinRequests, () => {
     component = mountPrayerGroupJoinRequests(1);
 
     const approveButton = await component.findByTestId(
-      `${JoinRequestTestIds.approveButton}[0]`
+      `${JoinRequestTestIds.approveButton}[0]`,
     );
 
     fireEvent.press(approveButton);
 
     const saveButton = await component.findByTestId(
-      JoinRequestTestIds.saveButton
+      JoinRequestTestIds.saveButton,
     );
 
     fireEvent.press(saveButton);
 
     const remainingJoinRequestFullName = await component.findByTestId(
-      `${JoinRequestTestIds.fullNameValue}[0]`
+      `${JoinRequestTestIds.fullNameValue}[0]`,
     );
 
     expect(mockPostApproveJoinRequests).toHaveBeenCalledWith(1, [
@@ -168,7 +165,7 @@ describe(PrayerGroupJoinRequests, () => {
     expect(mockDeleteJoinRequests).not.toHaveBeenCalled();
 
     expect(remainingJoinRequestFullName).toHaveTextContent(
-      mockJoinRequests[1].user.fullName
+      mockJoinRequests[1].user.fullName,
     );
   });
 
@@ -187,19 +184,19 @@ describe(PrayerGroupJoinRequests, () => {
     component = mountPrayerGroupJoinRequests(1);
 
     const rejectButton = await component.findByTestId(
-      `${JoinRequestTestIds.rejectButton}[0]`
+      `${JoinRequestTestIds.rejectButton}[0]`,
     );
 
     fireEvent.press(rejectButton);
 
     const saveButton = await component.findByTestId(
-      JoinRequestTestIds.saveButton
+      JoinRequestTestIds.saveButton,
     );
 
     fireEvent.press(saveButton);
 
     const remainingJoinRequestFullName = await component.findByTestId(
-      `${JoinRequestTestIds.fullNameValue}[0]`
+      `${JoinRequestTestIds.fullNameValue}[0]`,
     );
 
     expect(mockDeleteJoinRequests).toHaveBeenCalledWith(1, [
@@ -208,7 +205,7 @@ describe(PrayerGroupJoinRequests, () => {
     expect(mockPostApproveJoinRequests).not.toHaveBeenCalled();
 
     expect(remainingJoinRequestFullName).toHaveTextContent(
-      mockJoinRequests[1].user.fullName
+      mockJoinRequests[1].user.fullName,
     );
   });
 });

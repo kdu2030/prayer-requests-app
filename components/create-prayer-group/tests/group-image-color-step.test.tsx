@@ -1,7 +1,3 @@
-import "@testing-library/jest-native/extend-expect";
-import "@testing-library/jest-native";
-
-import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import { RenderResult } from "@testing-library/react-native";
 import { Formik } from "formik";
 import * as React from "react";
@@ -11,17 +7,15 @@ import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 import { GroupImageStep } from "../group-image-step/group-image-step";
 import { GroupImageColorStepTestIds } from "./test-ids";
 
-jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
-
 let component: RenderResult;
 
 export const mountGroupImageColorStep = (
-  initialValues: CreatePrayerGroupForm = {}
+  initialValues: CreatePrayerGroupForm = {},
 ): RenderResult => {
   return mountComponent(
     <Formik initialValues={initialValues} onSubmit={() => {}}>
       <GroupImageStep setWizardStep={() => {}} />
-    </Formik>
+    </Formik>,
   );
 };
 
@@ -45,10 +39,10 @@ describe(GroupImageStep, () => {
     });
 
     const groupNamePreview = component.getByTestId(
-      GroupImageColorStepTestIds.groupNamePreview
+      GroupImageColorStepTestIds.groupNamePreview,
     );
     const descriptionPreview = component.getByTestId(
-      GroupImageColorStepTestIds.descriptionPreview
+      GroupImageColorStepTestIds.descriptionPreview,
     );
 
     expect(groupNamePreview).toHaveTextContent(mockGroupName);

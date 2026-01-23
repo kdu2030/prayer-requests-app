@@ -1,6 +1,3 @@
-import "@testing-library/jest-native/extend-expect";
-import "@testing-library/jest-native";
-
 import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { renderHook, RenderResult } from "@testing-library/react-native";
@@ -36,7 +33,7 @@ const mountPrayerGroupOptions = (prayerGroupDetails: PrayerGroupDetails) => {
       prayerGroupDetails={prayerGroupDetails}
       bottomSheetRef={bottomSheetRef}
       setShowLeavePrayerGroupModal={() => {}}
-    />
+    />,
   );
 };
 
@@ -53,11 +50,11 @@ describe(PrayerGroupOptions, () => {
   test("If the user is an admin, show edit prayer group and manage users", async () => {
     component = mountPrayerGroupOptions(mockPrayerGroupDetails);
     const editPrayerGroupButton = await component.findByTestId(
-      PrayerGroupOptionsTestIds.editButton
+      PrayerGroupOptionsTestIds.editButton,
     );
 
     const manageUsersButton = await component.findByTestId(
-      PrayerGroupOptionsTestIds.manageUsersButton
+      PrayerGroupOptionsTestIds.manageUsersButton,
     );
 
     expect(editPrayerGroupButton).toBeTruthy();
@@ -73,11 +70,11 @@ describe(PrayerGroupOptions, () => {
     component = mountPrayerGroupOptions(prayerGroupDetails);
 
     const editPrayerGroupButton = component.queryByTestId(
-      PrayerGroupOptionsTestIds.editButton
+      PrayerGroupOptionsTestIds.editButton,
     );
 
     const manageUsersButton = component.queryByTestId(
-      PrayerGroupOptionsTestIds.manageUsersButton
+      PrayerGroupOptionsTestIds.manageUsersButton,
     );
 
     expect(editPrayerGroupButton).toBeFalsy();
@@ -95,11 +92,11 @@ describe(PrayerGroupOptions, () => {
     component = mountPrayerGroupOptions(prayerGroupDetails);
 
     const manageJoinRequests = component.getByTestId(
-      PrayerGroupOptionsTestIds.manageJoinRequestsButton
+      PrayerGroupOptionsTestIds.manageJoinRequestsButton,
     );
 
     const joinRequestsCount = component.getByTestId(
-      PrayerGroupOptionsTestIds.joinRequestsCount
+      PrayerGroupOptionsTestIds.joinRequestsCount,
     );
 
     expect(manageJoinRequests).toBeTruthy();
@@ -110,7 +107,7 @@ describe(PrayerGroupOptions, () => {
     component = mountPrayerGroupOptions(mockPrayerGroupDetails);
 
     const leavePrayerGroupButton = component.queryByTestId(
-      PrayerGroupOptionsTestIds.leavePrayerGroupButton
+      PrayerGroupOptionsTestIds.leavePrayerGroupButton,
     );
     expect(leavePrayerGroupButton).toBeTruthy();
   });

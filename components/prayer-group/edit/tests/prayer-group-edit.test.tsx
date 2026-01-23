@@ -1,7 +1,3 @@
-import "@testing-library/jest-native/extend-expect";
-import "@testing-library/jest-native";
-
-import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import {
   fireEvent,
   RenderResult,
@@ -33,8 +29,6 @@ const mockPostFile = jest.fn();
 const mockDeleteFile = jest.fn();
 const mockPutPrayerGroup = jest.fn();
 const mockGetPrayerGroupNameValidation = jest.fn();
-
-jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
 jest.mock("../../prayer-group-context", () => ({
   usePrayerGroupContext: () => mockUsePrayerGroupContext(),
@@ -73,15 +67,6 @@ jest.mock("../../../../api/get-prayer-group-name-validation", () => ({
   useGetPrayerGroupNameValidation: () => (prayerGroupName: string) =>
     mockGetPrayerGroupNameValidation(prayerGroupName),
 }));
-
-jest.mock("@expo/vector-icons", () => ({
-  Ionicons: "",
-  MaterialCommunityIcons: "",
-  MaterialIcons: "",
-  EvilIcons: "",
-}));
-
-jest.mock("expo-font");
 
 const mountPrayerGroupEdit = (prayerGroupDetails: PrayerGroupDetails) => {
   mockUsePrayerGroupContext.mockReturnValue({

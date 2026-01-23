@@ -49,7 +49,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
           borderColor: theme.colors.outline,
         }}
       >
-        <View className="flex flex-row items-center flex-1">
+        <View className="flex flex-row items-center w-full">
           {displayUser && (
             <View className="flex flex-row items-center">
               <ProfilePicture

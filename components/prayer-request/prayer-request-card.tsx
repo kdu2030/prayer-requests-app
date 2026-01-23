@@ -1,6 +1,7 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Button, Text, TouchableRipple, useTheme } from "react-native-paper";
 
 import { formatDate, formatNumber } from "../../helpers/formatting-helpers";
 import { getArrayTestId } from "../../helpers/utils";
@@ -45,7 +46,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
           borderColor: theme.colors.outline,
         }}
       >
-        <View className="flex flex-row items-center">
+        <View className="flex flex-row items-center flex-1">
           {displayUser && (
             <View className="flex flex-row items-center">
               <ProfilePicture
@@ -78,6 +79,17 @@ export const PrayerRequestCard: React.FC<Props> = ({
               )}
             </Text>
           )}
+
+          <View className="ml-auto">
+            <TouchableRipple
+              rippleColor={"rgba(0, 0, 0, 0.12)"}
+              style={{ borderRadius: 9999 }}
+              onPress={() => openPrayerRequestActions(prayerRequest)}
+              borderless
+            >
+              <MaterialIcons size={24} name="more-vert" />
+            </TouchableRipple>
+          </View>
         </View>
 
         <Text

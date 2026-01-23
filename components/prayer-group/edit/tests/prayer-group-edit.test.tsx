@@ -74,6 +74,15 @@ jest.mock("../../../../api/get-prayer-group-name-validation", () => ({
     mockGetPrayerGroupNameValidation(prayerGroupName),
 }));
 
+jest.mock("@expo/vector-icons", () => ({
+  Ionicons: "",
+  MaterialCommunityIcons: "",
+  MaterialIcons: "",
+  EvilIcons: "",
+}));
+
+jest.mock("expo-font");
+
 const mountPrayerGroupEdit = (prayerGroupDetails: PrayerGroupDetails) => {
   mockUsePrayerGroupContext.mockReturnValue({
     prayerGroupDetails,
@@ -101,13 +110,13 @@ describe(PrayerGroupEdit, () => {
     const newGroupName = "Ravenclaw";
 
     const groupNameTextInput = component.getByTestId(
-      PrayerGroupEditTestIds.groupNameInput
+      PrayerGroupEditTestIds.groupNameInput,
     );
     fireEvent.changeText(groupNameTextInput, newGroupName);
     fireEvent(groupNameTextInput, "blur");
 
     const groupNamePreview = await component.findByTestId(
-      PrayerGroupEditTestIds.groupPreviewName
+      PrayerGroupEditTestIds.groupPreviewName,
     );
     expect(groupNamePreview).toHaveTextContent(newGroupName);
   });
@@ -123,7 +132,7 @@ describe(PrayerGroupEdit, () => {
       };
 
     mockGetPrayerGroupNameValidation.mockReturnValue(
-      getPrayerGroupNameValidationResponse
+      getPrayerGroupNameValidationResponse,
     );
 
     component = mountPrayerGroupEdit(mockPrayerGroupDetails);
@@ -131,21 +140,21 @@ describe(PrayerGroupEdit, () => {
     const newGroupName = "Order of the Phoenix";
 
     const groupNameTextInput = component.getByTestId(
-      PrayerGroupEditTestIds.groupNameInput
+      PrayerGroupEditTestIds.groupNameInput,
     );
     fireEvent.changeText(groupNameTextInput, newGroupName);
     fireEvent(groupNameTextInput, "blur");
 
     const saveButton = await component.findByTestId(
-      PrayerGroupEditTestIds.saveButton
+      PrayerGroupEditTestIds.saveButton,
     );
     fireEvent.press(saveButton);
 
     const groupNameContainer = await component.findByTestId(
-      `${PrayerGroupEditTestIds.groupNameInput}-container`
+      `${PrayerGroupEditTestIds.groupNameInput}-container`,
     );
     expect(groupNameContainer).toHaveTextContent(
-      "This group name has already been used."
+      "This group name has already been used.",
     );
   });
 
@@ -161,7 +170,7 @@ describe(PrayerGroupEdit, () => {
     component = mountPrayerGroupEdit(prayerGroupDetails);
 
     const saveButton = await component.findByTestId(
-      PrayerGroupEditTestIds.saveButton
+      PrayerGroupEditTestIds.saveButton,
     );
     fireEvent.press(saveButton);
 
@@ -196,7 +205,7 @@ describe(PrayerGroupEdit, () => {
     component = mountPrayerGroupEdit(prayerGroupDetails);
 
     const saveButton = await component.findByTestId(
-      PrayerGroupEditTestIds.saveButton
+      PrayerGroupEditTestIds.saveButton,
     );
     fireEvent.press(saveButton);
 

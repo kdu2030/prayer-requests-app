@@ -17,6 +17,7 @@ jest.mock("@expo/vector-icons", () => ({
   MaterialCommunityIcons: "",
   MaterialIcons: "",
   EvilIcons: "",
+  Foundation: "",
 }));
 
 jest.mock("expo-font");

@@ -10,21 +10,27 @@ import { DrawerContent } from "../../components/navigation/drawer-content";
 import { DrawerHeader } from "../../components/navigation/drawer-header";
 
 const DrawerLayout: React.FC = () => {
+  const renderDrawerContent = React.useCallback(
+    (props: DrawerContentComponentProps) => {
+      return <DrawerContent {...props} />;
+    },
+    [],
+  );
+
   return (
-    <GestureHandlerRootView className="flex-1">
+    <GestureHandlerRootView>
       <Drawer
         screenOptions={{
           lazy: true,
           header: (props: DrawerHeaderProps) => <DrawerHeader {...props} />,
+          drawerType: "front",
         }}
-        drawerContent={(props: DrawerContentComponentProps) => (
-          <DrawerContent {...props} />
-        )}
+        drawerContent={renderDrawerContent}
         backBehavior="history"
       >
         <Drawer.Screen
           name="prayergroup/[id]"
-          options={{ unmountOnBlur: true }}
+          options={{ popToTopOnBlur: true }}
         />
         <Drawer.Screen name="search" options={{ headerShown: false }} />
       </Drawer>

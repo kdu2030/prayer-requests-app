@@ -1,7 +1,3 @@
-import "@testing-library/jest-native/extend-expect";
-import "@testing-library/jest-native";
-
-import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import {
   fireEvent,
   RenderResult,
@@ -29,25 +25,24 @@ const mockSetWizardStep = jest.fn();
 const mockTranslate = jest.fn();
 const mockGetPrayerGroupNameValidation = jest.fn();
 
-jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("../../../api/get-prayer-group-name-validation", () => ({
   useGetPrayerGroupNameValidation: () => mockGetPrayerGroupNameValidation,
 }));
 
 const mountGroupNameDescriptionStep = (
-  initialValues: CreatePrayerGroupForm = {}
+  initialValues: CreatePrayerGroupForm = {},
 ): RenderResult => {
   return mountComponent(
     <Formik
       initialValues={initialValues}
       validationSchema={groupNameValidationSchema(
         mockTranslate,
-        CultureCode.enUS
+        CultureCode.enUS,
       )}
       onSubmit={() => {}}
     >
       <GroupNameDescriptionStep setWizardStep={mockSetWizardStep} />
-    </Formik>
+    </Formik>,
   );
 };
 
@@ -80,7 +75,7 @@ describe(GroupNameDescriptionStep, () => {
     });
 
     const nextButton = component.getByTestId(
-      CreatePrayerGroupWizardHeaderTestIds.nextButton
+      CreatePrayerGroupWizardHeaderTestIds.nextButton,
     );
     fireEvent.press(nextButton);
 
@@ -100,28 +95,28 @@ describe(GroupNameDescriptionStep, () => {
           case "createPrayerGroup.groupNameDescription.description":
             return "Description";
         }
-      }
+      },
     );
 
     component = mountGroupNameDescriptionStep();
 
     const nextButton = component.getByTestId(
-      CreatePrayerGroupWizardHeaderTestIds.nextButton
+      CreatePrayerGroupWizardHeaderTestIds.nextButton,
     );
     fireEvent.press(nextButton);
 
     const groupNameInputContainer = await component.findByTestId(
-      `${GroupNameDescriptionStepTestIds.groupNameInput}-container`
+      `${GroupNameDescriptionStepTestIds.groupNameInput}-container`,
     );
     const descriptionInputContainer = await component.findByTestId(
-      `${GroupNameDescriptionStepTestIds.descriptionInput}-container`
+      `${GroupNameDescriptionStepTestIds.descriptionInput}-container`,
     );
 
     expect(groupNameInputContainer).toHaveTextContent(
-      "Group Name is required."
+      "Group Name is required.",
     );
     expect(descriptionInputContainer).toHaveTextContent(
-      "Description is required"
+      "Description is required",
     );
   });
 
@@ -134,7 +129,7 @@ describe(GroupNameDescriptionStep, () => {
           case "createPrayerGroup.groupNameDescription.groupName":
             return "Group Name";
         }
-      }
+      },
     );
 
     const mockResponse: ManagedErrorResponse<GetPrayerGroupNameValidationResponse> =
@@ -155,16 +150,16 @@ describe(GroupNameDescriptionStep, () => {
     });
 
     const nextButton = component.getByTestId(
-      CreatePrayerGroupWizardHeaderTestIds.nextButton
+      CreatePrayerGroupWizardHeaderTestIds.nextButton,
     );
     fireEvent.press(nextButton);
 
     const groupNameInput = await component.findByTestId(
-      `${GroupNameDescriptionStepTestIds.groupNameInput}-container`
+      `${GroupNameDescriptionStepTestIds.groupNameInput}-container`,
     );
 
     expect(groupNameInput).toHaveTextContent(
-      "This Group Name has already been used."
+      "This Group Name has already been used.",
     );
   });
 });

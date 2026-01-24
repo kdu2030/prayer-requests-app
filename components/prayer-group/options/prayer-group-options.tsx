@@ -6,7 +6,7 @@ import BottomSheet, {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
-import { Href, router } from "expo-router";
+import { RelativePathString, router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
@@ -41,7 +41,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
   const formattedJoinRequestCount = prayerGroupDetails?.joinRequestCount
     ? formatNumber(
         prayerGroupDetails.joinRequestCount,
-        i18n.language as CultureCode
+        i18n.language as CultureCode,
       )
     : undefined;
 
@@ -53,20 +53,20 @@ export const PrayerGroupOptions: React.FC<Props> = ({
         disappearsOnIndex={-1}
       />
     ),
-    []
+    [],
   );
 
   const onPressOption = (route: string) => {
     prayerGroupDetails?.prayerGroupId &&
       router.push({
-        pathname: route,
+        pathname: route as RelativePathString,
         params: { id: prayerGroupDetails?.prayerGroupId },
-      } as Href<any>);
+      });
   };
 
   return (
     <BottomSheet
-      snapPoints={["50%"]}
+      enableDynamicSizing
       index={-1}
       enablePanDownToClose
       ref={bottomSheetRef}
@@ -74,7 +74,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
       backdropComponent={renderBackdrop}
     >
       <BottomSheetView>
-        <View className="px-4">
+        <View className="p-4">
           <PrayerGroupOptionButton
             label={translate("prayerGroup.options.about")}
             icon={<MaterialCommunityIcons name="information" size={24} />}

@@ -4,7 +4,7 @@ import {
   DrawerContentScrollView,
   useDrawerStatus,
 } from "@react-navigation/drawer";
-import { Href, router } from "expo-router";
+import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { View } from "react-native";
@@ -37,7 +37,11 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
       )}
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{ paddingTop: insets.top }}
+        contentContainerStyle={{
+          paddingTop: insets.top,
+          paddingStart: 0,
+          paddingEnd: 0,
+        }}
       >
         <View
           className="flex flex-col items-center justify-center py-2"
@@ -90,9 +94,7 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                       }
                       label={group.groupName ?? ""}
                       onPress={() => {
-                        router.push(
-                          `/prayergroup/${group.prayerGroupId}` as Href<string>
-                        );
+                        router.push(`/prayergroup/${group.prayerGroupId}`);
                         props.navigation.closeDrawer();
                       }}
                       key={group.prayerGroupId}

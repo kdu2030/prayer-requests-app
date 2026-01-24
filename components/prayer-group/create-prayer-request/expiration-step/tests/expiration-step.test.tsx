@@ -1,6 +1,3 @@
-import "@testing-library/jest-native/extend-expect";
-import "@testing-library/jest-native";
-
 import {
   fireEvent,
   renderHook,
@@ -30,7 +27,7 @@ jest.mock("../../../../../api/post-prayer-request", () => ({
     () =>
     (
       prayerGroupId: number,
-      createPrayerRequestForm: RawCreatePrayerRequestForm
+      createPrayerRequestForm: RawCreatePrayerRequestForm,
     ) =>
       mockPostPrayerRequest(prayerGroupId, createPrayerRequestForm),
 }));
@@ -52,10 +49,10 @@ jest.mock("../../../prayer-group-context", () => ({
 let component: RenderResult;
 
 const mountExpirationStep = (
-  createPrayerRequestForm: CreatePrayerRequestForm
+  createPrayerRequestForm: CreatePrayerRequestForm,
 ) => {
   const { result: expirationStepValidationRef } = renderHook(() =>
-    useExpirationStepValidationSchema()
+    useExpirationStepValidationSchema(),
   );
 
   return mountComponent(
@@ -65,7 +62,7 @@ const mountExpirationStep = (
       onSubmit={() => {}}
     >
       <ExpirationStep setWizardStep={() => {}} />
-    </Formik>
+    </Formik>,
   );
 };
 
@@ -94,7 +91,7 @@ describe(ExpirationStep, () => {
     fireEvent.press(saveButton);
 
     const timeToLiveDropdown = await component.findByTestId(
-      ExpirationStepTestIds.timeToLiveDropdown
+      ExpirationStepTestIds.timeToLiveDropdown,
     );
     expect(timeToLiveDropdown).toHaveTextContent("required");
     expect(mockPostPrayerRequest).not.toHaveBeenCalled();
@@ -110,7 +107,7 @@ describe(ExpirationStep, () => {
     });
 
     const saveButton = await component.findByTestId(
-      ExpirationStepTestIds.saveButton
+      ExpirationStepTestIds.saveButton,
     );
     fireEvent.press(saveButton);
 

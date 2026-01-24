@@ -5,10 +5,10 @@ import { Token, UserTokenPair } from "../types/context/api-data-context-type";
 import { ManagedErrorResponse } from "../types/error-handling";
 
 export const handleApiErrors = <TResponse>(
-  error: any
+  error: any,
 ): ManagedErrorResponse<TResponse> => {
-  console.log(JSON.stringify(error));
   const axiosError = error as AxiosError;
+  console.log(JSON.stringify(axiosError?.response?.data));
   return { isError: true, error: axiosError?.response?.data };
 };
 

@@ -1,3 +1,4 @@
+import { min } from "lodash";
 import * as React from "react";
 import { FlatList, View } from "react-native";
 import { useTheme } from "react-native-paper";
@@ -7,14 +8,16 @@ import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
+import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
+import { PrayerRequestSkeletonList } from "../prayer-request/prayer-request-skeleton-list";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
 import { LeavePrayerGroupModal } from "./leave-prayer-group/leave-prayer-group-modal";
 import { PrayerGroupOptions } from "./options/prayer-group-options";
 import { usePrayerGroupContext } from "./prayer-group-context";
 import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
-import { PrayerRequestSpinner } from "./spinners/prayer-request-spinner";
 import { usePrayerGroup } from "./use-prayer-group";
+import { usePrayerRequestActions } from "./use-prayer-request-actions";
 
 type Props = {
   prayerGroupId: number;
@@ -36,7 +39,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     onRetry,
     prayerGroupOptionsRef,
     onOpenOptions,
-    nextPrayerRequestsLoadStatus,
     prayerRequestLoadStatus,
     prayerRequests,
     onEndReached,
@@ -46,7 +48,20 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     showLeavePrayerGroupModal,
     setShowLeavePrayerGroupModal,
     setUserJoinStatus,
+    numNotLoadedRequests,
+    prayerRequestFilters,
+    nextPrayerRequestsLoadStatus,
   } = usePrayerGroup(prayerGroupId);
+
+  const {
+    selectedPrayerRequest,
+    prayerRequestActionsRef,
+    openPrayerRequestActions,
+    isToggleBookmarkLoading,
+    toggleBookmark,
+    setSelectedPrayerRequest,
+    showExtendedActions,
+  } = usePrayerRequestActions(setPrayerRequests);
 
   const prayerGroupHeader = React.useMemo(
     () => (
@@ -58,7 +73,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
       />
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isAddUserLoading, isRemoveUserLoading, prayerGroupDetails]
+    [isAddUserLoading, isRemoveUserLoading, prayerGroupDetails],
   );
 
   if (
@@ -112,18 +127,18 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                   prayerRequest={item}
                   prayerRequests={prayerRequests}
                   setPrayerRequests={setPrayerRequests}
+                  openPrayerRequestActions={openPrayerRequestActions}
                   key={item.prayerRequestId}
                 />
               )}
               ListFooterComponent={
                 nextPrayerRequestsLoadStatus === LoadStatus.Loading ? (
-                  <View className="py-6">
-                    <PrayerRequestSpinner
-                      size={48}
-                      textClassName="mt-3"
-                      labelVariant="titleSmall"
-                    />
-                  </View>
+                  <PrayerRequestSkeletonList
+                    numCards={min([
+                      numNotLoadedRequests,
+                      prayerRequestFilters.pageSize ?? 0,
+                    ])}
+                  />
                 ) : undefined
               }
               onEndReachedThreshold={0.8}
@@ -135,6 +150,15 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           prayerGroupDetails={prayerGroupDetails}
           setShowLeavePrayerGroupModal={setShowLeavePrayerGroupModal}
           bottomSheetRef={prayerGroupOptionsRef}
+        />
+
+        <PrayerRequestActions
+          showExtendedActions={showExtendedActions}
+          selectedPrayerRequest={selectedPrayerRequest}
+          isToggleBookmarkLoading={isToggleBookmarkLoading}
+          toggleBookmark={toggleBookmark}
+          bottomSheetRef={prayerRequestActionsRef}
+          setSelectedPrayerRequest={setSelectedPrayerRequest}
         />
 
         {showLeavePrayerGroupModal && (

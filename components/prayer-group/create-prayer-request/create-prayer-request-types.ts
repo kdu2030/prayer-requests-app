@@ -16,6 +16,7 @@ export type RawCreatePrayerRequestForm = {
   requestTitle?: string;
   requestDescription?: string;
   expirationDate?: string;
+  createdDate?: string;
 };
 
 export enum CreatePrayerRequestWizardStep {

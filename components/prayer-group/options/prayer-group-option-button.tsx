@@ -1,6 +1,11 @@
 import * as React from "react";
 import { View } from "react-native";
-import { Text, TouchableRipple } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Text,
+  TouchableRipple,
+  useTheme,
+} from "react-native-paper";
 
 type Props = {
   label: string;
@@ -8,6 +13,8 @@ type Props = {
   endAdornment?: React.ReactNode;
   onPress: () => void;
   testID?: string;
+  isLoading?: boolean;
+  spinnerSize?: number;
 };
 
 export const PrayerGroupOptionButton: React.FC<Props> = ({
@@ -16,7 +23,11 @@ export const PrayerGroupOptionButton: React.FC<Props> = ({
   onPress,
   endAdornment,
   testID,
+  isLoading,
+  spinnerSize,
 }) => {
+  const theme = useTheme();
+
   return (
     <TouchableRipple
       rippleColor={"rgba(0, 0, 0, 0.12)"}
@@ -26,7 +37,14 @@ export const PrayerGroupOptionButton: React.FC<Props> = ({
       testID={testID}
     >
       <View className="flex-row gap-x-3 items-center py-4 px-2">
-        {icon}
+        {isLoading ? (
+          <ActivityIndicator
+            size={spinnerSize ?? 24}
+            color={theme.colors.primary}
+          />
+        ) : (
+          icon
+        )}
         <Text variant="bodyMedium">{label}</Text>
         {endAdornment}
       </View>

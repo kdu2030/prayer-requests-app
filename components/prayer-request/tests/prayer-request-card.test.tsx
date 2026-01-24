@@ -7,7 +7,12 @@ import {
 
 import { getArrayTestId } from "../../../helpers/utils";
 import { mountComponent } from "../../../tests/utils/test-utils";
-import { PrayerRequestModel } from "../../../types/prayer-request-types";
+import { ManagedErrorResponse } from "../../../types/error-handling";
+import {
+  PrayerRequestActionCreateRequest,
+  PrayerRequestLikeModel,
+  PrayerRequestModel,
+} from "../../../types/prayer-request-types";
 import {
   mockPrayerRequests,
   mockUserData,
@@ -29,18 +34,23 @@ jest.mock("../../../hooks/use-api-data", () => ({
 }));
 
 jest.mock("../../../api/post-prayer-request-like", () => ({
-  usePostPrayerRequestLike: () => (userId: number, prayerRequestId: number) =>
-    mockPostPrayerRequestLike(userId, prayerRequestId),
+  usePostPrayerRequestLike:
+    () =>
+    (
+      prayerRequestId: number,
+      createRequest: PrayerRequestActionCreateRequest,
+    ) =>
+      mockPostPrayerRequestLike(prayerRequestId, createRequest),
 }));
 
 jest.mock("../../../api/delete-prayer-request-like", () => ({
-  useDeletePrayerRequestLike: () => (userId: number, prayerRequestId: number) =>
-    mockDeletePrayerRequestLike(userId, prayerRequestId),
+  useDeletePrayerRequestLike: () => (prayerRequestLikeId: number) =>
+    mockDeletePrayerRequestLike(prayerRequestLikeId),
 }));
 
 const mountPrayerRequestCard = (
   prayerRequest: PrayerRequestModel,
-  prayerRequests: PrayerRequestModel[]
+  prayerRequests: PrayerRequestModel[],
 ) => {
   return mountComponent(
     <PrayerRequestCard
@@ -48,7 +58,8 @@ const mountPrayerRequestCard = (
       prayerRequests={prayerRequests}
       setPrayerRequests={mockSetPrayerRequests}
       showCreatedUser
-    />
+      openPrayerRequestActions={() => {}}
+    />,
   );
 };
 
@@ -61,34 +72,50 @@ describe(PrayerRequestCard, () => {
   test("Mount test", () => {
     component = mountPrayerRequestCard(
       mockPrayerRequests[0],
-      mockPrayerRequests
+      mockPrayerRequests,
     );
     expect(component).toBeTruthy();
   });
 
   test("Like button adds prayer request like if user hasn't liked prayer request", async () => {
     let updatedPrayerRequests: PrayerRequestModel[] = [];
+    let submittedPrayerRequestId: number | undefined = undefined;
 
     mockSetPrayerRequests.mockImplementation(
       (prayerRequests: PrayerRequestModel[]) => {
         updatedPrayerRequests = prayerRequests;
-      }
+      },
     );
 
-    mockPostPrayerRequestLike.mockReturnValue({ isError: false });
+    const mockPostLikeResponse: ManagedErrorResponse<PrayerRequestLikeModel> = {
+      isError: false,
+      value: {
+        prayerRequestLikeId: 787,
+        prayerRequestId: mockPrayerRequests[0].prayerRequestId,
+        submittedUserId: 717,
+        submittedDate: new Date().toISOString(),
+      },
+    };
+
+    mockPostPrayerRequestLike.mockImplementation((prayerRequestId: number) => {
+      submittedPrayerRequestId = prayerRequestId;
+      return mockPostLikeResponse;
+    });
 
     component = mountPrayerRequestCard(
       mockPrayerRequests[0],
-      mockPrayerRequests
+      mockPrayerRequests,
     );
 
     const likeButton = component.getByTestId(
-      getArrayTestId(PrayerRequestCardTestIds.likeButton, 9)
+      getArrayTestId(PrayerRequestCardTestIds.likeButton, 9),
     );
     fireEvent.press(likeButton);
 
     await waitFor(() => {
-      expect(mockPostPrayerRequestLike).toHaveBeenCalledWith(1, 9);
+      expect(submittedPrayerRequestId).toBe(
+        mockPrayerRequests[0].prayerRequestId,
+      );
       expect(updatedPrayerRequests[0].likeCount).toBe(2);
     });
   });
@@ -99,23 +126,23 @@ describe(PrayerRequestCard, () => {
     mockSetPrayerRequests.mockImplementation(
       (prayerRequests: PrayerRequestModel[]) => {
         updatedPrayerRequests = prayerRequests;
-      }
+      },
     );
 
     mockDeletePrayerRequestLike.mockReturnValue({ isError: false });
 
     component = mountPrayerRequestCard(
       mockPrayerRequests[1],
-      mockPrayerRequests
+      mockPrayerRequests,
     );
 
     const likeButton = component.getByTestId(
-      getArrayTestId(PrayerRequestCardTestIds.likeButton, 8)
+      getArrayTestId(PrayerRequestCardTestIds.likeButton, 8),
     );
     fireEvent.press(likeButton);
 
     await waitFor(() => {
-      expect(mockDeletePrayerRequestLike).toHaveBeenCalledWith(1, 8);
+      expect(mockDeletePrayerRequestLike).toHaveBeenCalledWith(787);
       expect(updatedPrayerRequests[1].likeCount).toBe(0);
     });
   });

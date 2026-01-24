@@ -17,6 +17,7 @@ export type PrayerRequestMetadata = {
   totalCount?: number;
   numberOfPages?: number;
   pageIndex?: number;
+  prayerRequestsLoaded?: number;
 };
 
 export type PrayerRequestGetResponse = {
@@ -49,3 +50,22 @@ export enum PrayerRequestSortFields {
   CommentCount = "COMMENT_COUNT",
   PrayedCount = "PRAYED_COUNT",
 }
+
+export type PrayerRequestActionCreateRequest = {
+  userId: number;
+  submittedDate: string;
+};
+
+export type PrayerRequestLikeModel = {
+  prayerRequestLikeId?: number;
+  prayerRequestId?: number;
+  submittedUserId?: number;
+  submittedDate?: string;
+};
+
+export type PrayerRequestBookmarkModel = {
+  prayerRequestBookmarkId?: number;
+  prayerRequestId?: number;
+  submittedUserId?: number;
+  submittedDate?: string;
+};

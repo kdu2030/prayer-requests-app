@@ -1,5 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { Href, router } from "expo-router";
+import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
@@ -65,12 +65,14 @@ export const PrayerGroupSearch: React.FC = () => {
               renderItem={({ item: group, index }) => (
                 <TouchableRipple
                   rippleColor={"rgba(0, 0, 0, 0.12)"}
-                  onPress={() =>
-                    router.push({
-                      pathname: "/prayergroup/[id]",
-                      params: { id: group.prayerGroupId },
-                    } as Href<any>)
-                  }
+                  onPress={() => {
+                    if (group.prayerGroupId) {
+                      router.push({
+                        pathname: "/prayergroup/[id]",
+                        params: { id: group.prayerGroupId },
+                      });
+                    }
+                  }}
                   style={{ borderRadius: 8, marginBottom: 8 }}
                   borderless
                   testID={`${PrayerGroupSearchTestIds.prayerGroupResult}[${index}]`}

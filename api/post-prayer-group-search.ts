@@ -19,7 +19,7 @@ const postPrayerGroupSearch = async (
   fetch: AxiosInstance,
   baseUrl: string,
   groupNameQuery: string,
-  maxNumResults?: number
+  maxNumResults?: number,
 ): Promise<ManagedErrorResponse<PostPrayerGroupSearchResponse>> => {
   const url = `${baseUrl}/api/prayergroup/search`;
 
@@ -36,7 +36,7 @@ const postPrayerGroupSearch = async (
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
     return { isError: false, value: response.data };
   } catch (error) {
@@ -50,6 +50,6 @@ export const usePostPrayerGroupSearch = () => {
   return React.useCallback(
     (groupNameQuery: string, maxNumResults?: number) =>
       postPrayerGroupSearch(fetch, baseUrl, groupNameQuery, maxNumResults),
-    []
+    [baseUrl, fetch],
   );
 };

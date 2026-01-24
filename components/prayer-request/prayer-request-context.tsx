@@ -36,8 +36,9 @@ export type PrayerRequestContextType = {
   loadNextPrayerRequestsForGroup: (
     prayerGroupId: number,
     showCompleteSpinner: boolean,
-    customFilters?: PrayerRequestFilterCriteria
+    customFilters?: PrayerRequestFilterCriteria,
   ) => void;
+  numNotLoadedRequests: number;
 };
 
 const PrayerRequestContext = React.createContext<PrayerRequestContextType>({
@@ -53,6 +54,7 @@ const PrayerRequestContext = React.createContext<PrayerRequestContextType>({
   setNextPrayerRequestsLoadStatus: () => {},
   cleanupPrayerRequests: () => {},
   loadNextPrayerRequestsForGroup: () => {},
+  numNotLoadedRequests: 0,
 });
 
 type Props = {
@@ -91,7 +93,7 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
   const loadNextPrayerRequestsForGroup = async (
     prayerGroupId: number,
     showCompleteSpinner: boolean,
-    customFilters?: PrayerRequestFilterCriteria
+    customFilters?: PrayerRequestFilterCriteria,
   ) => {
     const setLoadStatus = showCompleteSpinner
       ? setPrayerRequestLoadStatus
@@ -130,14 +132,31 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
       ...(response.value.prayerRequests ?? []),
     ]);
 
-    setPrayerRequestMetadata({
+    const numPrayerRequestsInResponse = response.value.prayerRequests
+      ? response.value.prayerRequests.length
+      : 0;
+
+    setPrayerRequestMetadata((currentMetadata) => ({
       pageIndex: response.value.pageIndex,
       numberOfPages: response.value.numberOfPages,
       totalCount: response.value.totalCount,
-    });
+      prayerRequestsLoaded:
+        (currentMetadata.prayerRequestsLoaded ?? 0) +
+        numPrayerRequestsInResponse,
+    }));
 
     setLoadStatus(LoadStatus.Success);
   };
+
+  const numNotLoadedRequests = React.useMemo(() => {
+    return (
+      (prayerRequestMetadata.totalCount ?? 0) -
+      (prayerRequestMetadata.prayerRequestsLoaded ?? 0)
+    );
+  }, [
+    prayerRequestMetadata.prayerRequestsLoaded,
+    prayerRequestMetadata.totalCount,
+  ]);
 
   return (
     <PrayerRequestContext.Provider
@@ -154,6 +173,7 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
         setNextPrayerRequestsLoadStatus,
         cleanupPrayerRequests,
         loadNextPrayerRequestsForGroup,
+        numNotLoadedRequests,
       }}
     >
       {children}

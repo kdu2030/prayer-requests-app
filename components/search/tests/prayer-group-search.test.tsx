@@ -1,13 +1,9 @@
-import "@testing-library/jest-native/extend-expect";
-import "@testing-library/jest-native";
-
 import {
   act,
   fireEvent,
   RenderResult,
   waitFor,
 } from "@testing-library/react-native";
-import { Href } from "expo-router";
 
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { PrayerGroupSearch } from "../prayer-group-search";
@@ -31,7 +27,7 @@ jest.mock("../../../api/post-prayer-group-search", () => ({
 jest.mock("expo-router", () => ({
   usePathname: () => "/",
   router: {
-    push: (route: Href<any> | string) => mockRouterPush(route),
+    push: (route: string) => mockRouterPush(route),
   },
 }));
 
@@ -54,17 +50,17 @@ describe(PrayerGroupSearch, () => {
     component = mountComponent(<PrayerGroupSearch />);
 
     const searchInput = component.getByTestId(
-      PrayerGroupSearchTestIds.searchInput
+      PrayerGroupSearchTestIds.searchInput,
     );
     act(() => fireEvent.changeText(searchInput, "Prayer Group"));
 
     const prayerGroupResultsList = await component.findByTestId(
-      PrayerGroupSearchTestIds.prayerGroupResultsList
+      PrayerGroupSearchTestIds.prayerGroupResultsList,
     );
 
     mockPrayerGroupSearchResults.forEach((prayerGroup) => {
       expect(prayerGroupResultsList).toHaveTextContent(
-        prayerGroup.groupName ?? ""
+        prayerGroup.groupName ?? "",
       );
     });
   });
@@ -78,13 +74,13 @@ describe(PrayerGroupSearch, () => {
     component = mountComponent(<PrayerGroupSearch />);
 
     const searchInput = component.getByTestId(
-      PrayerGroupSearchTestIds.searchInput
+      PrayerGroupSearchTestIds.searchInput,
     );
 
     fireEvent.changeText(searchInput, "Prayer Group");
 
     const prayerGroupResult = await component.findByTestId(
-      `${PrayerGroupSearchTestIds.prayerGroupResult}[0]`
+      `${PrayerGroupSearchTestIds.prayerGroupResult}[0]`,
     );
     fireEvent.press(prayerGroupResult);
 

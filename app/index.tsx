@@ -85,7 +85,7 @@ const AppContainer: React.FC = () => {
     const userSummaryResponse = await getUserSummaryRaw(
       refreshToken,
       baseUrl,
-      userId
+      userId,
     );
 
     if (userSummaryResponse.isError) {

@@ -1,5 +1,5 @@
 import * as ImagePicker from "expo-image-picker";
-import { Href, router } from "expo-router";
+import { router } from "expo-router";
 import { setNestedObjectValues, useFormikContext } from "formik";
 import { get, isEmpty } from "lodash";
 import * as React from "react";
@@ -62,7 +62,7 @@ export const useGroupImageColorStep = () => {
     } catch (error) {
       openToaster({
         message: translate(
-          "createPrayerGroup.groupImageColorStep.unableToSelectImage"
+          "createPrayerGroup.groupImageColorStep.unableToSelectImage",
         ),
         variant: "error",
       });
@@ -78,7 +78,7 @@ export const useGroupImageColorStep = () => {
   };
 
   const uploadPrayerGroupImage = async (
-    image: MediaFile | undefined
+    image: MediaFile | undefined,
   ): Promise<ManagedErrorResponse<MediaFile | undefined>> => {
     if (!image) {
       return { isError: false, value: undefined };
@@ -123,11 +123,11 @@ export const useGroupImageColorStep = () => {
     const createPrayerGroupRequest = mapCreatePrayerGroupRequest(
       values,
       imageId,
-      bannerImageId
+      bannerImageId,
     );
 
     const createPrayerGroupResponse = await postPrayerGroup(
-      createPrayerGroupRequest
+      createPrayerGroupRequest,
     );
     setIsLoading(false);
 
@@ -144,7 +144,7 @@ export const useGroupImageColorStep = () => {
     const prayerGroupId = createPrayerGroupResponse.value.prayerGroupId;
 
     const prayerGroupSummary = mapPrayerGroupSummaryFromPrayerGroupDetails(
-      createPrayerGroupResponse.value
+      createPrayerGroupResponse.value,
     );
 
     const prayerGroups = [
@@ -157,7 +157,7 @@ export const useGroupImageColorStep = () => {
       router.push({
         pathname: "/prayergroup/[id]",
         params: { id: prayerGroupId },
-      } as Href<any>);
+      });
   };
 
   return {

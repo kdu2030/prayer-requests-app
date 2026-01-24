@@ -16,7 +16,7 @@ const postPrayerGroupUser = async (
   fetch: AxiosInstance,
   baseUrl: string,
   prayerGroupId: number,
-  userId: number
+  userId: number,
 ): Promise<ManagedErrorResponse<PostPrayerGroupUserResponse>> => {
   const url = `${baseUrl}/api/prayergroup/${prayerGroupId}/user/${userId}`;
 
@@ -35,6 +35,6 @@ export const usePostPrayerGroupUser = () => {
   return React.useCallback(
     (prayerGroupId: number, userId: number) =>
       postPrayerGroupUser(fetch, baseUrl, prayerGroupId, userId),
-    []
+    [baseUrl, fetch],
   );
 };

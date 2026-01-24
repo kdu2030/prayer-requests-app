@@ -9,7 +9,7 @@ const deletePrayerGroupUser = async (
   fetch: AxiosInstance,
   baseUrl: string,
   prayerGroupId: number,
-  userId: number
+  userId: number,
 ): Promise<BaseManagedErrorResponse> => {
   const url = `${baseUrl}/api/prayergroup/${prayerGroupId}/user/${userId}`;
 
@@ -28,6 +28,6 @@ export const useDeletePrayerGroupUser = () => {
   return React.useCallback(
     (prayerGroupId: number, userId: number) =>
       deletePrayerGroupUser(fetch, baseUrl, prayerGroupId, userId),
-    []
+    [baseUrl, fetch],
   );
 };

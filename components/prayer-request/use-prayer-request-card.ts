@@ -4,13 +4,16 @@ import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like
 import { usePostPrayerRequestLike } from "../../api/post-prayer-request-like";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
-import { PrayerRequestModel } from "../../types/prayer-request-types";
+import {
+  PrayerRequestActionCreateRequest,
+  PrayerRequestModel,
+} from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
 
 export const usePrayerRequestCard = (
   prayerRequest: PrayerRequestModel,
   prayerRequests: PrayerRequestModel[],
-  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>
+  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>,
 ) => {
   const [isLikeLoading, setIsLikeLoading] = React.useState<boolean>(false);
   const { translate } = useI18N();
@@ -29,7 +32,15 @@ export const usePrayerRequestCard = (
       return;
     }
 
-    const response = await postPrayerRequestLike(userId, prayerRequestId);
+    const createRequest: PrayerRequestActionCreateRequest = {
+      userId,
+      submittedDate: new Date().toISOString(),
+    };
+
+    const response = await postPrayerRequestLike(
+      prayerRequestId,
+      createRequest,
+    );
 
     if (response.isError) {
       openToaster({
@@ -46,7 +57,7 @@ export const usePrayerRequestCard = (
 
       return {
         ...prayerRequest,
-        isUserLiked: true,
+        userLikeId: response.value.prayerRequestLikeId,
         likeCount: (prayerRequest.likeCount ?? 0) + 1,
       };
     });
@@ -57,11 +68,11 @@ export const usePrayerRequestCard = (
   const removePrayerRequestLike = async (prayerRequestId: number) => {
     const userId = userData?.userId;
 
-    if (!userId) {
+    if (!userId || !prayerRequest.userLikeId) {
       return;
     }
 
-    const response = await deletePrayerRequestLike(userId, prayerRequestId);
+    const response = await deletePrayerRequestLike(prayerRequest.userLikeId);
 
     if (response.isError) {
       openToaster({
@@ -78,7 +89,7 @@ export const usePrayerRequestCard = (
 
       return {
         ...prayerRequest,
-        isUserLiked: false,
+        userLikeId: undefined,
         likeCount: prayerRequest.likeCount ? prayerRequest.likeCount - 1 : 0,
       };
     });

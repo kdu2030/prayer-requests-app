@@ -9,6 +9,7 @@ import { getArrayTestId } from "../../../helpers/utils";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { ManagedErrorResponse } from "../../../types/error-handling";
 import {
+  PrayerRequestActionCreateRequest,
   PrayerRequestLikeModel,
   PrayerRequestModel,
 } from "../../../types/prayer-request-types";
@@ -33,13 +34,18 @@ jest.mock("../../../hooks/use-api-data", () => ({
 }));
 
 jest.mock("../../../api/post-prayer-request-like", () => ({
-  usePostPrayerRequestLike: () => (userId: number, prayerRequestId: number) =>
-    mockPostPrayerRequestLike(userId, prayerRequestId),
+  usePostPrayerRequestLike:
+    () =>
+    (
+      prayerRequestId: number,
+      createRequest: PrayerRequestActionCreateRequest,
+    ) =>
+      mockPostPrayerRequestLike(prayerRequestId, createRequest),
 }));
 
 jest.mock("../../../api/delete-prayer-request-like", () => ({
-  useDeletePrayerRequestLike: () => (userId: number, prayerRequestId: number) =>
-    mockDeletePrayerRequestLike(userId, prayerRequestId),
+  useDeletePrayerRequestLike: () => (prayerRequestLikeId: number) =>
+    mockDeletePrayerRequestLike(prayerRequestLikeId),
 }));
 
 const mountPrayerRequestCard = (
@@ -136,7 +142,7 @@ describe(PrayerRequestCard, () => {
     fireEvent.press(likeButton);
 
     await waitFor(() => {
-      expect(mockDeletePrayerRequestLike).toHaveBeenCalledWith(1, 8);
+      expect(mockDeletePrayerRequestLike).toHaveBeenCalledWith(787);
       expect(updatedPrayerRequests[1].likeCount).toBe(0);
     });
   });

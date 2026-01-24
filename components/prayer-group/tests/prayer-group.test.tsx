@@ -3,6 +3,7 @@ import {
   RenderResult,
   waitFor,
 } from "@testing-library/react-native";
+import { View } from "react-native";
 
 import {
   JoinStatus,
@@ -64,6 +65,14 @@ jest.mock("../../../api/post-prayer-request-filter", () => ({
   usePostPrayerRequestFilter:
     () => (filterCriteria: PrayerRequestFilterCriteria) =>
       mockPostPrayerRequestFilter(filterCriteria),
+}));
+
+const MockSkeleton = View;
+
+jest.mock("moti/skeleton", () => ({
+  Skeleton: ({ children }: React.PropsWithChildren) => (
+    <MockSkeleton>{children}</MockSkeleton>
+  ),
 }));
 
 const mountPrayerGroup = (

@@ -75,6 +75,14 @@ jest.mock("moti/skeleton", () => ({
   ),
 }));
 
+jest.mock("@expo/vector-icons", () => ({
+  Ionicons: "",
+  MaterialCommunityIcons: "",
+  MaterialIcons: "",
+  EvilIcons: "",
+  Foundation: "",
+}));
+
 const mountPrayerGroup = (
   prayerGroupDetails: PrayerGroupDetails,
   useCustomPostPrayerRequestMock: boolean = false,

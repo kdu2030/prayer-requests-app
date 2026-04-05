@@ -80,8 +80,5 @@
     "ts-jest": "^29.4.6",
     "typescript": "~5.3.3"
   },
-  "resolutions": {
-    "react-refresh": "~0.14.0"
-  },
   "private": true
 }

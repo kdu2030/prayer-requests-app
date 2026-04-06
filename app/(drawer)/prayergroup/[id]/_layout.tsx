@@ -15,7 +15,7 @@ const PrayerGroupLayout: React.FC = () => {
           <Stack.Screen name="edit" />
           <Stack.Screen name="about" />
           <Stack.Screen name="index" />
-          <Stack.Screen name="prayerrequest/[id]" />
+          <Stack.Screen name="prayerrequest" />
         </Stack>
       </PrayerRequestContextProvider>
     </PrayerGroupContextProvider>

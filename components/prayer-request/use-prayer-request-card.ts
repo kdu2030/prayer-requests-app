@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import * as React from "react";
 
 import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like";
@@ -8,6 +9,7 @@ import {
   PrayerRequestActionCreateRequest,
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
+import { usePrayerGroupContext } from "../prayer-group/prayer-group-context";
 import { useToasterContext } from "../toasters/toaster-context";
 
 export const usePrayerRequestCard = (
@@ -19,6 +21,8 @@ export const usePrayerRequestCard = (
   const { translate } = useI18N();
 
   const { openToaster } = useToasterContext();
+
+  const { prayerGroupDetails } = usePrayerGroupContext();
 
   const postPrayerRequestLike = usePostPrayerRequestLike();
   const deletePrayerRequestLike = useDeletePrayerRequestLike();
@@ -120,9 +124,24 @@ export const usePrayerRequestCard = (
     return prayerRequest.userLikeId ? "heart" : "heart-outline";
   }, [isLikeLoading, prayerRequest.userLikeId]);
 
+  const handlePress = () => {
+    if (!prayerGroupDetails?.prayerGroupId || !prayerRequest.prayerRequestId) {
+      return;
+    }
+
+    router.push({
+      pathname: "/prayergroup/[id]/prayerrequest/[id]",
+      params: {
+        id: prayerGroupDetails.prayerGroupId,
+        id_1: prayerRequest.prayerRequestId,
+      },
+    });
+  };
+
   return {
     isLikeLoading,
     onLikePress,
     likeIcon,
+    handlePress,
   };
 };

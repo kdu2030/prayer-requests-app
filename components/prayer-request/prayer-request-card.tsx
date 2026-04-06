@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import { Button, Text, TouchableRipple, useTheme } from "react-native-paper";
 
 import { formatDate, formatNumber } from "../../helpers/formatting-helpers";
@@ -34,14 +34,11 @@ export const PrayerRequestCard: React.FC<Props> = ({
   const { i18n } = useI18N();
   const displayUser = showCreatedUser && prayerRequest.user?.fullName;
 
-  const { isLikeLoading, onLikePress, likeIcon } = usePrayerRequestCard(
-    prayerRequest,
-    prayerRequests,
-    setPrayerRequests,
-  );
+  const { isLikeLoading, onLikePress, likeIcon, handlePress } =
+    usePrayerRequestCard(prayerRequest, prayerRequests, setPrayerRequests);
 
   return (
-    <>
+    <Pressable onPress={handlePress}>
       <View
         className="p-5 border-b"
         style={{
@@ -171,6 +168,6 @@ export const PrayerRequestCard: React.FC<Props> = ({
           </Button>
         </View>
       </View>
-    </>
+    </Pressable>
   );
 };

@@ -37,7 +37,7 @@ export type PrayerRequestContextType = {
     prayerGroupId: number,
     showCompleteSpinner: boolean,
     customFilters?: PrayerRequestFilterCriteria,
-  ) => void;
+  ) => Promise<void>;
   numNotLoadedRequests: number;
 };
 
@@ -53,7 +53,7 @@ const PrayerRequestContext = React.createContext<PrayerRequestContextType>({
   nextPrayerRequestsLoadStatus: LoadStatus.NotStarted,
   setNextPrayerRequestsLoadStatus: () => {},
   cleanupPrayerRequests: () => {},
-  loadNextPrayerRequestsForGroup: () => {},
+  loadNextPrayerRequestsForGroup: async () => {},
   numNotLoadedRequests: 0,
 });
 

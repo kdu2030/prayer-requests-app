@@ -7,7 +7,10 @@ import { useApiDataContext } from "../../../../hooks/use-api-data";
 import { useI18N } from "../../../../hooks/use-i18n";
 import { mapCreatePrayerRequest } from "../../../../mappers/map-create-prayer-request";
 import { DropdownOption } from "../../../../types/inputs/dropdown";
+import { PrayerRequestFilterCriteria } from "../../../../types/prayer-request-types";
+import { usePrayerRequestContext } from "../../../prayer-request/prayer-request-context";
 import { useToasterContext } from "../../../toasters/toaster-context";
+import { DEFAULT_PRAYER_REQUEST_FILTERS } from "../../prayer-group-constants";
 import { usePrayerGroupContext } from "../../prayer-group-context";
 import {
   CreatePrayerRequestForm,
@@ -24,6 +27,11 @@ export const useExpirationStep = () => {
 
   const { userData } = useApiDataContext();
   const { prayerGroupDetails } = usePrayerGroupContext();
+  const {
+    loadNextPrayerRequestsForGroup,
+    cleanupPrayerRequests,
+    prayerRequestFilters,
+  } = usePrayerRequestContext();
 
   const postPrayerRequest = usePostPrayerRequest();
 
@@ -48,8 +56,22 @@ export const useExpirationStep = () => {
         value: TimeToLiveOption.ThreeWeeks,
       },
     ],
-    [translate]
+    [translate],
   );
+
+  const refreshPrayerRequests = async (prayerGroupId: number) => {
+    const filtersForRefresh: PrayerRequestFilterCriteria = {
+      ...DEFAULT_PRAYER_REQUEST_FILTERS,
+      sortConfig: prayerRequestFilters.sortConfig,
+    };
+
+    cleanupPrayerRequests();
+    await loadNextPrayerRequestsForGroup(
+      prayerGroupId,
+      true,
+      filtersForRefresh,
+    );
+  };
 
   const onSavePrayerRequest = async () => {
     const errors = await validateForm();
@@ -66,7 +88,7 @@ export const useExpirationStep = () => {
     const createPrayerRequestForm = mapCreatePrayerRequest(
       userData.userId,
       prayerGroupDetails.prayerGroupId,
-      values
+      values,
     );
 
     setIsLoading(true);
@@ -82,6 +104,8 @@ export const useExpirationStep = () => {
       });
       return;
     }
+
+    await refreshPrayerRequests(prayerGroupDetails.prayerGroupId);
 
     // TODO: Redirect to prayer request with replace
   };

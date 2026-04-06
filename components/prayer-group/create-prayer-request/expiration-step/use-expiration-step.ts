@@ -107,7 +107,7 @@ export const useExpirationStep = () => {
 
     await refreshPrayerRequests(prayerGroupDetails.prayerGroupId);
 
-    // TODO: Redirect to prayer request with replace
+    // TODO: Redirect to prayer request with router.replace, not router.push
     // FIXME: We need to fix post prayer request to add the correct type for the post prayer request payload
   };
 

@@ -108,6 +108,7 @@ export const useExpirationStep = () => {
     await refreshPrayerRequests(prayerGroupDetails.prayerGroupId);
 
     // TODO: Redirect to prayer request with replace
+    // FIXME: We need to fix post prayer request to add the correct type for the post prayer request payload
   };
 
   return {

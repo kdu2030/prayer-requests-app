@@ -57,7 +57,7 @@ export const usePrayerGroupEdit = () => {
         value: VisibilityLevel.Private,
       },
     ],
-    [translate]
+    [translate],
   );
 
   const selectImage = async (fieldName: string, aspect: [number, number]) => {
@@ -70,7 +70,7 @@ export const usePrayerGroupEdit = () => {
     try {
       await ImagePicker.requestCameraPermissionsAsync();
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: ["images"],
         allowsEditing: true,
         aspect,
         quality: 1,
@@ -86,7 +86,7 @@ export const usePrayerGroupEdit = () => {
     } catch (error) {
       openToaster({
         message: translate(
-          "createPrayerGroup.groupImageColorStep.unableToSelectImage"
+          "createPrayerGroup.groupImageColorStep.unableToSelectImage",
         ),
         variant: "error",
       });
@@ -106,7 +106,7 @@ export const usePrayerGroupEdit = () => {
 
   const removeUnusedPrayerGroupFiles = async (
     originalPrayerGroup: PrayerGroupDetails,
-    updatedPrayerGroupDetails: PrayerGroupDetails
+    updatedPrayerGroupDetails: PrayerGroupDetails,
   ) => {
     let deleteAvatarPromise;
     let deleteBannerPromise;
@@ -138,7 +138,7 @@ export const usePrayerGroupEdit = () => {
 
   const savePrayerGroupEdit = async (
     values: PrayerGroupDetails,
-    formikHelpers: FormikHelpers<PrayerGroupDetails>
+    formikHelpers: FormikHelpers<PrayerGroupDetails>,
   ) => {
     const valuesToSubmit: PrayerGroupDetails = { ...values };
     const { setFieldError } = formikHelpers;
@@ -159,7 +159,7 @@ export const usePrayerGroupEdit = () => {
 
     if (formikRef.current?.initialValues.groupName !== values.groupName) {
       groupNameValidationPromise = getGroupNameValidation(
-        values.groupName ?? ""
+        values.groupName ?? "",
       );
     }
 
@@ -176,16 +176,16 @@ export const usePrayerGroupEdit = () => {
     if (
       !groupNameValidationResponse?.isError &&
       groupNameValidationResponse?.value.errors?.includes(
-        UNIQUE_GROUP_NAME_ERROR
+        UNIQUE_GROUP_NAME_ERROR,
       )
     ) {
       setFieldError(
         "groupName",
         translate("form.validation.unique.error", {
           field: translate(
-            "createPrayerGroup.groupNameDescription.groupName"
+            "createPrayerGroup.groupNameDescription.groupName",
           ).toLocaleLowerCase(),
-        })
+        }),
       );
 
       setIsLoading(false);
@@ -224,7 +224,7 @@ export const usePrayerGroupEdit = () => {
 
     const putPrayerGroupResponse = await putPrayerGroup(
       valuesToSubmit.prayerGroupId ?? -1,
-      mapPrayerGroupToPutPrayerGroupRequest(valuesToSubmit)
+      mapPrayerGroupToPutPrayerGroupRequest(valuesToSubmit),
     );
     setIsLoading(false);
 
@@ -252,13 +252,13 @@ export const usePrayerGroupEdit = () => {
     };
 
     const prayerGroupSummary = mapPrayerGroupSummaryFromPrayerGroupDetails(
-      putPrayerGroupResponse.value
+      putPrayerGroupResponse.value,
     );
 
     const prayerGroupSummaries = [...(userData?.prayerGroups ?? [])];
 
     const summaryIndex = prayerGroupSummaries.findIndex(
-      (summary) => summary.prayerGroupId === prayerGroupSummary.prayerGroupId
+      (summary) => summary.prayerGroupId === prayerGroupSummary.prayerGroupId,
     );
 
     prayerGroupSummaries[summaryIndex] = prayerGroupSummary;

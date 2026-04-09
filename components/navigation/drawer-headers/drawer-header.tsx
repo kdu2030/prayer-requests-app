@@ -8,10 +8,10 @@ import { Text } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { useApiDataContext } from "../../hooks/use-api-data";
-import { useI18N } from "../../hooks/use-i18n";
-import { ProfilePicture } from "../layouts/profile-picture";
-import { ROUTES_WITHOUT_HEADER } from "./drawer-constants";
+import { useApiDataContext } from "../../../hooks/use-api-data";
+import { useI18N } from "../../../hooks/use-i18n";
+import { ProfilePicture } from "../../layouts/profile-picture";
+import { ROUTES_WITHOUT_HEADER } from "../drawer-constants";
 
 export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
   const { translate } = useI18N();

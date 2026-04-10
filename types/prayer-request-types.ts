@@ -44,6 +44,17 @@ export type PrayerRequestModel = {
   userPrayerSessionId?: number;
 };
 
+export type PrayerRequestDetailsModel = PrayerRequestModel & {
+  comments?: PrayerRequestCommentModel[];
+};
+
+export type PrayerRequestCommentModel = {
+  prayerRequestCommentId?: number;
+  submittedDate?: string;
+  comment?: string;
+  user?: PrayerGroupUserSummary;
+};
+
 export enum PrayerRequestSortFields {
   CreatedDate = "CREATED_DATE",
   LikeCount = "LIKE_COUNT",

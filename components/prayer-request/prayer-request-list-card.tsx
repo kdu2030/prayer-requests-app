@@ -10,7 +10,7 @@ import { CultureCode } from "../../types/languages";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { ProfilePicture } from "../layouts/profile-picture";
 import { PrayerRequestCardTestIds } from "./tests/test-ids";
-import { usePrayerRequestCard } from "./use-prayer-request-card";
+import { usePrayerRequestListCard } from "./use-prayer-request-list-card";
 
 type Props = {
   prayerRequest: PrayerRequestModel;
@@ -23,7 +23,7 @@ type Props = {
   showCreatedUser?: boolean;
 };
 
-export const PrayerRequestCard: React.FC<Props> = ({
+export const PrayerRequestListCard: React.FC<Props> = ({
   prayerRequest,
   prayerRequests,
   setPrayerRequests,
@@ -34,7 +34,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
   const { i18n } = useI18N();
   const displayUser = showCreatedUser && prayerRequest.user?.fullName;
 
-  const { isLikeLoading, onLikePress, likeIcon } = usePrayerRequestCard(
+  const { isLikeLoading, onLikePress, likeIcon } = usePrayerRequestListCard(
     prayerRequest,
     prayerRequests,
     setPrayerRequests,

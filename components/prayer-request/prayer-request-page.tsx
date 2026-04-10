@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { usePrayerGroupContext } from "../prayer-group/prayer-group-context";
 import { PrayerGroupSectionHeader } from "../prayer-group/section-header/prayer-group-section-header";
-import { PrayerRequestCard } from "./prayer-request-card";
+import { PrayerRequestListCard } from "./prayer-request-list-card";
 
 type Props = {
   prayerRequestId: number;

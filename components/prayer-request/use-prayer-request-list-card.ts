@@ -12,7 +12,7 @@ import {
 import { usePrayerGroupContext } from "../prayer-group/prayer-group-context";
 import { useToasterContext } from "../toasters/toaster-context";
 
-export const usePrayerRequestCard = (
+export const usePrayerRequestListCard = (
   prayerRequest: PrayerRequestModel,
   prayerRequests: PrayerRequestModel[],
   setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>,

@@ -17,7 +17,7 @@ import {
   mockPrayerRequests,
   mockUserData,
 } from "../../prayer-group/tests/mock-data";
-import { PrayerRequestCard } from "../prayer-request-card";
+import { PrayerRequestListCard } from "../prayer-request-list-card";
 import { PrayerRequestCardTestIds } from "./test-ids";
 
 let component: RenderResult;
@@ -53,7 +53,7 @@ const mountPrayerRequestCard = (
   prayerRequests: PrayerRequestModel[],
 ) => {
   return mountComponent(
-    <PrayerRequestCard
+    <PrayerRequestListCard
       prayerRequest={prayerRequest}
       prayerRequests={prayerRequests}
       setPrayerRequests={mockSetPrayerRequests}
@@ -63,7 +63,7 @@ const mountPrayerRequestCard = (
   );
 };
 
-describe(PrayerRequestCard, () => {
+describe(PrayerRequestListCard, () => {
   afterEach(() => {
     component?.unmount();
     jest.resetAllMocks();

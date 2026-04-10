@@ -9,7 +9,7 @@ import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
-import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
+import { PrayerRequestListCard } from "../prayer-request/prayer-request-list-card";
 import { PrayerRequestSkeletonList } from "../prayer-request/prayer-request-skeleton-list";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
 import { LeavePrayerGroupModal } from "./leave-prayer-group/leave-prayer-group-modal";
@@ -125,7 +125,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
               data={prayerRequests}
               renderItem={({ item }) => (
                 <Pressable onPress={() => navigateToPrayerRequestPage(item)}>
-                  <PrayerRequestCard
+                  <PrayerRequestListCard
                     prayerRequest={item}
                     prayerRequests={prayerRequests}
                     setPrayerRequests={setPrayerRequests}

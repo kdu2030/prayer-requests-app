@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Text } from "react-native-paper";
+
+import { PrayerRequestPage } from "../../../../../components/prayer-request/prayer-request-page";
 
 const PrayerRequestContainer: React.FC = () => {
   return (
     <>
-      <Text>Prayer request</Text>
+      <PrayerRequestPage />
     </>
   );
 };

@@ -1,4 +1,5 @@
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+import { router } from "expo-router";
 import * as React from "react";
 
 import { useDeletePrayerRequestBookmark } from "../../api/delete-prayer-request-bookmark";
@@ -10,6 +11,7 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
+import { usePrayerGroupContext } from "./prayer-group-context";
 
 export const usePrayerRequestActions = (
   setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>,
@@ -33,6 +35,8 @@ export const usePrayerRequestActions = (
   const deletePrayerRequestBookmark = useDeletePrayerRequestBookmark();
 
   const { userData } = useApiDataContext();
+
+  const { prayerGroupDetails } = usePrayerGroupContext();
 
   const openPrayerRequestActions = (
     prayerRequest: PrayerRequestModel,
@@ -157,6 +161,20 @@ export const usePrayerRequestActions = (
     await removePrayerRequestBookmark(selectedPrayerRequest.userBookmarkId);
   };
 
+  const navigateToPrayerRequestPage = (prayerRequest: PrayerRequestModel) => {
+    if (!prayerGroupDetails?.prayerGroupId || !prayerRequest.prayerRequestId) {
+      return;
+    }
+
+    router.push({
+      pathname: "/prayergroup/[id]/prayerrequest/[id]",
+      params: {
+        id: prayerGroupDetails.prayerGroupId,
+        id_1: prayerRequest.prayerRequestId,
+      },
+    });
+  };
+
   return {
     selectedPrayerRequest,
     openPrayerRequestActions,
@@ -166,5 +184,6 @@ export const usePrayerRequestActions = (
     isToggleBookmarkLoading,
     setSelectedPrayerRequest,
     showExtendedActions,
+    navigateToPrayerRequestPage,
   };
 };

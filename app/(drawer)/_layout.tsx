@@ -7,7 +7,7 @@ import * as React from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { DrawerContent } from "../../components/navigation/drawer-content";
-import { DrawerHeader } from "../../components/navigation/drawer-headers/drawer-header";
+import { DrawerHeader } from "../../components/navigation/drawer-header";
 
 const DrawerLayout: React.FC = () => {
   const renderDrawerContent = React.useCallback(

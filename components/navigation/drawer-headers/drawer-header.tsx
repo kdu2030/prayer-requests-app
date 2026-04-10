@@ -3,6 +3,7 @@ import { useSegments } from "expo-router";
 import * as React from "react";
 
 import { ROUTES_WITHOUT_HEADER } from "../drawer-constants";
+import { MainDrawerHeader } from "./main-drawer-header";
 
 export const DrawerHeader: React.FC<DrawerHeaderProps> = (props) => {
   const segments = useSegments();
@@ -12,5 +13,5 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = (props) => {
     return <></>;
   }
 
-  return <DrawerHeader {...props} />;
+  return <MainDrawerHeader {...props} />;
 };

@@ -50,7 +50,7 @@ export const WizardHeader: React.FC<Props> = ({
             onPress={onBack}
             testID={testIDs?.backButton}
           >
-            <Ionicons name="arrow-back" size={28} />
+            <Ionicons name="arrow-back" size={28} color="black" />
           </TouchableOpacity>
         )}
         <View
@@ -64,7 +64,7 @@ export const WizardHeader: React.FC<Props> = ({
               step: formatNumber(stepNumber, i18n.language as CultureCode),
               total: formatNumber(
                 totalNumberOfSteps,
-                i18n.language as CultureCode
+                i18n.language as CultureCode,
               ),
             })}
           </Text>

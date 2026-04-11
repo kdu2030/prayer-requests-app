@@ -90,7 +90,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
             onPress={onOpenMenu}
             borderless
           >
-            <MaterialIcons size={24} name="more-vert" />
+            <MaterialIcons size={24} name="more-vert" color="black" />
           </TouchableRipple>
         </View>
       </View>

@@ -38,7 +38,7 @@ export const RoundedModal: React.FC<Props> = ({
           </Text>
 
           <TouchableOpacity onPress={onClose}>
-            <Ionicons name="close" size={28} />
+            <Ionicons name="close" size={28} color="black" />
           </TouchableOpacity>
         </View>
 

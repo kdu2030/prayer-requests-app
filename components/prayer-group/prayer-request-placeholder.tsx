@@ -10,7 +10,7 @@ export const PrayerRequestPlaceholder: React.FC = () => {
 
   return (
     <View className="items-center mx-4">
-      <Ionicons name="chatbox-outline" size={64} />
+      <Ionicons name="chatbox-outline" size={64} color="black" />
       <Text className="mt-5" variant="titleMedium">
         {translate("prayerRequest.prayerGroup.noPrayerRequests")}
       </Text>

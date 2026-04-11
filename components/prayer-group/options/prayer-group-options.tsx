@@ -77,7 +77,13 @@ export const PrayerGroupOptions: React.FC<Props> = ({
         <View className="p-4">
           <PrayerGroupOptionButton
             label={translate("prayerGroup.options.about")}
-            icon={<MaterialCommunityIcons name="information" size={24} />}
+            icon={
+              <MaterialCommunityIcons
+                name="information"
+                size={24}
+                color="black"
+              />
+            }
             onPress={() => onPressOption("/(drawer)/prayergroup/[id]/about")}
             testID={PrayerGroupOptionsTestIds.aboutButton}
           />
@@ -86,14 +92,26 @@ export const PrayerGroupOptions: React.FC<Props> = ({
             <>
               <PrayerGroupOptionButton
                 label={translate("prayerGroup.options.editPrayerGroup")}
-                icon={<MaterialCommunityIcons name="pencil" size={24} />}
+                icon={
+                  <MaterialCommunityIcons
+                    name="pencil"
+                    size={24}
+                    color="black"
+                  />
+                }
                 onPress={() => onPressOption("/(drawer)/prayergroup/[id]/edit")}
                 testID={PrayerGroupOptionsTestIds.editButton}
               />
 
               <PrayerGroupOptionButton
                 label={translate("prayerGroup.manageUsers.label")}
-                icon={<MaterialCommunityIcons name="account" size={24} />}
+                icon={
+                  <MaterialCommunityIcons
+                    name="account"
+                    size={24}
+                    color="black"
+                  />
+                }
                 onPress={() =>
                   onPressOption("/(drawer)/prayergroup/[id]/users")
                 }
@@ -104,7 +122,13 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                 VisibilityLevel.Private && (
                 <PrayerGroupOptionButton
                   label={translate("prayerGroup.joinRequest.manage")}
-                  icon={<MaterialIcons name="manage-accounts" size={24} />}
+                  icon={
+                    <MaterialIcons
+                      name="manage-accounts"
+                      size={24}
+                      color="black"
+                    />
+                  }
                   onPress={() => {
                     onPressOption("/(drawer)/prayergroup/[id]/join-requests");
                   }}
@@ -130,7 +154,9 @@ export const PrayerGroupOptions: React.FC<Props> = ({
           {prayerGroupDetails?.userJoinStatus == JoinStatus.Joined && (
             <PrayerGroupOptionButton
               label={translate("prayerGroup.actions.addPrayerRequest")}
-              icon={<MaterialCommunityIcons name="plus" size={24} />}
+              icon={
+                <MaterialCommunityIcons name="plus" size={24} color="black" />
+              }
               onPress={() => {
                 onPressOption("/(drawer)/prayergroup/[id]/create");
               }}
@@ -140,7 +166,9 @@ export const PrayerGroupOptions: React.FC<Props> = ({
           {prayerGroupDetails?.userJoinStatus == JoinStatus.Joined && (
             <PrayerGroupOptionButton
               label={translate("prayerGroup.actions.leavePrayerGroup")}
-              icon={<MaterialIcons name="person-remove" size={24} />}
+              icon={
+                <MaterialIcons name="person-remove" size={24} color="black" />
+              }
               onPress={() => {
                 setShowLeavePrayerGroupModal(true);
                 bottomSheetRef.current?.close();

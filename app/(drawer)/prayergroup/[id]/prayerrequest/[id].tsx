@@ -2,9 +2,16 @@ import { useLocalSearchParams } from "expo-router";
 import * as React from "react";
 
 import { PrayerRequestPage } from "../../../../../components/prayer-request/prayer-request-page";
+import { PrayerRequestEntryPoint } from "../../../../../components/prayer-request/prayer-request-types";
+
+type PrayerRequestPageParams = {
+  id: string;
+  id_1: string;
+  entryPoint: PrayerRequestEntryPoint;
+};
 
 const PrayerRequestContainer: React.FC = () => {
-  const { id_1 } = useLocalSearchParams();
+  const { id_1, entryPoint } = useLocalSearchParams<PrayerRequestPageParams>();
   const prayerRequestId = React.useMemo(() => {
     if (typeof id_1 === "string") {
       return Number.parseInt(id_1);
@@ -15,7 +22,10 @@ const PrayerRequestContainer: React.FC = () => {
 
   return (
     <>
-      <PrayerRequestPage prayerRequestId={prayerRequestId} />
+      <PrayerRequestPage
+        prayerRequestId={prayerRequestId}
+        entryPoint={entryPoint}
+      />
     </>
   );
 };

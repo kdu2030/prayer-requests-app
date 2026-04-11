@@ -4,12 +4,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { usePrayerGroupContext } from "../prayer-group/prayer-group-context";
 import { PrayerGroupSectionHeader } from "../prayer-group/section-header/prayer-group-section-header";
+import { PrayerRequestEntryPoint } from "./prayer-request-types";
 
 type Props = {
   prayerRequestId: number;
+  entryPoint: PrayerRequestEntryPoint;
 };
 
-export const PrayerRequestPage: React.FC<Props> = () => {
+export const PrayerRequestPage: React.FC<Props> = ({ entryPoint }) => {
   const theme = useTheme();
   const { prayerGroupDetails } = usePrayerGroupContext();
 

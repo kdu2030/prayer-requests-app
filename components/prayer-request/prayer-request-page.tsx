@@ -7,6 +7,7 @@ import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerGroupSectionHeader } from "../prayer-group/section-header/prayer-group-section-header";
+import { PrayerRequestCard } from "./prayer-request-card";
 import { PrayerRequestEntryPoint } from "./prayer-request-types";
 import { usePrayerRequestPage } from "./use-prayer-request-page";
 
@@ -43,6 +44,17 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
           errorLabel={translate("prayerRequestPage.failedToLoad")}
           onRetry={loadPrayerRequest}
           showSafeArea={false}
+        />
+      )}
+
+      {prayerRequestLoadStatus === LoadStatus.Success && prayerRequest && (
+        <PrayerRequestCard
+          prayerRequest={prayerRequest}
+          onOpenMenu={() => {}}
+          isLikeLoading={false}
+          onLikePress={() => {}}
+          onPrayPress={() => {}}
+          showCreatedUser
         />
       )}
     </SafeAreaView>

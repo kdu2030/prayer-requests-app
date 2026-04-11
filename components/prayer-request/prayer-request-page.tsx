@@ -16,12 +16,15 @@ type Props = {
   entryPoint: PrayerRequestEntryPoint;
 };
 
-export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
+export const PrayerRequestPage: React.FC<Props> = ({
+  prayerRequestId,
+  entryPoint,
+}) => {
   const theme = useTheme();
   const { translate } = useI18N();
 
   const { prayerRequest, prayerRequestLoadStatus, loadPrayerRequest } =
-    usePrayerRequestPage(prayerRequestId);
+    usePrayerRequestPage(prayerRequestId, entryPoint);
 
   return (
     <SafeAreaView

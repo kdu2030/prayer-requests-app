@@ -7,8 +7,16 @@ import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
+import {
+  PrayerRequestContextType,
+  usePrayerRequestContext,
+} from "./prayer-request-context";
+import { PrayerRequestEntryPoint } from "./prayer-request-types";
 
-export const usePrayerRequestPage = (prayerRequestId: number) => {
+export const usePrayerRequestPage = (
+  prayerRequestId: number,
+  entryPoint: PrayerRequestEntryPoint,
+) => {
   const [prayerRequest, setPrayerRequest] =
     React.useState<PrayerRequestModel>();
   const [prayerRequestLoadStatus, setPrayerRequestLoadStatus] =
@@ -22,6 +30,10 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
 
   const getPrayerRequest = useGetPrayerRequest();
   const postPrayerRequestLike = usePostPrayerRequestLike();
+
+  // This can be undefined because the last page visited might not be a prayer group
+  const prayerRequestContext: PrayerRequestContextType | undefined =
+    usePrayerRequestContext();
 
   const loadPrayerRequest = React.useCallback(async () => {
     setPrayerRequestLoadStatus(LoadStatus.Loading);
@@ -61,6 +73,35 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
         variant: "error",
       });
       return;
+    }
+
+    const updatedPrayerRequest: PrayerRequestModel = {
+      ...prayerRequest,
+      likeCount: (prayerRequest.likeCount ?? 0) + 1,
+      userLikeId: response.value.prayerRequestLikeId,
+    };
+
+    setPrayerRequest(updatedPrayerRequest);
+
+    if (
+      entryPoint === PrayerRequestEntryPoint.PrayerGroup &&
+      prayerRequestContext
+    ) {
+      const { prayerRequests, setPrayerRequests } = prayerRequestContext;
+
+      const updatedPrayerRequests = prayerRequests.map((groupPrayerRequest) => {
+        if (groupPrayerRequest.prayerRequestId !== prayerRequestId) {
+          return groupPrayerRequest;
+        }
+
+        return {
+          ...groupPrayerRequest,
+          userLikeId: updatedPrayerRequest.userLikeId,
+          likeCount: updatedPrayerRequest.likeCount,
+        };
+      });
+
+      setPrayerRequests(updatedPrayerRequests);
     }
   };
 

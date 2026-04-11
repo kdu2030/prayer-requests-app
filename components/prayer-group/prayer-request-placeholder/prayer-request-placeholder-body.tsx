@@ -9,7 +9,7 @@ import { useI18N } from "../../../hooks/use-i18n";
 import { LoadStatus } from "../../../types/api-response-types";
 import { ErrorScreen } from "../../layouts/error-screen";
 import { PrayerRequestPlaceholder } from "../prayer-request-placeholder";
-import { PrayerRequestListSpinner } from "../spinners/prayer-request-spinner";
+import { PrayerRequestListSpinner } from "../spinners/prayer-request-list-spinner";
 import { PrivatePrayerGroupPlaceholder } from "./private-prayer-group-placeholder";
 
 type Props = {

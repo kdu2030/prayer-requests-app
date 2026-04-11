@@ -166,6 +166,9 @@ export const chineseTranslations: Translations = {
   "prayerRequest.actions.savePrayerRequest": "收藏祷告事项",
   "prayerRequest.actions.unsavePrayerRequest": "取消祷告事项收藏",
 
+  "prayerRequestPage.loading": "加载祷告事项",
+  "prayerRequestPage.failedToLoad": "加载祷告事项失败了。",
+
   "prayerGroup.joinRequest.label":
     "这是一个私密的祷告小组。要加入，请提交加入请求。",
   "prayerGroup.joinRequest.submitJoinRequest": "提交加入请求",
@@ -187,5 +190,4 @@ export const chineseTranslations: Translations = {
   "toaster.savePrayerRequest.failure": "收藏报告事项失败了。",
   "toaster.unsavePrayerRequest.success": "祷告事项收藏已取消。",
   "toaster.unsavePrayerRequest.failure": "取消祷告事项收藏失败了。",
-  "toaster.loadPrayerRequest.failure": "加载祷告事项失败了。",
 };

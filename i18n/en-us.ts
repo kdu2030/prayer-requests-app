@@ -170,6 +170,9 @@ export const englishTranslations = {
   "prayerRequest.actions.savePrayerRequest": "Save prayer request",
   "prayerRequest.actions.unsavePrayerRequest": "Unsave prayer request",
 
+  "prayerRequestPage.loading": "Loading prayer request",
+  "prayerRequestPage.failedToLoad": "Failed to load prayer request.",
+
   "prayerGroup.joinRequest.label":
     "This is a private prayer group. To join, please submit a join request.",
   "prayerGroup.joinRequest.submitJoinRequest": "Submit Join Request",
@@ -193,5 +196,4 @@ export const englishTranslations = {
   "toaster.savePrayerRequest.failure": "Failed to save prayer request.",
   "toaster.unsavePrayerRequest.success": "Prayer request unsaved.",
   "toaster.unsavePrayerRequest.failure": "Failed to unsave prayer request.",
-  "toaster.loadPrayerRequest.failure": "Failed to load prayer request.",
 };

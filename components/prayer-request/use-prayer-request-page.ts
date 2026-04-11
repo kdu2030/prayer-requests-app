@@ -32,5 +32,6 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   return {
     prayerRequest,
     prayerRequestLoadStatus,
+    loadPrayerRequest,
   };
 };

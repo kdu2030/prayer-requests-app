@@ -13,7 +13,7 @@ type Props = {
   size?: number;
 };
 
-export const PrayerRequestSpinner: React.FC<Props> = ({
+export const PrayerRequestListSpinner: React.FC<Props> = ({
   className,
   labelVariant,
   size = 64,

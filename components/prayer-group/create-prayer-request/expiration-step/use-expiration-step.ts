@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { setNestedObjectValues, useFormikContext } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
@@ -9,6 +10,7 @@ import { mapCreatePrayerRequest } from "../../../../mappers/map-create-prayer-re
 import { DropdownOption } from "../../../../types/inputs/dropdown";
 import { PrayerRequestFilterCriteria } from "../../../../types/prayer-request-types";
 import { usePrayerRequestContext } from "../../../prayer-request/prayer-request-context";
+import { PrayerRequestEntryPoint } from "../../../prayer-request/prayer-request-types";
 import { useToasterContext } from "../../../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "../../prayer-group-constants";
 import { usePrayerGroupContext } from "../../prayer-group-context";
@@ -107,8 +109,14 @@ export const useExpirationStep = () => {
 
     await refreshPrayerRequests(prayerGroupDetails.prayerGroupId);
 
-    // TODO: Redirect to prayer request with router.replace, not router.push
-    // FIXME: We need to fix post prayer request to add the correct type for the post prayer request payload
+    router.replace({
+      pathname: "/prayergroup/[id]/prayerrequest/[id]",
+      params: {
+        id: prayerGroupDetails.prayerGroupId,
+        id_1: response.value.prayerRequestId,
+        entryPoint: PrayerRequestEntryPoint.PrayerGroup,
+      },
+    });
   };
 
   return {

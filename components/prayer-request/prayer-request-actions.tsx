@@ -21,7 +21,7 @@ type Props = {
   setSelectedPrayerRequest: React.Dispatch<
     React.SetStateAction<PrayerRequestModel | undefined>
   >;
-  bottomSheetRef: React.RefObject<BottomSheetMethods>;
+  bottomSheetRef: React.RefObject<BottomSheetMethods | null>;
 };
 
 export const PrayerRequestActions: React.FC<Props> = ({

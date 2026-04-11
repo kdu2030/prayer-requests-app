@@ -26,7 +26,9 @@ import { PrayerGroupOptionsTestIds } from "./tests/test-ids";
 type Props = {
   prayerGroupDetails?: PrayerGroupDetails;
   setShowLeavePrayerGroupModal: React.Dispatch<React.SetStateAction<boolean>>;
-  bottomSheetRef: React.RefObject<BottomSheetProps & BottomSheetMethods>;
+  bottomSheetRef: React.RefObject<
+    (BottomSheetProps & BottomSheetMethods) | null
+  >;
 };
 
 export const PrayerGroupOptions: React.FC<Props> = ({

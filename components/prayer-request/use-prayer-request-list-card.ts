@@ -117,13 +117,6 @@ export const usePrayerRequestListCard = (
     setIsLikeLoading(false);
   };
 
-  const likeIcon = React.useMemo(() => {
-    if (isLikeLoading) {
-      return undefined;
-    }
-    return prayerRequest.userLikeId ? "heart" : "heart-outline";
-  }, [isLikeLoading, prayerRequest.userLikeId]);
-
   const handlePress = () => {
     if (!prayerGroupDetails?.prayerGroupId || !prayerRequest.prayerRequestId) {
       return;
@@ -141,7 +134,6 @@ export const usePrayerRequestListCard = (
   return {
     isLikeLoading,
     onLikePress,
-    likeIcon,
     handlePress,
   };
 };

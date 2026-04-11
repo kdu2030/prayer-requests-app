@@ -1,16 +1,7 @@
-import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
-import { View } from "react-native";
-import { Button, Text, TouchableRipple, useTheme } from "react-native-paper";
 
-import { formatDate, formatNumber } from "../../helpers/formatting-helpers";
-import { getArrayTestId } from "../../helpers/utils";
-import { useI18N } from "../../hooks/use-i18n";
-import { CultureCode } from "../../types/languages";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
-import { ProfilePicture } from "../layouts/profile-picture";
 import { PrayerRequestCard } from "./prayer-request-card";
-import { PrayerRequestCardTestIds } from "./tests/test-ids";
 import { usePrayerRequestListCard } from "./use-prayer-request-list-card";
 
 type Props = {
@@ -31,11 +22,7 @@ export const PrayerRequestListCard: React.FC<Props> = ({
   showCreatedUser = true,
   openPrayerRequestActions,
 }) => {
-  const theme = useTheme();
-  const { i18n } = useI18N();
-  const displayUser = showCreatedUser && prayerRequest.user?.fullName;
-
-  const { isLikeLoading, onLikePress, likeIcon } = usePrayerRequestListCard(
+  const { isLikeLoading, onLikePress } = usePrayerRequestListCard(
     prayerRequest,
     prayerRequests,
     setPrayerRequests,

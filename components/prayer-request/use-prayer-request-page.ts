@@ -105,9 +105,21 @@ export const usePrayerRequestPage = (
     }
   };
 
+  const onLikePress = async () => {
+    if (!prayerRequest) {
+      return;
+    }
+
+    if (!prayerRequest.userLikeId) {
+      await addPrayerRequestLike();
+    }
+  };
+
   return {
     prayerRequest,
     prayerRequestLoadStatus,
     loadPrayerRequest,
+    onLikePress,
+    isLikeLoading,
   };
 };

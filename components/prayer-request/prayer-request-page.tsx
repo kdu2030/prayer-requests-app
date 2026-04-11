@@ -23,8 +23,13 @@ export const PrayerRequestPage: React.FC<Props> = ({
   const theme = useTheme();
   const { translate } = useI18N();
 
-  const { prayerRequest, prayerRequestLoadStatus, loadPrayerRequest } =
-    usePrayerRequestPage(prayerRequestId, entryPoint);
+  const {
+    prayerRequest,
+    prayerRequestLoadStatus,
+    loadPrayerRequest,
+    onLikePress,
+    isLikeLoading,
+  } = usePrayerRequestPage(prayerRequestId, entryPoint);
 
   return (
     <SafeAreaView
@@ -54,8 +59,8 @@ export const PrayerRequestPage: React.FC<Props> = ({
         <PrayerRequestCard
           prayerRequest={prayerRequest}
           onOpenMenu={() => {}}
-          isLikeLoading={false}
-          onLikePress={() => {}}
+          isLikeLoading={isLikeLoading}
+          onLikePress={onLikePress}
           onPrayPress={() => {}}
           showCreatedUser
         />

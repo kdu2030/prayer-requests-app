@@ -193,4 +193,5 @@ export const englishTranslations = {
   "toaster.savePrayerRequest.failure": "Failed to save prayer request.",
   "toaster.unsavePrayerRequest.success": "Prayer request unsaved.",
   "toaster.unsavePrayerRequest.failure": "Failed to unsave prayer request.",
+  "toaster.loadPrayerRequest.failure": "Failed to load prayer request.",
 };

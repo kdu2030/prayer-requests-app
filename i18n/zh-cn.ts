@@ -187,4 +187,5 @@ export const chineseTranslations: Translations = {
   "toaster.savePrayerRequest.failure": "收藏报告事项失败了。",
   "toaster.unsavePrayerRequest.success": "祷告事项收藏已取消。",
   "toaster.unsavePrayerRequest.failure": "取消祷告事项收藏失败了。",
+  "toaster.loadPrayerRequest.failure": "加载祷告事项失败了。",
 };

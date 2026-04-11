@@ -11,7 +11,7 @@ type Props = {
   entryPoint: PrayerRequestEntryPoint;
 };
 
-export const PrayerRequestPage: React.FC<Props> = ({ entryPoint }) => {
+export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
   const theme = useTheme();
   const { prayerGroupDetails } = usePrayerGroupContext();
 

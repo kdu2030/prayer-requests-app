@@ -89,7 +89,11 @@ export const PrayerRequestListCard: React.FC<Props> = ({
             onPress={() => openPrayerRequestActions(prayerRequest, true)}
             borderless
           >
-            <MaterialIcons size={24} name="more-vert" color="black" />
+            <MaterialIcons
+              size={24}
+              name="more-vert"
+              color={theme.colors.onSurface}
+            />
           </TouchableRipple>
         </View>
       </View>

@@ -50,7 +50,11 @@ export const WizardHeader: React.FC<Props> = ({
             onPress={onBack}
             testID={testIDs?.backButton}
           >
-            <Ionicons name="arrow-back" size={28} color="black" />
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color={theme.colors.onSurface}
+            />
           </TouchableOpacity>
         )}
         <View

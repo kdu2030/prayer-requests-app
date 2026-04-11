@@ -81,7 +81,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
               <MaterialCommunityIcons
                 name="information"
                 size={24}
-                color="black"
+                color={theme.colors.onSurface}
               />
             }
             onPress={() => onPressOption("/(drawer)/prayergroup/[id]/about")}
@@ -96,7 +96,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                   <MaterialCommunityIcons
                     name="pencil"
                     size={24}
-                    color="black"
+                    color={theme.colors.onSurface}
                   />
                 }
                 onPress={() => onPressOption("/(drawer)/prayergroup/[id]/edit")}
@@ -109,7 +109,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                   <MaterialCommunityIcons
                     name="account"
                     size={24}
-                    color="black"
+                    color={theme.colors.onSurface}
                   />
                 }
                 onPress={() =>
@@ -126,7 +126,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                     <MaterialIcons
                       name="manage-accounts"
                       size={24}
-                      color="black"
+                      color={theme.colors.onSurface}
                     />
                   }
                   onPress={() => {
@@ -155,7 +155,11 @@ export const PrayerGroupOptions: React.FC<Props> = ({
             <PrayerGroupOptionButton
               label={translate("prayerGroup.actions.addPrayerRequest")}
               icon={
-                <MaterialCommunityIcons name="plus" size={24} color="black" />
+                <MaterialCommunityIcons
+                  name="plus"
+                  size={24}
+                  color={theme.colors.onSurface}
+                />
               }
               onPress={() => {
                 onPressOption("/(drawer)/prayergroup/[id]/create");
@@ -167,7 +171,11 @@ export const PrayerGroupOptions: React.FC<Props> = ({
             <PrayerGroupOptionButton
               label={translate("prayerGroup.actions.leavePrayerGroup")}
               icon={
-                <MaterialIcons name="person-remove" size={24} color="black" />
+                <MaterialIcons
+                  name="person-remove"
+                  size={24}
+                  color={theme.colors.onSurface}
+                />
               }
               onPress={() => {
                 setShowLeavePrayerGroupModal(true);

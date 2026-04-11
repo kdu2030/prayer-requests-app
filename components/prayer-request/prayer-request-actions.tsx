@@ -59,7 +59,13 @@ export const PrayerRequestActions: React.FC<Props> = ({
       <BottomSheetView>
         <View className="p-4">
           <PrayerGroupOptionButton
-            icon={<MaterialCommunityIcons name="cross" size={24} />}
+            icon={
+              <MaterialCommunityIcons
+                name="cross"
+                size={24}
+                color={theme.colors.onSurface}
+              />
+            }
             label={translate("prayerRequest.actions.prayForRequest")}
             onPress={() => {}}
           />
@@ -73,6 +79,7 @@ export const PrayerRequestActions: React.FC<Props> = ({
                     : "bookmark-outline"
                 }
                 size={24}
+                color={theme.colors.onSurface}
               />
             }
             label={

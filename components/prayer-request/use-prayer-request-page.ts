@@ -1,3 +1,8 @@
 import * as React from "react";
 
-export const usePrayerRequestPage = (prayerRequestId: number) => {};
+import { PrayerRequestEntryPoint } from "./prayer-request-types";
+
+export const usePrayerRequestPage = (
+  prayerRequestId: number,
+  entryPoint: PrayerRequestEntryPoint,
+) => {};

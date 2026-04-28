@@ -4,20 +4,22 @@ import { PrayerRequestModel } from "../../types/prayer-request-types";
 
 export type PrayerRequestDetailContextType = {
   prayerRequests: Record<number, PrayerRequestModel>;
-  getPrayerRequest: (prayerRequestId: number) => PrayerRequestModel | undefined;
+  getPrayerRequestFromStore: (
+    prayerRequestId: number,
+  ) => PrayerRequestModel | undefined;
   setPrayerRequest: (
     prayerRequestId: number,
     prayerRequest: PrayerRequestModel,
   ) => void;
-  addPrayerRequests: (prayerRequests: PrayerRequestModel[]) => void;
+  addPrayerRequestsToStore: (prayerRequests: PrayerRequestModel[]) => void;
 };
 
 export const PrayerRequestDetailContext =
   React.createContext<PrayerRequestDetailContextType>({
     prayerRequests: {},
-    getPrayerRequest: () => {},
+    getPrayerRequestFromStore: () => {},
     setPrayerRequest: () => {},
-    addPrayerRequests: () => {},
+    addPrayerRequestsToStore: () => {},
   });
 
 type Props = {
@@ -68,10 +70,10 @@ export const PrayerRequestDetailContextProvider: React.FC<Props> = ({
   return (
     <PrayerRequestDetailContext.Provider
       value={{
-        addPrayerRequests,
+        addPrayerRequestsToStore: addPrayerRequests,
         prayerRequests,
         setPrayerRequest,
-        getPrayerRequest,
+        getPrayerRequestFromStore: getPrayerRequest,
       }}
     >
       {children}

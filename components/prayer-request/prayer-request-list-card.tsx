@@ -2,12 +2,11 @@ import * as React from "react";
 
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { PrayerRequestCard } from "./prayer-request-card";
+import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
 import { usePrayerRequestListCard } from "./use-prayer-request-list-card";
 
 type Props = {
-  prayerRequest: PrayerRequestModel;
-  prayerRequests: PrayerRequestModel[];
-  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>;
+  prayerRequestId: number;
   openPrayerRequestActions: (
     prayerRequest: PrayerRequestModel,
     showExtendedOptions?: boolean,
@@ -16,17 +15,20 @@ type Props = {
 };
 
 export const PrayerRequestListCard: React.FC<Props> = ({
-  prayerRequest,
-  prayerRequests,
-  setPrayerRequests,
+  prayerRequestId,
   showCreatedUser = true,
   openPrayerRequestActions,
 }) => {
-  const { isLikeLoading, onLikePress } = usePrayerRequestListCard(
-    prayerRequest,
-    prayerRequests,
-    setPrayerRequests,
-  );
+  const { getPrayerRequestFromStore: getPrayerRequest } =
+    usePrayerRequestDetailContext();
+
+  const prayerRequest = getPrayerRequest(prayerRequestId);
+  const { isLikeLoading, onLikePress } =
+    usePrayerRequestListCard(prayerRequest);
+
+  if (!prayerRequest) {
+    return;
+  }
 
   return (
     <PrayerRequestCard

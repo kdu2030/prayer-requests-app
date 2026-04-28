@@ -70,7 +70,8 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
 
   const [prayerRequestIds, setPrayerRequestIds] = React.useState<number[]>([]);
 
-  const { addPrayerRequests } = usePrayerRequestDetailContext();
+  const { addPrayerRequestsToStore: addPrayerRequests } =
+    usePrayerRequestDetailContext();
 
   const [prayerRequestMetadata, setPrayerRequestMetadata] =
     React.useState<PrayerRequestMetadata>(DEFAULT_PRAYER_REQUEST_METADATA);

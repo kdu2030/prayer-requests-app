@@ -9,11 +9,10 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
+import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
 
 export const usePrayerRequestListCard = (
-  prayerRequest: PrayerRequestModel,
-  prayerRequests: PrayerRequestModel[],
-  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>,
+  prayerRequest: PrayerRequestModel | undefined,
 ) => {
   const [isLikeLoading, setIsLikeLoading] = React.useState<boolean>(false);
   const { translate } = useI18N();
@@ -24,6 +23,8 @@ export const usePrayerRequestListCard = (
   const deletePrayerRequestLike = useDeletePrayerRequestLike();
 
   const { userData } = useApiDataContext();
+
+  const { setPrayerRequest } = usePrayerRequestDetailContext();
 
   const addPrayerRequestLike = async (prayerRequestId: number) => {
     const userId = userData?.userId;

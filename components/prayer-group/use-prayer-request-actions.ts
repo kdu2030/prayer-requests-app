@@ -38,7 +38,7 @@ export const usePrayerRequestActions = () => {
 
   const { prayerGroupDetails } = usePrayerGroupContext();
 
-  const { setPrayerRequest, getPrayerRequest } =
+  const { setPrayerRequest, getPrayerRequestFromStore: getPrayerRequest } =
     usePrayerRequestDetailContext();
 
   const openPrayerRequestActions = (

@@ -9,6 +9,7 @@ import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
+import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
 import { PrayerRequestListCard } from "../prayer-request/prayer-request-list-card";
 import { PrayerRequestSkeletonList } from "../prayer-request/prayer-request-skeleton-list";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
@@ -29,6 +30,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
   const theme = useTheme();
 
   const { prayerGroupDetails } = usePrayerGroupContext();
+
+  const { prayerRequestIds } = usePrayerRequestContext();
 
   const {
     prayerGroupLoadStatus,
@@ -117,18 +120,16 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         )}
 
         {prayerRequestLoadStatus === LoadStatus.Success &&
-          prayerRequests.length > 0 && (
+          prayerRequestIds.length > 0 && (
             <FlatList
               ListHeaderComponent={prayerGroupHeader}
-              data={prayerRequests}
+              data={prayerRequestIds}
               renderItem={({ item }) => (
                 <Pressable onPress={() => navigateToPrayerRequestPage(item)}>
                   <PrayerRequestListCard
-                    prayerRequest={item}
-                    prayerRequests={prayerRequests}
-                    setPrayerRequests={setPrayerRequests}
+                    prayerRequestId={item}
                     openPrayerRequestActions={openPrayerRequestActions}
-                    key={item.prayerRequestId}
+                    key={item}
                   />
                 </Pressable>
               )}

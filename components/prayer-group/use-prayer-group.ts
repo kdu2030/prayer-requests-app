@@ -29,8 +29,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const {
     prayerRequestFilters,
     setPrayerRequestFilters,
-    prayerRequests,
-    setPrayerRequests,
+    prayerRequestIds,
     prayerRequestMetadata,
     cleanupPrayerRequests,
     loadNextPrayerRequestsForGroup,
@@ -216,7 +215,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     if (
       prayerRequestMetadata.totalCount == null ||
-      prayerRequests.length >= prayerRequestMetadata.totalCount
+      prayerRequestIds.length >= prayerRequestMetadata.totalCount
     ) {
       return;
     }
@@ -236,9 +235,9 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const showPrayerRequestList = React.useMemo(() => {
     return (
       prayerRequestLoadStatus === LoadStatus.Success &&
-      prayerRequests.length > 0
+      prayerRequestIds.length > 0
     );
-  }, [prayerRequestLoadStatus, prayerRequests.length]);
+  }, [prayerRequestLoadStatus, prayerRequestIds.length]);
 
   const setUserJoinStatus = (joinStatus: JoinStatus) => {
     setPrayerGroupDetails((prayerGroupDetails) => ({
@@ -259,9 +258,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     onOpenOptions,
     prayerRequestFilters,
     setPrayerRequestFilters,
-    prayerRequests,
     onEndReached,
-    setPrayerRequests,
     loadNextPrayerRequestsForGroup,
     nextPrayerRequestsLoadStatus,
     prayerRequestLoadStatus,

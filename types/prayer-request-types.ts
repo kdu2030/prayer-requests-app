@@ -9,7 +9,7 @@ export type PrayerRequestFilterCriteria = {
   pageIndex?: number;
   pageSize?: number;
   bookmarkedByUserId?: number;
-  includeExpiredRequests?: boolean;
+  includeExpiredPrayerRequests?: boolean;
   sortConfig: SortConfig;
 };
 

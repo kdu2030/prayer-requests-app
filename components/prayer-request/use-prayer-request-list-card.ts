@@ -29,7 +29,7 @@ export const usePrayerRequestListCard = (
   const addPrayerRequestLike = async (prayerRequestId: number) => {
     const userId = userData?.userId;
 
-    if (!userId) {
+    if (!userId || !prayerRequest) {
       return;
     }
 
@@ -51,25 +51,17 @@ export const usePrayerRequestListCard = (
       return;
     }
 
-    const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-      if (prayerRequest.prayerRequestId !== prayerRequestId) {
-        return prayerRequest;
-      }
-
-      return {
-        ...prayerRequest,
-        userLikeId: response.value.prayerRequestLikeId,
-        likeCount: (prayerRequest.likeCount ?? 0) + 1,
-      };
+    setPrayerRequest(prayerRequestId, {
+      ...prayerRequest,
+      userLikeId: response.value.prayerRequestLikeId,
+      likeCount: (prayerRequest.likeCount ?? 0) + 1,
     });
-
-    setPrayerRequests(updatedPrayerRequests);
   };
 
   const removePrayerRequestLike = async (prayerRequestId: number) => {
     const userId = userData?.userId;
 
-    if (!userId || !prayerRequest.userLikeId) {
+    if (!userId || !prayerRequest?.userLikeId) {
       return;
     }
 
@@ -83,23 +75,15 @@ export const usePrayerRequestListCard = (
       return;
     }
 
-    const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-      if (prayerRequest.prayerRequestId !== prayerRequestId) {
-        return prayerRequest;
-      }
-
-      return {
-        ...prayerRequest,
-        userLikeId: undefined,
-        likeCount: prayerRequest.likeCount ? prayerRequest.likeCount - 1 : 0,
-      };
+    setPrayerRequest(prayerRequestId, {
+      ...prayerRequest,
+      userLikeId: undefined,
+      likeCount: prayerRequest.likeCount ? prayerRequest.likeCount - 1 : 0,
     });
-
-    setPrayerRequests(updatedPrayerRequests);
   };
 
   const onLikePress = async () => {
-    if (!prayerRequest.prayerRequestId) {
+    if (!prayerRequest?.prayerRequestId) {
       return;
     }
 

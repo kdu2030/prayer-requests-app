@@ -78,3 +78,6 @@ export const PrayerRequestDetailContextProvider: React.FC<Props> = ({
     </PrayerRequestDetailContext.Provider>
   );
 };
+
+export const usePrayerRequestDetailContext = () =>
+  React.useContext(PrayerRequestDetailContext);

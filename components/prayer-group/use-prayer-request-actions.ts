@@ -10,13 +10,12 @@ import {
   PrayerRequestActionCreateRequest,
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
+import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
 import { PrayerRequestEntryPoint } from "../prayer-request/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
 import { usePrayerGroupContext } from "./prayer-group-context";
 
-export const usePrayerRequestActions = (
-  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>,
-) => {
+export const usePrayerRequestActions = () => {
   const { translate } = useI18N();
 
   const prayerRequestActionsRef = React.useRef<BottomSheetMethods>(null);
@@ -38,6 +37,9 @@ export const usePrayerRequestActions = (
   const { userData } = useApiDataContext();
 
   const { prayerGroupDetails } = usePrayerGroupContext();
+
+  const { setPrayerRequest, getPrayerRequest } =
+    usePrayerRequestDetailContext();
 
   const openPrayerRequestActions = (
     prayerRequest: PrayerRequestModel,
@@ -63,6 +65,12 @@ export const usePrayerRequestActions = (
       return;
     }
 
+    const targetPrayerRequest = getPrayerRequest(prayerRequestId);
+
+    if (!targetPrayerRequest) {
+      return;
+    }
+
     const createRequest: PrayerRequestActionCreateRequest = {
       userId: userData.userId,
       submittedDate: new Date().toISOString(),
@@ -85,19 +93,9 @@ export const usePrayerRequestActions = (
       return;
     }
 
-    setPrayerRequests((prayerRequests) => {
-      const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-        if (prayerRequest.prayerRequestId !== prayerRequestId) {
-          return prayerRequest;
-        }
-
-        return {
-          ...prayerRequest,
-          userBookmarkId: response.value.prayerRequestBookmarkId,
-        };
-      });
-
-      return updatedPrayerRequests;
+    setPrayerRequest(prayerRequestId, {
+      ...targetPrayerRequest,
+      userBookmarkId: response.value.prayerRequestBookmarkId,
     });
 
     closePrayerRequestActions();
@@ -111,6 +109,10 @@ export const usePrayerRequestActions = (
   const removePrayerRequestBookmark = async (
     prayerRequestBookmarkId: number,
   ) => {
+    if (!selectedPrayerRequest?.prayerRequestId) {
+      return;
+    }
+
     setIsToggleBookmarkLoading(true);
 
     const response = await deletePrayerRequestBookmark(prayerRequestBookmarkId);
@@ -126,19 +128,9 @@ export const usePrayerRequestActions = (
       return;
     }
 
-    setPrayerRequests((prayerRequests) => {
-      const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-        if (
-          prayerRequest.prayerRequestId !==
-          selectedPrayerRequest?.prayerRequestId
-        ) {
-          return prayerRequest;
-        }
-
-        return { ...prayerRequest, userBookmarkId: undefined };
-      });
-
-      return updatedPrayerRequests;
+    setPrayerRequest(selectedPrayerRequest.prayerRequestId, {
+      ...selectedPrayerRequest,
+      userBookmarkId: undefined,
     });
 
     closePrayerRequestActions();

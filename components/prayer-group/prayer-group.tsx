@@ -40,9 +40,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     prayerGroupOptionsRef,
     onOpenOptions,
     prayerRequestLoadStatus,
-    prayerRequests,
     onEndReached,
-    setPrayerRequests,
     loadNextPrayerRequestsForGroup,
     showPrayerRequestList,
     showLeavePrayerGroupModal,
@@ -62,7 +60,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     setSelectedPrayerRequest,
     showExtendedActions,
     navigateToPrayerRequestPage,
-  } = usePrayerRequestActions(setPrayerRequests);
+  } = usePrayerRequestActions();
 
   const prayerGroupHeader = React.useMemo(
     () => (

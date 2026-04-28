@@ -154,8 +154,8 @@ export const usePrayerRequestActions = () => {
     await removePrayerRequestBookmark(selectedPrayerRequest.userBookmarkId);
   };
 
-  const navigateToPrayerRequestPage = (prayerRequest: PrayerRequestModel) => {
-    if (!prayerGroupDetails?.prayerGroupId || !prayerRequest.prayerRequestId) {
+  const navigateToPrayerRequestPage = (prayerRequestId: number) => {
+    if (!prayerGroupDetails?.prayerGroupId) {
       return;
     }
 
@@ -163,7 +163,7 @@ export const usePrayerRequestActions = () => {
       pathname: "/prayergroup/[id]/prayerrequest/[id]",
       params: {
         id: prayerGroupDetails.prayerGroupId,
-        id_1: prayerRequest.prayerRequestId,
+        id_1: prayerRequestId,
         entryPoint: PrayerRequestEntryPoint.PrayerGroup,
       },
     });

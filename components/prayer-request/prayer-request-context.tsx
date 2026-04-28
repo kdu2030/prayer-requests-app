@@ -1,4 +1,3 @@
-import { compact } from "lodash";
 import * as React from "react";
 
 import { usePostPrayerRequestFilter } from "../../api/post-prayer-request-filter";
@@ -8,7 +7,6 @@ import { LoadStatus } from "../../types/api-response-types";
 import {
   PrayerRequestFilterCriteria,
   PrayerRequestMetadata,
-  PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import {
   DEFAULT_PRAYER_REQUEST_FILTERS,
@@ -22,8 +20,8 @@ export type PrayerRequestContextType = {
   setPrayerRequestFilters: React.Dispatch<
     React.SetStateAction<PrayerRequestFilterCriteria>
   >;
-  prayerRequests: PrayerRequestModel[];
-  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>;
+  prayerRequestIds: number[];
+  setPrayerRequestIds: React.Dispatch<React.SetStateAction<number[]>>;
   prayerRequestMetadata: PrayerRequestMetadata;
   setPrayerRequestMetadata: React.Dispatch<
     React.SetStateAction<PrayerRequestMetadata>
@@ -46,8 +44,8 @@ export type PrayerRequestContextType = {
 const PrayerRequestContext = React.createContext<PrayerRequestContextType>({
   prayerRequestFilters: DEFAULT_PRAYER_REQUEST_FILTERS,
   setPrayerRequestFilters: () => {},
-  prayerRequests: [],
-  setPrayerRequests: () => {},
+  prayerRequestIds: [],
+  setPrayerRequestIds: () => {},
   prayerRequestMetadata: DEFAULT_PRAYER_REQUEST_METADATA,
   setPrayerRequestMetadata: () => {},
   prayerRequestLoadStatus: LoadStatus.NotStarted,
@@ -183,8 +181,8 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
       value={{
         prayerRequestFilters,
         setPrayerRequestFilters,
-        prayerRequests,
-        setPrayerRequests,
+        prayerRequestIds,
+        setPrayerRequestIds,
         prayerRequestMetadata,
         setPrayerRequestMetadata,
         prayerRequestLoadStatus,

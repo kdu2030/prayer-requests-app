@@ -4,9 +4,7 @@ import { PrayerRequestModel } from "../../types/prayer-request-types";
 
 export type PrayerRequestDetailContextType = {
   prayerRequests: Record<number, PrayerRequestModel>;
-  getPrayerRequestById: (
-    prayerRequestId: number,
-  ) => PrayerRequestModel | undefined;
+  getPrayerRequest: (prayerRequestId: number) => PrayerRequestModel | undefined;
   updatePrayerRequest: (
     prayerRequestId: number,
     prayerRequest: PrayerRequestModel,
@@ -14,3 +12,12 @@ export type PrayerRequestDetailContextType = {
   addPrayerRequests: (prayerRequests: PrayerRequestModel[]) => void;
   clearPrayerRequest: (prayerRequestId: number) => void;
 };
+
+export const PrayerRequestDetailContext =
+  React.createContext<PrayerRequestDetailContextType>({
+    prayerRequests: {},
+    getPrayerRequest: () => {},
+    updatePrayerRequest: () => {},
+    addPrayerRequests: () => {},
+    clearPrayerRequest: () => {},
+  });

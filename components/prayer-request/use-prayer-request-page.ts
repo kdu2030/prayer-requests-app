@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like";
 import { useGetPrayerRequest } from "../../api/get-prayer-request";
 import { usePostPrayerRequestLike } from "../../api/post-prayer-request-like";
 import { useApiDataContext } from "../../hooks/use-api-data";
@@ -25,12 +26,14 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   const { openToaster } = useToasterContext();
 
   const getPrayerRequest = useGetPrayerRequest();
+
   const postPrayerRequestLike = usePostPrayerRequestLike();
+  const deletePrayerRequestLike = useDeletePrayerRequestLike();
 
   const { setPrayerRequest: setPrayerRequestGlobal } =
     usePrayerRequestDetailContext();
 
-  const loadPrayerRequest = React.useCallback(async () => {
+  const loadPrayerRequest = async () => {
     setPrayerRequestLoadStatus(LoadStatus.Loading);
     const prayerRequestResponse = await getPrayerRequest(prayerRequestId);
 
@@ -43,11 +46,12 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     setPrayerRequestGlobal(prayerRequestId, prayerRequestResponse.value);
 
     setPrayerRequestLoadStatus(LoadStatus.Success);
-  }, [getPrayerRequest, prayerRequestId, setPrayerRequestGlobal]);
+  };
 
   React.useEffect(() => {
     loadPrayerRequest();
-  }, [loadPrayerRequest]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const addPrayerRequestLike = async () => {
     if (!prayerRequest?.prayerRequestId || !userData?.userId) {
@@ -82,6 +86,35 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     setPrayerRequestGlobal(prayerRequestId, updatedPrayerRequest);
   };
 
+  const removePrayerRequestLike = async () => {
+    if (!prayerRequest?.userLikeId) {
+      return;
+    }
+
+    setIsLikeLoading(true);
+    const response = await deletePrayerRequestLike(prayerRequest.userLikeId);
+    setIsLikeLoading(false);
+
+    if (response.isError) {
+      openToaster({
+        message: translate("prayerRequest.removeLike.failure"),
+        variant: "error",
+      });
+      return;
+    }
+
+    const updatedPrayerRequest: PrayerRequestDetailsModel = {
+      ...prayerRequest,
+      likeCount: prayerRequest.likeCount
+        ? prayerRequest.likeCount - 1
+        : undefined,
+      userLikeId: undefined,
+    };
+
+    setPrayerRequest(updatedPrayerRequest);
+    setPrayerRequestGlobal(prayerRequestId, updatedPrayerRequest);
+  };
+
   const onLikePress = async () => {
     if (!prayerRequest) {
       return;
@@ -89,7 +122,10 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
 
     if (!prayerRequest.userLikeId) {
       await addPrayerRequestLike();
+      return;
     }
+
+    await removePrayerRequestLike();
   };
 
   return {

@@ -8,18 +8,13 @@ import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerGroupSectionHeader } from "../prayer-group/section-header/prayer-group-section-header";
 import { PrayerRequestCard } from "./prayer-request-card";
-import { PrayerRequestEntryPoint } from "./prayer-request-types";
 import { usePrayerRequestPage } from "./use-prayer-request-page";
 
 type Props = {
   prayerRequestId: number;
-  entryPoint: PrayerRequestEntryPoint;
 };
 
-export const PrayerRequestPage: React.FC<Props> = ({
-  prayerRequestId,
-  entryPoint,
-}) => {
+export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
   const theme = useTheme();
   const { translate } = useI18N();
 
@@ -29,7 +24,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
     loadPrayerRequest,
     onLikePress,
     isLikeLoading,
-  } = usePrayerRequestPage(prayerRequestId, entryPoint);
+  } = usePrayerRequestPage(prayerRequestId);
 
   return (
     <SafeAreaView

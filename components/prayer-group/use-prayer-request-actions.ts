@@ -11,7 +11,6 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
-import { PrayerRequestEntryPoint } from "../prayer-request/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
 import { usePrayerGroupContext } from "./prayer-group-context";
 
@@ -164,7 +163,6 @@ export const usePrayerRequestActions = () => {
       params: {
         id: prayerGroupDetails.prayerGroupId,
         id_1: prayerRequestId,
-        entryPoint: PrayerRequestEntryPoint.PrayerGroup,
       },
     });
   };

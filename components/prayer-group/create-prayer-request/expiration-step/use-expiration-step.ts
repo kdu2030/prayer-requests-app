@@ -10,7 +10,6 @@ import { mapCreatePrayerRequest } from "../../../../mappers/map-create-prayer-re
 import { DropdownOption } from "../../../../types/inputs/dropdown";
 import { PrayerRequestFilterCriteria } from "../../../../types/prayer-request-types";
 import { usePrayerRequestContext } from "../../../prayer-request/prayer-request-context";
-import { PrayerRequestEntryPoint } from "../../../prayer-request/prayer-request-types";
 import { useToasterContext } from "../../../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "../../prayer-group-constants";
 import { usePrayerGroupContext } from "../../prayer-group-context";
@@ -114,7 +113,6 @@ export const useExpirationStep = () => {
       params: {
         id: prayerGroupDetails.prayerGroupId,
         id_1: response.value.prayerRequestId,
-        entryPoint: PrayerRequestEntryPoint.PrayerGroup,
       },
     });
   };

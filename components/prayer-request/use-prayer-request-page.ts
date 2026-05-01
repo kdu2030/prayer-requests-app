@@ -5,13 +5,16 @@ import { usePostPrayerRequestLike } from "../../api/post-prayer-request-like";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
-import { PrayerRequestModel } from "../../types/prayer-request-types";
+import {
+  PrayerRequestDetailsModel,
+  PrayerRequestModel,
+} from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
 import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
 
 export const usePrayerRequestPage = (prayerRequestId: number) => {
   const [prayerRequest, setPrayerRequest] =
-    React.useState<PrayerRequestModel>();
+    React.useState<PrayerRequestDetailsModel>();
   const [prayerRequestLoadStatus, setPrayerRequestLoadStatus] =
     React.useState<LoadStatus>(LoadStatus.NotStarted);
 
@@ -37,8 +40,10 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     }
 
     setPrayerRequest(prayerRequestResponse.value);
+    setPrayerRequestGlobal(prayerRequestId, prayerRequestResponse.value);
+
     setPrayerRequestLoadStatus(LoadStatus.Success);
-  }, [getPrayerRequest, prayerRequestId]);
+  }, [getPrayerRequest, prayerRequestId, setPrayerRequestGlobal]);
 
   React.useEffect(() => {
     loadPrayerRequest();

@@ -18,7 +18,7 @@ import { PrayerGroupOptions } from "./options/prayer-group-options";
 import { usePrayerGroupContext } from "./prayer-group-context";
 import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
 import { usePrayerGroup } from "./use-prayer-group";
-import { usePrayerRequestActionsContainer } from "./use-prayer-group-requests";
+import { usePrayerRequestActionsContainer } from "./use-prayer-request-actions-container";
 
 type Props = {
   prayerGroupId: number;

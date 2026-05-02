@@ -1,4 +1,4 @@
-import { Formik } from "formik";
+import { Formik, FormikProps } from "formik";
 import * as React from "react";
 import { View } from "react-native";
 import { Button, useTheme } from "react-native-paper";
@@ -12,6 +12,7 @@ import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerGroupSectionHeader } from "../prayer-group/section-header/prayer-group-section-header";
 import { PrayerRequestActions } from "./prayer-request-actions";
 import { PrayerRequestCard } from "./prayer-request-card";
+import { PrayerRequestCommentForm } from "./prayer-request-types";
 import { usePrayerRequestPage } from "./use-prayer-request-page";
 
 type Props = {
@@ -37,65 +38,72 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
 
   return (
     <Formik initialValues={{}} onSubmit={() => {}}>
-      <SafeAreaView
-        className="flex flex-1"
-        style={{ backgroundColor: theme.colors.background }}
-      >
-        <View className="flex flex-1">
-          <PrayerGroupSectionHeader title={""} />
+      {({ values }: FormikProps<PrayerRequestCommentForm>) => (
+        <SafeAreaView
+          className="flex flex-1"
+          style={{ backgroundColor: theme.colors.background }}
+        >
+          <View className="flex flex-1">
+            <PrayerGroupSectionHeader title={""} />
 
-          {prayerRequestLoadStatus === LoadStatus.Loading && (
-            <SpinnerScreen
-              loadingLabel={translate("prayerRequestPage.loading")}
-              showSafeArea={false}
-            />
-          )}
-
-          {prayerRequestLoadStatus === LoadStatus.Error && (
-            <ErrorScreen
-              errorLabel={translate("prayerRequestPage.failedToLoad")}
-              onRetry={loadPrayerRequest}
-              showSafeArea={false}
-            />
-          )}
-
-          {prayerRequestLoadStatus === LoadStatus.Success && prayerRequest && (
-            <PrayerRequestCard
-              prayerRequest={prayerRequest}
-              onOpenMenu={openPrayerRequestMenu}
-              isLikeLoading={isLikeLoading}
-              onLikePress={onLikePress}
-              onPrayPress={openBookmarkBottomSheet}
-              showCreatedUser
-            />
-          )}
-
-          <View
-            className="flex flex-col w-full p-4 mt-auto border-t"
-            style={{ borderColor: theme.colors.outline }}
-          >
-            <View className="w-full pb-2 mt-auto">
-              <TextInput
-                name="comment"
-                label={translate("prayerRequest.comment.label")}
-                multiline
-                style={{ maxHeight: 120 }}
+            {prayerRequestLoadStatus === LoadStatus.Loading && (
+              <SpinnerScreen
+                loadingLabel={translate("prayerRequestPage.loading")}
+                showSafeArea={false}
               />
+            )}
+
+            {prayerRequestLoadStatus === LoadStatus.Error && (
+              <ErrorScreen
+                errorLabel={translate("prayerRequestPage.failedToLoad")}
+                onRetry={loadPrayerRequest}
+                showSafeArea={false}
+              />
+            )}
+
+            {prayerRequestLoadStatus === LoadStatus.Success &&
+              prayerRequest && (
+                <PrayerRequestCard
+                  prayerRequest={prayerRequest}
+                  onOpenMenu={openPrayerRequestMenu}
+                  isLikeLoading={isLikeLoading}
+                  onLikePress={onLikePress}
+                  onPrayPress={openBookmarkBottomSheet}
+                  showCreatedUser
+                />
+              )}
+
+            <View
+              className="flex flex-col w-full p-4 mt-auto border-t"
+              style={{ borderColor: theme.colors.outline }}
+            >
+              <View className="w-full pb-2 mt-auto">
+                <TextInput
+                  name="comment"
+                  label={translate("prayerRequest.comment.label")}
+                  multiline
+                  style={{ maxHeight: 120 }}
+                />
+              </View>
+
+              <Button
+                className="self-end"
+                mode="contained"
+                disabled={!values.comment || values.comment.trim().length < 1}
+              >
+                {translate("prayerRequest.comment.post")}
+              </Button>
             </View>
 
-            <Button className="self-end" mode="contained">
-              {translate("prayerRequest.comment.post")}
-            </Button>
+            <PrayerRequestActions
+              isOpen={isPrayerRequestActionsOpen}
+              showExtendedActions={showExtendedActions}
+              selectedPrayerRequest={prayerRequest}
+              onClose={closePrayerRequestActions}
+            />
           </View>
-
-          <PrayerRequestActions
-            isOpen={isPrayerRequestActionsOpen}
-            showExtendedActions={showExtendedActions}
-            selectedPrayerRequest={prayerRequest}
-            onClose={closePrayerRequestActions}
-          />
-        </View>
-      </SafeAreaView>
+        </SafeAreaView>
+      )}
     </Formik>
   );
 };

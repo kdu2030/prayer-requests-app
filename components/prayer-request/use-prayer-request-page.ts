@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like";
 import { useGetPrayerRequest } from "../../api/get-prayer-request";
+import { usePostPrayerRequestComment } from "../../api/post-prayer-request-comment";
 import { usePostPrayerRequestLike } from "../../api/post-prayer-request-like";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
@@ -37,6 +38,8 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
 
   const postPrayerRequestLike = usePostPrayerRequestLike();
   const deletePrayerRequestLike = useDeletePrayerRequestLike();
+
+  const postPrayerRequestComment = usePostPrayerRequestComment();
 
   const {
     setPrayerRequest: setPrayerRequestGlobal,

@@ -38,8 +38,12 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   const postPrayerRequestLike = usePostPrayerRequestLike();
   const deletePrayerRequestLike = useDeletePrayerRequestLike();
 
-  const { setPrayerRequest: setPrayerRequestGlobal } =
-    usePrayerRequestDetailContext();
+  const {
+    setPrayerRequest: setPrayerRequestGlobal,
+    getPrayerRequestFromStore,
+  } = usePrayerRequestDetailContext();
+
+  const storedPrayerRequest = getPrayerRequestFromStore(prayerRequestId);
 
   const loadPrayerRequest = async () => {
     setPrayerRequestLoadStatus(LoadStatus.Loading);
@@ -151,6 +155,19 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
 
     openPrayerRequestActions(prayerRequest, true);
   };
+
+  React.useEffect(() => {
+    setPrayerRequest((prayerRequest) => {
+      if (!prayerRequest) {
+        return;
+      }
+
+      return {
+        ...storedPrayerRequest,
+        comments: prayerRequest.comments,
+      };
+    });
+  }, [storedPrayerRequest]);
 
   return {
     prayerRequest,

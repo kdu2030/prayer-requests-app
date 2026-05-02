@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 
-export const usePrayerGroupRequests = () => {
+export const usePrayerRequestActionsContainer = () => {
   const [isPrayerRequestActionsOpen, setIsPrayerRequestActionsOpen] =
     React.useState<boolean>(false);
 

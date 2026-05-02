@@ -10,6 +10,7 @@ import {
   PrayerRequestDetailsModel,
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
+import { usePrayerRequestActionsContainer } from "../prayer-group/use-prayer-request-actions-container";
 import { useToasterContext } from "../toasters/toaster-context";
 import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
 
@@ -20,6 +21,14 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     React.useState<LoadStatus>(LoadStatus.NotStarted);
 
   const [isLikeLoading, setIsLikeLoading] = React.useState<boolean>(false);
+
+  const {
+    selectedPrayerRequest,
+    openPrayerRequestActions,
+    showExtendedActions,
+    isPrayerRequestActionsOpen,
+    closePrayerRequestActions,
+  } = usePrayerRequestActionsContainer();
 
   const { userData } = useApiDataContext();
   const { translate } = useI18N();
@@ -128,11 +137,32 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     await removePrayerRequestLike();
   };
 
+  const openBookmarkBottomSheet = () => {
+    if (!selectedPrayerRequest) {
+      return;
+    }
+
+    openPrayerRequestActions(selectedPrayerRequest, false);
+  };
+
+  const openPrayerRequestMenu = () => {
+    if (!selectedPrayerRequest) {
+      return;
+    }
+
+    openPrayerRequestActions(selectedPrayerRequest, true);
+  };
+
   return {
     prayerRequest,
     prayerRequestLoadStatus,
     loadPrayerRequest,
     onLikePress,
     isLikeLoading,
+    showExtendedActions,
+    isPrayerRequestActionsOpen,
+    closePrayerRequestActions,
+    openBookmarkBottomSheet,
+    openPrayerRequestMenu,
   };
 };

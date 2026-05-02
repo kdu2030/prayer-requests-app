@@ -7,6 +7,7 @@ import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerGroupSectionHeader } from "../prayer-group/section-header/prayer-group-section-header";
+import { PrayerRequestActions } from "./prayer-request-actions";
 import { PrayerRequestCard } from "./prayer-request-card";
 import { usePrayerRequestPage } from "./use-prayer-request-page";
 
@@ -24,6 +25,11 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     loadPrayerRequest,
     onLikePress,
     isLikeLoading,
+    isPrayerRequestActionsOpen,
+    openBookmarkBottomSheet,
+    showExtendedActions,
+    closePrayerRequestActions,
+    openPrayerRequestMenu,
   } = usePrayerRequestPage(prayerRequestId);
 
   return (
@@ -53,13 +59,20 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
       {prayerRequestLoadStatus === LoadStatus.Success && prayerRequest && (
         <PrayerRequestCard
           prayerRequest={prayerRequest}
-          onOpenMenu={() => {}}
+          onOpenMenu={openPrayerRequestMenu}
           isLikeLoading={isLikeLoading}
           onLikePress={onLikePress}
-          onPrayPress={() => {}}
+          onPrayPress={openBookmarkBottomSheet}
           showCreatedUser
         />
       )}
+
+      <PrayerRequestActions
+        isOpen={isPrayerRequestActionsOpen}
+        showExtendedActions={showExtendedActions}
+        selectedPrayerRequest={prayerRequest}
+        onClose={closePrayerRequestActions}
+      />
     </SafeAreaView>
   );
 };

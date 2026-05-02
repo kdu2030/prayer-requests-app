@@ -14,6 +14,7 @@ import {
 import { usePrayerRequestActionsContainer } from "../prayer-group/use-prayer-request-actions-container";
 import { useToasterContext } from "../toasters/toaster-context";
 import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
+import { PrayerRequestCommentForm } from "./prayer-request-types";
 
 export const usePrayerRequestPage = (prayerRequestId: number) => {
   const [prayerRequest, setPrayerRequest] =
@@ -22,6 +23,8 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     React.useState<LoadStatus>(LoadStatus.NotStarted);
 
   const [isLikeLoading, setIsLikeLoading] = React.useState<boolean>(false);
+  const [isPostCommentLoading, setIsPostCommentLoading] =
+    React.useState<boolean>(false);
 
   const {
     openPrayerRequestActions,
@@ -171,6 +174,40 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
       };
     });
   }, [storedPrayerRequest]);
+
+  const onPostCommentPress = async (values: PrayerRequestCommentForm) => {
+    if (!userData?.userId) {
+      return;
+    }
+
+    if (!values.comment || values.comment.trim().length < 1) {
+      return;
+    }
+
+    setIsPostCommentLoading(true);
+
+    const response = await postPrayerRequestComment(prayerRequestId, {
+      comment: values.comment,
+      userId: userData.userId,
+      submittedDate: new Date().toISOString(),
+    });
+
+    setIsPostCommentLoading(false);
+
+    if (response.isError) {
+      openToaster({
+        message: translate("toaster.comment.failure"),
+        variant: "error",
+      });
+
+      return;
+    }
+
+    openToaster({
+      message: translate("toaster.comment.success"),
+      variant: "success",
+    });
+  };
 
   return {
     prayerRequest,

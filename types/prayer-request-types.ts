@@ -1,4 +1,5 @@
 import { SortConfig } from "./api-response-types";
+import { MediaFile } from "./media-file-types";
 import {
   PrayerGroupSummary,
   PrayerGroupUserSummary,
@@ -48,11 +49,18 @@ export type PrayerRequestDetailsModel = PrayerRequestModel & {
   comments?: PrayerRequestCommentModel[];
 };
 
+export type PrayerRequestCommentUserSummary = {
+  userId?: number;
+  fullName?: string;
+  username?: string;
+  image?: MediaFile;
+};
+
 export type PrayerRequestCommentModel = {
   prayerRequestCommentId?: number;
   submittedDate?: string;
   comment?: string;
-  user?: PrayerGroupUserSummary;
+  user?: PrayerRequestCommentUserSummary;
 };
 
 export enum PrayerRequestSortFields {

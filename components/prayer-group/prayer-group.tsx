@@ -18,7 +18,7 @@ import { PrayerGroupOptions } from "./options/prayer-group-options";
 import { usePrayerGroupContext } from "./prayer-group-context";
 import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
 import { usePrayerGroup } from "./use-prayer-group";
-import { usePrayerRequestActions } from "./use-prayer-request-actions";
+import { usePrayerGroupRequests } from "./use-prayer-group-requests";
 
 type Props = {
   prayerGroupId: number;
@@ -56,14 +56,12 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
 
   const {
     selectedPrayerRequest,
-    prayerRequestActionsRef,
     openPrayerRequestActions,
-    isToggleBookmarkLoading,
-    toggleBookmark,
-    setSelectedPrayerRequest,
     showExtendedActions,
     navigateToPrayerRequestPage,
-  } = usePrayerRequestActions();
+    isPrayerRequestActionsOpen,
+    closePrayerRequestActions,
+  } = usePrayerGroupRequests();
 
   const prayerGroupHeader = React.useMemo(
     () => (
@@ -155,12 +153,10 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         />
 
         <PrayerRequestActions
+          isOpen={isPrayerRequestActionsOpen}
           showExtendedActions={showExtendedActions}
           selectedPrayerRequest={selectedPrayerRequest}
-          isToggleBookmarkLoading={isToggleBookmarkLoading}
-          toggleBookmark={toggleBookmark}
-          bottomSheetRef={prayerRequestActionsRef}
-          setSelectedPrayerRequest={setSelectedPrayerRequest}
+          onClose={closePrayerRequestActions}
         />
 
         {showLeavePrayerGroupModal && (

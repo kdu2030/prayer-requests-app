@@ -23,7 +23,6 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   const [isLikeLoading, setIsLikeLoading] = React.useState<boolean>(false);
 
   const {
-    selectedPrayerRequest,
     openPrayerRequestActions,
     showExtendedActions,
     isPrayerRequestActionsOpen,
@@ -138,19 +137,19 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   };
 
   const openBookmarkBottomSheet = () => {
-    if (!selectedPrayerRequest) {
+    if (!prayerRequest) {
       return;
     }
 
-    openPrayerRequestActions(selectedPrayerRequest, false);
+    openPrayerRequestActions(prayerRequest, false);
   };
 
   const openPrayerRequestMenu = () => {
-    if (!selectedPrayerRequest) {
+    if (!prayerRequest) {
       return;
     }
 
-    openPrayerRequestActions(selectedPrayerRequest, true);
+    openPrayerRequestActions(prayerRequest, true);
   };
 
   return {

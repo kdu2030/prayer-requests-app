@@ -40,7 +40,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
 
   return (
     <Formik initialValues={{}} onSubmit={() => {}}>
-      {({ values }: FormikProps<PrayerRequestCommentForm>) => (
+      {({ values, setFieldValue }: FormikProps<PrayerRequestCommentForm>) => (
         <SafeAreaView
           className="flex flex-1"
           style={{ backgroundColor: theme.colors.background }}
@@ -93,7 +93,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
                 mode="contained"
                 disabled={!values.comment || values.comment.trim().length < 1}
                 loading={isPostCommentLoading}
-                onPress={() => onPostCommentPress(values)}
+                onPress={() => onPostCommentPress(values, setFieldValue)}
               >
                 {translate("prayerRequest.comment.post")}
               </Button>

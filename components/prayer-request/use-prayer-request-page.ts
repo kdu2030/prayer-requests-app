@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Keyboard } from "react-native";
 
 import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like";
 import { useGetPrayerRequest } from "../../api/get-prayer-request";
@@ -175,7 +176,10 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     });
   }, [storedPrayerRequest]);
 
-  const onPostCommentPress = async (values: PrayerRequestCommentForm) => {
+  const onPostCommentPress = async (
+    values: PrayerRequestCommentForm,
+    setFieldValue: (field: string, value: any) => void,
+  ) => {
     if (!userData?.userId) {
       return;
     }
@@ -183,6 +187,9 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     if (!values.comment || values.comment.trim().length < 1) {
       return;
     }
+
+    Keyboard.dismiss();
+    setFieldValue("comment", undefined);
 
     setIsPostCommentLoading(true);
 

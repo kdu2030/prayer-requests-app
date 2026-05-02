@@ -1,6 +1,6 @@
 import { useField } from "formik";
 import * as React from "react";
-import { View } from "react-native";
+import { Keyboard, TextInput as NativeTextInput, View } from "react-native";
 import {
   HelperText,
   TextInput as PaperTextInput,
@@ -28,9 +28,23 @@ export const TextInput: React.FC<Props> = ({
   testID,
   ...props
 }) => {
+  const inputRef = React.useRef<NativeTextInput>(null);
+
   const [field, meta, helpers] = useField(name);
   const isError = meta.touched && meta.error;
   const theme = useTheme();
+
+  React.useEffect(() => {
+    const subscription = Keyboard.addListener("keyboardDidHide", () => {
+      if (inputRef.current) {
+        inputRef.current.blur();
+      }
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   return (
     <View className={containerClassNames} testID={`${testID}-container`}>
@@ -49,6 +63,7 @@ export const TextInput: React.FC<Props> = ({
         textColor={isError ? theme.colors.error : undefined}
         testID={testID}
         {...props}
+        ref={inputRef}
       />
       {isError && (
         <HelperText className={errorClassNames} type="error">

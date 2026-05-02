@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import * as React from "react";
-import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import { View } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -41,62 +41,59 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
         className="flex flex-1"
         style={{ backgroundColor: theme.colors.background }}
       >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <View className="flex flex-1">
-            <PrayerGroupSectionHeader title={""} />
+        <View className="flex flex-1">
+          <PrayerGroupSectionHeader title={""} />
 
-            {prayerRequestLoadStatus === LoadStatus.Loading && (
-              <SpinnerScreen
-                loadingLabel={translate("prayerRequestPage.loading")}
-                showSafeArea={false}
+          {prayerRequestLoadStatus === LoadStatus.Loading && (
+            <SpinnerScreen
+              loadingLabel={translate("prayerRequestPage.loading")}
+              showSafeArea={false}
+            />
+          )}
+
+          {prayerRequestLoadStatus === LoadStatus.Error && (
+            <ErrorScreen
+              errorLabel={translate("prayerRequestPage.failedToLoad")}
+              onRetry={loadPrayerRequest}
+              showSafeArea={false}
+            />
+          )}
+
+          {prayerRequestLoadStatus === LoadStatus.Success && prayerRequest && (
+            <PrayerRequestCard
+              prayerRequest={prayerRequest}
+              onOpenMenu={openPrayerRequestMenu}
+              isLikeLoading={isLikeLoading}
+              onLikePress={onLikePress}
+              onPrayPress={openBookmarkBottomSheet}
+              showCreatedUser
+            />
+          )}
+
+          <View
+            className="flex flex-col w-full p-4 mt-auto border-t"
+            style={{ borderColor: theme.colors.outline }}
+          >
+            <View className="w-full pb-2 mt-auto">
+              <TextInput
+                name="comment"
+                label={translate("prayerRequest.comment.label")}
+                multiline
               />
-            )}
-
-            {prayerRequestLoadStatus === LoadStatus.Error && (
-              <ErrorScreen
-                errorLabel={translate("prayerRequestPage.failedToLoad")}
-                onRetry={loadPrayerRequest}
-                showSafeArea={false}
-              />
-            )}
-
-            {prayerRequestLoadStatus === LoadStatus.Success &&
-              prayerRequest && (
-                <PrayerRequestCard
-                  prayerRequest={prayerRequest}
-                  onOpenMenu={openPrayerRequestMenu}
-                  isLikeLoading={isLikeLoading}
-                  onLikePress={onLikePress}
-                  onPrayPress={openBookmarkBottomSheet}
-                  showCreatedUser
-                />
-              )}
-
-            <View
-              className="flex flex-col w-full p-4 mt-auto border-t"
-              style={{ borderColor: theme.colors.outline }}
-            >
-              <View className="w-full pb-2 mt-auto">
-                <TextInput
-                  name="comment"
-                  label={translate("prayerRequest.comment.label")}
-                  multiline
-                />
-              </View>
-
-              <Button className="self-end" mode="contained">
-                {translate("prayerRequest.comment.post")}
-              </Button>
             </View>
 
-            <PrayerRequestActions
-              isOpen={isPrayerRequestActionsOpen}
-              showExtendedActions={showExtendedActions}
-              selectedPrayerRequest={prayerRequest}
-              onClose={closePrayerRequestActions}
-            />
+            <Button className="self-end" mode="contained">
+              {translate("prayerRequest.comment.post")}
+            </Button>
           </View>
-        </TouchableWithoutFeedback>
+
+          <PrayerRequestActions
+            isOpen={isPrayerRequestActionsOpen}
+            showExtendedActions={showExtendedActions}
+            selectedPrayerRequest={prayerRequest}
+            onClose={closePrayerRequestActions}
+          />
+        </View>
       </SafeAreaView>
     </Formik>
   );

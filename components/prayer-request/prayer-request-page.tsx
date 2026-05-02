@@ -79,6 +79,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
                 name="comment"
                 label={translate("prayerRequest.comment.label")}
                 multiline
+                style={{ maxHeight: 120 }}
               />
             </View>
 

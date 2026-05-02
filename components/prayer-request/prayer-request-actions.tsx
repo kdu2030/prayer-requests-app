@@ -21,18 +21,32 @@ type Props = {
   setSelectedPrayerRequest: React.Dispatch<
     React.SetStateAction<PrayerRequestModel | undefined>
   >;
-  bottomSheetRef: React.RefObject<BottomSheetMethods | null>;
+  isOpen: boolean;
 };
 
 export const PrayerRequestActions: React.FC<Props> = ({
   selectedPrayerRequest,
-  bottomSheetRef,
   isToggleBookmarkLoading,
   toggleBookmark,
   setSelectedPrayerRequest,
+  isOpen,
 }) => {
   const theme = useTheme();
   const { translate } = useI18N();
+
+  const bottomSheetRef = React.useRef<BottomSheetMethods>(null);
+
+  React.useEffect(() => {
+    if (!bottomSheetRef.current) {
+      return;
+    }
+
+    if (isOpen) {
+      bottomSheetRef.current.snapToIndex(0);
+    } else {
+      bottomSheetRef.current.close();
+    }
+  }, [isOpen]);
 
   const renderBackdrop = React.useCallback(
     (props: BottomSheetBackdropProps) => {

@@ -173,6 +173,9 @@ export const englishTranslations = {
   "prayerRequestPage.loading": "Loading prayer request",
   "prayerRequestPage.failedToLoad": "Failed to load prayer request.",
 
+  "prayerRequest.comment.label": "Comment",
+  "prayerRequest.comment.post": "Post",
+
   "prayerGroup.joinRequest.label":
     "This is a private prayer group. To join, please submit a join request.",
   "prayerGroup.joinRequest.submitJoinRequest": "Submit Join Request",

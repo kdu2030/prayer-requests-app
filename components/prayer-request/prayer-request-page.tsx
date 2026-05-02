@@ -77,11 +77,15 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
               style={{ borderColor: theme.colors.outline }}
             >
               <View className="w-full pb-2 mt-auto">
-                <TextInput name="comment" label="comment" multiline />
+                <TextInput
+                  name="comment"
+                  label={translate("prayerRequest.comment.label")}
+                  multiline
+                />
               </View>
 
               <Button className="self-end" mode="contained">
-                Post
+                {translate("prayerRequest.comment.post")}
               </Button>
             </View>
 

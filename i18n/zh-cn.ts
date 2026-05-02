@@ -166,6 +166,9 @@ export const chineseTranslations: Translations = {
   "prayerRequest.actions.savePrayerRequest": "收藏祷告事项",
   "prayerRequest.actions.unsavePrayerRequest": "取消祷告事项收藏",
 
+  "prayerRequest.comment.label": "评论",
+  "prayerRequest.comment.post": "发表",
+
   "prayerRequestPage.loading": "加载祷告事项",
   "prayerRequestPage.failedToLoad": "加载祷告事项失败了。",
 

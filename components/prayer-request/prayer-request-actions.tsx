@@ -12,7 +12,7 @@ import { useTheme } from "react-native-paper";
 import { useI18N } from "../../hooks/use-i18n";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { PrayerGroupOptionButton } from "../prayer-group/options/prayer-group-option-button";
-import { usePrayerRequestActionsSheet } from "./use-prayer-request-actions-sheet";
+import { usePrayerRequestActions } from "./use-prayer-request-actions";
 
 type Props = {
   showExtendedActions: boolean;
@@ -29,8 +29,10 @@ export const PrayerRequestActions: React.FC<Props> = ({
   const theme = useTheme();
   const { translate } = useI18N();
 
-  const { toggleBookmark, isToggleBookmarkLoading } =
-    usePrayerRequestActionsSheet(onClose, selectedPrayerRequest);
+  const { toggleBookmark, isToggleBookmarkLoading } = usePrayerRequestActions(
+    onClose,
+    selectedPrayerRequest,
+  );
 
   const bottomSheetRef = React.useRef<BottomSheetMethods>(null);
 

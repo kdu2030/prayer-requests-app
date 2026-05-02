@@ -1,4 +1,3 @@
-import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
 
 import { useDeletePrayerRequestBookmark } from "../../api/delete-prayer-request-bookmark";
@@ -12,7 +11,7 @@ import {
 import { useToasterContext } from "../toasters/toaster-context";
 import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
 
-export const usePrayerRequestActionsSheet = (
+export const usePrayerRequestActions = (
   onClose: () => void,
   selectedPrayerRequest: PrayerRequestModel | undefined,
 ) => {

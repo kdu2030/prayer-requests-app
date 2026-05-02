@@ -12,27 +12,25 @@ import { useTheme } from "react-native-paper";
 import { useI18N } from "../../hooks/use-i18n";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { PrayerGroupOptionButton } from "../prayer-group/options/prayer-group-option-button";
+import { usePrayerRequestActionsSheet } from "./use-prayer-request-actions-sheet";
 
 type Props = {
   showExtendedActions: boolean;
   selectedPrayerRequest: PrayerRequestModel | undefined;
-  isToggleBookmarkLoading: boolean;
-  toggleBookmark: () => void;
-  setSelectedPrayerRequest: React.Dispatch<
-    React.SetStateAction<PrayerRequestModel | undefined>
-  >;
   isOpen: boolean;
+  onClose: () => void;
 };
 
 export const PrayerRequestActions: React.FC<Props> = ({
   selectedPrayerRequest,
-  isToggleBookmarkLoading,
-  toggleBookmark,
-  setSelectedPrayerRequest,
   isOpen,
+  onClose,
 }) => {
   const theme = useTheme();
   const { translate } = useI18N();
+
+  const { toggleBookmark, isToggleBookmarkLoading } =
+    usePrayerRequestActionsSheet(onClose, selectedPrayerRequest);
 
   const bottomSheetRef = React.useRef<BottomSheetMethods>(null);
 
@@ -67,7 +65,7 @@ export const PrayerRequestActions: React.FC<Props> = ({
       index={-1}
       backdropComponent={renderBackdrop}
       backgroundStyle={{ backgroundColor: theme.colors.background }}
-      onClose={() => setSelectedPrayerRequest(undefined)}
+      onClose={onClose}
       ref={bottomSheetRef}
     >
       <BottomSheetView>

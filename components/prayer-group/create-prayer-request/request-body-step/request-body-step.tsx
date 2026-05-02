@@ -47,7 +47,7 @@ export const RequestBodyStep: React.FC<Props> = ({ setWizardStep }) => {
           mode="outlined"
           name="requestDescription"
           placeholder={translate(
-            "createPrayerGroup.groupNameDescription.description"
+            "createPrayerGroup.groupNameDescription.description",
           )}
           outlineStyle={{ borderColor: theme.colors.background }}
           multiline

@@ -8,6 +8,7 @@ import { TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { useBlurOnHide } from "../inputs/use-blur-on-hide";
 import { ProfilePicture } from "../layouts/profile-picture";
 import { PrayerGroupSearchTestIds } from "./tests/test-ids";
 import { usePrayerGroupSearch } from "./use-prayer-group-search";
@@ -18,6 +19,8 @@ export const PrayerGroupSearch: React.FC = () => {
   const theme = useTheme();
   const { placeholderMessage, groupQuery, onChangeQuery, groupSearchResults } =
     usePrayerGroupSearch();
+
+  const { inputRef } = useBlurOnHide();
 
   return (
     <>
@@ -40,6 +43,7 @@ export const PrayerGroupSearch: React.FC = () => {
               placeholder={translate("prayerGroup.search.placeholder")}
               style={{ height: 44 }}
               left={<TextInput.Icon icon="magnify" />}
+              ref={inputRef}
               testID={PrayerGroupSearchTestIds.searchInput}
             />
           </View>

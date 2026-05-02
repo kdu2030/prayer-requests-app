@@ -36,7 +36,7 @@ const Signup: React.FC = () => {
     if (!isEmpty(errors)) {
       formProps.setErrors(errors);
       formProps.setTouched(
-        setNestedObjectValues({ ...errors, ...formProps.touched }, true)
+        setNestedObjectValues({ ...errors, ...formProps.touched }, true),
       );
       return;
     }
@@ -53,7 +53,7 @@ const Signup: React.FC = () => {
         "email",
         translate("form.validation.unique.error", {
           field: translate("signup.email.label").toLocaleLowerCase(),
-        })
+        }),
       );
       return;
     } else if (
@@ -64,7 +64,7 @@ const Signup: React.FC = () => {
         "username",
         translate("form.validation.unique.error", {
           field: translate("signup.username.label").toLocaleLowerCase(),
-        })
+        }),
       );
       return;
     } else if (response.isError) {

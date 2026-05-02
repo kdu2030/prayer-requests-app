@@ -8,6 +8,7 @@ import { useI18N } from "../../../hooks/use-i18n";
 import i18n from "../../../i18n/i18n";
 import { LoadStatus } from "../../../types/api-response-types";
 import { CultureCode } from "../../../types/languages";
+import { useBlurOnHide } from "../../inputs/use-blur-on-hide";
 import { ErrorScreen } from "../../layouts/error-screen";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { SpinnerScreen } from "../../layouts/spinner-screen";
@@ -23,6 +24,8 @@ type Props = {
 export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
   const { translate } = useI18N();
   const theme = useTheme();
+
+  const { inputRef } = useBlurOnHide();
 
   const {
     joinRequestLoadStatus,
@@ -47,7 +50,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
       {joinRequestLoadStatus === LoadStatus.Loading && (
         <SpinnerScreen
           loadingLabel={translate(
-            "prayerGroup.joinRequest.loadingJoinRequests"
+            "prayerGroup.joinRequest.loadingJoinRequests",
           )}
           showSafeArea={false}
         />
@@ -75,10 +78,11 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
               left={<TextInput.Icon icon="magnify" size={24} />}
               label={translate("prayerGroup.manageUsers.searchForUsers")}
               placeholder={translate(
-                "prayerGroup.manageUsers.searchPlaceholder"
+                "prayerGroup.manageUsers.searchPlaceholder",
               )}
               onChangeText={searchJoinRequests}
               testID={JoinRequestTestIds.joinRequestSearchInput}
+              ref={inputRef}
             />
           </View>
 
@@ -125,7 +129,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
                           >
                             {formatDate(
                               item.submittedDate,
-                              i18n.language as CultureCode
+                              i18n.language as CultureCode,
                             )}
                           </Text>
                         )}

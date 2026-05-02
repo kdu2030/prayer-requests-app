@@ -42,12 +42,12 @@ export const PrayerGroupRulesStep: React.FC<Props> = ({ setWizardStep }) => {
 
   const publicDescription = React.useMemo(
     () => translate("createPrayerGroup.visibilityLevel.public.description"),
-    []
+    [],
   );
 
   const privateDescription = React.useMemo(
     () => translate("createPrayerGroup.visibilityLevel.private.description"),
-    []
+    [],
   );
 
   return (

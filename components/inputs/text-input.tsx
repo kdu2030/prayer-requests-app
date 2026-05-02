@@ -1,12 +1,14 @@
 import { useField } from "formik";
 import * as React from "react";
-import { Keyboard, TextInput as NativeTextInput, View } from "react-native";
+import { View } from "react-native";
 import {
   HelperText,
   TextInput as PaperTextInput,
   TextInputProps,
 } from "react-native-paper";
 import { useTheme } from "react-native-paper";
+
+import { useBlurOnHide } from "./use-blur-on-hide";
 
 interface Props extends TextInputProps {
   name: string;
@@ -28,23 +30,11 @@ export const TextInput: React.FC<Props> = ({
   testID,
   ...props
 }) => {
-  const inputRef = React.useRef<NativeTextInput>(null);
+  const { inputRef } = useBlurOnHide();
 
   const [field, meta, helpers] = useField(name);
   const isError = meta.touched && meta.error;
   const theme = useTheme();
-
-  React.useEffect(() => {
-    const subscription = Keyboard.addListener("keyboardDidHide", () => {
-      if (inputRef.current) {
-        inputRef.current.blur();
-      }
-    });
-
-    return () => {
-      subscription.remove();
-    };
-  }, []);
 
   return (
     <View className={containerClassNames} testID={`${testID}-container`}>

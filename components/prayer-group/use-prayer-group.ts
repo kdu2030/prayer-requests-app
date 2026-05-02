@@ -1,5 +1,6 @@
 import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+import { router } from "expo-router";
 import * as React from "react";
 
 import { useDeletePrayerGroupUser } from "../../api/delete-prayer-group-user";
@@ -246,6 +247,20 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     }));
   };
 
+  const navigateToPrayerRequestPage = (prayerRequestId: number) => {
+    if (!prayerGroupDetails?.prayerGroupId) {
+      return;
+    }
+
+    router.push({
+      pathname: "/prayergroup/[id]/prayerrequest/[id]",
+      params: {
+        id: prayerGroupDetails.prayerGroupId,
+        id_1: prayerRequestId,
+      },
+    });
+  };
+
   return {
     prayerGroupLoadStatus,
     setPrayerGroupLoadStatus,
@@ -267,5 +282,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setShowLeavePrayerGroupModal,
     setUserJoinStatus,
     numNotLoadedRequests,
+    navigateToPrayerRequestPage,
   };
 };

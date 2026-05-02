@@ -52,13 +52,13 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     numNotLoadedRequests,
     prayerRequestFilters,
     nextPrayerRequestsLoadStatus,
+    navigateToPrayerRequestPage,
   } = usePrayerGroup(prayerGroupId);
 
   const {
     selectedPrayerRequest,
     openPrayerRequestActions,
     showExtendedActions,
-    navigateToPrayerRequestPage,
     isPrayerRequestActionsOpen,
     closePrayerRequestActions,
   } = usePrayerGroupRequests();

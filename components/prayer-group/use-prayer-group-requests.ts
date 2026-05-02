@@ -1,8 +1,6 @@
-import { router } from "expo-router";
 import * as React from "react";
 
 import { PrayerRequestModel } from "../../types/prayer-request-types";
-import { usePrayerGroupContext } from "./prayer-group-context";
 
 export const usePrayerGroupRequests = () => {
   const [isPrayerRequestActionsOpen, setIsPrayerRequestActionsOpen] =
@@ -14,8 +12,6 @@ export const usePrayerGroupRequests = () => {
   const [selectedPrayerRequest, setSelectedPrayerRequest] = React.useState<
     PrayerRequestModel | undefined
   >();
-
-  const { prayerGroupDetails } = usePrayerGroupContext();
 
   const openPrayerRequestActions = (
     prayerRequest: PrayerRequestModel,
@@ -32,27 +28,12 @@ export const usePrayerGroupRequests = () => {
     setShowExtendedActions(false);
   };
 
-  const navigateToPrayerRequestPage = (prayerRequestId: number) => {
-    if (!prayerGroupDetails?.prayerGroupId) {
-      return;
-    }
-
-    router.push({
-      pathname: "/prayergroup/[id]/prayerrequest/[id]",
-      params: {
-        id: prayerGroupDetails.prayerGroupId,
-        id_1: prayerRequestId,
-      },
-    });
-  };
-
   return {
     selectedPrayerRequest,
     openPrayerRequestActions,
     closePrayerRequestActions,
     setSelectedPrayerRequest,
     showExtendedActions,
-    navigateToPrayerRequestPage,
     isPrayerRequestActionsOpen,
   };
 };

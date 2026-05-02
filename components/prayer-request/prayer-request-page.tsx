@@ -34,6 +34,8 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     showExtendedActions,
     closePrayerRequestActions,
     openPrayerRequestMenu,
+    isPostCommentLoading,
+    onPostCommentPress,
   } = usePrayerRequestPage(prayerRequestId);
 
   return (
@@ -90,6 +92,8 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
                 className="self-end"
                 mode="contained"
                 disabled={!values.comment || values.comment.trim().length < 1}
+                loading={isPostCommentLoading}
+                onPress={() => onPostCommentPress(values)}
               >
                 {translate("prayerRequest.comment.post")}
               </Button>

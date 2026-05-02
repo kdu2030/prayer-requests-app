@@ -207,6 +207,20 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
       message: translate("toaster.comment.success"),
       variant: "success",
     });
+
+    const newComment = response.value;
+
+    const updatedPrayerRequest: PrayerRequestDetailsModel = {
+      ...prayerRequest,
+      comments: prayerRequest?.comments
+        ? [...prayerRequest.comments, newComment]
+        : [newComment],
+      userCommentId: newComment.prayerRequestCommentId,
+      commentCount: (prayerRequest?.commentCount ?? 0) + 1,
+    };
+
+    setPrayerRequest(updatedPrayerRequest);
+    setPrayerRequestGlobal(prayerRequestId, updatedPrayerRequest);
   };
 
   return {
@@ -220,5 +234,7 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     closePrayerRequestActions,
     openBookmarkBottomSheet,
     openPrayerRequestMenu,
+    isPostCommentLoading,
+    onPostCommentPress,
   };
 };

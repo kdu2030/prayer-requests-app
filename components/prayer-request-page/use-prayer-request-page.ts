@@ -27,6 +27,11 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   const [isPostCommentLoading, setIsPostCommentLoading] =
     React.useState<boolean>(false);
 
+  const [isPrayerCommentActionsOpen, setIsPrayerCommentActionsOpen] =
+    React.useState<boolean>(false);
+  const [selectedCommentIndex, setSelectedCommentIndex] =
+    React.useState<number>();
+
   const {
     openPrayerRequestActions,
     showExtendedActions,
@@ -247,5 +252,6 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     openPrayerRequestMenu,
     isPostCommentLoading,
     onPostCommentPress,
+    isPrayerCommentActionsOpen,
   };
 };

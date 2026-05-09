@@ -36,6 +36,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     openPrayerRequestMenu,
     isPostCommentLoading,
     onPostCommentPress,
+    isPrayerCommentActionsOpen,
   } = usePrayerRequestPage(prayerRequestId);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {

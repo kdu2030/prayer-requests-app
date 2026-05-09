@@ -20,18 +20,16 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
   const theme = useTheme();
 
   return (
-    <View className="flex flex-col p-5 bg-green-300">
-      <View className="flex flex-row justify-between bg-blue-200 flex-1">
+    <View className="flex flex-col p-5">
+      <View className="flex flex-row justify-between flex-1">
         <View className="flex flex-row items-center gap-x-2 flex-1">
-          <ProfilePicture
-            width={24}
-            height={24}
-            url={prayerRequestComment.user?.image?.fileUrl}
-          />
-
-          {/* <View className="flex-1">
-          <Text variant="bodyMedium">{prayerRequestComment.comment}</Text>
-        </View> */}
+          <View>
+            <ProfilePicture
+              width={24}
+              height={24}
+              url={prayerRequestComment.user?.image?.fileUrl}
+            />
+          </View>
 
           <View className="flex flex-row flex-1">
             <Text variant="bodyMedium" numberOfLines={1}>
@@ -56,7 +54,7 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
         />
       </View>
 
-      <View className="flex-1 mt-4 bg-red-200">
+      <View className="flex-1 mt-4">
         <Text variant="bodyMedium">{prayerRequestComment.comment}</Text>
       </View>
     </View>

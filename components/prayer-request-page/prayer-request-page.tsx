@@ -106,17 +106,24 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
                 />
               </View>
 
-              <Button
-                className="self-end"
-                mode="contained"
-                disabled={!values.comment || values.comment.trim().length < 1}
-                loading={isPostCommentLoading}
-                onPress={() => onPostCommentPress(values, setFieldValue)}
-              >
-                {values.formAction === CommentFormAction.Create
-                  ? translate("prayerRequest.comment.post")
-                  : translate("common.actions.save")}
-              </Button>
+              <View className="flex flex-row self-end gap-3">
+                {values.formAction === CommentFormAction.Edit && (
+                  <Button mode="outlined" onPress={() => {}}>
+                    {translate("common.actions.cancel")}
+                  </Button>
+                )}
+
+                <Button
+                  mode="contained"
+                  disabled={!values.comment || values.comment.trim().length < 1}
+                  loading={isPostCommentLoading}
+                  onPress={() => onPostCommentPress(values, setFieldValue)}
+                >
+                  {values.formAction === CommentFormAction.Create
+                    ? translate("prayerRequest.comment.post")
+                    : translate("common.actions.save")}
+                </Button>
+              </View>
             </View>
 
             <PrayerRequestActions

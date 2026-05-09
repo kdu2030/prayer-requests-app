@@ -11,6 +11,7 @@ import { PrayerGroupSectionHeader } from "../prayer-group/section-header/prayer-
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import { PrayerRequestCommentForm } from "../prayer-request/prayer-request-types";
+import { PrayerRequestCommentCard } from "./prayer-request-comment-card";
 import { PrayerRequestPagePlaceholder } from "./prayer-request-page-placeholder";
 import { usePrayerRequestPage } from "./use-prayer-request-page";
 
@@ -68,8 +69,10 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
                   truncateDescription={false}
                 />
               }
-              data={[]}
-              renderItem={() => <></>}
+              data={prayerRequest.comments ?? []}
+              renderItem={({ item }) => (
+                <PrayerRequestCommentCard prayerRequestComment={item} />
+              )}
             />
 
             <View

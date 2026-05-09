@@ -1,4 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import classNames from "classnames";
 import * as React from "react";
 import { View } from "react-native";
 import { Text, TouchableRipple, useTheme } from "react-native-paper";
@@ -13,11 +14,13 @@ import { ProfilePicture } from "../layouts/profile-picture";
 type Props = {
   prayerRequestComment: PrayerRequestCommentModel;
   onOpenActions: () => void;
+  isSelected: boolean;
 };
 
 export const PrayerRequestCommentCard: React.FC<Props> = ({
   prayerRequestComment,
   onOpenActions,
+  isSelected,
 }) => {
   const { i18n } = useI18N();
   const theme = useTheme();
@@ -25,7 +28,9 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
   const { userData } = useApiDataContext();
 
   return (
-    <View className="flex flex-col p-5">
+    <View
+      className={classNames("flex flex-col p-5", { "opacity-80": isSelected })}
+    >
       <View className="flex flex-row justify-between flex-1">
         <View className="flex flex-row items-center gap-x-2 flex-1">
           <View>

@@ -295,6 +295,7 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
 
     setSelectedCommentIndex(undefined);
     resetForm({ values: { formAction: CommentFormAction.Create } });
+    isCommentActionInProgressRef.current = false;
   };
 
   return {

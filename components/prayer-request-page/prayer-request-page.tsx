@@ -10,7 +10,10 @@ import { TextInput } from "../inputs/text-input";
 import { PrayerGroupSectionHeader } from "../prayer-group/section-header/prayer-group-section-header";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
-import { PrayerRequestCommentForm } from "../prayer-request/prayer-request-types";
+import {
+  CommentFormAction,
+  PrayerRequestCommentForm,
+} from "../prayer-request/prayer-request-types";
 import { PrayerRequestCommentActions } from "./prayer-request-comment-actions";
 import { PrayerRequestCommentCard } from "./prayer-request-comment-card";
 import { PrayerRequestPagePlaceholder } from "./prayer-request-page-placeholder";
@@ -56,7 +59,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
 
   return (
     <Formik
-      initialValues={{}}
+      initialValues={{ formAction: CommentFormAction.Create }}
       onSubmit={() => {}}
       innerRef={prayerRequestCommentFormRef}
     >
@@ -110,7 +113,9 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
                 loading={isPostCommentLoading}
                 onPress={() => onPostCommentPress(values, setFieldValue)}
               >
-                {translate("prayerRequest.comment.post")}
+                {values.formAction === CommentFormAction.Create
+                  ? translate("prayerRequest.comment.post")
+                  : translate("common.actions.save")}
               </Button>
             </View>
 

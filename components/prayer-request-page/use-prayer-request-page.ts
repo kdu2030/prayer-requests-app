@@ -15,7 +15,10 @@ import {
 } from "../../types/prayer-request-types";
 import { usePrayerRequestActionsContainer } from "../prayer-group/use-prayer-request-actions-container";
 import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
-import { PrayerRequestCommentForm } from "../prayer-request/prayer-request-types";
+import {
+  CommentFormAction,
+  PrayerRequestCommentForm,
+} from "../prayer-request/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
 
 export const usePrayerRequestPage = (prayerRequestId: number) => {
@@ -272,7 +275,12 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
 
     const targetComment = prayerRequest.comments[selectedCommentIndex];
 
-    resetForm({ values: { comment: targetComment.comment } });
+    resetForm({
+      values: {
+        comment: targetComment.comment,
+        formAction: CommentFormAction.Edit,
+      },
+    });
     isCommentActionInProgressRef.current = true;
 
     setIsPrayerCommentActionsOpen(false);

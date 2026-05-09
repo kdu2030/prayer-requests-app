@@ -9,7 +9,7 @@ import { useApiDataContext } from "../../../hooks/use-api-data";
 import { ProfilePicture } from "../../layouts/profile-picture";
 
 type Props = {
-  title: string;
+  title?: string;
 };
 
 export const PrayerGroupSectionHeader: React.FC<Props> = ({ title }) => {
@@ -28,13 +28,15 @@ export const PrayerGroupSectionHeader: React.FC<Props> = ({ title }) => {
             <MaterialCommunityIcons name="close" size={28} color="white" />
           </TouchableOpacity>
 
-          <Text
-            variant="titleLarge"
-            className="ml-2 text-white font-bold"
-            numberOfLines={1}
-          >
-            {title}
-          </Text>
+          {title && (
+            <Text
+              variant="titleLarge"
+              className="ml-2 text-white font-bold"
+              numberOfLines={1}
+            >
+              {title}
+            </Text>
+          )}
         </View>
         <ProfilePicture url={userData?.image?.fileUrl} width={36} height={36} />
       </View>

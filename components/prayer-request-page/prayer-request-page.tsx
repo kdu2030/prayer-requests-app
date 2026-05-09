@@ -7,12 +7,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { TextInput } from "../inputs/text-input";
-import { ErrorScreen } from "../layouts/error-screen";
-import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerGroupSectionHeader } from "../prayer-group/section-header/prayer-group-section-header";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import { PrayerRequestCommentForm } from "../prayer-request/prayer-request-types";
+import { PrayerRequestPagePlaceholder } from "./prayer-request-page-placeholder";
 import { usePrayerRequestPage } from "./use-prayer-request-page";
 
 type Props = {
@@ -38,6 +37,15 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     onPostCommentPress,
   } = usePrayerRequestPage(prayerRequestId);
 
+  if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
+    return (
+      <PrayerRequestPagePlaceholder
+        prayerRequestLoadStatus={prayerRequestLoadStatus}
+        loadPrayerRequest={loadPrayerRequest}
+      />
+    );
+  }
+
   return (
     <Formik initialValues={{}} onSubmit={() => {}}>
       {({ values, setFieldValue }: FormikProps<PrayerRequestCommentForm>) => (
@@ -46,34 +54,16 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
           style={{ backgroundColor: theme.colors.background }}
         >
           <View className="flex flex-1">
-            <PrayerGroupSectionHeader title={""} />
+            <PrayerGroupSectionHeader />
 
-            {prayerRequestLoadStatus === LoadStatus.Loading && (
-              <SpinnerScreen
-                loadingLabel={translate("prayerRequestPage.loading")}
-                showSafeArea={false}
-              />
-            )}
-
-            {prayerRequestLoadStatus === LoadStatus.Error && (
-              <ErrorScreen
-                errorLabel={translate("prayerRequestPage.failedToLoad")}
-                onRetry={loadPrayerRequest}
-                showSafeArea={false}
-              />
-            )}
-
-            {prayerRequestLoadStatus === LoadStatus.Success &&
-              prayerRequest && (
-                <PrayerRequestCard
-                  prayerRequest={prayerRequest}
-                  onOpenMenu={openPrayerRequestMenu}
-                  isLikeLoading={isLikeLoading}
-                  onLikePress={onLikePress}
-                  onPrayPress={openBookmarkBottomSheet}
-                  showCreatedUser
-                />
-              )}
+            <PrayerRequestCard
+              prayerRequest={prayerRequest}
+              onOpenMenu={openPrayerRequestMenu}
+              isLikeLoading={isLikeLoading}
+              onLikePress={onLikePress}
+              onPrayPress={openBookmarkBottomSheet}
+              showCreatedUser
+            />
 
             <View
               className="flex flex-col w-full p-4 mt-auto border-t"

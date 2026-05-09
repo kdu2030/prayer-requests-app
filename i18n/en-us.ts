@@ -204,4 +204,6 @@ export const englishTranslations = {
 
   "toaster.comment.success": "Posted comment",
   "toaster.comment.failure": "Failed to post comment",
+  "toaster.editComment.success": "Edited comment",
+  "toaster.editComment.failure": "Failed to edit comment",
 };

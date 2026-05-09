@@ -39,7 +39,6 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     closePrayerRequestActions,
     openPrayerRequestMenu,
     isPostCommentLoading,
-    onPostCommentPress,
     isPrayerCommentActionsOpen,
     onCommentActionsCancel,
     onOpenPrayerRequestCommentActions,
@@ -47,6 +46,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     prayerRequestCommentFormRef,
     onEditPrayerRequestComment,
     onCancelEditComment,
+    onSaveCommentPress,
   } = usePrayerRequestPage(prayerRequestId);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -118,7 +118,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
                   mode="contained"
                   disabled={!values.comment || values.comment.trim().length < 1}
                   loading={isPostCommentLoading}
-                  onPress={() => onPostCommentPress(values, setFieldValue)}
+                  onPress={() => onSaveCommentPress(values, setFieldValue)}
                 >
                   {values.formAction === CommentFormAction.Create
                     ? translate("prayerRequest.comment.post")

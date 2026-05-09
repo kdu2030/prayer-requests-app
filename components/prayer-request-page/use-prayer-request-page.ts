@@ -6,6 +6,10 @@ import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like
 import { useGetPrayerRequest } from "../../api/get-prayer-request";
 import { usePostPrayerRequestComment } from "../../api/post-prayer-request-comment";
 import { usePostPrayerRequestLike } from "../../api/post-prayer-request-like";
+import {
+  PutPrayerRequestCommentRequest,
+  usePutPrayerRequestComment,
+} from "../../api/put-prayer-request-comment";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
@@ -53,6 +57,7 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   const deletePrayerRequestLike = useDeletePrayerRequestLike();
 
   const postPrayerRequestComment = usePostPrayerRequestComment();
+  const putPrayerRequestComment = usePutPrayerRequestComment();
 
   const {
     setPrayerRequest: setPrayerRequestGlobal,
@@ -249,6 +254,60 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     setPrayerRequestGlobal(prayerRequestId, updatedPrayerRequest);
   };
 
+  const onEditCommentPress = async (values: PrayerRequestCommentForm) => {
+    if (!prayerRequest?.comments || selectedCommentIndex == null) {
+      return;
+    }
+
+    const targetComment = prayerRequest.comments[selectedCommentIndex];
+
+    if (!targetComment?.prayerRequestCommentId) {
+      return;
+    }
+
+    const putCommentRequest: PutPrayerRequestCommentRequest = {
+      comment: values.comment ?? "",
+    };
+
+    setIsPostCommentLoading(true);
+    const response = await putPrayerRequestComment(
+      targetComment.prayerRequestCommentId,
+      putCommentRequest,
+    );
+    setIsPostCommentLoading(false);
+
+    if (response.isError) {
+      openToaster({
+        variant: "error",
+        message: translate("toaster.editComment.failure"),
+      });
+      return;
+    }
+
+    openToaster({
+      variant: "success",
+      message: translate("toaster.editComment.success"),
+    });
+
+    prayerRequestCommentFormRef.current?.resetForm({
+      values: { formAction: CommentFormAction.Create },
+    });
+
+    setSelectedCommentIndex(undefined);
+    isCommentActionInProgressRef.current = false;
+  };
+
+  const onSaveCommentPress = (
+    values: PrayerRequestCommentForm,
+    setFieldValue: (field: string, value: any) => void,
+  ) => {
+    if (values.formAction === CommentFormAction.Create) {
+      onPostCommentPress(values, setFieldValue);
+    } else {
+      onEditCommentPress(values);
+    }
+  };
+
   const onCommentActionsCancel = () => {
     setIsPrayerCommentActionsOpen(false);
 
@@ -318,5 +377,6 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     prayerRequestCommentFormRef,
     onEditPrayerRequestComment,
     onCancelEditComment,
+    onSaveCommentPress,
   };
 };

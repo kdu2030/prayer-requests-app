@@ -16,15 +16,17 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
   const theme = useTheme();
 
   return (
-    <View className="p-2 flex flex-row justify-between w-full">
-      <View className="flex flex-row items-start flex-1">
+    <View className="p-5 flex flex-row justify-between flex-1">
+      <View className="flex flex-row flex-1 gap-x-2">
         <ProfilePicture
           width={24}
           height={24}
           url={prayerRequestComment.user?.image?.fileUrl}
         />
 
-        <Text variant="bodyMedium">{prayerRequestComment.comment}</Text>
+        <View className="flex-1">
+          <Text variant="bodyMedium">{prayerRequestComment.comment}</Text>
+        </View>
       </View>
 
       <MaterialIcons

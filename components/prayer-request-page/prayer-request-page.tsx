@@ -1,6 +1,6 @@
 import { Formik, FormikProps } from "formik";
 import * as React from "react";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -56,13 +56,19 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
           <View className="flex flex-1">
             <PrayerGroupSectionHeader />
 
-            <PrayerRequestCard
-              prayerRequest={prayerRequest}
-              onOpenMenu={openPrayerRequestMenu}
-              isLikeLoading={isLikeLoading}
-              onLikePress={onLikePress}
-              onPrayPress={openBookmarkBottomSheet}
-              showCreatedUser
+            <FlatList
+              ListHeaderComponent={
+                <PrayerRequestCard
+                  prayerRequest={prayerRequest}
+                  onOpenMenu={openPrayerRequestMenu}
+                  isLikeLoading={isLikeLoading}
+                  onLikePress={onLikePress}
+                  onPrayPress={openBookmarkBottomSheet}
+                  showCreatedUser
+                />
+              }
+              data={[]}
+              renderItem={() => <></>}
             />
 
             <View

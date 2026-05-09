@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
 import * as React from "react";
 
-import { PrayerRequestPage } from "../../../../../components/prayer-request/prayer-request-page";
+import { PrayerRequestPage } from "../../../../../components/prayer-request-page/prayer-request-page";
 
 type PrayerRequestPageParams = {
   id: string;

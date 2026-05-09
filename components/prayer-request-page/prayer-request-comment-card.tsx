@@ -20,39 +20,45 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
   const theme = useTheme();
 
   return (
-    <View className="p-5 flex flex-row justify-between flex-1">
-      <View className="flex flex-row flex-1 items-center gap-x-2">
-        <ProfilePicture
-          width={24}
-          height={24}
-          url={prayerRequestComment.user?.image?.fileUrl}
-        />
+    <View className="flex flex-col p-5 bg-green-300">
+      <View className="flex flex-row justify-between bg-blue-200 flex-1">
+        <View className="flex flex-row items-center gap-x-2 flex-1">
+          <ProfilePicture
+            width={24}
+            height={24}
+            url={prayerRequestComment.user?.image?.fileUrl}
+          />
 
-        {/* <View className="flex-1">
+          {/* <View className="flex-1">
           <Text variant="bodyMedium">{prayerRequestComment.comment}</Text>
         </View> */}
 
-        <View className="flex flex-row">
-          <Text variant="bodyMedium" numberOfLines={1}>
-            {prayerRequestComment.user?.fullName}
-          </Text>
-
-          {prayerRequestComment.submittedDate && (
-            <Text variant="bodyMedium" className="ml-4 text-gray-500">
-              {formatDate(
-                prayerRequestComment.submittedDate,
-                i18n.language as CultureCode,
-              )}
+          <View className="flex flex-row flex-1">
+            <Text variant="bodyMedium" numberOfLines={1}>
+              {prayerRequestComment.user?.fullName}
             </Text>
-          )}
+
+            {prayerRequestComment.submittedDate && (
+              <Text variant="bodyMedium" className="ml-4 text-gray-500">
+                {formatDate(
+                  prayerRequestComment.submittedDate,
+                  i18n.language as CultureCode,
+                )}
+              </Text>
+            )}
+          </View>
         </View>
+
+        <MaterialIcons
+          size={24}
+          name="more-vert"
+          color={theme.colors.onSurface}
+        />
       </View>
 
-      <MaterialIcons
-        size={24}
-        name="more-vert"
-        color={theme.colors.onSurface}
-      />
+      <View className="flex-1 mt-4 bg-red-200">
+        <Text variant="bodyMedium">{prayerRequestComment.comment}</Text>
+      </View>
     </View>
   );
 };

@@ -61,6 +61,8 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   const prayerRequestCommentFormRef =
     React.useRef<FormikProps<PrayerRequestCommentForm>>(null);
 
+  const isCommentActionInProgressRef = React.useRef<boolean>(false);
+
   const loadPrayerRequest = async () => {
     setPrayerRequestLoadStatus(LoadStatus.Loading);
     const prayerRequestResponse = await getPrayerRequest(prayerRequestId);
@@ -246,7 +248,10 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
 
   const onCommentActionsCancel = () => {
     setIsPrayerCommentActionsOpen(false);
-    setSelectedCommentIndex(undefined);
+
+    if (!isCommentActionInProgressRef.current) {
+      setSelectedCommentIndex(undefined);
+    }
   };
 
   const onOpenPrayerRequestCommentActions = (commentIndex: number) => {
@@ -268,6 +273,8 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     const targetComment = prayerRequest.comments[selectedCommentIndex];
 
     resetForm({ values: { comment: targetComment.comment } });
+    isCommentActionInProgressRef.current = true;
+
     setIsPrayerCommentActionsOpen(false);
   };
 

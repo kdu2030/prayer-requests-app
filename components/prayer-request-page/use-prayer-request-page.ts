@@ -266,5 +266,6 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     isPrayerCommentActionsOpen,
     onCommentActionsCancel,
     selectedCommentIndex,
+    onOpenPrayerRequestCommentActions,
   };
 };

@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
 import { View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { Text, TouchableRipple, useTheme } from "react-native-paper";
 
 import { formatDate } from "../../helpers/formatting-helpers";
 import { useApiDataContext } from "../../hooks/use-api-data";
@@ -12,10 +12,12 @@ import { ProfilePicture } from "../layouts/profile-picture";
 
 type Props = {
   prayerRequestComment: PrayerRequestCommentModel;
+  onOpenActions: () => void;
 };
 
 export const PrayerRequestCommentCard: React.FC<Props> = ({
   prayerRequestComment,
+  onOpenActions,
 }) => {
   const { i18n } = useI18N();
   const theme = useTheme();
@@ -51,11 +53,18 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
         </View>
 
         {prayerRequestComment.user?.userId === userData?.userId && (
-          <MaterialIcons
-            size={24}
-            name="more-vert"
-            color={theme.colors.onSurface}
-          />
+          <TouchableRipple
+            rippleColor={"rgba(0, 0, 0, 0.12)"}
+            style={{ borderRadius: 9999 }}
+            onPress={onOpenActions}
+            borderless
+          >
+            <MaterialIcons
+              size={24}
+              name="more-vert"
+              color={theme.colors.onSurface}
+            />
+          </TouchableRipple>
         )}
       </View>
 

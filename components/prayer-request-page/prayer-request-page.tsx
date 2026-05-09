@@ -39,6 +39,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     onPostCommentPress,
     isPrayerCommentActionsOpen,
     onCommentActionsCancel,
+    onOpenPrayerRequestCommentActions,
   } = usePrayerRequestPage(prayerRequestId);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -73,8 +74,11 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
                 />
               }
               data={prayerRequest.comments ?? []}
-              renderItem={({ item }) => (
-                <PrayerRequestCommentCard prayerRequestComment={item} />
+              renderItem={({ item, index }) => (
+                <PrayerRequestCommentCard
+                  prayerRequestComment={item}
+                  onOpenActions={() => onOpenPrayerRequestCommentActions(index)}
+                />
               )}
             />
 

@@ -175,6 +175,8 @@ export const englishTranslations = {
 
   "prayerRequest.comment.label": "Comment",
   "prayerRequest.comment.post": "Post",
+  "prayerRequest.comment.editComment": "Edit Comment",
+  "prayerRequest.comment.deleteComment": "Delete Comment",
 
   "prayerGroup.joinRequest.label":
     "This is a private prayer group. To join, please submit a join request.",

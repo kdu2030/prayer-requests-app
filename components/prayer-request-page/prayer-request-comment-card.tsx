@@ -4,6 +4,7 @@ import { View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 
 import { formatDate } from "../../helpers/formatting-helpers";
+import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { CultureCode } from "../../types/languages";
 import { PrayerRequestCommentModel } from "../../types/prayer-request-types";
@@ -18,6 +19,8 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
 }) => {
   const { i18n } = useI18N();
   const theme = useTheme();
+
+  const { userData } = useApiDataContext();
 
   return (
     <View className="flex flex-col p-5">
@@ -47,11 +50,13 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
           </View>
         </View>
 
-        <MaterialIcons
-          size={24}
-          name="more-vert"
-          color={theme.colors.onSurface}
-        />
+        {prayerRequestComment.user?.userId === userData?.userId && (
+          <MaterialIcons
+            size={24}
+            name="more-vert"
+            color={theme.colors.onSurface}
+          />
+        )}
       </View>
 
       <View className="flex-1 mt-4">

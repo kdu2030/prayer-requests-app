@@ -168,6 +168,8 @@ export const chineseTranslations: Translations = {
 
   "prayerRequest.comment.label": "评论",
   "prayerRequest.comment.post": "发表",
+  "prayerRequest.comment.editComment": "编辑评论",
+  "prayerRequest.comment.deleteComment": "删除评论",
 
   "prayerRequestPage.loading": "加载祷告事项",
   "prayerRequestPage.failedToLoad": "加载祷告事项失败了。",

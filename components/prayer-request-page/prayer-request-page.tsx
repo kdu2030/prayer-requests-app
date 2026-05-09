@@ -65,6 +65,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
                   onLikePress={onLikePress}
                   onPrayPress={openBookmarkBottomSheet}
                   showCreatedUser
+                  truncateDescription={false}
                 />
               }
               data={[]}

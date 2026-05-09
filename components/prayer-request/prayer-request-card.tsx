@@ -20,6 +20,7 @@ type Props = {
   isLikeLoading: boolean;
   onLikePress: () => void;
   onPrayPress: () => void;
+  truncateDescription?: boolean;
 };
 
 export const PrayerRequestCard: React.FC<Props> = ({
@@ -29,6 +30,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
   isLikeLoading,
   onLikePress,
   onPrayPress,
+  truncateDescription = true,
 }) => {
   const theme = useTheme();
   const displayUser = showCreatedUser && prayerRequest.user?.fullName;
@@ -115,7 +117,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
       <Text
         variant="bodyMedium"
         className="mt-2"
-        numberOfLines={3}
+        numberOfLines={truncateDescription ? 3 : undefined}
         testID={getArrayTestId(
           PrayerRequestCardTestIds.requestDescription,
           prayerRequest.prayerRequestId,

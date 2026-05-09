@@ -64,7 +64,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
                 prayerRequest.prayerRequestId,
               )}
             />
-            <Text className="ml-2" variant="bodyMedium">
+            <Text className="ml-2" variant="bodyMedium" numberOfLines={1}>
               {prayerRequest.user?.fullName}
             </Text>
           </View>

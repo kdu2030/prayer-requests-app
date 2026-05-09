@@ -194,7 +194,6 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     }
 
     Keyboard.dismiss();
-    setFieldValue("comment", undefined);
 
     setIsPostCommentLoading(true);
 
@@ -220,6 +219,8 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
       variant: "success",
     });
 
+    setFieldValue("comment", undefined);
+
     const newComment = response.value;
     const currentUserCommentIds = prayerRequest?.userCommentIds ?? [];
 
@@ -242,6 +243,11 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   const onCommentActionsCancel = () => {
     setIsPrayerCommentActionsOpen(false);
     setSelectedCommentIndex(undefined);
+  };
+
+  const onOpenPrayerRequestCommentActions = (commentIndex: number) => {
+    setSelectedCommentIndex(commentIndex);
+    setIsPrayerCommentActionsOpen(true);
   };
 
   return {

@@ -40,9 +40,9 @@ export type PrayerRequestModel = {
   prayedCount?: number;
   expirationDate?: string;
   userLikeId?: number;
-  userCommentId?: number;
+  userCommentIds?: number[];
   userBookmarkId?: number;
-  userPrayerSessionId?: number;
+  userPrayerSessionIds?: number[];
 };
 
 export type PrayerRequestDetailsModel = PrayerRequestModel & {

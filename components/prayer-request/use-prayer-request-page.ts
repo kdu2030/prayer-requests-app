@@ -216,13 +216,16 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     });
 
     const newComment = response.value;
+    const currentUserCommentIds = prayerRequest?.userCommentIds ?? [];
 
     const updatedPrayerRequest: PrayerRequestDetailsModel = {
       ...prayerRequest,
       comments: prayerRequest?.comments
         ? [...prayerRequest.comments, newComment]
         : [newComment],
-      userCommentId: newComment.prayerRequestCommentId,
+      userCommentIds: newComment.prayerRequestCommentId
+        ? currentUserCommentIds.concat(newComment.prayerRequestCommentId)
+        : currentUserCommentIds,
       commentCount: (prayerRequest?.commentCount ?? 0) + 1,
     };
 

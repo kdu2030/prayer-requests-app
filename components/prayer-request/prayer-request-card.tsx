@@ -1,4 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { isEmpty } from "lodash";
 import * as React from "react";
 import { View } from "react-native";
 import { Button, TouchableRipple, useTheme } from "react-native-paper";
@@ -144,7 +145,11 @@ export const PrayerRequestCard: React.FC<Props> = ({
 
           <Button
             mode="outlined"
-            icon={prayerRequest.userCommentId ? "comment" : "comment-outline"}
+            icon={
+              !isEmpty(prayerRequest.userCommentIds)
+                ? "comment"
+                : "comment-outline"
+            }
             testID={getArrayTestId(
               PrayerRequestCardTestIds.commentButton,
               prayerRequest.prayerRequestId,
@@ -160,7 +165,11 @@ export const PrayerRequestCard: React.FC<Props> = ({
 
         <Button
           mode="outlined"
-          icon={prayerRequest.userPrayerSessionId ? "cross" : "cross-outline"}
+          icon={
+            !isEmpty(prayerRequest.userPrayerSessionIds)
+              ? "cross"
+              : "cross-outline"
+          }
           onPress={() => onPrayPress()}
           testID={getArrayTestId(
             PrayerRequestCardTestIds.prayedButton,

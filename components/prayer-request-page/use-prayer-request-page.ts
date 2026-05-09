@@ -239,6 +239,11 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     setPrayerRequestGlobal(prayerRequestId, updatedPrayerRequest);
   };
 
+  const onCommentActionsCancel = () => {
+    setIsPrayerCommentActionsOpen(false);
+    setSelectedCommentIndex(undefined);
+  };
+
   return {
     prayerRequest,
     prayerRequestLoadStatus,
@@ -253,5 +258,7 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     isPostCommentLoading,
     onPostCommentPress,
     isPrayerCommentActionsOpen,
+    onCommentActionsCancel,
+    selectedCommentIndex,
   };
 };

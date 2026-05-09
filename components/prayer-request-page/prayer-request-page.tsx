@@ -11,6 +11,7 @@ import { PrayerGroupSectionHeader } from "../prayer-group/section-header/prayer-
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import { PrayerRequestCommentForm } from "../prayer-request/prayer-request-types";
+import { PrayerRequestCommentActions } from "./prayer-request-comment-actions";
 import { PrayerRequestCommentCard } from "./prayer-request-comment-card";
 import { PrayerRequestPagePlaceholder } from "./prayer-request-page-placeholder";
 import { usePrayerRequestPage } from "./use-prayer-request-page";
@@ -37,6 +38,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     isPostCommentLoading,
     onPostCommentPress,
     isPrayerCommentActionsOpen,
+    onCommentActionsCancel,
   } = usePrayerRequestPage(prayerRequestId);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -105,6 +107,11 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
               showExtendedActions={showExtendedActions}
               selectedPrayerRequest={prayerRequest}
               onClose={closePrayerRequestActions}
+            />
+
+            <PrayerRequestCommentActions
+              isOpen={isPrayerCommentActionsOpen}
+              onClose={onCommentActionsCancel}
             />
           </View>
         </SafeAreaView>

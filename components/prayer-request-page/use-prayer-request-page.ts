@@ -218,11 +218,12 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     const newComment = response.value;
     const currentUserCommentIds = prayerRequest?.userCommentIds ?? [];
 
+    const prayerRequestComments = prayerRequest?.comments ?? [];
+    prayerRequestComments.unshift(newComment);
+
     const updatedPrayerRequest: PrayerRequestDetailsModel = {
       ...prayerRequest,
-      comments: prayerRequest?.comments
-        ? [...prayerRequest.comments, newComment]
-        : [newComment],
+      comments: prayerRequestComments,
       userCommentIds: newComment.prayerRequestCommentId
         ? currentUserCommentIds.concat(newComment.prayerRequestCommentId)
         : currentUserCommentIds,

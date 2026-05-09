@@ -10,11 +10,13 @@ import { PrayerGroupOptionButton } from "../prayer-group/options/prayer-group-op
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  onEditComment: () => void;
 };
 
 export const PrayerRequestCommentActions: React.FC<Props> = ({
   isOpen,
   onClose,
+  onEditComment,
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
@@ -31,7 +33,7 @@ export const PrayerRequestCommentActions: React.FC<Props> = ({
             />
           }
           label={translate("prayerRequest.comment.editComment")}
-          onPress={() => {}}
+          onPress={onEditComment}
         />
       </View>
     </AppBottomSheet>

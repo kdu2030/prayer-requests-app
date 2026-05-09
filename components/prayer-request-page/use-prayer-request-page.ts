@@ -1,3 +1,4 @@
+import { FormikProps } from "formik";
 import * as React from "react";
 import { Keyboard } from "react-native";
 
@@ -56,6 +57,9 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   } = usePrayerRequestDetailContext();
 
   const storedPrayerRequest = getPrayerRequestFromStore(prayerRequestId);
+
+  const prayerRequestCommentFormRef =
+    React.useRef<FormikProps<PrayerRequestCommentForm>>(null);
 
   const loadPrayerRequest = async () => {
     setPrayerRequestLoadStatus(LoadStatus.Loading);
@@ -250,6 +254,23 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     setIsPrayerCommentActionsOpen(true);
   };
 
+  const onEditPrayerRequestComment = () => {
+    if (!prayerRequest?.comments || selectedCommentIndex == null) {
+      return;
+    }
+
+    if (!prayerRequestCommentFormRef.current) {
+      return;
+    }
+
+    const { resetForm } = prayerRequestCommentFormRef.current;
+
+    const targetComment = prayerRequest.comments[selectedCommentIndex];
+
+    resetForm({ values: { comment: targetComment.comment } });
+    setIsPrayerCommentActionsOpen(false);
+  };
+
   return {
     prayerRequest,
     prayerRequestLoadStatus,
@@ -267,5 +288,7 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     onCommentActionsCancel,
     selectedCommentIndex,
     onOpenPrayerRequestCommentActions,
+    prayerRequestCommentFormRef,
+    onEditPrayerRequestComment,
   };
 };

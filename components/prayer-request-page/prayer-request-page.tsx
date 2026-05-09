@@ -41,6 +41,8 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     onCommentActionsCancel,
     onOpenPrayerRequestCommentActions,
     selectedCommentIndex,
+    prayerRequestCommentFormRef,
+    onEditPrayerRequestComment,
   } = usePrayerRequestPage(prayerRequestId);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -53,7 +55,11 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
   }
 
   return (
-    <Formik initialValues={{}} onSubmit={() => {}}>
+    <Formik
+      initialValues={{}}
+      onSubmit={() => {}}
+      innerRef={prayerRequestCommentFormRef}
+    >
       {({ values, setFieldValue }: FormikProps<PrayerRequestCommentForm>) => (
         <SafeAreaView
           className="flex flex-1"
@@ -118,6 +124,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
             <PrayerRequestCommentActions
               isOpen={isPrayerCommentActionsOpen}
               onClose={onCommentActionsCancel}
+              onEditComment={onEditPrayerRequestComment}
             />
           </View>
         </SafeAreaView>

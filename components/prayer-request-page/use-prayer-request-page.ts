@@ -13,9 +13,9 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { usePrayerRequestActionsContainer } from "../prayer-group/use-prayer-request-actions-container";
+import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
+import { PrayerRequestCommentForm } from "../prayer-request/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
-import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
-import { PrayerRequestCommentForm } from "./prayer-request-types";
 
 export const usePrayerRequestPage = (prayerRequestId: number) => {
   const [prayerRequest, setPrayerRequest] =

@@ -10,9 +10,9 @@ import { TextInput } from "../inputs/text-input";
 import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerGroupSectionHeader } from "../prayer-group/section-header/prayer-group-section-header";
-import { PrayerRequestActions } from "./prayer-request-actions";
-import { PrayerRequestCard } from "./prayer-request-card";
-import { PrayerRequestCommentForm } from "./prayer-request-types";
+import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
+import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
+import { PrayerRequestCommentForm } from "../prayer-request/prayer-request-types";
 import { usePrayerRequestPage } from "./use-prayer-request-page";
 
 type Props = {

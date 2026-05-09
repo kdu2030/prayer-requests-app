@@ -286,6 +286,17 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     setIsPrayerCommentActionsOpen(false);
   };
 
+  const onCancelEditComment = () => {
+    if (!prayerRequestCommentFormRef.current) {
+      return;
+    }
+
+    const { resetForm } = prayerRequestCommentFormRef.current;
+
+    setSelectedCommentIndex(undefined);
+    resetForm({ values: { formAction: CommentFormAction.Create } });
+  };
+
   return {
     prayerRequest,
     prayerRequestLoadStatus,
@@ -305,5 +316,6 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     onOpenPrayerRequestCommentActions,
     prayerRequestCommentFormRef,
     onEditPrayerRequestComment,
+    onCancelEditComment,
   };
 };

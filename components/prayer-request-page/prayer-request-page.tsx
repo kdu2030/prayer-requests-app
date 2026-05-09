@@ -46,6 +46,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     selectedCommentIndex,
     prayerRequestCommentFormRef,
     onEditPrayerRequestComment,
+    onCancelEditComment,
   } = usePrayerRequestPage(prayerRequestId);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -106,9 +107,9 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
                 />
               </View>
 
-              <View className="flex flex-row self-end gap-3">
+              <View className="flex flex-row self-end gap-2">
                 {values.formAction === CommentFormAction.Edit && (
-                  <Button mode="outlined" onPress={() => {}}>
+                  <Button mode="outlined" onPress={onCancelEditComment}>
                     {translate("common.actions.cancel")}
                   </Button>
                 )}

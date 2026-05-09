@@ -289,6 +289,17 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
       message: translate("toaster.editComment.success"),
     });
 
+    const updatedPrayerRequestComments = [...prayerRequest.comments];
+    updatedPrayerRequestComments[selectedCommentIndex] = {
+      ...targetComment,
+      comment: values.comment,
+    };
+
+    setPrayerRequest((prayerRequest) => ({
+      ...prayerRequest,
+      comments: updatedPrayerRequestComments,
+    }));
+
     prayerRequestCommentFormRef.current?.resetForm({
       values: { formAction: CommentFormAction.Create },
     });

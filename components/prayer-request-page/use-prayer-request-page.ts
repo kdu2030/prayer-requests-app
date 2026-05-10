@@ -2,6 +2,7 @@ import { FormikProps } from "formik";
 import * as React from "react";
 import { Keyboard } from "react-native";
 
+import { useDeletePrayerRequestComment } from "../../api/delete-prayer-request-comment";
 import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like";
 import { useGetPrayerRequest } from "../../api/get-prayer-request";
 import { usePostPrayerRequestComment } from "../../api/post-prayer-request-comment";
@@ -43,6 +44,9 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   const [isDeleteCommentModalOpen, setIsDeleteCommentModalOpen] =
     React.useState<boolean>(false);
 
+  const [isDeleteCommentLoading, setIsDeleteCommentLoading] =
+    React.useState<boolean>(false);
+
   const {
     openPrayerRequestActions,
     showExtendedActions,
@@ -61,6 +65,7 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
 
   const postPrayerRequestComment = usePostPrayerRequestComment();
   const putPrayerRequestComment = usePutPrayerRequestComment();
+  const deletePrayerRequestComment = useDeletePrayerRequestComment();
 
   const {
     setPrayerRequest: setPrayerRequestGlobal,
@@ -377,8 +382,41 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     setIsPrayerCommentActionsOpen(false);
   };
 
-  const onCancelDelete = () => {
+  const onCancelDeleteComment = () => {
     setIsDeleteCommentModalOpen(false);
+    isCommentActionInProgressRef.current = false;
+    setSelectedCommentIndex(undefined);
+  };
+
+  const onConfirmDeleteComment = async () => {
+    if (!prayerRequest?.comments || selectedCommentIndex == null) {
+      return;
+    }
+
+    const targetComment = prayerRequest.comments[selectedCommentIndex];
+
+    if (!targetComment?.prayerRequestCommentId) {
+      return;
+    }
+
+    setIsDeleteCommentLoading(true);
+    const response = await deletePrayerRequestComment(
+      targetComment.prayerRequestCommentId,
+    );
+    setIsDeleteCommentLoading(false);
+
+    if (response.isError) {
+      openToaster({
+        variant: "error",
+        message: translate("toaster.deleteComment.failure"),
+      });
+      return;
+    }
+
+    openToaster({
+      variant: "success",
+      message: translate("toaster.deleteComment.success"),
+    });
     isCommentActionInProgressRef.current = false;
     setSelectedCommentIndex(undefined);
   };
@@ -407,6 +445,6 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     onDeleteComment,
     isDeleteCommentModalOpen,
     setIsDeleteCommentModalOpen,
-    onCancelDelete,
+    onCancelDeleteComment,
   };
 };

@@ -203,4 +203,6 @@ export const chineseTranslations: Translations = {
   "toaster.comment.failure": "评论发表失败了。",
   "toaster.editComment.success": "已编辑评论。",
   "toaster.editComment.failure": "编辑评论失败了。",
+  "toaster.deleteComment.success": "已删除评论。",
+  "toaster.deleteComment.failure": "删除评论失败了。",
 };

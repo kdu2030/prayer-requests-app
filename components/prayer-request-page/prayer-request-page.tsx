@@ -49,7 +49,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     onCancelEditComment,
     onSaveCommentPress,
     onDeleteComment,
-    onCancelDelete,
+    onCancelDeleteComment,
     isDeleteCommentModalOpen,
   } = usePrayerRequestPage(prayerRequestId);
 
@@ -146,7 +146,9 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
             />
 
             {isDeleteCommentModalOpen && (
-              <DeletePrayerRequestCommentModal onClose={onCancelDelete} />
+              <DeletePrayerRequestCommentModal
+                onClose={onCancelDeleteComment}
+              />
             )}
           </View>
         </SafeAreaView>

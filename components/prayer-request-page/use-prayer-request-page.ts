@@ -458,20 +458,15 @@ export const usePrayerRequestPage = (
     }
   }, [prayerRequest?.comments]);
 
-  React.useLayoutEffect(() => {
+  const onCommentListLayout = () => {
     if (prayerRequestLoadStatus !== LoadStatus.Success) {
       return;
     }
 
     if (scrollToCommentsOnLoad) {
-      window.setTimeout(() => scrollToCommentSection(), 180);
+      scrollToCommentSection();
     }
-  }, [
-    prayerRequest?.comments,
-    prayerRequestLoadStatus,
-    scrollToCommentSection,
-    scrollToCommentsOnLoad,
-  ]);
+  };
 
   return {
     prayerRequest,
@@ -502,5 +497,6 @@ export const usePrayerRequestPage = (
     onConfirmDeleteComment,
     prayerRequestCommentListRef,
     scrollToCommentSection,
+    onCommentListLayout,
   };
 };

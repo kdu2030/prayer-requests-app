@@ -59,6 +59,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
     onConfirmDeleteComment,
     prayerRequestCommentListRef,
     scrollToCommentSection,
+    onCommentListLayout,
   } = usePrayerRequestPage(prayerRequestId, scrollToCommentsOnLoad);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -105,6 +106,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
                   onOpenActions={() => onOpenPrayerRequestCommentActions(index)}
                 />
               )}
+              onLayout={onCommentListLayout}
               ref={prayerRequestCommentListRef}
             />
 

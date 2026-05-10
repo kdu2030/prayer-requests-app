@@ -173,6 +173,7 @@ export const chineseTranslations: Translations = {
   "prayerRequest.comment.deleteComment": "删除评论",
   "prayerRequest.comment.deleteConfirmation":
     "确定要删除评论吗？删除后将无法回复。",
+  "prayerRequest.comments.placeholder": "这个祷告事项还没有评论。",
 
   "prayerRequestPage.loading": "加载祷告事项",
   "prayerRequestPage.failedToLoad": "加载祷告事项失败了。",

@@ -180,6 +180,8 @@ export const englishTranslations = {
   "prayerRequest.comment.deleteComment": "Delete Comment",
   "prayerRequest.comment.deleteConfirmation":
     "Are you sure you want to delete this comment? This cannot be undone.",
+  "prayerRequest.comments.placeholder":
+    "This prayer request does not have comments yet.",
 
   "prayerGroup.joinRequest.label":
     "This is a private prayer group. To join, please submit a join request.",

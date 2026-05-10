@@ -17,6 +17,7 @@ import {
 import { DeletePrayerRequestCommentModal } from "./delete-prayer-request-comment-modal";
 import { PrayerRequestCommentActions } from "./prayer-request-comment-actions";
 import { PrayerRequestCommentCard } from "./prayer-request-comment-card";
+import { PrayerRequestCommentPlaceholder } from "./prayer-request-comment-placeholder";
 import { PrayerRequestPagePlaceholder } from "./prayer-request-page-placeholder";
 import { usePrayerRequestPage } from "./use-prayer-request-page";
 
@@ -106,6 +107,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
                   onOpenActions={() => onOpenPrayerRequestCommentActions(index)}
                 />
               )}
+              ListEmptyComponent={<PrayerRequestCommentPlaceholder />}
               onLayout={onCommentListLayout}
               ref={prayerRequestCommentListRef}
             />

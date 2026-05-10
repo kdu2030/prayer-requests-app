@@ -389,20 +389,23 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   };
 
   const onConfirmDeleteComment = async () => {
-    if (!prayerRequest?.comments || selectedCommentIndex == null) {
+    if (
+      !prayerRequest?.comments ||
+      selectedCommentIndex == null ||
+      !prayerRequest.prayerRequestId
+    ) {
       return;
     }
 
     const targetComment = prayerRequest.comments[selectedCommentIndex];
+    const targetCommentId = targetComment?.prayerRequestCommentId;
 
-    if (!targetComment?.prayerRequestCommentId) {
+    if (!targetCommentId) {
       return;
     }
 
     setIsDeleteCommentLoading(true);
-    const response = await deletePrayerRequestComment(
-      targetComment.prayerRequestCommentId,
-    );
+    const response = await deletePrayerRequestComment(targetCommentId);
     setIsDeleteCommentLoading(false);
 
     if (response.isError) {
@@ -417,8 +420,25 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
       variant: "success",
       message: translate("toaster.deleteComment.success"),
     });
+
+    const updatedPrayerRequest: PrayerRequestDetailsModel = {
+      ...prayerRequest,
+      commentCount: prayerRequest.commentCount
+        ? prayerRequest.commentCount - 1
+        : prayerRequest.commentCount,
+      userCommentIds: prayerRequest.userCommentIds?.filter(
+        (userCommentId) => userCommentId !== targetCommentId,
+      ),
+    };
+
+    updatedPrayerRequest.comments?.splice(selectedCommentIndex, 1);
+
+    setPrayerRequest(updatedPrayerRequest);
+    setPrayerRequestGlobal(prayerRequest.prayerRequestId, updatedPrayerRequest);
+
     isCommentActionInProgressRef.current = false;
     setSelectedCommentIndex(undefined);
+    setIsDeleteCommentModalOpen(false);
   };
 
   return {
@@ -446,5 +466,7 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     isDeleteCommentModalOpen,
     setIsDeleteCommentModalOpen,
     onCancelDeleteComment,
+    isDeleteCommentLoading,
+    onConfirmDeleteComment,
   };
 };

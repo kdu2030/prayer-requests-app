@@ -176,9 +176,10 @@ export const PrayerGroupOptions: React.FC<Props> = ({
                 <MaterialIcons
                   name="person-remove"
                   size={24}
-                  color={theme.colors.onSurface}
+                  color={theme.colors.error}
                 />
               }
+              labelStyles={{ color: theme.colors.error }}
               onPress={() => {
                 setShowLeavePrayerGroupModal(true);
                 bottomSheetRef.current?.close();

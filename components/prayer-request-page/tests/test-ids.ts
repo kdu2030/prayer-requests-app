@@ -3,4 +3,5 @@ export enum PrayerRequestPageTestIds {
   commentFullName = "prayer-request-page-comment-full-name",
   commentDate = "prayer-request-page-comment-date",
   commentActionsButton = "prayer-request-page-comment-actions-button",
+  commentText = "prayer-request-page-comment-text",
 }

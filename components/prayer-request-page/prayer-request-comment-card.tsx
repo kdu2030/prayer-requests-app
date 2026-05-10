@@ -98,7 +98,15 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
       </View>
 
       <View className="flex-1 mt-4">
-        <Text variant="bodyMedium">{prayerRequestComment.comment}</Text>
+        <Text
+          variant="bodyMedium"
+          testID={getArrayTestId(
+            PrayerRequestPageTestIds.commentText,
+            prayerRequestComment.prayerRequestCommentId,
+          )}
+        >
+          {prayerRequestComment.comment}
+        </Text>
       </View>
     </View>
   );

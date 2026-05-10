@@ -9,6 +9,7 @@ import { Formik } from "formik";
 import { mountComponent } from "../../../../../tests/utils/test-utils";
 import {
   mockPrayerGroupDetails1,
+  mockPrayerRequests,
   mockUserData,
 } from "../../../tests/mock-data";
 import {
@@ -98,7 +99,10 @@ describe(ExpirationStep, () => {
   });
 
   test("Post prayer request gets called when form is valid", async () => {
-    mockPostPrayerRequest.mockReturnValue({ isError: false });
+    mockPostPrayerRequest.mockReturnValue({
+      isError: false,
+      value: mockPrayerRequests[0],
+    });
 
     component = mountExpirationStep({
       requestTitle: "Request Title",

@@ -128,8 +128,8 @@ export const PrayerRequestCard: React.FC<Props> = ({
         {prayerRequest.requestDescription}
       </Text>
 
-      <View className="flex flex-row justify-between items-center mt-6">
-        <View className="flex flex-row gap-x-3 items-center">
+      <View className="flex flex-row items-center justify-between mt-6">
+        <View className="flex flex-row items-center gap-x-3">
           <Button
             mode="outlined"
             icon={likeIcon}

@@ -1,5 +1,6 @@
-import { render, RenderResult } from "@testing-library/react-native";
+import { render, RenderResult, screen } from "@testing-library/react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import mockSafeAreaContext from "react-native-safe-area-context/jest/mock";
 
 import { englishTranslations } from "../../../i18n/en-us";
 import { PrayerRequestDetailsModel } from "../../../types/prayer-request-types";
@@ -77,6 +78,8 @@ jest.mock("../../../api/delete-prayer-request-comment", () => ({
   useDeletePrayerRequestComment: () => mockDeletePrayerRequestComment,
 }));
 
+jest.mock("react-native-safe-area-context", () => mockSafeAreaContext);
+
 let component: RenderResult;
 
 describe(PrayerRequestPage, () => {
@@ -96,12 +99,7 @@ describe(PrayerRequestPage, () => {
     });
 
     component = render(
-      <SafeAreaProvider>
-        <PrayerRequestPage
-          prayerRequestId={707}
-          scrollToCommentsOnLoad={false}
-        />
-      </SafeAreaProvider>,
+      <PrayerRequestPage prayerRequestId={9} scrollToCommentsOnLoad={false} />,
     );
 
     expect(component).toBeTruthy();

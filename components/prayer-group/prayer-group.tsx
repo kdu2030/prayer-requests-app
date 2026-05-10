@@ -127,6 +127,9 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
                   <PrayerRequestListCard
                     prayerRequestId={item}
                     openPrayerRequestActions={openPrayerRequestActions}
+                    onCommentPress={() =>
+                      navigateToPrayerRequestPage(item, true)
+                    }
                     key={item}
                   />
                 </Pressable>

@@ -247,7 +247,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     }));
   };
 
-  const navigateToPrayerRequestPage = (prayerRequestId: number) => {
+  const navigateToPrayerRequestPage = (
+    prayerRequestId: number,
+    scrollToCommentsOnLoad: boolean = false,
+  ) => {
     if (!prayerGroupDetails?.prayerGroupId) {
       return;
     }
@@ -257,6 +260,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       params: {
         id: prayerGroupDetails.prayerGroupId,
         id_1: prayerRequestId,
+        scrollToCommentsOnLoad: scrollToCommentsOnLoad.toString(),
       },
     });
   };

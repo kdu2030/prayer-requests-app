@@ -12,12 +12,14 @@ type Props = {
     showExtendedOptions?: boolean,
   ) => void;
   showCreatedUser?: boolean;
+  onCommentPress: () => void;
 };
 
 export const PrayerRequestListCard: React.FC<Props> = ({
   prayerRequestId,
   showCreatedUser = true,
   openPrayerRequestActions,
+  onCommentPress,
 }) => {
   const { getPrayerRequestFromStore: getPrayerRequest } =
     usePrayerRequestDetailContext();
@@ -37,6 +39,7 @@ export const PrayerRequestListCard: React.FC<Props> = ({
       isLikeLoading={isLikeLoading}
       onLikePress={onLikePress}
       onPrayPress={() => openPrayerRequestActions(prayerRequest, false)}
+      onCommentPress={onCommentPress}
       showCreatedUser={showCreatedUser}
     />
   );

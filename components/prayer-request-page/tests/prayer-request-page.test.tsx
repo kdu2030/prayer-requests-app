@@ -3,8 +3,14 @@ import mockSafeAreaContext from "react-native-safe-area-context/jest/mock";
 
 import { getArrayTestId } from "../../../helpers/utils";
 import { mountComponent } from "../../../tests/utils/test-utils";
-import { PrayerRequestDetailsModel } from "../../../types/prayer-request-types";
-import { mockPrayerRequests } from "../../prayer-group/tests/mock-data";
+import {
+  PrayerRequestDetailsModel,
+  PrayerRequestLikeModel,
+} from "../../../types/prayer-request-types";
+import {
+  mockPrayerRequests,
+  mockUserData,
+} from "../../prayer-group/tests/mock-data";
 import { PrayerRequestCardTestIds } from "../../prayer-request/tests/test-ids";
 import { PrayerRequestPage } from "../prayer-request-page";
 
@@ -65,6 +71,22 @@ jest.mock("@gorhom/bottom-sheet", () => ({
 
 let component: RenderResult;
 
+const mountPrayerRequestPage = (
+  prayerRequest: PrayerRequestDetailsModel,
+): RenderResult => {
+  mockGetPrayerRequest.mockReturnValue({
+    isError: false,
+    value: prayerRequest,
+  });
+
+  return mountComponent(
+    <PrayerRequestPage
+      prayerRequestId={prayerRequest.prayerRequestId!}
+      scrollToCommentsOnLoad={false}
+    />,
+  );
+};
+
 describe(PrayerRequestPage, () => {
   afterEach(() => {
     component?.unmount();
@@ -76,14 +98,7 @@ describe(PrayerRequestPage, () => {
       ...mockPrayerRequests[0],
     };
 
-    mockGetPrayerRequest.mockReturnValue({
-      isError: false,
-      value: mockPrayerRequest,
-    });
-
-    component = mountComponent(
-      <PrayerRequestPage prayerRequestId={9} scrollToCommentsOnLoad={false} />,
-    );
+    component = mountPrayerRequestPage(mockPrayerRequest);
 
     expect(component).toBeTruthy();
   });
@@ -93,14 +108,7 @@ describe(PrayerRequestPage, () => {
       ...mockPrayerRequests[0],
     };
 
-    mockGetPrayerRequest.mockReturnValue({
-      isError: false,
-      value: mockPrayerRequest,
-    });
-
-    component = mountComponent(
-      <PrayerRequestPage prayerRequestId={9} scrollToCommentsOnLoad={false} />,
-    );
+    component = mountPrayerRequestPage(mockPrayerRequest);
 
     const prayerRequestDescription = await component.findByTestId(
       getArrayTestId(
@@ -116,7 +124,25 @@ describe(PrayerRequestPage, () => {
       ),
     );
 
-    expect(prayerRequestDescription).toBeTruthy();
-    expect(prayerRequestTitle).toBeTruthy();
+    expect(prayerRequestDescription).toHaveTextContent(
+      mockPrayerRequest.requestDescription ?? "",
+    );
+    expect(prayerRequestTitle).toHaveTextContent(
+      mockPrayerRequest.requestTitle ?? "",
+    );
+  });
+
+  test("When the like button is clicked, the prayer request like count increments", () => {
+    const mockPrayerRequestLike: PrayerRequestLikeModel = {
+      prayerRequestLikeId: 717,
+      prayerRequestId: mockPrayerRequests[0].prayerRequestId,
+      submittedUserId: mockUserData.userId,
+      submittedDate: new Date().toISOString(),
+    };
+
+    mockPostPrayerRequestLike.mockReturnValue({
+      isError: false,
+      value: mockPrayerRequestLike,
+    });
   });
 });

@@ -25,6 +25,7 @@ let component: RenderResult;
 const mockSetPrayerRequests = jest.fn();
 const mockPostPrayerRequestLike = jest.fn();
 const mockDeletePrayerRequestLike = jest.fn();
+const mockUsePrayerRequestDetailContext = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
@@ -48,15 +49,22 @@ jest.mock("../../../api/delete-prayer-request-like", () => ({
     mockDeletePrayerRequestLike(prayerRequestLikeId),
 }));
 
-const mountPrayerRequestCard = (
-  prayerRequest: PrayerRequestModel,
-  prayerRequests: PrayerRequestModel[],
-) => {
+jest.mock("../prayer-request-detail-context", () => ({
+  usePrayerRequestDetailContext: () => mockUsePrayerRequestDetailContext(),
+}));
+
+const mountPrayerRequestCard = (prayerRequest: PrayerRequestModel) => {
+  mockUsePrayerRequestDetailContext.mockReturnValue({
+    getPrayerRequestFromStore: () => {
+      return prayerRequest;
+    },
+    setPrayerRequest: () => {},
+  });
+
   return mountComponent(
     <PrayerRequestListCard
-      prayerRequest={prayerRequest}
-      prayerRequests={prayerRequests}
-      setPrayerRequests={mockSetPrayerRequests}
+      prayerRequestId={prayerRequest.prayerRequestId!}
+      onCommentPress={() => {}}
       showCreatedUser
       openPrayerRequestActions={() => {}}
     />,
@@ -70,10 +78,7 @@ describe(PrayerRequestListCard, () => {
   });
 
   test("Mount test", () => {
-    component = mountPrayerRequestCard(
-      mockPrayerRequests[0],
-      mockPrayerRequests,
-    );
+    component = mountPrayerRequestCard(mockPrayerRequests[0]);
     expect(component).toBeTruthy();
   });
 
@@ -102,10 +107,7 @@ describe(PrayerRequestListCard, () => {
       return mockPostLikeResponse;
     });
 
-    component = mountPrayerRequestCard(
-      mockPrayerRequests[0],
-      mockPrayerRequests,
-    );
+    component = mountPrayerRequestCard(mockPrayerRequests[0]);
 
     const likeButton = component.getByTestId(
       getArrayTestId(PrayerRequestCardTestIds.likeButton, 9),
@@ -131,10 +133,7 @@ describe(PrayerRequestListCard, () => {
 
     mockDeletePrayerRequestLike.mockReturnValue({ isError: false });
 
-    component = mountPrayerRequestCard(
-      mockPrayerRequests[1],
-      mockPrayerRequests,
-    );
+    component = mountPrayerRequestCard(mockPrayerRequests[1]);
 
     const likeButton = component.getByTestId(
       getArrayTestId(PrayerRequestCardTestIds.likeButton, 8),

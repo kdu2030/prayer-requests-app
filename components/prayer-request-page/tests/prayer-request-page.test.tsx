@@ -109,6 +109,14 @@ describe(PrayerRequestPage, () => {
       ),
     );
 
+    const prayerRequestTitle = await component.findByTestId(
+      getArrayTestId(
+        PrayerRequestCardTestIds.requestTitle,
+        mockPrayerRequest.prayerRequestId,
+      ),
+    );
+
     expect(prayerRequestDescription).toBeTruthy();
+    expect(prayerRequestTitle).toBeTruthy();
   });
 });

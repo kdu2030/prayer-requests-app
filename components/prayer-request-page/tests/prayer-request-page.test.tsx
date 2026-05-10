@@ -1,13 +1,14 @@
-import { render, RenderResult, screen } from "@testing-library/react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { render, RenderResult } from "@testing-library/react-native";
 import mockSafeAreaContext from "react-native-safe-area-context/jest/mock";
 
-import { englishTranslations } from "../../../i18n/en-us";
+import { getArrayTestId } from "../../../helpers/utils";
+import { mountComponent } from "../../../tests/utils/test-utils";
 import { PrayerRequestDetailsModel } from "../../../types/prayer-request-types";
 import {
   mockPrayerRequests,
   mockUserData,
 } from "../../prayer-group/tests/mock-data";
+import { PrayerRequestCardTestIds } from "../../prayer-request/tests/test-ids";
 import { PrayerRequestPage } from "../prayer-request-page";
 
 const mockSetPrayerRequestGlobal = jest.fn();
@@ -20,26 +21,6 @@ const mockDeletePrayerRequestLike = jest.fn();
 const mockPostPrayerRequestComment = jest.fn();
 const mockPutPrayerRequestComment = jest.fn();
 const mockDeletePrayerRequestComment = jest.fn();
-
-jest.mock("../../../hooks/use-api-data", () => ({
-  useApiDataContext: () => {
-    return {
-      userData: mockUserData,
-    };
-  },
-}));
-
-const mockEnglishTranslations = englishTranslations;
-
-jest.mock("../../../hooks/use-i18n", () => ({
-  useI18N: () => {
-    return {
-      translate: (key: keyof typeof englishTranslations) => {
-        return mockEnglishTranslations[key];
-      },
-    };
-  },
-}));
 
 jest.mock("../../toasters/toaster-context", () => ({
   useToasterContext: () => ({
@@ -98,10 +79,34 @@ describe(PrayerRequestPage, () => {
       value: mockPrayerRequest,
     });
 
-    component = render(
+    component = mountComponent(
       <PrayerRequestPage prayerRequestId={9} scrollToCommentsOnLoad={false} />,
     );
 
     expect(component).toBeTruthy();
+  });
+
+  test("Prayer request renders", async () => {
+    const mockPrayerRequest: PrayerRequestDetailsModel = {
+      ...mockPrayerRequests[0],
+    };
+
+    mockGetPrayerRequest.mockReturnValue({
+      isError: false,
+      value: mockPrayerRequest,
+    });
+
+    component = mountComponent(
+      <PrayerRequestPage prayerRequestId={9} scrollToCommentsOnLoad={false} />,
+    );
+
+    const prayerRequestDescription = await component.findByTestId(
+      getArrayTestId(
+        PrayerRequestCardTestIds.requestDescription,
+        mockPrayerRequest.prayerRequestId,
+      ),
+    );
+
+    expect(prayerRequestDescription).toBeTruthy();
   });
 });

@@ -1,7 +1,12 @@
 import { render, RenderResult } from "@testing-library/react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { englishTranslations } from "../../../i18n/en-us";
-import { mockUserData } from "../../prayer-group/tests/mock-data";
+import { PrayerRequestDetailsModel } from "../../../types/prayer-request-types";
+import {
+  mockPrayerRequests,
+  mockUserData,
+} from "../../prayer-group/tests/mock-data";
 import { PrayerRequestPage } from "../prayer-request-page";
 
 const mockSetPrayerRequestGlobal = jest.fn();
@@ -81,11 +86,22 @@ describe(PrayerRequestPage, () => {
   });
 
   test("Mount test", () => {
+    const mockPrayerRequest: PrayerRequestDetailsModel = {
+      ...mockPrayerRequests[0],
+    };
+
+    mockGetPrayerRequest.mockReturnValue({
+      isError: false,
+      value: mockPrayerRequest,
+    });
+
     component = render(
-      <PrayerRequestPage
-        prayerRequestId={707}
-        scrollToCommentsOnLoad={false}
-      />,
+      <SafeAreaProvider>
+        <PrayerRequestPage
+          prayerRequestId={707}
+          scrollToCommentsOnLoad={false}
+        />
+      </SafeAreaProvider>,
     );
 
     expect(component).toBeTruthy();

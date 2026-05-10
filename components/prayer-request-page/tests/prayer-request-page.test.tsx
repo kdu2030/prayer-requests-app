@@ -1,3 +1,5 @@
+import { render, RenderResult } from "@testing-library/react-native";
+
 import { englishTranslations } from "../../../i18n/en-us";
 import { mockUserData } from "../../prayer-group/tests/mock-data";
 import { PrayerRequestPage } from "../prayer-request-page";
@@ -21,17 +23,23 @@ jest.mock("../../../hooks/use-api-data", () => ({
   },
 }));
 
+const mockEnglishTranslations = englishTranslations;
+
 jest.mock("../../../hooks/use-i18n", () => ({
   useI18N: () => {
     return {
       translate: (key: keyof typeof englishTranslations) => {
-        return englishTranslations[key];
+        return mockEnglishTranslations[key];
       },
     };
   },
 }));
 
-jest.mock("../../toasters/toaster-context");
+jest.mock("../../toasters/toaster-context", () => ({
+  useToasterContext: () => ({
+    openToaster: jest.fn(),
+  }),
+}));
 
 jest.mock("../../prayer-request/prayer-request-detail-context", () => ({
   usePrayerRequestDetailContext: () => ({
@@ -64,4 +72,22 @@ jest.mock("../../../api/delete-prayer-request-comment", () => ({
   useDeletePrayerRequestComment: () => mockDeletePrayerRequestComment,
 }));
 
-describe(PrayerRequestPage, () => {});
+let component: RenderResult;
+
+describe(PrayerRequestPage, () => {
+  afterEach(() => {
+    component?.unmount();
+    jest.resetAllMocks();
+  });
+
+  test("Mount test", () => {
+    component = render(
+      <PrayerRequestPage
+        prayerRequestId={707}
+        scrollToCommentsOnLoad={false}
+      />,
+    );
+
+    expect(component).toBeTruthy();
+  });
+});

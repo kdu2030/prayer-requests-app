@@ -243,7 +243,7 @@ describe(PrayerGroup, () => {
       getPrayerRequestFromStore: (prayerRequestId: number) => {
         return mockPrayerRequestMap[prayerRequestId];
       },
-      addPrayerRequests: () => {},
+      addPrayerRequestsToStore: () => {},
     });
 
     mockPostPrayerRequestFilter.mockImplementation(

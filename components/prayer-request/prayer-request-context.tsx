@@ -64,14 +64,10 @@ type Props = {
 export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
   const [prayerRequestFilters, setPrayerRequestFilters] =
     React.useState<PrayerRequestFilterCriteria>(DEFAULT_PRAYER_REQUEST_FILTERS);
-  // const [prayerRequests, setPrayerRequests] = React.useState<
-  //   PrayerRequestModel[]
-  // >([]);
 
   const [prayerRequestIds, setPrayerRequestIds] = React.useState<number[]>([]);
 
-  const { addPrayerRequestsToStore: addPrayerRequests } =
-    usePrayerRequestDetailContext();
+  const { addPrayerRequestsToStore } = usePrayerRequestDetailContext();
 
   const [prayerRequestMetadata, setPrayerRequestMetadata] =
     React.useState<PrayerRequestMetadata>(DEFAULT_PRAYER_REQUEST_METADATA);
@@ -147,7 +143,7 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
       return;
     }
 
-    addPrayerRequests(newPrayerRequests);
+    addPrayerRequestsToStore(newPrayerRequests);
 
     // Since prayer requests can be infinitely scrolled
     // We don't want to get rid of the current existing prayer requests unless group ID changes.

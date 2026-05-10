@@ -40,6 +40,9 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
   const [selectedCommentIndex, setSelectedCommentIndex] =
     React.useState<number>();
 
+  const [isDeleteCommentModalOpen, setIsDeleteCommentModalOpen] =
+    React.useState<boolean>(false);
+
   const {
     openPrayerRequestActions,
     showExtendedActions,
@@ -368,6 +371,18 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     isCommentActionInProgressRef.current = false;
   };
 
+  const onDeleteComment = () => {
+    setIsDeleteCommentModalOpen(true);
+    isCommentActionInProgressRef.current = true;
+    setIsPrayerCommentActionsOpen(false);
+  };
+
+  const onCancelDelete = () => {
+    setIsDeleteCommentModalOpen(false);
+    isCommentActionInProgressRef.current = false;
+    setSelectedCommentIndex(undefined);
+  };
+
   return {
     prayerRequest,
     prayerRequestLoadStatus,
@@ -389,5 +404,9 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     onEditPrayerRequestComment,
     onCancelEditComment,
     onSaveCommentPress,
+    onDeleteComment,
+    isDeleteCommentModalOpen,
+    setIsDeleteCommentModalOpen,
+    onCancelDelete,
   };
 };

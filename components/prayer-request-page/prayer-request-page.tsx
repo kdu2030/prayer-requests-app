@@ -14,6 +14,7 @@ import {
   CommentFormAction,
   PrayerRequestCommentForm,
 } from "../prayer-request/prayer-request-types";
+import { DeletePrayerRequestCommentModal } from "./delete-prayer-request-comment-modal";
 import { PrayerRequestCommentActions } from "./prayer-request-comment-actions";
 import { PrayerRequestCommentCard } from "./prayer-request-comment-card";
 import { PrayerRequestPagePlaceholder } from "./prayer-request-page-placeholder";
@@ -47,6 +48,9 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     onEditPrayerRequestComment,
     onCancelEditComment,
     onSaveCommentPress,
+    onDeleteComment,
+    onCancelDelete,
+    isDeleteCommentModalOpen,
   } = usePrayerRequestPage(prayerRequestId);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -138,7 +142,12 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
               isOpen={isPrayerCommentActionsOpen}
               onClose={onCommentActionsCancel}
               onEditComment={onEditPrayerRequestComment}
+              onDeleteComment={onDeleteComment}
             />
+
+            {isDeleteCommentModalOpen && (
+              <DeletePrayerRequestCommentModal onClose={onCancelDelete} />
+            )}
           </View>
         </SafeAreaView>
       )}

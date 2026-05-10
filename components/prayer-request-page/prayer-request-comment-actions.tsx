@@ -11,12 +11,14 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   onEditComment: () => void;
+  onDeleteComment: () => void;
 };
 
 export const PrayerRequestCommentActions: React.FC<Props> = ({
   isOpen,
   onClose,
   onEditComment,
+  onDeleteComment,
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
@@ -46,7 +48,7 @@ export const PrayerRequestCommentActions: React.FC<Props> = ({
           }
           label={translate("prayerRequest.comment.deleteComment")}
           labelStyles={{ color: theme.colors.error }}
-          onPress={() => {}}
+          onPress={onDeleteComment}
         />
       </View>
     </AppBottomSheet>

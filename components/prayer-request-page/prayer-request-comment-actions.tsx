@@ -35,6 +35,19 @@ export const PrayerRequestCommentActions: React.FC<Props> = ({
           label={translate("prayerRequest.comment.editComment")}
           onPress={onEditComment}
         />
+
+        <PrayerGroupOptionButton
+          icon={
+            <MaterialCommunityIcons
+              name="trash-can"
+              size={24}
+              color={theme.colors.error}
+            />
+          }
+          label={translate("prayerRequest.comment.deleteComment")}
+          labelStyles={{ color: theme.colors.error }}
+          onPress={() => {}}
+        />
       </View>
     </AppBottomSheet>
   );

@@ -16,6 +16,7 @@ export const chineseTranslations: Translations = {
   "common.actions.leave": "退出",
   "common.actions.approve": "同意",
   "common.actions.reject": "拒绝",
+  "common.actions.delete": "删除",
 
   "loading.userData.text": "加载用户数据",
   "loading.userData.label": "用户数据",
@@ -170,6 +171,8 @@ export const chineseTranslations: Translations = {
   "prayerRequest.comment.post": "发表",
   "prayerRequest.comment.editComment": "编辑评论",
   "prayerRequest.comment.deleteComment": "删除评论",
+  "prayerRequest.comment.deleteConfirmation":
+    "确定要删除评论吗？删除后将无法回复。",
 
   "prayerRequestPage.loading": "加载祷告事项",
   "prayerRequestPage.failedToLoad": "加载祷告事项失败了。",

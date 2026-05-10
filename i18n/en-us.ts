@@ -10,6 +10,7 @@ export const englishTranslations = {
   "common.actions.leave": "Leave",
   "common.actions.approve": "Approve",
   "common.actions.reject": "Reject",
+  "common.actions.delete": "Delete",
 
   "loading.userData.text": "Loading user data",
   "loading.userData.label": "User Data",
@@ -177,6 +178,8 @@ export const englishTranslations = {
   "prayerRequest.comment.post": "Post",
   "prayerRequest.comment.editComment": "Edit Comment",
   "prayerRequest.comment.deleteComment": "Delete Comment",
+  "prayerRequest.comment.deleteConfirmation":
+    "Are you sure you want to delete this comment? This cannot be undone.",
 
   "prayerGroup.joinRequest.label":
     "This is a private prayer group. To join, please submit a join request.",

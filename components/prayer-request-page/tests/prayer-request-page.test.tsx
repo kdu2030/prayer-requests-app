@@ -1,13 +1,10 @@
-import { render, RenderResult } from "@testing-library/react-native";
+import { RenderResult } from "@testing-library/react-native";
 import mockSafeAreaContext from "react-native-safe-area-context/jest/mock";
 
 import { getArrayTestId } from "../../../helpers/utils";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import { PrayerRequestDetailsModel } from "../../../types/prayer-request-types";
-import {
-  mockPrayerRequests,
-  mockUserData,
-} from "../../prayer-group/tests/mock-data";
+import { mockPrayerRequests } from "../../prayer-group/tests/mock-data";
 import { PrayerRequestCardTestIds } from "../../prayer-request/tests/test-ids";
 import { PrayerRequestPage } from "../prayer-request-page";
 
@@ -60,6 +57,11 @@ jest.mock("../../../api/delete-prayer-request-comment", () => ({
 }));
 
 jest.mock("react-native-safe-area-context", () => mockSafeAreaContext);
+
+jest.mock("@gorhom/bottom-sheet", () => ({
+  __esModule: true,
+  ...require("@gorhom/bottom-sheet/mock"),
+}));
 
 let component: RenderResult;
 

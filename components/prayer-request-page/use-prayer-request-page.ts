@@ -70,6 +70,9 @@ export const usePrayerRequestPage = (
   const putPrayerRequestComment = usePutPrayerRequestComment();
   const deletePrayerRequestComment = useDeletePrayerRequestComment();
 
+  const [commentPlaceholderPosition, setCommentPlaceholderPosition] =
+    React.useState<number>();
+
   const {
     setPrayerRequest: setPrayerRequestGlobal,
     getPrayerRequestFromStore,
@@ -447,17 +450,19 @@ export const usePrayerRequestPage = (
     setIsDeleteCommentModalOpen(false);
   };
 
-  const scrollToCommentSection = React.useCallback(() => {
-    // FIXME: Handle placeholder when there are no comments
-
+  const scrollToCommentSection = () => {
     if (!prayerRequestCommentListRef.current) {
       return;
     }
 
     if (prayerRequest?.comments && prayerRequest.comments.length > 0) {
       prayerRequestCommentListRef.current.scrollToIndex({ index: 0 });
+    } else if (commentPlaceholderPosition) {
+      prayerRequestCommentListRef.current.scrollToOffset({
+        offset: commentPlaceholderPosition,
+      });
     }
-  }, [prayerRequest?.comments]);
+  };
 
   const onCommentListLayout = () => {
     if (
@@ -503,5 +508,6 @@ export const usePrayerRequestPage = (
     prayerRequestCommentListRef,
     scrollToCommentSection,
     onCommentListLayout,
+    setCommentPlaceholderPosition,
   };
 };

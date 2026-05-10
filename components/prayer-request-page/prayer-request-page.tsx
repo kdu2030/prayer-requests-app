@@ -61,6 +61,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
     prayerRequestCommentListRef,
     scrollToCommentSection,
     onCommentListLayout,
+    setCommentPlaceholderPosition,
   } = usePrayerRequestPage(prayerRequestId, scrollToCommentsOnLoad);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -107,7 +108,11 @@ export const PrayerRequestPage: React.FC<Props> = ({
                   onOpenActions={() => onOpenPrayerRequestCommentActions(index)}
                 />
               )}
-              ListEmptyComponent={<PrayerRequestCommentPlaceholder />}
+              ListEmptyComponent={
+                <PrayerRequestCommentPlaceholder
+                  setPlaceholderPosition={setCommentPlaceholderPosition}
+                />
+              }
               onLayout={onCommentListLayout}
               ref={prayerRequestCommentListRef}
             />

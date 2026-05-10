@@ -16,6 +16,7 @@ import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import {
   PrayerRequestFilterCriteria,
   PrayerRequestGetResponse,
+  PrayerRequestModel,
 } from "../../../types/prayer-request-types";
 import { PrayerRequestContextProvider } from "../../prayer-request/prayer-request-context";
 import { PrayerRequestCardTestIds } from "../../prayer-request/tests/test-ids";
@@ -36,6 +37,8 @@ const mockGetPrayerGroup = jest.fn();
 const mockPostPrayerGroupUser = jest.fn();
 const mockDeletePrayerGroupUser = jest.fn();
 const mockPostPrayerRequestFilter = jest.fn();
+
+const mockUsePrayerRequestDetailsContext = jest.fn();
 
 jest.mock("@gorhom/bottom-sheet", () => ({
   __esModule: true,
@@ -65,6 +68,10 @@ jest.mock("../../../api/post-prayer-request-filter", () => ({
   usePostPrayerRequestFilter:
     () => (filterCriteria: PrayerRequestFilterCriteria) =>
       mockPostPrayerRequestFilter(filterCriteria),
+}));
+
+jest.mock("../../prayer-request/prayer-request-detail-context", () => ({
+  usePrayerRequestDetailContext: () => mockUsePrayerRequestDetailsContext(),
 }));
 
 const MockSkeleton = View;
@@ -225,6 +232,19 @@ describe(PrayerGroup, () => {
         sortDirection: SortOrder.Descending,
       },
     };
+
+    const mockPrayerRequestMap: Record<number, PrayerRequestModel> = {};
+
+    mockPrayerRequests.forEach((prayerRequest) => {
+      mockPrayerRequestMap[prayerRequest.prayerRequestId!] = prayerRequest;
+    });
+
+    mockUsePrayerRequestDetailsContext.mockReturnValue({
+      getPrayerRequestFromStore: (prayerRequestId: number) => {
+        return mockPrayerRequestMap[prayerRequestId];
+      },
+      addPrayerRequests: () => {},
+    });
 
     mockPostPrayerRequestFilter.mockImplementation(
       (filterCriteria: PrayerRequestFilterCriteria) => {

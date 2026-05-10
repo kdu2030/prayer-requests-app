@@ -22,7 +22,7 @@ import { PrayerRequestCardTestIds } from "./test-ids";
 
 let component: RenderResult;
 
-const mockSetPrayerRequests = jest.fn();
+const mockSetPrayerRequest = jest.fn();
 const mockPostPrayerRequestLike = jest.fn();
 const mockDeletePrayerRequestLike = jest.fn();
 const mockUsePrayerRequestDetailContext = jest.fn();
@@ -58,7 +58,10 @@ const mountPrayerRequestCard = (prayerRequest: PrayerRequestModel) => {
     getPrayerRequestFromStore: () => {
       return prayerRequest;
     },
-    setPrayerRequest: () => {},
+    setPrayerRequest: (
+      _prayerRequestId: number,
+      prayerRequest: PrayerRequestModel,
+    ) => mockSetPrayerRequest(prayerRequest),
   });
 
   return mountComponent(
@@ -83,12 +86,12 @@ describe(PrayerRequestListCard, () => {
   });
 
   test("Like button adds prayer request like if user hasn't liked prayer request", async () => {
-    let updatedPrayerRequests: PrayerRequestModel[] = [];
+    let updatedPrayerRequest: PrayerRequestModel | undefined = undefined;
     let submittedPrayerRequestId: number | undefined = undefined;
 
-    mockSetPrayerRequests.mockImplementation(
-      (prayerRequests: PrayerRequestModel[]) => {
-        updatedPrayerRequests = prayerRequests;
+    mockSetPrayerRequest.mockImplementation(
+      (prayerRequest: PrayerRequestModel) => {
+        updatedPrayerRequest = prayerRequest;
       },
     );
 
@@ -118,16 +121,16 @@ describe(PrayerRequestListCard, () => {
       expect(submittedPrayerRequestId).toBe(
         mockPrayerRequests[0].prayerRequestId,
       );
-      expect(updatedPrayerRequests[0].likeCount).toBe(2);
+      expect(updatedPrayerRequest?.likeCount).toBe(2);
     });
   });
 
   test("Like button removes prayer request like if user liked prayer request", async () => {
-    let updatedPrayerRequests: PrayerRequestModel[] = [];
+    let updatedPrayerRequest: PrayerRequestModel | undefined = undefined;
 
-    mockSetPrayerRequests.mockImplementation(
-      (prayerRequests: PrayerRequestModel[]) => {
-        updatedPrayerRequests = prayerRequests;
+    mockSetPrayerRequest.mockImplementation(
+      (prayerRequest: PrayerRequestModel) => {
+        updatedPrayerRequest = prayerRequest;
       },
     );
 
@@ -142,7 +145,7 @@ describe(PrayerRequestListCard, () => {
 
     await waitFor(() => {
       expect(mockDeletePrayerRequestLike).toHaveBeenCalledWith(787);
-      expect(updatedPrayerRequests[1].likeCount).toBe(0);
+      expect(updatedPrayerRequest?.likeCount).toBe(0);
     });
   });
 });

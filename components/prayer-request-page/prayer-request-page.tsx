@@ -51,6 +51,8 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     onDeleteComment,
     onCancelDeleteComment,
     isDeleteCommentModalOpen,
+    isDeleteCommentLoading,
+    onConfirmDeleteComment,
   } = usePrayerRequestPage(prayerRequestId);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -147,7 +149,9 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
 
             {isDeleteCommentModalOpen && (
               <DeletePrayerRequestCommentModal
+                isDeleteLoading={isDeleteCommentLoading}
                 onClose={onCancelDeleteComment}
+                onConfirmDelete={onConfirmDeleteComment}
               />
             )}
           </View>

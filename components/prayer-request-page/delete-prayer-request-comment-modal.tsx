@@ -6,11 +6,15 @@ import { useI18N } from "../../hooks/use-i18n";
 import { RoundedModal } from "../modals/rounded-modal";
 
 type Props = {
+  isDeleteLoading: boolean;
   onClose: () => void;
+  onConfirmDelete: () => void;
 };
 
 export const DeletePrayerRequestCommentModal: React.FC<Props> = ({
   onClose,
+  isDeleteLoading,
+  onConfirmDelete,
 }) => {
   const theme = useTheme();
   const { translate } = useI18N();
@@ -29,7 +33,12 @@ export const DeletePrayerRequestCommentModal: React.FC<Props> = ({
         <Button mode="outlined" onPress={onClose}>
           {translate("common.actions.cancel")}
         </Button>
-        <Button mode="contained" buttonColor={theme.colors.error}>
+        <Button
+          mode="contained"
+          buttonColor={theme.colors.error}
+          loading={isDeleteLoading}
+          onPress={onConfirmDelete}
+        >
           {translate("common.actions.delete")}
         </Button>
       </View>

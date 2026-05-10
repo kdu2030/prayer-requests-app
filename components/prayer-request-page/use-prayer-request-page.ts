@@ -459,10 +459,19 @@ export const usePrayerRequestPage = (
   }, [prayerRequest?.comments]);
 
   React.useLayoutEffect(() => {
+    if (prayerRequestLoadStatus !== LoadStatus.Success) {
+      return;
+    }
+
     if (scrollToCommentsOnLoad) {
       scrollToCommentSection();
     }
-  }, [prayerRequest?.comments, scrollToCommentSection, scrollToCommentsOnLoad]);
+  }, [
+    prayerRequest?.comments,
+    prayerRequestLoadStatus,
+    scrollToCommentSection,
+    scrollToCommentsOnLoad,
+  ]);
 
   return {
     prayerRequest,

@@ -464,7 +464,7 @@ export const usePrayerRequestPage = (
     }
 
     if (scrollToCommentsOnLoad) {
-      scrollToCommentSection();
+      window.setTimeout(() => scrollToCommentSection(), 180);
     }
   }, [
     prayerRequest?.comments,

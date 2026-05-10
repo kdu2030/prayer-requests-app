@@ -83,6 +83,7 @@ export const usePrayerRequestPage = (
   const isCommentActionInProgressRef = React.useRef<boolean>(false);
 
   const prayerRequestCommentListRef = React.useRef<FlatList>(null);
+  const isScrollOnLoadCompleteRef = React.useRef<boolean>(false);
 
   const loadPrayerRequest = async () => {
     setPrayerRequestLoadStatus(LoadStatus.Loading);
@@ -459,12 +460,16 @@ export const usePrayerRequestPage = (
   }, [prayerRequest?.comments]);
 
   const onCommentListLayout = () => {
-    if (prayerRequestLoadStatus !== LoadStatus.Success) {
+    if (
+      prayerRequestLoadStatus !== LoadStatus.Success &&
+      !isScrollOnLoadCompleteRef.current
+    ) {
       return;
     }
 
     if (scrollToCommentsOnLoad) {
       scrollToCommentSection();
+      isScrollOnLoadCompleteRef.current = true;
     }
   };
 

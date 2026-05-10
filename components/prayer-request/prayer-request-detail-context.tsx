@@ -20,7 +20,7 @@ export const PrayerRequestDetailContext =
     getPrayerRequestFromStore: () => {},
     setPrayerRequest: () => {},
     addPrayerRequestsToStore: () => {},
-  });
+  } as PrayerRequestDetailContextType);
 
 type Props = {
   children: React.ReactNode;

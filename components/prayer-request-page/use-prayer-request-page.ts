@@ -26,7 +26,10 @@ import {
 } from "../prayer-request/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
 
-export const usePrayerRequestPage = (prayerRequestId: number) => {
+export const usePrayerRequestPage = (
+  prayerRequestId: number,
+  scrollToCommentsOnLoad: boolean,
+) => {
   const [prayerRequest, setPrayerRequest] =
     React.useState<PrayerRequestDetailsModel>();
   const [prayerRequestLoadStatus, setPrayerRequestLoadStatus] =
@@ -454,6 +457,12 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
       prayerRequestCommentListRef.current.scrollToIndex({ index: 0 });
     }
   }, [prayerRequest?.comments]);
+
+  React.useLayoutEffect(() => {
+    if (scrollToCommentsOnLoad) {
+      scrollToCommentSection();
+    }
+  }, [prayerRequest?.comments, scrollToCommentSection, scrollToCommentsOnLoad]);
 
   return {
     prayerRequest,

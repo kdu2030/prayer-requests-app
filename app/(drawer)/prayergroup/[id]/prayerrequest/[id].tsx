@@ -6,10 +6,13 @@ import { PrayerRequestPage } from "../../../../../components/prayer-request-page
 type PrayerRequestPageParams = {
   id: string;
   id_1: string;
+  scrollToCommentsOnLoad: string;
 };
 
 const PrayerRequestContainer: React.FC = () => {
-  const { id_1 } = useLocalSearchParams<PrayerRequestPageParams>();
+  const { id_1, scrollToCommentsOnLoad } =
+    useLocalSearchParams<PrayerRequestPageParams>();
+
   const prayerRequestId = React.useMemo(() => {
     if (typeof id_1 === "string") {
       return Number.parseInt(id_1);
@@ -20,7 +23,10 @@ const PrayerRequestContainer: React.FC = () => {
 
   return (
     <>
-      <PrayerRequestPage prayerRequestId={prayerRequestId} />
+      <PrayerRequestPage
+        prayerRequestId={prayerRequestId}
+        scrollToCommentsOnLoad={scrollToCommentsOnLoad === "true"}
+      />
     </>
   );
 };

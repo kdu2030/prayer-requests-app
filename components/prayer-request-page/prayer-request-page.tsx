@@ -22,9 +22,13 @@ import { usePrayerRequestPage } from "./use-prayer-request-page";
 
 type Props = {
   prayerRequestId: number;
+  scrollToCommentsOnLoad: boolean;
 };
 
-export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
+export const PrayerRequestPage: React.FC<Props> = ({
+  prayerRequestId,
+  scrollToCommentsOnLoad,
+}) => {
   const theme = useTheme();
   const { translate } = useI18N();
 
@@ -55,7 +59,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     onConfirmDeleteComment,
     prayerRequestCommentListRef,
     scrollToCommentSection,
-  } = usePrayerRequestPage(prayerRequestId);
+  } = usePrayerRequestPage(prayerRequestId, scrollToCommentsOnLoad);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
     return (

@@ -53,6 +53,8 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
     isDeleteCommentModalOpen,
     isDeleteCommentLoading,
     onConfirmDeleteComment,
+    prayerRequestCommentListRef,
+    scrollToCommentSection,
   } = usePrayerRequestPage(prayerRequestId);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -86,6 +88,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
                   isLikeLoading={isLikeLoading}
                   onLikePress={onLikePress}
                   onPrayPress={openBookmarkBottomSheet}
+                  onCommentPress={scrollToCommentSection}
                   showCreatedUser
                   truncateDescription={false}
                 />
@@ -98,6 +101,7 @@ export const PrayerRequestPage: React.FC<Props> = ({ prayerRequestId }) => {
                   onOpenActions={() => onOpenPrayerRequestCommentActions(index)}
                 />
               )}
+              ref={prayerRequestCommentListRef}
             />
 
             <View

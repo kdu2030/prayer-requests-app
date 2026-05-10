@@ -20,6 +20,7 @@ type Props = {
   isLikeLoading: boolean;
   onLikePress: () => void;
   onPrayPress: () => void;
+  onCommentPress: () => void;
   truncateDescription?: boolean;
 };
 
@@ -31,6 +32,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
   onLikePress,
   onPrayPress,
   truncateDescription = true,
+  onCommentPress,
 }) => {
   const theme = useTheme();
   const displayUser = showCreatedUser && prayerRequest.user?.fullName;
@@ -152,6 +154,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
                 ? "comment"
                 : "comment-outline"
             }
+            onPress={onCommentPress}
             testID={getArrayTestId(
               PrayerRequestCardTestIds.commentButton,
               prayerRequest.prayerRequestId,

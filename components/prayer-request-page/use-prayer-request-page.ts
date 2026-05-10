@@ -1,6 +1,6 @@
 import { FormikProps } from "formik";
 import * as React from "react";
-import { Keyboard } from "react-native";
+import { FlatList, Keyboard } from "react-native";
 
 import { useDeletePrayerRequestComment } from "../../api/delete-prayer-request-comment";
 import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like";
@@ -78,6 +78,8 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     React.useRef<FormikProps<PrayerRequestCommentForm>>(null);
 
   const isCommentActionInProgressRef = React.useRef<boolean>(false);
+
+  const prayerRequestCommentListRef = React.useRef<FlatList>(null);
 
   const loadPrayerRequest = async () => {
     setPrayerRequestLoadStatus(LoadStatus.Loading);
@@ -441,6 +443,18 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     setIsDeleteCommentModalOpen(false);
   };
 
+  const scrollToCommentSection = React.useCallback(() => {
+    // FIXME: Handle placeholder when there are no comments
+
+    if (!prayerRequestCommentListRef.current) {
+      return;
+    }
+
+    if (prayerRequest?.comments && prayerRequest.comments.length > 0) {
+      prayerRequestCommentListRef.current.scrollToIndex({ index: 0 });
+    }
+  }, [prayerRequest?.comments]);
+
   return {
     prayerRequest,
     prayerRequestLoadStatus,
@@ -468,5 +482,7 @@ export const usePrayerRequestPage = (prayerRequestId: number) => {
     onCancelDeleteComment,
     isDeleteCommentLoading,
     onConfirmDeleteComment,
+    prayerRequestCommentListRef,
+    scrollToCommentSection,
   };
 };

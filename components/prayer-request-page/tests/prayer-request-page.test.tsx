@@ -296,4 +296,32 @@ describe(PrayerRequestPage, () => {
 
     expect(postedComment).toHaveTextContent(mockCommentText);
   });
+
+  test("If the comment belongs to the current user, the comment actions button is shown", async () => {
+    const mockPrayerRequestComment: PrayerRequestCommentModel = {
+      prayerRequestCommentId: 737,
+      user: mockUserData,
+      comment:
+        "You're always saying there's something wrong with society, maybe there's something wrong with you?",
+      submittedDate: new Date().toISOString(),
+    };
+
+    const mockPrayerRequest: PrayerRequestDetailsModel = {
+      ...cloneDeep(mockPrayerRequests[0]),
+      comments: [mockPrayerRequestComment],
+      userCommentIds: [mockPrayerRequestComment.prayerRequestCommentId ?? -1],
+      commentCount: 1,
+    };
+
+    const component = mountPrayerRequestPage(mockPrayerRequest);
+
+    const commentActionsButton = await component.findByTestId(
+      getArrayTestId(
+        PrayerRequestPageTestIds.commentActionsButton,
+        mockPrayerRequestComment.prayerRequestCommentId,
+      ),
+    );
+
+    expect(commentActionsButton).toBeTruthy();
+  });
 });

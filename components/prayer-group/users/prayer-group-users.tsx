@@ -5,6 +5,7 @@ import { Button, Text, TextInput, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../../hooks/use-i18n";
+import { useBlurOnHide } from "../../inputs/use-blur-on-hide";
 import { ErrorScreen } from "../../layouts/error-screen";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { SpinnerScreen } from "../../layouts/spinner-screen";
@@ -38,6 +39,8 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
     isSaveLoading,
     onSavePrayerGroupUsers,
   } = usePrayerGroupUsers(prayerGroupId);
+
+  const { inputRef } = useBlurOnHide();
 
   return (
     <SafeAreaView className="flex-1">
@@ -76,8 +79,9 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
               left={<TextInput.Icon icon="magnify" size={24} />}
               label={translate("prayerGroup.manageUsers.searchForUsers")}
               placeholder={translate(
-                "prayerGroup.manageUsers.searchPlaceholder"
+                "prayerGroup.manageUsers.searchPlaceholder",
               )}
+              ref={inputRef}
               testID={PrayerGroupUsersTestIds.searchBar}
             />
           </View>

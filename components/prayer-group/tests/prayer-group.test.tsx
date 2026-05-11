@@ -16,6 +16,7 @@ import { PrayerGroupDetails } from "../../../types/prayer-group-types";
 import {
   PrayerRequestFilterCriteria,
   PrayerRequestGetResponse,
+  PrayerRequestModel,
 } from "../../../types/prayer-request-types";
 import { PrayerRequestContextProvider } from "../../prayer-request/prayer-request-context";
 import { PrayerRequestCardTestIds } from "../../prayer-request/tests/test-ids";
@@ -36,6 +37,8 @@ const mockGetPrayerGroup = jest.fn();
 const mockPostPrayerGroupUser = jest.fn();
 const mockDeletePrayerGroupUser = jest.fn();
 const mockPostPrayerRequestFilter = jest.fn();
+
+const mockUsePrayerRequestDetailsContext = jest.fn();
 
 jest.mock("@gorhom/bottom-sheet", () => ({
   __esModule: true,
@@ -65,6 +68,10 @@ jest.mock("../../../api/post-prayer-request-filter", () => ({
   usePostPrayerRequestFilter:
     () => (filterCriteria: PrayerRequestFilterCriteria) =>
       mockPostPrayerRequestFilter(filterCriteria),
+}));
+
+jest.mock("../../prayer-request/prayer-request-detail-context", () => ({
+  usePrayerRequestDetailContext: () => mockUsePrayerRequestDetailsContext(),
 }));
 
 const MockSkeleton = View;
@@ -123,6 +130,11 @@ describe(PrayerGroup, () => {
   });
 
   test("Mount test", async () => {
+    mockUsePrayerRequestDetailsContext.mockReturnValue({
+      getPrayerRequestFromStore: () => {},
+      addPrayerRequestsToStore: () => {},
+    });
+
     component = mountPrayerGroup(mockPrayerGroupDetails);
     await waitFor(() => {
       expect(component).toBeTruthy();
@@ -130,6 +142,11 @@ describe(PrayerGroup, () => {
   });
 
   test("Prayer group banner displays if not null", async () => {
+    mockUsePrayerRequestDetailsContext.mockReturnValue({
+      getPrayerRequestFromStore: () => {},
+      addPrayerRequestsToStore: () => {},
+    });
+
     component = mountPrayerGroup(mockPrayerGroupDetails);
     const prayerGroupBanner = await component.findByTestId(
       PrayerGroupHeaderTestIds.imageBanner,
@@ -140,6 +157,11 @@ describe(PrayerGroup, () => {
   });
 
   test("Prayer group banner placeholder displays if banner is null", async () => {
+    mockUsePrayerRequestDetailsContext.mockReturnValue({
+      getPrayerRequestFromStore: () => {},
+      addPrayerRequestsToStore: () => {},
+    });
+
     const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       bannerFile: undefined,
@@ -153,6 +175,11 @@ describe(PrayerGroup, () => {
   });
 
   test("Correct buttons display if user is a member", async () => {
+    mockUsePrayerRequestDetailsContext.mockReturnValue({
+      getPrayerRequestFromStore: () => {},
+      addPrayerRequestsToStore: () => {},
+    });
+
     component = mountPrayerGroup(mockPrayerGroupDetails);
     const leaveGroupButton = await component.findByTestId(
       PrayerGroupHeaderTestIds.optionsButton,
@@ -166,6 +193,11 @@ describe(PrayerGroup, () => {
   });
 
   test("Join prayer group button displays if user is not a member", async () => {
+    mockUsePrayerRequestDetailsContext.mockReturnValue({
+      getPrayerRequestFromStore: () => {},
+      addPrayerRequestsToStore: () => {},
+    });
+
     const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       prayerGroupRole: undefined,
@@ -186,6 +218,11 @@ describe(PrayerGroup, () => {
   });
 
   test("Post prayer group user gets called when the user presses the join button", async () => {
+    mockUsePrayerRequestDetailsContext.mockReturnValue({
+      getPrayerRequestFromStore: () => {},
+      addPrayerRequestsToStore: () => {},
+    });
+
     mockPostPrayerGroupUser.mockReturnValue({ isError: false });
 
     const prayerGroupDetails: PrayerGroupDetails = {
@@ -226,6 +263,19 @@ describe(PrayerGroup, () => {
       },
     };
 
+    const mockPrayerRequestMap: Record<number, PrayerRequestModel> = {};
+
+    mockPrayerRequests.forEach((prayerRequest) => {
+      mockPrayerRequestMap[prayerRequest.prayerRequestId!] = prayerRequest;
+    });
+
+    mockUsePrayerRequestDetailsContext.mockReturnValue({
+      getPrayerRequestFromStore: (prayerRequestId: number) => {
+        return mockPrayerRequestMap[prayerRequestId];
+      },
+      addPrayerRequestsToStore: () => {},
+    });
+
     mockPostPrayerRequestFilter.mockImplementation(
       (filterCriteria: PrayerRequestFilterCriteria) => {
         prayerRequestFilterCriteria = filterCriteria;
@@ -245,6 +295,11 @@ describe(PrayerGroup, () => {
   });
 
   test("Submit join request button shows up when the user is not joined on a private prayer group", async () => {
+    mockUsePrayerRequestDetailsContext.mockReturnValue({
+      getPrayerRequestFromStore: () => {},
+      addPrayerRequestsToStore: () => {},
+    });
+
     const prayerGroupDetails: PrayerGroupDetails = {
       ...mockPrayerGroupDetails,
       userJoinStatus: JoinStatus.NotJoined,

@@ -9,7 +9,7 @@ import { useI18N } from "../../../hooks/use-i18n";
 import { LoadStatus } from "../../../types/api-response-types";
 import { ErrorScreen } from "../../layouts/error-screen";
 import { PrayerRequestPlaceholder } from "../prayer-request-placeholder";
-import { PrayerRequestSpinner } from "../spinners/prayer-request-spinner";
+import { PrayerRequestListSpinner } from "../spinners/prayer-request-list-spinner";
 import { PrivatePrayerGroupPlaceholder } from "./private-prayer-group-placeholder";
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
   prayerRequestLoadStatus: LoadStatus;
   loadNextPrayerRequestsForGroup: (
     prayerGroupId: number,
-    showCompleteSpinner: boolean
+    showCompleteSpinner: boolean,
   ) => void;
   visibilityLevel?: VisibilityLevel;
   joinStatus?: JoinStatus;
@@ -46,7 +46,7 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
       {prayerGroupHeader}
       <View className="mt-32">
         {prayerRequestLoadStatus === LoadStatus.Loading && (
-          <PrayerRequestSpinner
+          <PrayerRequestListSpinner
             textClassName="mt-5"
             labelVariant={"titleMedium"}
           />

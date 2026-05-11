@@ -10,6 +10,7 @@ export const englishTranslations = {
   "common.actions.leave": "Leave",
   "common.actions.approve": "Approve",
   "common.actions.reject": "Reject",
+  "common.actions.delete": "Delete",
 
   "loading.userData.text": "Loading user data",
   "loading.userData.label": "User Data",
@@ -170,6 +171,18 @@ export const englishTranslations = {
   "prayerRequest.actions.savePrayerRequest": "Save prayer request",
   "prayerRequest.actions.unsavePrayerRequest": "Unsave prayer request",
 
+  "prayerRequestPage.loading": "Loading prayer request",
+  "prayerRequestPage.failedToLoad": "Failed to load prayer request.",
+
+  "prayerRequest.comment.label": "Comment",
+  "prayerRequest.comment.post": "Post",
+  "prayerRequest.comment.editComment": "Edit Comment",
+  "prayerRequest.comment.deleteComment": "Delete Comment",
+  "prayerRequest.comment.deleteConfirmation":
+    "Are you sure you want to delete this comment? This cannot be undone.",
+  "prayerRequest.comments.placeholder":
+    "This prayer request does not have comments yet.",
+
   "prayerGroup.joinRequest.label":
     "This is a private prayer group. To join, please submit a join request.",
   "prayerGroup.joinRequest.submitJoinRequest": "Submit Join Request",
@@ -193,4 +206,11 @@ export const englishTranslations = {
   "toaster.savePrayerRequest.failure": "Failed to save prayer request.",
   "toaster.unsavePrayerRequest.success": "Prayer request unsaved.",
   "toaster.unsavePrayerRequest.failure": "Failed to unsave prayer request.",
+
+  "toaster.comment.success": "Posted comment",
+  "toaster.comment.failure": "Failed to post comment",
+  "toaster.editComment.success": "Edited comment",
+  "toaster.editComment.failure": "Failed to edit comment",
+  "toaster.deleteComment.success": "Deleted comment",
+  "toaster.deleteComment.failure": "Failed to delete comment",
 };

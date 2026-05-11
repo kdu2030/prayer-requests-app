@@ -1,5 +1,6 @@
 import { BottomSheetProps } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+import { router } from "expo-router";
 import * as React from "react";
 
 import { useDeletePrayerGroupUser } from "../../api/delete-prayer-group-user";
@@ -29,8 +30,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const {
     prayerRequestFilters,
     setPrayerRequestFilters,
-    prayerRequests,
-    setPrayerRequests,
+    prayerRequestIds,
     prayerRequestMetadata,
     cleanupPrayerRequests,
     loadNextPrayerRequestsForGroup,
@@ -216,7 +216,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     if (
       prayerRequestMetadata.totalCount == null ||
-      prayerRequests.length >= prayerRequestMetadata.totalCount
+      prayerRequestIds.length >= prayerRequestMetadata.totalCount
     ) {
       return;
     }
@@ -236,15 +236,33 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const showPrayerRequestList = React.useMemo(() => {
     return (
       prayerRequestLoadStatus === LoadStatus.Success &&
-      prayerRequests.length > 0
+      prayerRequestIds.length > 0
     );
-  }, [prayerRequestLoadStatus, prayerRequests.length]);
+  }, [prayerRequestLoadStatus, prayerRequestIds.length]);
 
   const setUserJoinStatus = (joinStatus: JoinStatus) => {
     setPrayerGroupDetails((prayerGroupDetails) => ({
       ...prayerGroupDetails,
       userJoinStatus: joinStatus,
     }));
+  };
+
+  const navigateToPrayerRequestPage = (
+    prayerRequestId: number,
+    scrollToCommentsOnLoad: boolean = false,
+  ) => {
+    if (!prayerGroupDetails?.prayerGroupId) {
+      return;
+    }
+
+    router.push({
+      pathname: "/prayergroup/[id]/prayerrequest/[id]",
+      params: {
+        id: prayerGroupDetails.prayerGroupId,
+        id_1: prayerRequestId,
+        scrollToCommentsOnLoad: scrollToCommentsOnLoad.toString(),
+      },
+    });
   };
 
   return {
@@ -259,9 +277,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     onOpenOptions,
     prayerRequestFilters,
     setPrayerRequestFilters,
-    prayerRequests,
     onEndReached,
-    setPrayerRequests,
     loadNextPrayerRequestsForGroup,
     nextPrayerRequestsLoadStatus,
     prayerRequestLoadStatus,
@@ -270,5 +286,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setShowLeavePrayerGroupModal,
     setUserJoinStatus,
     numNotLoadedRequests,
+    navigateToPrayerRequestPage,
   };
 };

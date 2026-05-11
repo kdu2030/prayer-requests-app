@@ -16,6 +16,7 @@ export const chineseTranslations: Translations = {
   "common.actions.leave": "退出",
   "common.actions.approve": "同意",
   "common.actions.reject": "拒绝",
+  "common.actions.delete": "删除",
 
   "loading.userData.text": "加载用户数据",
   "loading.userData.label": "用户数据",
@@ -166,6 +167,17 @@ export const chineseTranslations: Translations = {
   "prayerRequest.actions.savePrayerRequest": "收藏祷告事项",
   "prayerRequest.actions.unsavePrayerRequest": "取消祷告事项收藏",
 
+  "prayerRequest.comment.label": "评论",
+  "prayerRequest.comment.post": "发表",
+  "prayerRequest.comment.editComment": "编辑评论",
+  "prayerRequest.comment.deleteComment": "删除评论",
+  "prayerRequest.comment.deleteConfirmation":
+    "确定要删除评论吗？删除后将无法回复。",
+  "prayerRequest.comments.placeholder": "这个祷告事项还没有评论。",
+
+  "prayerRequestPage.loading": "加载祷告事项",
+  "prayerRequestPage.failedToLoad": "加载祷告事项失败了。",
+
   "prayerGroup.joinRequest.label":
     "这是一个私密的祷告小组。要加入，请提交加入请求。",
   "prayerGroup.joinRequest.submitJoinRequest": "提交加入请求",
@@ -187,4 +199,11 @@ export const chineseTranslations: Translations = {
   "toaster.savePrayerRequest.failure": "收藏报告事项失败了。",
   "toaster.unsavePrayerRequest.success": "祷告事项收藏已取消。",
   "toaster.unsavePrayerRequest.failure": "取消祷告事项收藏失败了。",
+
+  "toaster.comment.success": "评论发表了。",
+  "toaster.comment.failure": "评论发表失败了。",
+  "toaster.editComment.success": "已编辑评论。",
+  "toaster.editComment.failure": "编辑评论失败了。",
+  "toaster.deleteComment.success": "已删除评论。",
+  "toaster.deleteComment.failure": "删除评论失败了。",
 };

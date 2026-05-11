@@ -8,6 +8,8 @@ import {
 } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 
+import { useBlurOnHide } from "./use-blur-on-hide";
+
 interface Props extends TextInputProps {
   name: string;
   inputClassNames?: string;
@@ -28,6 +30,8 @@ export const TextInput: React.FC<Props> = ({
   testID,
   ...props
 }) => {
+  const { inputRef } = useBlurOnHide();
+
   const [field, meta, helpers] = useField(name);
   const isError = meta.touched && meta.error;
   const theme = useTheme();
@@ -49,6 +53,7 @@ export const TextInput: React.FC<Props> = ({
         textColor={isError ? theme.colors.error : undefined}
         testID={testID}
         {...props}
+        ref={inputRef}
       />
       {isError && (
         <HelperText className={errorClassNames} type="error">

@@ -7,21 +7,21 @@ import { LoadStatus } from "../../types/api-response-types";
 import {
   PrayerRequestFilterCriteria,
   PrayerRequestMetadata,
-  PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import {
   DEFAULT_PRAYER_REQUEST_FILTERS,
   DEFAULT_PRAYER_REQUEST_METADATA,
 } from "../prayer-group/prayer-group-constants";
 import { useToasterContext } from "../toasters/toaster-context";
+import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
 
 export type PrayerRequestContextType = {
   prayerRequestFilters: PrayerRequestFilterCriteria;
   setPrayerRequestFilters: React.Dispatch<
     React.SetStateAction<PrayerRequestFilterCriteria>
   >;
-  prayerRequests: PrayerRequestModel[];
-  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>;
+  prayerRequestIds: number[];
+  setPrayerRequestIds: React.Dispatch<React.SetStateAction<number[]>>;
   prayerRequestMetadata: PrayerRequestMetadata;
   setPrayerRequestMetadata: React.Dispatch<
     React.SetStateAction<PrayerRequestMetadata>
@@ -37,15 +37,15 @@ export type PrayerRequestContextType = {
     prayerGroupId: number,
     showCompleteSpinner: boolean,
     customFilters?: PrayerRequestFilterCriteria,
-  ) => void;
+  ) => Promise<void>;
   numNotLoadedRequests: number;
 };
 
 const PrayerRequestContext = React.createContext<PrayerRequestContextType>({
   prayerRequestFilters: DEFAULT_PRAYER_REQUEST_FILTERS,
   setPrayerRequestFilters: () => {},
-  prayerRequests: [],
-  setPrayerRequests: () => {},
+  prayerRequestIds: [],
+  setPrayerRequestIds: () => {},
   prayerRequestMetadata: DEFAULT_PRAYER_REQUEST_METADATA,
   setPrayerRequestMetadata: () => {},
   prayerRequestLoadStatus: LoadStatus.NotStarted,
@@ -53,7 +53,7 @@ const PrayerRequestContext = React.createContext<PrayerRequestContextType>({
   nextPrayerRequestsLoadStatus: LoadStatus.NotStarted,
   setNextPrayerRequestsLoadStatus: () => {},
   cleanupPrayerRequests: () => {},
-  loadNextPrayerRequestsForGroup: () => {},
+  loadNextPrayerRequestsForGroup: async () => {},
   numNotLoadedRequests: 0,
 });
 
@@ -64,9 +64,11 @@ type Props = {
 export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
   const [prayerRequestFilters, setPrayerRequestFilters] =
     React.useState<PrayerRequestFilterCriteria>(DEFAULT_PRAYER_REQUEST_FILTERS);
-  const [prayerRequests, setPrayerRequests] = React.useState<
-    PrayerRequestModel[]
-  >([]);
+
+  const [prayerRequestIds, setPrayerRequestIds] = React.useState<number[]>([]);
+
+  const { addPrayerRequestsToStore } = usePrayerRequestDetailContext();
+
   const [prayerRequestMetadata, setPrayerRequestMetadata] =
     React.useState<PrayerRequestMetadata>(DEFAULT_PRAYER_REQUEST_METADATA);
   const [prayerRequestLoadStatus, setPrayerRequestLoadStatus] =
@@ -83,7 +85,7 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
 
   const cleanupPrayerRequests = async () => {
     setPrayerRequestFilters(DEFAULT_PRAYER_REQUEST_FILTERS);
-    setPrayerRequests([]);
+    setPrayerRequestIds([]);
     setPrayerRequestMetadata(DEFAULT_PRAYER_REQUEST_METADATA);
 
     setPrayerRequestLoadStatus(LoadStatus.NotStarted);
@@ -114,7 +116,7 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
 
     if (response.isError && showCompleteSpinner) {
       setLoadStatus(LoadStatus.Error);
-      setPrayerRequests([]);
+      setPrayerRequestIds([]);
       return;
     } else if (response.isError) {
       setLoadStatus(LoadStatus.Error);
@@ -125,27 +127,40 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
       return;
     }
 
-    // Since prayer requests can be infinitely scrolled
-    // We don't want to get rid of the current existing prayer requests unless group ID changes.
-    setPrayerRequests((existingRequests) => [
-      ...existingRequests,
-      ...(response.value.prayerRequests ?? []),
-    ]);
-
-    const numPrayerRequestsInResponse = response.value.prayerRequests
-      ? response.value.prayerRequests.length
-      : 0;
+    const newPrayerRequests = response.value.prayerRequests ?? [];
 
     setPrayerRequestMetadata((currentMetadata) => ({
       pageIndex: response.value.pageIndex,
       numberOfPages: response.value.numberOfPages,
       totalCount: response.value.totalCount,
       prayerRequestsLoaded:
-        (currentMetadata.prayerRequestsLoaded ?? 0) +
-        numPrayerRequestsInResponse,
+        (currentMetadata.prayerRequestsLoaded ?? 0) + newPrayerRequests.length,
     }));
 
     setLoadStatus(LoadStatus.Success);
+
+    if (newPrayerRequests.length < 1) {
+      return;
+    }
+
+    addPrayerRequestsToStore(newPrayerRequests);
+
+    // Since prayer requests can be infinitely scrolled
+    // We don't want to get rid of the current existing prayer requests unless group ID changes.
+    setPrayerRequestIds((existingPrayerRequestIds) => {
+      const loadedPrayerRequestIds = newPrayerRequests.reduce(
+        (prayerRequestIds: number[], prayerRequest) => {
+          if (!prayerRequest.prayerRequestId) {
+            return prayerRequestIds;
+          }
+
+          return prayerRequestIds.concat(prayerRequest.prayerRequestId);
+        },
+        [],
+      );
+
+      return existingPrayerRequestIds.concat(loadedPrayerRequestIds);
+    });
   };
 
   const numNotLoadedRequests = React.useMemo(() => {
@@ -163,8 +178,8 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
       value={{
         prayerRequestFilters,
         setPrayerRequestFilters,
-        prayerRequests,
-        setPrayerRequests,
+        prayerRequestIds,
+        setPrayerRequestIds,
         prayerRequestMetadata,
         setPrayerRequestMetadata,
         prayerRequestLoadStatus,

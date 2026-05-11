@@ -35,7 +35,7 @@ export const Signin: React.FC = () => {
     if (!isEmpty(errors)) {
       formProps.setErrors(errors);
       formProps.setTouched(
-        setNestedObjectValues({ ...formProps.touched, ...errors }, true)
+        setNestedObjectValues({ ...formProps.touched, ...errors }, true),
       );
       return;
     }
@@ -51,7 +51,7 @@ export const Signin: React.FC = () => {
     ) {
       formProps.setFieldError(
         "email",
-        translate("form.validation.emailNotFound.error")
+        translate("form.validation.emailNotFound.error"),
       );
       return;
     } else if (
@@ -60,7 +60,7 @@ export const Signin: React.FC = () => {
     ) {
       formProps.setFieldError(
         "password",
-        translate("form.validation.incorrectPassword.error")
+        translate("form.validation.incorrectPassword.error"),
       );
       return;
     } else if (signinResponse.isError) {
@@ -76,7 +76,7 @@ export const Signin: React.FC = () => {
     handleSuccessfulAuthentication(
       signinResponse.value,
       setUserData,
-      setUserTokens
+      setUserTokens,
     );
     router.push("/home");
   };

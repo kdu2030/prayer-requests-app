@@ -9,6 +9,7 @@ jest.mock("expo-router", () => ({
   usePathname: () => "/",
   router: {
     push: jest.fn(),
+    replace: jest.fn(),
   },
 }));
 

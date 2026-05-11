@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View } from "react-native";
+import { TextStyle, View } from "react-native";
 import {
   ActivityIndicator,
   Text,
@@ -9,6 +9,7 @@ import {
 
 type Props = {
   label: string;
+  labelStyles?: TextStyle;
   icon: React.ReactNode;
   endAdornment?: React.ReactNode;
   onPress: () => void;
@@ -19,6 +20,7 @@ type Props = {
 
 export const PrayerGroupOptionButton: React.FC<Props> = ({
   label,
+  labelStyles,
   icon,
   onPress,
   endAdornment,
@@ -45,7 +47,9 @@ export const PrayerGroupOptionButton: React.FC<Props> = ({
         ) : (
           icon
         )}
-        <Text variant="bodyMedium">{label}</Text>
+        <Text variant="bodyMedium" style={labelStyles}>
+          {label}
+        </Text>
         {endAdornment}
       </View>
     </TouchableRipple>

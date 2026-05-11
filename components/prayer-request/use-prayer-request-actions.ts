@@ -1,4 +1,3 @@
-import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
 
 import { useDeletePrayerRequestBookmark } from "../../api/delete-prayer-request-bookmark";
@@ -10,20 +9,14 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
+import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
 
 export const usePrayerRequestActions = (
-  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>,
+  onClose: () => void,
+  selectedPrayerRequest: PrayerRequestModel | undefined,
 ) => {
   const { translate } = useI18N();
 
-  const prayerRequestActionsRef = React.useRef<BottomSheetMethods>(null);
-
-  const [showExtendedActions, setShowExtendedActions] =
-    React.useState<boolean>(false);
-
-  const [selectedPrayerRequest, setSelectedPrayerRequest] = React.useState<
-    PrayerRequestModel | undefined
-  >();
   const [isToggleBookmarkLoading, setIsToggleBookmarkLoading] =
     React.useState<boolean>(false);
 
@@ -34,27 +27,17 @@ export const usePrayerRequestActions = (
 
   const { userData } = useApiDataContext();
 
-  const openPrayerRequestActions = (
-    prayerRequest: PrayerRequestModel,
-    showExtended: boolean = false,
-  ) => {
-    if (!prayerRequestActionsRef.current) {
-      return;
-    }
-
-    prayerRequestActionsRef.current.snapToIndex(0);
-    setSelectedPrayerRequest(prayerRequest);
-    setShowExtendedActions(showExtended);
-  };
-
-  const closePrayerRequestActions = () => {
-    prayerRequestActionsRef.current?.close();
-    setSelectedPrayerRequest(undefined);
-    setShowExtendedActions(false);
-  };
+  const { setPrayerRequest, getPrayerRequestFromStore: getPrayerRequest } =
+    usePrayerRequestDetailContext();
 
   const addPrayerRequestBookmark = async (prayerRequestId: number) => {
     if (!userData?.userId) {
+      return;
+    }
+
+    const targetPrayerRequest = getPrayerRequest(prayerRequestId);
+
+    if (!targetPrayerRequest) {
       return;
     }
 
@@ -80,22 +63,12 @@ export const usePrayerRequestActions = (
       return;
     }
 
-    setPrayerRequests((prayerRequests) => {
-      const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-        if (prayerRequest.prayerRequestId !== prayerRequestId) {
-          return prayerRequest;
-        }
-
-        return {
-          ...prayerRequest,
-          userBookmarkId: response.value.prayerRequestBookmarkId,
-        };
-      });
-
-      return updatedPrayerRequests;
+    setPrayerRequest(prayerRequestId, {
+      ...targetPrayerRequest,
+      userBookmarkId: response.value.prayerRequestBookmarkId,
     });
 
-    closePrayerRequestActions();
+    onClose();
 
     openToaster({
       message: translate("toaster.savePrayerRequest.success"),
@@ -106,6 +79,10 @@ export const usePrayerRequestActions = (
   const removePrayerRequestBookmark = async (
     prayerRequestBookmarkId: number,
   ) => {
+    if (!selectedPrayerRequest?.prayerRequestId) {
+      return;
+    }
+
     setIsToggleBookmarkLoading(true);
 
     const response = await deletePrayerRequestBookmark(prayerRequestBookmarkId);
@@ -121,22 +98,12 @@ export const usePrayerRequestActions = (
       return;
     }
 
-    setPrayerRequests((prayerRequests) => {
-      const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-        if (
-          prayerRequest.prayerRequestId !==
-          selectedPrayerRequest?.prayerRequestId
-        ) {
-          return prayerRequest;
-        }
-
-        return { ...prayerRequest, userBookmarkId: undefined };
-      });
-
-      return updatedPrayerRequests;
+    setPrayerRequest(selectedPrayerRequest.prayerRequestId, {
+      ...selectedPrayerRequest,
+      userBookmarkId: undefined,
     });
 
-    closePrayerRequestActions();
+    onClose();
 
     openToaster({
       message: translate("toaster.unsavePrayerRequest.success"),
@@ -158,13 +125,7 @@ export const usePrayerRequestActions = (
   };
 
   return {
-    selectedPrayerRequest,
-    openPrayerRequestActions,
-    closePrayerRequestActions,
-    prayerRequestActionsRef,
-    toggleBookmark,
     isToggleBookmarkLoading,
-    setSelectedPrayerRequest,
-    showExtendedActions,
+    toggleBookmark,
   };
 };

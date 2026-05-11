@@ -52,7 +52,7 @@ export const GroupNameDescriptionStep: React.FC<Props> = ({
         <TextInput
           name="description"
           label={translate(
-            "createPrayerGroup.groupNameDescription.description"
+            "createPrayerGroup.groupNameDescription.description",
           )}
           multiline
           numberOfLines={5}

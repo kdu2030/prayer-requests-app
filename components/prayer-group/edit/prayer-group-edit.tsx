@@ -56,7 +56,7 @@ export const PrayerGroupEdit: React.FC = () => {
             initialValues={prayerGroupDetails ?? {}}
             validationSchema={prayerGroupDetailsValidationSchema(
               translate,
-              i18n.language as CultureCode
+              i18n.language as CultureCode,
             )}
             onSubmit={savePrayerGroupEdit}
             validateOnBlur
@@ -99,7 +99,7 @@ export const PrayerGroupEdit: React.FC = () => {
                   name="groupName"
                   className="mt-3"
                   label={translate(
-                    "createPrayerGroup.groupNameDescription.groupName"
+                    "createPrayerGroup.groupNameDescription.groupName",
                   )}
                   maxLength={TEXT_INPUT_MAX_LENGTH}
                   required
@@ -110,7 +110,7 @@ export const PrayerGroupEdit: React.FC = () => {
                   name="description"
                   className="mt-5"
                   label={translate(
-                    "createPrayerGroup.groupNameDescription.description"
+                    "createPrayerGroup.groupNameDescription.description",
                   )}
                   multiline
                   numberOfLines={5}
@@ -149,7 +149,7 @@ export const PrayerGroupEdit: React.FC = () => {
                     onPress={() => selectImage("avatarFile", [1, 1])}
                   >
                     {translate(
-                      "createPrayerGroup.groupImageColorStep.selectImage"
+                      "createPrayerGroup.groupImageColorStep.selectImage",
                     )}
                   </Button>
                 </View>
@@ -176,7 +176,7 @@ export const PrayerGroupEdit: React.FC = () => {
                     onPress={() => selectImage("bannerFile", [10, 3])}
                   >
                     {translate(
-                      "createPrayerGroup.groupImageColorStep.selectImage"
+                      "createPrayerGroup.groupImageColorStep.selectImage",
                     )}
                   </Button>
                 </View>

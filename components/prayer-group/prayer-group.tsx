@@ -1,6 +1,6 @@
 import { min } from "lodash";
 import * as React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, Pressable, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -9,7 +9,8 @@ import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
-import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
+import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
+import { PrayerRequestListCard } from "../prayer-request/prayer-request-list-card";
 import { PrayerRequestSkeletonList } from "../prayer-request/prayer-request-skeleton-list";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
 import { LeavePrayerGroupModal } from "./leave-prayer-group/leave-prayer-group-modal";
@@ -17,7 +18,7 @@ import { PrayerGroupOptions } from "./options/prayer-group-options";
 import { usePrayerGroupContext } from "./prayer-group-context";
 import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
 import { usePrayerGroup } from "./use-prayer-group";
-import { usePrayerRequestActions } from "./use-prayer-request-actions";
+import { usePrayerRequestActionsContainer } from "./use-prayer-request-actions-container";
 
 type Props = {
   prayerGroupId: number;
@@ -30,6 +31,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
 
   const { prayerGroupDetails } = usePrayerGroupContext();
 
+  const { prayerRequestIds } = usePrayerRequestContext();
+
   const {
     prayerGroupLoadStatus,
     isRemoveUserLoading,
@@ -40,9 +43,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     prayerGroupOptionsRef,
     onOpenOptions,
     prayerRequestLoadStatus,
-    prayerRequests,
     onEndReached,
-    setPrayerRequests,
     loadNextPrayerRequestsForGroup,
     showPrayerRequestList,
     showLeavePrayerGroupModal,
@@ -51,17 +52,16 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     numNotLoadedRequests,
     prayerRequestFilters,
     nextPrayerRequestsLoadStatus,
+    navigateToPrayerRequestPage,
   } = usePrayerGroup(prayerGroupId);
 
   const {
     selectedPrayerRequest,
-    prayerRequestActionsRef,
     openPrayerRequestActions,
-    isToggleBookmarkLoading,
-    toggleBookmark,
-    setSelectedPrayerRequest,
     showExtendedActions,
-  } = usePrayerRequestActions(setPrayerRequests);
+    isPrayerRequestActionsOpen,
+    closePrayerRequestActions,
+  } = usePrayerRequestActionsContainer();
 
   const prayerGroupHeader = React.useMemo(
     () => (
@@ -118,18 +118,21 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         )}
 
         {prayerRequestLoadStatus === LoadStatus.Success &&
-          prayerRequests.length > 0 && (
+          prayerRequestIds.length > 0 && (
             <FlatList
               ListHeaderComponent={prayerGroupHeader}
-              data={prayerRequests}
+              data={prayerRequestIds}
               renderItem={({ item }) => (
-                <PrayerRequestCard
-                  prayerRequest={item}
-                  prayerRequests={prayerRequests}
-                  setPrayerRequests={setPrayerRequests}
-                  openPrayerRequestActions={openPrayerRequestActions}
-                  key={item.prayerRequestId}
-                />
+                <Pressable onPress={() => navigateToPrayerRequestPage(item)}>
+                  <PrayerRequestListCard
+                    prayerRequestId={item}
+                    openPrayerRequestActions={openPrayerRequestActions}
+                    onCommentPress={() =>
+                      navigateToPrayerRequestPage(item, true)
+                    }
+                    key={item}
+                  />
+                </Pressable>
               )}
               ListFooterComponent={
                 nextPrayerRequestsLoadStatus === LoadStatus.Loading ? (
@@ -153,12 +156,10 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         />
 
         <PrayerRequestActions
+          isOpen={isPrayerRequestActionsOpen}
           showExtendedActions={showExtendedActions}
           selectedPrayerRequest={selectedPrayerRequest}
-          isToggleBookmarkLoading={isToggleBookmarkLoading}
-          toggleBookmark={toggleBookmark}
-          bottomSheetRef={prayerRequestActionsRef}
-          setSelectedPrayerRequest={setSelectedPrayerRequest}
+          onClose={closePrayerRequestActions}
         />
 
         {showLeavePrayerGroupModal && (

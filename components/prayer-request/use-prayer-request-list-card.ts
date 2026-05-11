@@ -9,11 +9,10 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
+import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
 
-export const usePrayerRequestCard = (
-  prayerRequest: PrayerRequestModel,
-  prayerRequests: PrayerRequestModel[],
-  setPrayerRequests: React.Dispatch<React.SetStateAction<PrayerRequestModel[]>>,
+export const usePrayerRequestListCard = (
+  prayerRequest: PrayerRequestModel | undefined,
 ) => {
   const [isLikeLoading, setIsLikeLoading] = React.useState<boolean>(false);
   const { translate } = useI18N();
@@ -25,10 +24,12 @@ export const usePrayerRequestCard = (
 
   const { userData } = useApiDataContext();
 
+  const { setPrayerRequest } = usePrayerRequestDetailContext();
+
   const addPrayerRequestLike = async (prayerRequestId: number) => {
     const userId = userData?.userId;
 
-    if (!userId) {
+    if (!userId || !prayerRequest) {
       return;
     }
 
@@ -50,25 +51,17 @@ export const usePrayerRequestCard = (
       return;
     }
 
-    const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-      if (prayerRequest.prayerRequestId !== prayerRequestId) {
-        return prayerRequest;
-      }
-
-      return {
-        ...prayerRequest,
-        userLikeId: response.value.prayerRequestLikeId,
-        likeCount: (prayerRequest.likeCount ?? 0) + 1,
-      };
+    setPrayerRequest(prayerRequestId, {
+      ...prayerRequest,
+      userLikeId: response.value.prayerRequestLikeId,
+      likeCount: (prayerRequest.likeCount ?? 0) + 1,
     });
-
-    setPrayerRequests(updatedPrayerRequests);
   };
 
   const removePrayerRequestLike = async (prayerRequestId: number) => {
     const userId = userData?.userId;
 
-    if (!userId || !prayerRequest.userLikeId) {
+    if (!userId || !prayerRequest?.userLikeId) {
       return;
     }
 
@@ -82,23 +75,15 @@ export const usePrayerRequestCard = (
       return;
     }
 
-    const updatedPrayerRequests = prayerRequests.map((prayerRequest) => {
-      if (prayerRequest.prayerRequestId !== prayerRequestId) {
-        return prayerRequest;
-      }
-
-      return {
-        ...prayerRequest,
-        userLikeId: undefined,
-        likeCount: prayerRequest.likeCount ? prayerRequest.likeCount - 1 : 0,
-      };
+    setPrayerRequest(prayerRequestId, {
+      ...prayerRequest,
+      userLikeId: undefined,
+      likeCount: prayerRequest.likeCount ? prayerRequest.likeCount - 1 : 0,
     });
-
-    setPrayerRequests(updatedPrayerRequests);
   };
 
   const onLikePress = async () => {
-    if (!prayerRequest.prayerRequestId) {
+    if (!prayerRequest?.prayerRequestId) {
       return;
     }
 
@@ -113,16 +98,8 @@ export const usePrayerRequestCard = (
     setIsLikeLoading(false);
   };
 
-  const likeIcon = React.useMemo(() => {
-    if (isLikeLoading) {
-      return undefined;
-    }
-    return prayerRequest.userLikeId ? "heart" : "heart-outline";
-  }, [isLikeLoading, prayerRequest.userLikeId]);
-
   return {
     isLikeLoading,
     onLikePress,
-    likeIcon,
   };
 };

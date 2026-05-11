@@ -1,4 +1,5 @@
 import { SortConfig } from "./api-response-types";
+import { MediaFile } from "./media-file-types";
 import {
   PrayerGroupSummary,
   PrayerGroupUserSummary,
@@ -9,7 +10,7 @@ export type PrayerRequestFilterCriteria = {
   pageIndex?: number;
   pageSize?: number;
   bookmarkedByUserId?: number;
-  includeExpiredRequests?: boolean;
+  includeExpiredPrayerRequests?: boolean;
   sortConfig: SortConfig;
 };
 
@@ -39,9 +40,27 @@ export type PrayerRequestModel = {
   prayedCount?: number;
   expirationDate?: string;
   userLikeId?: number;
-  userCommentId?: number;
+  userCommentIds?: number[];
   userBookmarkId?: number;
-  userPrayerSessionId?: number;
+  userPrayerSessionIds?: number[];
+};
+
+export type PrayerRequestDetailsModel = PrayerRequestModel & {
+  comments?: PrayerRequestCommentModel[];
+};
+
+export type PrayerRequestCommentUserSummary = {
+  userId?: number;
+  fullName?: string;
+  username?: string;
+  image?: MediaFile;
+};
+
+export type PrayerRequestCommentModel = {
+  prayerRequestCommentId?: number;
+  submittedDate?: string;
+  comment?: string;
+  user?: PrayerRequestCommentUserSummary;
 };
 
 export enum PrayerRequestSortFields {

@@ -193,4 +193,48 @@ describe(PrayerRequestPage, () => {
       mockPrayerRequestLike.prayerRequestLikeId,
     );
   });
+
+  test("When the like button is clicked and the user already liked the request, the prayer request like count decrements ", async () => {
+    mockDeletePrayerRequestLike.mockReturnValue({
+      isError: false,
+    });
+
+    const mockPrayerRequest: PrayerRequestDetailsModel = {
+      ...cloneDeep(mockPrayerRequests[0]),
+      userLikeId: 717,
+    };
+
+    let calledPrayerRequestId: number | undefined = undefined;
+    let updatedPrayerRequest: PrayerRequestModel = { ...mockPrayerRequest };
+
+    mockSetPrayerRequestGlobal.mockImplementation(
+      (prayerRequestId: number, prayerRequest: PrayerRequestModel) => {
+        calledPrayerRequestId = prayerRequestId;
+        updatedPrayerRequest = prayerRequest;
+      },
+    );
+
+    const component = mountPrayerRequestPage(mockPrayerRequest);
+
+    const likeButton = await component.findByTestId(
+      getArrayTestId(
+        PrayerRequestCardTestIds.likeButton,
+        mockPrayerRequest.prayerRequestId,
+      ),
+    );
+
+    fireEvent.press(likeButton);
+
+    const likeButtonAfterDecrement = await component.findByTestId(
+      getArrayTestId(
+        PrayerRequestCardTestIds.likeButton,
+        mockPrayerRequest.prayerRequestId,
+      ),
+    );
+
+    expect(likeButtonAfterDecrement).toHaveTextContent("0");
+
+    expect(calledPrayerRequestId).toBe(mockPrayerRequest.prayerRequestId);
+    expect(updatedPrayerRequest.userLikeId).toBeFalsy();
+  });
 });

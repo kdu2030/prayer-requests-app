@@ -6,6 +6,7 @@ import { useTheme } from "react-native-paper";
 import { useI18N } from "../../hooks/use-i18n";
 import { AppBottomSheet } from "../layouts/app-bottom-sheet";
 import { PrayerGroupOptionButton } from "../prayer-group/options/prayer-group-option-button";
+import { PrayerRequestPageTestIds } from "./tests/test-ids";
 
 type Props = {
   isOpen: boolean;
@@ -36,6 +37,7 @@ export const PrayerRequestCommentActions: React.FC<Props> = ({
           }
           label={translate("prayerRequest.comment.editComment")}
           onPress={onEditComment}
+          testID={PrayerRequestPageTestIds.editCommentButton}
         />
 
         <PrayerGroupOptionButton

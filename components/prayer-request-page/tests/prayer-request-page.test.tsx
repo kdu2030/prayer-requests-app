@@ -105,7 +105,6 @@ const mountPrayerRequestPage = (
 describe(PrayerRequestPage, () => {
   afterEach(() => {
     component?.unmount();
-    jest.resetAllMocks();
   });
 
   test("Mount test", () => {

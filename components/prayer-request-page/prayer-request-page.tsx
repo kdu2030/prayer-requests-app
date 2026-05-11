@@ -86,7 +86,9 @@ export const PrayerRequestPage: React.FC<Props> = ({
           style={{ backgroundColor: theme.colors.background }}
         >
           <View className="flex flex-1">
-            <PrayerGroupSectionHeader />
+            <PrayerGroupSectionHeader
+              title={prayerRequest.prayerGroup?.groupName}
+            />
 
             <FlatList
               ListHeaderComponent={

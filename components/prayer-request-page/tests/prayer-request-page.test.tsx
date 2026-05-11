@@ -1,4 +1,5 @@
-import { RenderResult } from "@testing-library/react-native";
+import { fireEvent, RenderResult } from "@testing-library/react-native";
+import { cloneDeep } from "lodash";
 import mockSafeAreaContext from "react-native-safe-area-context/jest/mock";
 
 import { getArrayTestId } from "../../../helpers/utils";
@@ -6,6 +7,7 @@ import { mountComponent } from "../../../tests/utils/test-utils";
 import {
   PrayerRequestDetailsModel,
   PrayerRequestLikeModel,
+  PrayerRequestModel,
 } from "../../../types/prayer-request-types";
 import {
   mockPrayerRequests,
@@ -67,6 +69,13 @@ jest.mock("react-native-safe-area-context", () => mockSafeAreaContext);
 jest.mock("@gorhom/bottom-sheet", () => ({
   __esModule: true,
   ...require("@gorhom/bottom-sheet/mock"),
+}));
+
+jest.mock("../../../hooks/use-api-data", () => ({
+  ...jest.requireActual("../../../hooks/use-api-data"),
+  useApiDataContext: () => ({
+    userData: mockUserData,
+  }),
 }));
 
 let component: RenderResult;
@@ -132,7 +141,7 @@ describe(PrayerRequestPage, () => {
     );
   });
 
-  test("When the like button is clicked, the prayer request like count increments", () => {
+  test("When the like button is clicked, the prayer request like count increments", async () => {
     const mockPrayerRequestLike: PrayerRequestLikeModel = {
       prayerRequestLikeId: 717,
       prayerRequestId: mockPrayerRequests[0].prayerRequestId,
@@ -144,5 +153,44 @@ describe(PrayerRequestPage, () => {
       isError: false,
       value: mockPrayerRequestLike,
     });
+
+    const mockPrayerRequest: PrayerRequestDetailsModel = cloneDeep(
+      mockPrayerRequests[0],
+    );
+
+    let calledPrayerRequestId: number | undefined = undefined;
+    let updatedPrayerRequest: PrayerRequestModel = { ...mockPrayerRequest };
+
+    mockSetPrayerRequestGlobal.mockImplementation(
+      (prayerRequestId: number, prayerRequest: PrayerRequestModel) => {
+        calledPrayerRequestId = prayerRequestId;
+        updatedPrayerRequest = prayerRequest;
+      },
+    );
+
+    const component = mountPrayerRequestPage(mockPrayerRequest);
+
+    const likeButton = await component.findByTestId(
+      getArrayTestId(
+        PrayerRequestCardTestIds.likeButton,
+        mockPrayerRequest.prayerRequestId,
+      ),
+    );
+
+    fireEvent.press(likeButton);
+
+    const likeButtonAfterIncrement = await component.findByTestId(
+      getArrayTestId(
+        PrayerRequestCardTestIds.likeButton,
+        mockPrayerRequestLike.prayerRequestId,
+      ),
+    );
+
+    expect(likeButtonAfterIncrement).toHaveTextContent("2");
+
+    expect(calledPrayerRequestId).toBe(mockPrayerRequest.prayerRequestId);
+    expect(updatedPrayerRequest.userLikeId).toBe(
+      mockPrayerRequestLike.prayerRequestLikeId,
+    );
   });
 });

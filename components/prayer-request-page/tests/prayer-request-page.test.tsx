@@ -1,4 +1,8 @@
-import { fireEvent, RenderResult } from "@testing-library/react-native";
+import {
+  fireEvent,
+  RenderResult,
+  waitFor,
+} from "@testing-library/react-native";
 import { cloneDeep } from "lodash";
 import mockSafeAreaContext from "react-native-safe-area-context/jest/mock";
 
@@ -323,6 +327,40 @@ describe(PrayerRequestPage, () => {
     );
 
     expect(commentActionsButton).toBeTruthy();
+  });
+
+  test("If the comment does not belong to the current user, the comment actions button is hidden", async () => {
+    const mockPrayerRequestComment: PrayerRequestCommentModel = {
+      prayerRequestCommentId: 737,
+      user: {
+        userId: 787,
+        fullName: "Dwight Schrute",
+        username: "dshrute",
+      },
+      comment:
+        "Identity theft is wrong, Jim! Millions of families suffer every year",
+      submittedDate: new Date().toISOString(),
+    };
+
+    const mockPrayerRequest: PrayerRequestDetailsModel = {
+      ...cloneDeep(mockPrayerRequests[0]),
+      comments: [mockPrayerRequestComment],
+      userCommentIds: [mockPrayerRequestComment.prayerRequestCommentId ?? -1],
+      commentCount: 1,
+    };
+
+    const component = mountPrayerRequestPage(mockPrayerRequest);
+
+    await waitFor(() => {
+      const commentActionsButton = component.queryByTestId(
+        getArrayTestId(
+          PrayerRequestPageTestIds.commentActionsButton,
+          mockPrayerRequestComment.prayerRequestCommentId,
+        ),
+      );
+
+      expect(commentActionsButton).toBeFalsy();
+    });
   });
 
   test("When the user selects the comment for editing, the comment is shown in the comment field", async () => {

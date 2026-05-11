@@ -5,6 +5,7 @@ import mockSafeAreaContext from "react-native-safe-area-context/jest/mock";
 import { getArrayTestId } from "../../../helpers/utils";
 import { mountComponent } from "../../../tests/utils/test-utils";
 import {
+  PrayerRequestCommentModel,
   PrayerRequestDetailsModel,
   PrayerRequestLikeModel,
   PrayerRequestModel,
@@ -250,5 +251,49 @@ describe(PrayerRequestPage, () => {
     );
 
     expect(prayerRequestPostButton).toBeDisabled();
+  });
+
+  test("When a user adds a comment, the comment is posted", async () => {
+    const mockCommentText =
+      "A Jedi uses the Force for knowledge and defense, never attack.";
+
+    const mockPrayerRequestComment: PrayerRequestCommentModel = {
+      prayerRequestCommentId: 727,
+      user: mockUserData,
+      comment: mockCommentText,
+      submittedDate: new Date().toISOString(),
+    };
+
+    mockPostPrayerRequestComment.mockReturnValue({
+      isError: false,
+      value: mockPrayerRequestComment,
+    });
+
+    const mockPrayerRequest: PrayerRequestDetailsModel = cloneDeep(
+      mockPrayerRequests[0],
+    );
+
+    const component = mountPrayerRequestPage(mockPrayerRequest);
+
+    const prayerRequestField = await component.findByTestId(
+      PrayerRequestPageTestIds.commentField,
+    );
+
+    fireEvent.changeText(prayerRequestField, mockCommentText);
+
+    const prayerRequestPostButton = await component.findByTestId(
+      PrayerRequestPageTestIds.postCommentButton,
+    );
+
+    fireEvent.press(prayerRequestPostButton);
+
+    const postedComment = await component.findByTestId(
+      getArrayTestId(
+        PrayerRequestPageTestIds.commentText,
+        mockPrayerRequestComment.prayerRequestCommentId,
+      ),
+    );
+
+    expect(postedComment).toHaveTextContent(mockCommentText);
   });
 });

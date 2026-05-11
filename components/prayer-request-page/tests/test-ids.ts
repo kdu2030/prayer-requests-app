@@ -4,4 +4,6 @@ export enum PrayerRequestPageTestIds {
   commentDate = "prayer-request-page-comment-date",
   commentActionsButton = "prayer-request-page-comment-actions-button",
   commentText = "prayer-request-page-comment-text",
+  commentField = "prayer-request-comment-field",
+  postCommentButton = "prayer-request-post-comment-button",
 }

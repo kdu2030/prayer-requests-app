@@ -15,6 +15,7 @@ import {
 } from "../../prayer-group/tests/mock-data";
 import { PrayerRequestCardTestIds } from "../../prayer-request/tests/test-ids";
 import { PrayerRequestPage } from "../prayer-request-page";
+import { PrayerRequestPageTestIds } from "./test-ids";
 
 const mockSetPrayerRequestGlobal = jest.fn();
 const mockGetPrayerRequestFromStore = jest.fn();
@@ -236,5 +237,18 @@ describe(PrayerRequestPage, () => {
 
     expect(calledPrayerRequestId).toBe(mockPrayerRequest.prayerRequestId);
     expect(updatedPrayerRequest.userLikeId).toBeFalsy();
+  });
+
+  test("If the user doesn't add a comment, the post comment button is disabled", async () => {
+    const mockPrayerRequest: PrayerRequestDetailsModel = {
+      ...mockPrayerRequests[0],
+    };
+    const component = mountPrayerRequestPage(mockPrayerRequest);
+
+    const prayerRequestPostButton = await component.findByTestId(
+      PrayerRequestPageTestIds.postCommentButton,
+    );
+
+    expect(prayerRequestPostButton).toBeDisabled();
   });
 });

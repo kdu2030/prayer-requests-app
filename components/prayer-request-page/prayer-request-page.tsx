@@ -19,6 +19,7 @@ import { PrayerRequestCommentActions } from "./prayer-request-comment-actions";
 import { PrayerRequestCommentCard } from "./prayer-request-comment-card";
 import { PrayerRequestCommentPlaceholder } from "./prayer-request-comment-placeholder";
 import { PrayerRequestPagePlaceholder } from "./prayer-request-page-placeholder";
+import { PrayerRequestPageTestIds } from "./tests/test-ids";
 import { usePrayerRequestPage } from "./use-prayer-request-page";
 
 type Props = {
@@ -127,6 +128,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
                   label={translate("prayerRequest.comment.label")}
                   multiline
                   style={{ maxHeight: 120 }}
+                  testID={PrayerRequestPageTestIds.commentField}
                 />
               </View>
 
@@ -142,6 +144,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
                   disabled={!values.comment || values.comment.trim().length < 1}
                   loading={isPostCommentLoading}
                   onPress={() => onSaveCommentPress(values, setFieldValue)}
+                  testID={PrayerRequestPageTestIds.postCommentButton}
                 >
                   {values.formAction === CommentFormAction.Create
                     ? translate("prayerRequest.comment.post")

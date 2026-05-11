@@ -4,6 +4,7 @@ import { Button, Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { RoundedModal } from "../modals/rounded-modal";
+import { PrayerRequestPageTestIds } from "./tests/test-ids";
 
 type Props = {
   isDeleteLoading: boolean;
@@ -30,7 +31,11 @@ export const DeletePrayerRequestCommentModal: React.FC<Props> = ({
       </Text>
 
       <View className="flex flex-row self-end mt-6 gap-x-2">
-        <Button mode="outlined" onPress={onClose}>
+        <Button
+          mode="outlined"
+          onPress={onClose}
+          testID={PrayerRequestPageTestIds.cancelDeleteCommentButton}
+        >
           {translate("common.actions.cancel")}
         </Button>
         <Button
@@ -38,6 +43,7 @@ export const DeletePrayerRequestCommentModal: React.FC<Props> = ({
           buttonColor={theme.colors.error}
           loading={isDeleteLoading}
           onPress={onConfirmDelete}
+          testID={PrayerRequestPageTestIds.deleteCommentConfirmButton}
         >
           {translate("common.actions.delete")}
         </Button>

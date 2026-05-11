@@ -7,4 +7,7 @@ export enum PrayerRequestPageTestIds {
   commentField = "prayer-request-comment-field",
   postCommentButton = "prayer-request-post-comment-button",
   editCommentButton = "prayer-request-edit-comment-button",
+  deleteCommentButton = "prayer-request-delete-comment-button",
+  cancelDeleteCommentButton = "prayer-request-page-cancel-delete-comment-button",
+  deleteCommentConfirmButton = "prayer-request-page-delete-comment-confirm-button",
 }

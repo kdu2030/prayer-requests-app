@@ -477,4 +477,55 @@ describe(PrayerRequestPage, () => {
       editedMockPrayerRequestComment.comment ?? "",
     );
   });
+
+  test("Comment is removed when user deletes comment and confirms", async () => {
+    const mockPrayerRequestComment: PrayerRequestCommentModel = {
+      prayerRequestCommentId: 737,
+      user: mockUserData,
+      comment:
+        "You're always saying there's something wrong with society, maybe there's something wrong with you?",
+      submittedDate: new Date().toISOString(),
+    };
+
+    mockDeletePrayerRequestComment.mockReturnValue({ isError: false });
+
+    const mockPrayerRequest: PrayerRequestDetailsModel = {
+      ...cloneDeep(mockPrayerRequests[0]),
+      comments: [mockPrayerRequestComment],
+      userCommentIds: [mockPrayerRequestComment.prayerRequestCommentId ?? -1],
+      commentCount: 1,
+    };
+
+    const component = mountPrayerRequestPage(mockPrayerRequest);
+
+    const commentActionsButton = await component.findByTestId(
+      getArrayTestId(
+        PrayerRequestPageTestIds.commentActionsButton,
+        mockPrayerRequestComment.prayerRequestCommentId,
+      ),
+    );
+
+    fireEvent.press(commentActionsButton);
+
+    const deleteCommentButton = await component.findByTestId(
+      PrayerRequestPageTestIds.deleteCommentButton,
+    );
+
+    fireEvent.press(deleteCommentButton);
+
+    const deleteConfirmButton = await component.findByTestId(
+      PrayerRequestPageTestIds.deleteCommentConfirmButton,
+    );
+
+    fireEvent.press(deleteConfirmButton);
+
+    const commentCount = await component.findByTestId(
+      getArrayTestId(
+        PrayerRequestCardTestIds.commentButton,
+        mockPrayerRequest.prayerRequestId,
+      ),
+    );
+
+    expect(commentCount).toHaveTextContent("0");
+  });
 });

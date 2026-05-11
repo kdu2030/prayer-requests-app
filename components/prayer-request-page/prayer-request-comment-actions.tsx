@@ -51,6 +51,7 @@ export const PrayerRequestCommentActions: React.FC<Props> = ({
           label={translate("prayerRequest.comment.deleteComment")}
           labelStyles={{ color: theme.colors.error }}
           onPress={onDeleteComment}
+          testID={PrayerRequestPageTestIds.deleteCommentButton}
         />
       </View>
     </AppBottomSheet>

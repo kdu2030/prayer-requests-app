@@ -6,7 +6,10 @@ import * as React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 import { useTheme } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
@@ -25,15 +28,18 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
     return <></>;
   }
 
+  const { top } = useSafeAreaInsets();
+
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.background} />
+      <StatusBar translucent />
 
-      <SafeAreaView edges={["top"]}>
+      <View
+        style={{ paddingTop: top, backgroundColor: theme.colors.background }}
+      >
         <View
-          className="flex flex-row items-center justify-between w-full px-4 py-4 grow shadow-md"
+          className="flex flex-row items-center justify-between w-full px-4 py-4"
           style={{
-            backgroundColor: theme.colors.background,
             shadowColor: theme.colors.shadow,
           }}
         >
@@ -72,7 +78,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
             />
           </View>
         </View>
-      </SafeAreaView>
+      </View>
     </>
   );
 };

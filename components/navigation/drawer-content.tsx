@@ -32,13 +32,10 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
 
   return (
     <>
-      {drawerStatus === "open" && (
-        <StatusBar backgroundColor={theme.colors.background} />
-      )}
+      {drawerStatus === "open" && <StatusBar translucent />}
       <DrawerContentScrollView
         {...props}
         contentContainerStyle={{
-          paddingTop: insets.top,
           paddingStart: 0,
           paddingEnd: 0,
         }}

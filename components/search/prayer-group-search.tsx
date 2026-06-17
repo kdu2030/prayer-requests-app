@@ -5,7 +5,7 @@ import * as React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { Text, TouchableRipple, useTheme } from "react-native-paper";
 import { TextInput } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { useBlurOnHide } from "../inputs/use-blur-on-hide";
@@ -17,6 +17,9 @@ export const PrayerGroupSearch: React.FC = () => {
   const { translate } = useI18N();
 
   const theme = useTheme();
+
+  const insets = useSafeAreaInsets();
+
   const { placeholderMessage, groupQuery, onChangeQuery, groupSearchResults } =
     usePrayerGroupSearch();
 
@@ -24,84 +27,83 @@ export const PrayerGroupSearch: React.FC = () => {
 
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.background} />
+      <StatusBar translucent />
 
-      <SafeAreaView>
-        <View
-          className="flex flex-row items-center justify-between w-full pl-2 pr-4 py-2 grow shadow-md"
-          style={{
-            backgroundColor: theme.colors.background,
-            shadowColor: theme.colors.shadow,
-          }}
-        >
-          <View className="flex flex-row items-center">
-            <TouchableOpacity onPress={() => router.back()} className="mr-2">
-              <MaterialIcons
-                name="arrow-back"
-                size={28}
-                color={theme.colors.onSurface}
-              />
-            </TouchableOpacity>
-            <TextInput
-              value={groupQuery}
-              onChangeText={onChangeQuery}
-              mode="outlined"
-              className="flex-1"
-              placeholder={translate("prayerGroup.search.placeholder")}
-              style={{ height: 44 }}
-              left={<TextInput.Icon icon="magnify" />}
-              ref={inputRef}
-              testID={PrayerGroupSearchTestIds.searchInput}
+      <View
+        className="flex flex-row items-center justify-between w-full pl-2 pr-4 pb-2 shadow-md"
+        style={{
+          backgroundColor: theme.colors.background,
+          shadowColor: theme.colors.shadow,
+          paddingTop: insets.top + 8,
+        }}
+      >
+        <View className="flex flex-row items-center">
+          <TouchableOpacity onPress={() => router.back()} className="mr-2">
+            <MaterialIcons
+              name="arrow-back"
+              size={28}
+              color={theme.colors.onSurface}
             />
-          </View>
+          </TouchableOpacity>
+          <TextInput
+            value={groupQuery}
+            onChangeText={onChangeQuery}
+            mode="outlined"
+            className="flex-1"
+            placeholder={translate("prayerGroup.search.placeholder")}
+            style={{ height: 44 }}
+            left={<TextInput.Icon icon="magnify" />}
+            ref={inputRef}
+            testID={PrayerGroupSearchTestIds.searchInput}
+          />
         </View>
+      </View>
 
-        {placeholderMessage && groupSearchResults.length === 0 && (
-          <View className="flex flex-row items-center justify-center mt-16">
-            <Text
-              variant="bodyLarge"
-              className="font-bold"
-              testID={PrayerGroupSearchTestIds.prayerGroupPlaceholder}
-            >
-              {placeholderMessage}
-            </Text>
-          </View>
-        )}
+      {placeholderMessage && groupSearchResults.length === 0 && (
+        <View className="flex flex-row items-center justify-center mt-16">
+          <Text
+            variant="bodyLarge"
+            className="font-bold"
+            testID={PrayerGroupSearchTestIds.prayerGroupPlaceholder}
+          >
+            {placeholderMessage}
+          </Text>
+        </View>
+      )}
 
-        {groupSearchResults.length > 0 && (
-          <View className="flex flex-col mt-4 mx-4">
-            <FlatList
-              data={groupSearchResults}
-              testID={PrayerGroupSearchTestIds.prayerGroupResultsList}
-              renderItem={({ item: group, index }) => (
-                <TouchableRipple
-                  rippleColor={"rgba(0, 0, 0, 0.12)"}
-                  onPress={() => {
-                    if (group.prayerGroupId) {
-                      router.push({
-                        pathname: "/prayergroup/[id]",
-                        params: { id: group.prayerGroupId },
-                      });
-                    }
-                  }}
-                  style={{ borderRadius: 8, marginBottom: 8 }}
-                  borderless
-                  testID={`${PrayerGroupSearchTestIds.prayerGroupResult}[${index}]`}
-                >
-                  <View className="flex-row gap-x-3 items-center px-4 py-2">
-                    <ProfilePicture
-                      url={group.avatarFile?.fileUrl}
-                      width={36}
-                      height={36}
-                    />
-                    <Text variant="titleMedium">{group.groupName}</Text>
-                  </View>
-                </TouchableRipple>
-              )}
-            />
-          </View>
-        )}
-      </SafeAreaView>
+      {groupSearchResults.length > 0 && (
+        <View className="flex flex-col mt-4 mx-4">
+          <FlatList
+            data={groupSearchResults}
+            testID={PrayerGroupSearchTestIds.prayerGroupResultsList}
+            renderItem={({ item: group, index }) => (
+              <TouchableRipple
+                rippleColor={"rgba(0, 0, 0, 0.12)"}
+                onPress={() => {
+                  if (group.prayerGroupId) {
+                    router.push({
+                      pathname: "/prayergroup/[id]",
+                      params: { id: group.prayerGroupId },
+                    });
+                  }
+                }}
+                style={{ borderRadius: 8, marginBottom: 8 }}
+                borderless
+                testID={`${PrayerGroupSearchTestIds.prayerGroupResult}[${index}]`}
+              >
+                <View className="flex-row gap-x-3 items-center px-4 py-2">
+                  <ProfilePicture
+                    url={group.avatarFile?.fileUrl}
+                    width={36}
+                    height={36}
+                  />
+                  <Text variant="titleMedium">{group.groupName}</Text>
+                </View>
+              </TouchableRipple>
+            )}
+          />
+        </View>
+      )}
     </>
   );
 };

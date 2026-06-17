@@ -36,15 +36,16 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
       <DrawerContentScrollView
         {...props}
         contentContainerStyle={{
+          paddingTop: 0,
           paddingStart: 0,
           paddingEnd: 0,
         }}
       >
         <View
-          className="flex flex-col items-center justify-center pb-2 pt-6 border-b"
+          className="flex flex-col items-center justify-center pb-2"
           style={{
-            backgroundColor: theme.colors.background,
-            borderColor: theme.colors.outline,
+            paddingTop: insets.top + 24,
+            backgroundColor: theme.colors.primary,
           }}
         >
           <ProfilePicture
@@ -52,12 +53,8 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
             width={80}
             height={80}
           />
-          <Text className="mt-2" style={{ color: theme.colors.onSurface }}>
-            {userData?.fullName}
-          </Text>
-          <Text
-            style={{ color: theme.colors.onSurface }}
-          >{`@ ${userData?.username}`}</Text>
+          <Text className="mt-2 text-white">{userData?.fullName}</Text>
+          <Text className="text-white">{`@ ${userData?.username}`}</Text>
         </View>
 
         <View className="mt-2">

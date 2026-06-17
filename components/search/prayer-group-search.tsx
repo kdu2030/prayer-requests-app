@@ -24,16 +24,23 @@ export const PrayerGroupSearch: React.FC = () => {
 
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.primary} />
+      <StatusBar backgroundColor={theme.colors.background} />
 
       <SafeAreaView>
         <View
-          className="flex flex-row items-center justify-between w-full pl-2 pr-4 py-2 grow"
-          style={{ backgroundColor: theme.colors.primary }}
+          className="flex flex-row items-center justify-between w-full pl-2 pr-4 py-2 grow shadow-md"
+          style={{
+            backgroundColor: theme.colors.background,
+            shadowColor: theme.colors.shadow,
+          }}
         >
           <View className="flex flex-row items-center">
             <TouchableOpacity onPress={() => router.back()} className="mr-2">
-              <MaterialIcons name="arrow-back" size={28} color="white" />
+              <MaterialIcons
+                name="arrow-back"
+                size={28}
+                color={theme.colors.onSurface}
+              />
             </TouchableOpacity>
             <TextInput
               value={groupQuery}

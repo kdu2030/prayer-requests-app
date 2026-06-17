@@ -27,13 +27,14 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.primary} />
+      <StatusBar backgroundColor={theme.colors.background} />
 
       <SafeAreaView edges={["top"]}>
         <View
-          className="flex flex-row items-center justify-between w-full px-4 py-4 grow"
+          className="flex flex-row items-center justify-between w-full px-4 py-4 grow shadow-md"
           style={{
-            backgroundColor: theme.colors.primary,
+            backgroundColor: theme.colors.background,
+            shadowColor: theme.colors.shadow,
           }}
         >
           <View className="flex flex-row items-center">
@@ -41,9 +42,13 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
               className="mr-2"
             >
-              <Ionicons name="menu" size={28} color="white" />
+              <Ionicons name="menu" size={28} color={theme.colors.onSurface} />
             </TouchableOpacity>
-            <Text variant="titleLarge" className="font-bold text-white">
+            <Text
+              variant="titleLarge"
+              className="font-bold"
+              style={{ color: theme.colors.primary }}
+            >
               {translate("common.appName")}
             </Text>
           </View>
@@ -53,7 +58,11 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
               onPress={() => router.push("/(drawer)/search")}
               className="mr-4"
             >
-              <Ionicons name="search" size={28} color="white" />
+              <Ionicons
+                name="search"
+                size={28}
+                color={theme.colors.onSurface}
+              />
             </TouchableOpacity>
 
             <ProfilePicture

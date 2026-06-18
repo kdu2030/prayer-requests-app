@@ -2,14 +2,13 @@ import * as React from "react";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Button, Text, TextInput, useTheme } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../../hooks/use-i18n";
 import { useBlurOnHide } from "../../inputs/use-blur-on-hide";
 import { ErrorScreen } from "../../layouts/error-screen";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { SpinnerScreen } from "../../layouts/spinner-screen";
-import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
+import { PrayerGroupContentContainer } from "../section-header/prayer-group-content-container";
 import { DeleteUserConfirmationModal } from "./delete-user-confirmation-modal";
 import { PrayerGroupUsersTestIds } from "./tests/test-ids";
 import { usePrayerGroupUsers } from "./use-prayer-group-users";
@@ -43,11 +42,9 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
   const { inputRef } = useBlurOnHide();
 
   return (
-    <SafeAreaView className="flex-1">
-      <PrayerGroupSectionHeader
-        title={translate("prayerGroup.manageUsers.label")}
-      />
-
+    <PrayerGroupContentContainer
+      title={translate("prayerGroup.manageUsers.label")}
+    >
       {isLoading && (
         <SpinnerScreen
           loadingLabel={translate("prayerGroup.manageUsers.loading")}
@@ -177,6 +174,6 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
           }
         />
       )}
-    </SafeAreaView>
+    </PrayerGroupContentContainer>
   );
 };

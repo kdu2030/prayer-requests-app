@@ -15,58 +15,64 @@ export const PrayerGroupAbout: React.FC = () => {
   const { prayerGroupDetails } = usePrayerGroupContext();
 
   return (
-    <SafeAreaView
-      className="flex flex-1"
-      style={{ backgroundColor: theme.colors.background }}
-    >
+    <>
       <PrayerGroupSectionHeader
         title={translate("prayerGroup.about.header", {
           groupName: prayerGroupDetails?.groupName,
         })}
       />
+      <SafeAreaView
+        className="flex flex-1"
+        edges={["left", "right", "bottom"]}
+        style={{ backgroundColor: theme.colors.background }}
+      >
+        <ScrollView className="flex flex-1" automaticallyAdjustKeyboardInsets>
+          <View className="p-4 flex-col gap-y-4">
+            <View className="gap-y-2">
+              <Text variant="bodyLarge" className="font-bold">
+                {translate(
+                  "createPrayerGroup.groupNameDescription.description",
+                )}
+              </Text>
 
-      <ScrollView className="flex flex-1" automaticallyAdjustKeyboardInsets>
-        <View className="p-4 flex-col gap-y-4">
-          <View className="gap-y-2">
-            <Text variant="bodyLarge" className="font-bold">
-              {translate("createPrayerGroup.groupNameDescription.description")}
-            </Text>
+              <Text variant="bodyMedium">
+                {prayerGroupDetails?.description}
+              </Text>
+            </View>
 
-            <Text variant="bodyMedium">{prayerGroupDetails?.description}</Text>
-          </View>
+            <View className="gap-y-2">
+              <Text variant="bodyLarge" className="font-bold">
+                {translate("createPrayerGroup.rules.label")}
+              </Text>
 
-          <View className="gap-y-2">
-            <Text variant="bodyLarge" className="font-bold">
-              {translate("createPrayerGroup.rules.label")}
-            </Text>
+              <Text variant="bodyMedium">{prayerGroupDetails?.rules}</Text>
+            </View>
 
-            <Text variant="bodyMedium">{prayerGroupDetails?.rules}</Text>
-          </View>
+            <View className="gap-y-2">
+              <Text variant="bodyLarge" className="font-bold">
+                {translate("prayerGroup.about.admins")}
+              </Text>
 
-          <View className="gap-y-2">
-            <Text variant="bodyLarge" className="font-bold">
-              {translate("prayerGroup.about.admins")}
-            </Text>
-
-            <View>
-              {prayerGroupDetails?.admins?.map((admin) => {
-                return (
-                  <View className="flex-row items-center" key={admin.userId}>
-                    <ProfilePicture
-                      url={admin.image?.fileUrl}
-                      width={28}
-                      height={28}
-                    />
-                    <Text className="ml-3" variant="bodyMedium">
-                      {admin.fullName}
-                    </Text>
-                  </View>
-                );
-              })}
+              <View>
+                {prayerGroupDetails?.admins?.map((admin) => {
+                  return (
+                    <View className="flex-row items-center" key={admin.userId}>
+                      <ProfilePicture
+                        url={admin.image?.fileUrl}
+                        width={28}
+                        height={28}
+                      />
+                      <Text className="ml-3" variant="bodyMedium">
+                        {admin.fullName}
+                      </Text>
+                    </View>
+                  );
+                })}
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };

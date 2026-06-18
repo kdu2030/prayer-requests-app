@@ -2,9 +2,8 @@ import { Formik } from "formik";
 import * as React from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { Button, HelperText, useTheme } from "react-native-paper";
+import { Button, HelperText } from "react-native-paper";
 import { Text } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import { TEXT_INPUT_MAX_LENGTH } from "../../../constants/input-constants";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
@@ -16,13 +15,12 @@ import { GroupPreview } from "../../layouts/group-preview";
 import { SelectedImageCard } from "../../layouts/selected-image-card";
 import { PrayerGroupPermissionError } from "../error-screens/user-permission-error";
 import { usePrayerGroupContext } from "../prayer-group-context";
-import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
+import { PrayerGroupContentContainer } from "../section-header/prayer-group-content-container";
 import { prayerGroupDetailsValidationSchema } from "./prayer-group-details-validation-schema";
 import { PrayerGroupEditTestIds } from "./tests/test-ids";
 import { usePrayerGroupEdit } from "./use-prayer-group-edit";
 
 export const PrayerGroupEdit: React.FC = () => {
-  const theme = useTheme();
   const { translate, i18n } = useI18N();
   const { prayerGroupDetails } = usePrayerGroupContext();
 
@@ -41,14 +39,10 @@ export const PrayerGroupEdit: React.FC = () => {
 
   return (
     <>
-      <PrayerGroupSectionHeader
+      <PrayerGroupContentContainer
         title={translate("prayerGroup.edit.header", {
           groupName: prayerGroupDetails?.groupName,
         })}
-      />
-      <SafeAreaView
-        className="flex flex-1"
-        style={{ backgroundColor: theme.colors.background }}
       >
         <ScrollView automaticallyAdjustKeyboardInsets>
           <View className="p-4">
@@ -203,7 +197,7 @@ export const PrayerGroupEdit: React.FC = () => {
             </Formik>
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </PrayerGroupContentContainer>
     </>
   );
 };

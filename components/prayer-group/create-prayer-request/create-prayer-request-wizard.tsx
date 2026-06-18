@@ -26,22 +26,31 @@ export const CreatePrayerRequestWizard: React.FC = () => {
       onSubmit={() => {}}
       innerRef={formikRef}
     >
-      <SafeAreaView style={{ display: "flex", flex: 1 }}>
-        <ScrollView
-          contentContainerStyle={{
+      <>
+        <PrayerGroupSectionHeader
+          title={translate("prayerGroup.actions.addPrayerRequest")}
+        />
+
+        <SafeAreaView
+          edges={["bottom", "left", "right"]}
+          style={{
             display: "flex",
-            flexGrow: 1,
-            backgroundColor: theme.colors.background,
+            flex: 1,
           }}
         >
-          <PrayerGroupSectionHeader
-            title={translate("prayerGroup.actions.addPrayerRequest")}
-          />
-          <View className="flex flex-col p-4">
-            <>{getPrayerRequestWizardContent()}</>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+          <ScrollView
+            contentContainerStyle={{
+              display: "flex",
+              flexGrow: 1,
+              backgroundColor: theme.colors.background,
+            }}
+          >
+            <View className="flex flex-col p-4">
+              <>{getPrayerRequestWizardContent()}</>
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </>
     </Formik>
   );
 };

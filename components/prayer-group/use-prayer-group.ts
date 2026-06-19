@@ -134,6 +134,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       prayerGroupId,
       groupName: prayerGroupDetails?.groupName,
       avatarFile: prayerGroupDetails?.avatarFile,
+      joinStatus: JoinStatus.Joined,
     };
 
     setPrayerGroupDetails({

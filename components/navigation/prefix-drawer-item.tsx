@@ -17,6 +17,7 @@ export type Props = React.ComponentPropsWithRef<typeof View> & {
    * The label text of the item.
    */
   label: string;
+  labelClassName?: string;
   /**
    * Icon to display for the `DrawerItem`.
    */
@@ -83,6 +84,7 @@ export type Props = React.ComponentPropsWithRef<typeof View> & {
 export const PrefixDrawerItem = ({
   left,
   label,
+  labelClassName,
   active,
   disabled,
 
@@ -136,6 +138,7 @@ export const PrefixDrawerItem = ({
             {left}
             <Text
               variant="labelLarge"
+              className={labelClassName}
               selectable={false}
               numberOfLines={1}
               style={[

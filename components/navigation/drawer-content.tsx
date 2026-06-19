@@ -89,7 +89,11 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                     <PrefixDrawerItem
                       left={
                         <ProfilePicture
-                          className="bg-red-200"
+                          containerClassName={
+                            group.joinStatus !== JoinStatus.Joined
+                              ? "opacity-50"
+                              : undefined
+                          }
                           url={group.avatarFile?.fileUrl}
                           width={24}
                           height={24}
@@ -100,7 +104,7 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                         router.push(`/prayergroup/${group.prayerGroupId}`);
                         props.navigation.closeDrawer();
                       }}
-                      className={
+                      labelClassName={
                         group.joinStatus !== JoinStatus.Joined
                           ? "opacity-50"
                           : undefined

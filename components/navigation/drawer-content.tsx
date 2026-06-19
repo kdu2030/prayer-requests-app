@@ -32,25 +32,26 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
 
   return (
     <>
-      {drawerStatus === "open" && (
-        <StatusBar backgroundColor={theme.colors.primary} />
-      )}
+      {drawerStatus === "open" && <StatusBar translucent />}
       <DrawerContentScrollView
         {...props}
         contentContainerStyle={{
-          paddingTop: insets.top,
+          paddingTop: 0,
           paddingStart: 0,
           paddingEnd: 0,
         }}
       >
         <View
-          className="flex flex-col items-center justify-center py-2"
-          style={{ backgroundColor: theme.colors.primary }}
+          className="flex flex-col items-center justify-center pb-2"
+          style={{
+            paddingTop: insets.top + 24,
+            backgroundColor: theme.colors.primary,
+          }}
         >
           <ProfilePicture
             url={userData?.image?.fileUrl}
-            width={52}
-            height={52}
+            width={80}
+            height={80}
           />
           <Text className="mt-2 text-white">{userData?.fullName}</Text>
           <Text className="text-white">{`@ ${userData?.username}`}</Text>

@@ -3,10 +3,9 @@ import * as React from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../../hooks/use-i18n";
-import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
+import { PrayerGroupContentContainer } from "../section-header/prayer-group-content-container";
 import { useCreatePrayerRequestWizard } from "./use-create-prayer-request-wizard";
 
 export const CreatePrayerRequestWizard: React.FC = () => {
@@ -26,7 +25,9 @@ export const CreatePrayerRequestWizard: React.FC = () => {
       onSubmit={() => {}}
       innerRef={formikRef}
     >
-      <SafeAreaView style={{ display: "flex", flex: 1 }}>
+      <PrayerGroupContentContainer
+        title={translate("prayerGroup.actions.addPrayerRequest")}
+      >
         <ScrollView
           contentContainerStyle={{
             display: "flex",
@@ -34,14 +35,11 @@ export const CreatePrayerRequestWizard: React.FC = () => {
             backgroundColor: theme.colors.background,
           }}
         >
-          <PrayerGroupSectionHeader
-            title={translate("prayerGroup.actions.addPrayerRequest")}
-          />
           <View className="flex flex-col p-4">
             <>{getPrayerRequestWizardContent()}</>
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </PrayerGroupContentContainer>
     </Formik>
   );
 };

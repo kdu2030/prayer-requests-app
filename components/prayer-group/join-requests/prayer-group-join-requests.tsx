@@ -1,7 +1,6 @@
 import * as React from "react";
 import { FlatList, View } from "react-native";
 import { Button, Text, TextInput, useTheme } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import { formatDate } from "../../../helpers/formatting-helpers";
 import { useI18N } from "../../../hooks/use-i18n";
@@ -12,7 +11,7 @@ import { useBlurOnHide } from "../../inputs/use-blur-on-hide";
 import { ErrorScreen } from "../../layouts/error-screen";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { SpinnerScreen } from "../../layouts/spinner-screen";
-import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
+import { PrayerGroupContentContainer } from "../section-header/prayer-group-content-container";
 import { JoinRequestActions } from "./join-request-actions";
 import { JoinRequestTestIds } from "./tests/test-id";
 import { usePrayerGroupJoinRequests } from "./use-prayer-group-join-requests";
@@ -42,11 +41,9 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
   } = usePrayerGroupJoinRequests(prayerGroupId);
 
   return (
-    <SafeAreaView className="flex-1">
-      <PrayerGroupSectionHeader
-        title={translate("prayerGroup.joinRequest.manage")}
-      />
-
+    <PrayerGroupContentContainer
+      title={translate("prayerGroup.joinRequest.manage")}
+    >
       {joinRequestLoadStatus === LoadStatus.Loading && (
         <SpinnerScreen
           loadingLabel={translate(
@@ -181,6 +178,6 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
           </View>
         </View>
       )}
-    </SafeAreaView>
+    </PrayerGroupContentContainer>
   );
 };

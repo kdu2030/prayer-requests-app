@@ -2,12 +2,11 @@ import { Formik, FormikProps } from "formik";
 import * as React from "react";
 import { FlatList, View } from "react-native";
 import { Button, useTheme } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { TextInput } from "../inputs/text-input";
-import { PrayerGroupSectionHeader } from "../prayer-group/section-header/prayer-group-section-header";
+import { PrayerGroupContentContainer } from "../prayer-group/section-header/prayer-group-content-container";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import {
@@ -81,15 +80,10 @@ export const PrayerRequestPage: React.FC<Props> = ({
       innerRef={prayerRequestCommentFormRef}
     >
       {({ values, setFieldValue }: FormikProps<PrayerRequestCommentForm>) => (
-        <SafeAreaView
-          className="flex flex-1"
-          style={{ backgroundColor: theme.colors.background }}
+        <PrayerGroupContentContainer
+          title={prayerRequest.prayerGroup?.groupName}
         >
           <View className="flex flex-1">
-            <PrayerGroupSectionHeader
-              title={prayerRequest.prayerGroup?.groupName}
-            />
-
             <FlatList
               ListHeaderComponent={
                 <PrayerRequestCard
@@ -177,7 +171,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
               />
             )}
           </View>
-        </SafeAreaView>
+        </PrayerGroupContentContainer>
       )}
     </Formik>
   );

@@ -1,30 +1,23 @@
 import * as React from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { Text, useTheme } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Text } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { usePrayerGroupContext } from "../prayer-group-context";
-import { PrayerGroupSectionHeader } from "../section-header/prayer-group-section-header";
+import { PrayerGroupContentContainer } from "../section-header/prayer-group-content-container";
 
 export const PrayerGroupAbout: React.FC = () => {
-  const theme = useTheme();
   const { translate } = useI18N();
   const { prayerGroupDetails } = usePrayerGroupContext();
 
   return (
-    <SafeAreaView
-      className="flex flex-1"
-      style={{ backgroundColor: theme.colors.background }}
+    <PrayerGroupContentContainer
+      title={translate("prayerGroup.about.header", {
+        groupName: prayerGroupDetails?.groupName,
+      })}
     >
-      <PrayerGroupSectionHeader
-        title={translate("prayerGroup.about.header", {
-          groupName: prayerGroupDetails?.groupName,
-        })}
-      />
-
       <ScrollView className="flex flex-1" automaticallyAdjustKeyboardInsets>
         <View className="p-4 flex-col gap-y-4">
           <View className="gap-y-2">
@@ -67,6 +60,6 @@ export const PrayerGroupAbout: React.FC = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </PrayerGroupContentContainer>
   );
 };

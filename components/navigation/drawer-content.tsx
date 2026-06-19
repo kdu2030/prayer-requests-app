@@ -13,6 +13,7 @@ import { Text } from "react-native-paper";
 import { Drawer } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { JoinStatus } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { ProfilePicture } from "../layouts/profile-picture";
@@ -88,6 +89,7 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                     <PrefixDrawerItem
                       left={
                         <ProfilePicture
+                          className="bg-red-200"
                           url={group.avatarFile?.fileUrl}
                           width={24}
                           height={24}
@@ -98,6 +100,11 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                         router.push(`/prayergroup/${group.prayerGroupId}`);
                         props.navigation.closeDrawer();
                       }}
+                      className={
+                        group.joinStatus !== JoinStatus.Joined
+                          ? "opacity-50"
+                          : undefined
+                      }
                       key={group.prayerGroupId}
                     />
                   );

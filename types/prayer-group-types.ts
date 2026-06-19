@@ -31,4 +31,5 @@ export type PrayerGroupSummary = {
   prayerGroupId?: number;
   groupName?: string;
   avatarFile?: MediaFile;
+  joinStatus?: JoinStatus;
 };

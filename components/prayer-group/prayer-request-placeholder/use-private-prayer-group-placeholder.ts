@@ -53,7 +53,8 @@ export const usePrivatePrayerGroupPlaceholder = (
       prayerGroupId,
       groupName: prayerGroupDetails?.groupName,
       avatarFile: prayerGroupDetails?.avatarFile,
-      joinStatus: JoinStatus.Joined,
+      joinStatus: JoinStatus.RequestSubmitted,
+      addedDate: new Date().toISOString(),
     });
 
     setUserData((userData) => ({

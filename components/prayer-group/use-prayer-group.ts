@@ -20,6 +20,7 @@ import { usePrayerRequestContext } from "../prayer-request/prayer-request-contex
 import { useToasterContext } from "../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
+import { addNewPrayerGroupToUserGroups } from "./prayer-group-helpers";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [prayerGroupLoadStatus, setPrayerGroupLoadStatus] =
@@ -142,17 +143,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     });
 
     setUserData((existingUserData) => {
-      const updatedPrayerGroups = [...(existingUserData.prayerGroups ?? [])];
-
-      const indexToAdd = updatedPrayerGroups?.findIndex(
-        (prayerGroup) => prayerGroup.joinStatus !== JoinStatus.Joined,
+      const updatedPrayerGroups = addNewPrayerGroupToUserGroups(
+        existingUserData.prayerGroups ?? [],
+        joinedPrayerGroupSummary,
       );
-
-      if (indexToAdd == -1) {
-        updatedPrayerGroups.push(joinedPrayerGroupSummary);
-      } else {
-        updatedPrayerGroups.splice(indexToAdd, 0, joinedPrayerGroupSummary);
-      }
 
       return {
         ...existingUserData,

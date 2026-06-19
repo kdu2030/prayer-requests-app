@@ -5,18 +5,20 @@ import { useApiDataContext } from "../hooks/use-api-data";
 
 export type PostApproveJoinRequestBody = {
   joinRequestIds: number[];
+  approveDate?: string;
 };
 
 const postApproveJoinRequests = async (
   fetch: AxiosInstance,
   baseUrl: string,
   prayerGroupId: number,
-  joinRequestIds: number[]
+  joinRequestIds: number[],
 ) => {
   const url = `${baseUrl}/api/prayergroup/${prayerGroupId}/joinrequests`;
 
   const requestBody: PostApproveJoinRequestBody = {
     joinRequestIds,
+    approveDate: new Date().toISOString(),
   };
 
   await fetch.post(url, requestBody, {
@@ -32,6 +34,6 @@ export const usePostApproveJoinRequests = () => {
   return React.useCallback(
     (prayerGroupId: number, joinRequestIds: number[]) =>
       postApproveJoinRequests(fetch, baseUrl, prayerGroupId, joinRequestIds),
-    [baseUrl, fetch]
+    [baseUrl, fetch],
   );
 };

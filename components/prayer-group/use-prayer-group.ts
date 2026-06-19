@@ -140,10 +140,20 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       userJoinStatus: JoinStatus.Joined,
       prayerGroupRole: PrayerGroupRole.Member,
     });
+
     setUserData((existingUserData) => {
-      const updatedPrayerGroups = existingUserData.prayerGroups?.concat(
-        joinedPrayerGroupSummary,
+      const updatedPrayerGroups = [...(existingUserData.prayerGroups ?? [])];
+
+      const indexToAdd = updatedPrayerGroups?.findIndex(
+        (prayerGroup) => prayerGroup.joinStatus !== JoinStatus.Joined,
       );
+
+      if (indexToAdd == -1) {
+        updatedPrayerGroups.push(joinedPrayerGroupSummary);
+      } else {
+        updatedPrayerGroups.splice(indexToAdd, 0, joinedPrayerGroupSummary);
+      }
+
       return {
         ...existingUserData,
         prayerGroups: updatedPrayerGroups,

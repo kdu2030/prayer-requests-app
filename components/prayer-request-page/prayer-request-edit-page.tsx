@@ -17,23 +17,19 @@ export function PrayerRequestEditPage({
 }: PrayerRequestEditPageProps) {
   const { translate } = useI18N();
   const theme = useTheme();
-  const {
-    initialValues,
-    onScrollViewLayout,
-    onRequestTitleLayout,
-    requestDescriptionHeight,
-  } = usePrayerRequestEditPage(prayerRequestId);
+  const { initialValues, requestDescriptionRef } =
+    usePrayerRequestEditPage(prayerRequestId);
 
   return (
     <PrayerGroupContentContainer title={translate("prayerRequest.edit.label")}>
       <Formik initialValues={initialValues ?? {}} onSubmit={() => {}}>
         <ScrollView
+          automaticallyAdjustKeyboardInsets
           contentContainerStyle={{
             display: "flex",
             flexGrow: 1,
             backgroundColor: theme.colors.background,
           }}
-          onLayout={onScrollViewLayout}
         >
           <TextInput
             mode="outlined"
@@ -42,22 +38,20 @@ export function PrayerRequestEditPage({
             contentStyle={{ fontWeight: "bold", fontSize: 20 }}
             outlineStyle={{ borderColor: theme.colors.background }}
             errorClassNames="mb-3"
-            onLayout={onRequestTitleLayout}
           />
 
-          {requestDescriptionHeight != null && (
-            <TextInput
-              mode="outlined"
-              name="requestDescription"
-              placeholder={translate(
-                "createPrayerGroup.groupNameDescription.description",
-              )}
-              outlineStyle={{ borderColor: theme.colors.background }}
-              multiline
-              contentStyle={{ paddingTop: 16 }}
-              style={{ height: requestDescriptionHeight }}
-            />
-          )}
+          <TextInput
+            mode="outlined"
+            name="requestDescription"
+            placeholder={translate(
+              "createPrayerGroup.groupNameDescription.description",
+            )}
+            outlineStyle={{ borderColor: theme.colors.background }}
+            multiline
+            contentStyle={{ paddingTop: 16 }}
+            customRef={requestDescriptionRef}
+            style={{ height: 200 }}
+          />
         </ScrollView>
       </Formik>
     </PrayerGroupContentContainer>

@@ -1,6 +1,6 @@
 import { useField } from "formik";
 import * as React from "react";
-import { View } from "react-native";
+import { TextInput as NativeTextInput, View } from "react-native";
 import {
   HelperText,
   TextInput as PaperTextInput,
@@ -17,6 +17,7 @@ interface Props extends TextInputProps {
   onBlur?: () => void;
   required?: boolean;
   errorClassNames?: string;
+  customRef?: React.RefObject<NativeTextInput | null>;
 }
 
 export const TextInput: React.FC<Props> = ({
@@ -28,9 +29,16 @@ export const TextInput: React.FC<Props> = ({
   errorClassNames = "",
   onBlur = () => {},
   testID,
+  customRef,
   ...props
 }) => {
   const { inputRef } = useBlurOnHide();
+
+  React.useImperativeHandle<NativeTextInput | null, NativeTextInput | null>(
+    customRef,
+    () => inputRef.current,
+    [inputRef],
+  );
 
   const [field, meta, helpers] = useField(name);
   const isError = meta.touched && meta.error;

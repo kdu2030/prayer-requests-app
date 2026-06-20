@@ -52,6 +52,7 @@ export const RequestBodyStep: React.FC<Props> = ({ setWizardStep }) => {
           outlineStyle={{ borderColor: theme.colors.background }}
           multiline
           contentStyle={{ paddingTop: 16 }}
+          style={{ height: 200 }}
           numberOfLines={5}
           testID={RequestBodyTestIds.requestDescriptionInput}
         />

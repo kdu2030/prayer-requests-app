@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 
 import {
   JoinStatus,
@@ -10,6 +10,7 @@ import {
 } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
+import { DismissButton } from "../../inputs/dismiss-button";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { PrayerGroupBanner } from "./prayer-group-banner";
 import { PrayerGroupHeaderTestIds } from "./tests/test-ids";

@@ -1,11 +1,12 @@
 import { Foundation } from "@expo/vector-icons";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 
 import { JoinStatus } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { LoadStatus } from "../../../types/api-response-types";
+import { DismissButton } from "../../inputs/dismiss-button";
 import { PrayerRequestPlaceholderBodyTestIds } from "./tests/test-ids";
 import { usePrivatePrayerGroupPlaceholder } from "./use-private-prayer-group-placeholder";
 

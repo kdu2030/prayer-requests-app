@@ -1,10 +1,11 @@
 import color from "color";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
 import { JoinRequestForm } from "../../../types/join-request-types";
+import { DismissButton } from "../../inputs/dismiss-button";
 
 type JoinRequestActionsProps = {
   joinRequestId: number;

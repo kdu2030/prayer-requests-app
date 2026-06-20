@@ -52,7 +52,7 @@ export const UserActions: React.FC<Props> = ({
         </View>
 
         <View>
-          <TouchableRipple
+          <DismissTouchableRipple
             style={{
               borderRadius: 9999,
             }}
@@ -66,7 +66,7 @@ export const UserActions: React.FC<Props> = ({
               size={36}
               color={theme.colors.error}
             />
-          </TouchableRipple>
+          </DismissTouchableRipple>
         </View>
       </View>
     </>

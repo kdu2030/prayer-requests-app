@@ -2,10 +2,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
+import { DismissButton } from "../../inputs/dismiss-button";
 import { usePrayerGroupContext } from "../prayer-group-context";
 import { PrayerGroupContentContainer } from "../section-header/prayer-group-content-container";
 

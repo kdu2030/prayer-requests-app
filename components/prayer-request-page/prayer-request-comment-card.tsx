@@ -78,7 +78,7 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
         </View>
 
         {prayerRequestComment.user?.userId === userData?.userId && (
-          <TouchableRipple
+          <DismissTouchableRipple
             rippleColor={"rgba(0, 0, 0, 0.12)"}
             style={{ borderRadius: 9999 }}
             onPress={onOpenActions}
@@ -93,7 +93,7 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
               name="more-vert"
               color={theme.colors.onSurface}
             />
-          </TouchableRipple>
+          </DismissTouchableRipple>
         )}
       </View>
 

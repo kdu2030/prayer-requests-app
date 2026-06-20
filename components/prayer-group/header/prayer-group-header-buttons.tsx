@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import * as React from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
+
+import { DismissTouchableOpacity } from "../../inputs/dismiss-touchable-opacity";
 
 type Props = {
   className?: string;

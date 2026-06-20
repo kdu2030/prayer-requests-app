@@ -2,12 +2,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
-import { FlatList, Keyboard, TouchableOpacity, View } from "react-native";
-import { Text, TouchableRipple, useTheme } from "react-native-paper";
+import { FlatList, Keyboard, View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
 import { TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { DismissTouchableOpacity } from "../inputs/dismiss-touchable-opacity";
+import { DismissTouchableRipple } from "../inputs/dismiss-touchable-ripple";
 import { useBlurOnHide } from "../inputs/use-blur-on-hide";
 import { ProfilePicture } from "../layouts/profile-picture";
 import { PrayerGroupSearchTestIds } from "./tests/test-ids";
@@ -81,7 +83,7 @@ export const PrayerGroupSearch: React.FC = () => {
             testID={PrayerGroupSearchTestIds.prayerGroupResultsList}
             keyboardShouldPersistTaps="handled"
             renderItem={({ item: group, index }) => (
-              <TouchableRipple
+              <DismissTouchableRipple
                 rippleColor={"rgba(0, 0, 0, 0.12)"}
                 onPress={() => {
                   if (group.prayerGroupId) {
@@ -105,7 +107,7 @@ export const PrayerGroupSearch: React.FC = () => {
                   />
                   <Text variant="titleMedium">{group.groupName}</Text>
                 </View>
-              </TouchableRipple>
+              </DismissTouchableRipple>
             )}
           />
         </View>

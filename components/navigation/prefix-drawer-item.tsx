@@ -9,8 +9,10 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { Text, TouchableRipple, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { ThemeProp } from "react-native-paper/lib/typescript/types";
+
+import { DismissTouchableRipple } from "../inputs/dismiss-touchable-ripple";
 
 export type Props = React.ComponentPropsWithRef<typeof View> & {
   /**
@@ -116,7 +118,7 @@ export const PrefixDrawerItem = ({
 
   return (
     <View {...rest}>
-      <TouchableRipple
+      <DismissTouchableRipple
         borderless
         disabled={disabled}
         background={background}
@@ -157,7 +159,7 @@ export const PrefixDrawerItem = ({
 
           {right?.({ color: contentColor })}
         </View>
-      </TouchableRipple>
+      </DismissTouchableRipple>
     </View>
   );
 };

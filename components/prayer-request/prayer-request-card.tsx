@@ -90,7 +90,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
         )}
 
         <View className="ml-auto">
-          <TouchableRipple
+          <DismissTouchableRipple
             rippleColor={"rgba(0, 0, 0, 0.12)"}
             style={{ borderRadius: 9999 }}
             onPress={() => {
@@ -104,7 +104,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
               name="more-vert"
               color={theme.colors.onSurface}
             />
-          </TouchableRipple>
+          </DismissTouchableRipple>
         </View>
       </View>
 

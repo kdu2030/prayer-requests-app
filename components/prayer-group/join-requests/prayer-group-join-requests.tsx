@@ -1,12 +1,13 @@
 import * as React from "react";
 import { FlatList, View } from "react-native";
-import { Button, Text, TextInput, useTheme } from "react-native-paper";
+import { Text, TextInput, useTheme } from "react-native-paper";
 
 import { formatDate } from "../../../helpers/formatting-helpers";
 import { useI18N } from "../../../hooks/use-i18n";
 import i18n from "../../../i18n/i18n";
 import { LoadStatus } from "../../../types/api-response-types";
 import { CultureCode } from "../../../types/languages";
+import { DismissButton } from "../../inputs/dismiss-button";
 import { useBlurOnHide } from "../../inputs/use-blur-on-hide";
 import { ErrorScreen } from "../../layouts/error-screen";
 import { ProfilePicture } from "../../layouts/profile-picture";
@@ -87,6 +88,7 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
             <FlatList
               data={filteredJoinRequests}
               className="flex-1"
+              keyboardShouldPersistTaps="handled"
               renderItem={({ item, index }) => {
                 return (
                   <View

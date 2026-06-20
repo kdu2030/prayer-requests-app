@@ -175,6 +175,8 @@ export const chineseTranslations: Translations = {
     "确定要删除评论吗？删除后将无法回复。",
   "prayerRequest.comments.placeholder": "这个祷告事项还没有评论。",
 
+  "prayerRequest.edit.label": "编辑祷告事项",
+
   "prayerRequestPage.loading": "加载祷告事项",
   "prayerRequestPage.failedToLoad": "加载祷告事项失败了。",
 

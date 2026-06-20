@@ -38,6 +38,13 @@ export const AppBottomSheet: React.FC<Props> = ({
       return (
         <BottomSheetBackdrop
           {...props}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 49,
+          }}
           disappearsOnIndex={-1}
           appearsOnIndex={0}
         />

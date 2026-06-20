@@ -20,14 +20,13 @@ export const PrayerRequestActions: React.FC<Props> = ({
   selectedPrayerRequest,
   isOpen,
   onClose,
+  showExtendedActions,
 }) => {
   const theme = useTheme();
   const { translate } = useI18N();
 
-  const { toggleBookmark, isToggleBookmarkLoading } = usePrayerRequestActions(
-    onClose,
-    selectedPrayerRequest,
-  );
+  const { toggleBookmark, isToggleBookmarkLoading, onEditPrayerRequest } =
+    usePrayerRequestActions(onClose, selectedPrayerRequest);
 
   return (
     <AppBottomSheet isOpen={isOpen} onClose={onClose}>
@@ -64,6 +63,22 @@ export const PrayerRequestActions: React.FC<Props> = ({
           onPress={toggleBookmark}
           isLoading={isToggleBookmarkLoading}
         />
+
+        {showExtendedActions && (
+          <>
+            <PrayerGroupOptionButton
+              icon={
+                <MaterialCommunityIcons
+                  name="pencil"
+                  size={24}
+                  color={theme.colors.onSurface}
+                />
+              }
+              onPress={onEditPrayerRequest}
+              label={translate("prayerRequest.edit.label")}
+            />
+          </>
+        )}
       </View>
     </AppBottomSheet>
   );

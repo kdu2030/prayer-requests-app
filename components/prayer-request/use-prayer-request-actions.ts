@@ -124,8 +124,11 @@ export const usePrayerRequestActions = (
     await removePrayerRequestBookmark(selectedPrayerRequest.userBookmarkId);
   };
 
+  const onEditPrayerRequest = () => {};
+
   return {
     isToggleBookmarkLoading,
     toggleBookmark,
+    onEditPrayerRequest,
   };
 };

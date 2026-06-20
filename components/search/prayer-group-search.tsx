@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
-import { FlatList, Keyboard, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import { TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -87,8 +87,6 @@ export const PrayerGroupSearch: React.FC = () => {
                 rippleColor={"rgba(0, 0, 0, 0.12)"}
                 onPress={() => {
                   if (group.prayerGroupId) {
-                    Keyboard.dismiss();
-
                     router.push({
                       pathname: "/prayergroup/[id]",
                       params: { id: group.prayerGroupId },

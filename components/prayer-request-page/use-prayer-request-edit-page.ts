@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import * as React from "react";
-import { Keyboard, TextInput } from "react-native";
+import { TextInput } from "react-native";
 
 import {
   PutPrayerRequestBody,
@@ -44,8 +44,6 @@ export function usePrayerRequestEditPage(prayerRequestId: number) {
   async function saveEditPrayerRequest(
     editPrayerRequestValues: CreatePrayerRequestForm,
   ) {
-    Keyboard.dismiss();
-
     setIsEditLoading(true);
 
     const putRequestBody: PutPrayerRequestBody = {

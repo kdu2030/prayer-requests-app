@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { isEmpty } from "lodash";
 import * as React from "react";
-import { Keyboard, View } from "react-native";
+import { View } from "react-native";
 import { useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
 
@@ -136,10 +136,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
             mode="outlined"
             icon={likeIcon}
             loading={isLikeLoading}
-            onPress={() => {
-              Keyboard.dismiss();
-              onLikePress();
-            }}
+            onPress={onLikePress}
             testID={getArrayTestId(
               PrayerRequestCardTestIds.likeButton,
               prayerRequest.prayerRequestId,
@@ -159,10 +156,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
                 ? "comment"
                 : "comment-outline"
             }
-            onPress={() => {
-              Keyboard.dismiss();
-              onCommentPress();
-            }}
+            onPress={onCommentPress}
             testID={getArrayTestId(
               PrayerRequestCardTestIds.commentButton,
               prayerRequest.prayerRequestId,
@@ -183,10 +177,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
               ? "cross"
               : "cross-outline"
           }
-          onPress={() => {
-            Keyboard.dismiss();
-            onPrayPress();
-          }}
+          onPress={onPrayPress}
           testID={getArrayTestId(
             PrayerRequestCardTestIds.prayedButton,
             prayerRequest.prayerRequestId,

@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as React from "react";
-import { Keyboard, View } from "react-native";
+import { View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 
 import { formatNumber } from "../../helpers/formatting-helpers";
@@ -49,10 +49,7 @@ export const WizardHeader: React.FC<Props> = ({
         {showBackButton && (
           <DismissTouchableOpacity
             className="mr-3"
-            onPress={() => {
-              Keyboard.dismiss();
-              onBack?.();
-            }}
+            onPress={onBack}
             testID={testIDs?.backButton}
           >
             <Ionicons
@@ -96,10 +93,7 @@ export const WizardHeader: React.FC<Props> = ({
       {showSaveButton && (
         <DismissButton
           mode="contained"
-          onPress={() => {
-            Keyboard.dismiss();
-            onSave?.();
-          }}
+          onPress={onSave}
           loading={isLoading}
           testID={testIDs?.saveButton}
         >

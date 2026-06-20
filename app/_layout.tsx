@@ -1,5 +1,6 @@
 import "../i18n/i18n";
 
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { Stack } from "expo-router";
 import * as React from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -17,16 +18,18 @@ const BaseStack: React.FC = () => {
     <SafeAreaProvider>
       <GestureHandlerRootView className="flex-1">
         <PaperProvider theme={LIGHT_THEME}>
-          <ApiDataContextProvider>
-            <PrayerRequestDetailContextProvider>
-              <ToasterContextProvider>
-                <>
-                  <Stack screenOptions={{ headerShown: false }} />
-                  <ToasterPortal />
-                </>
-              </ToasterContextProvider>
-            </PrayerRequestDetailContextProvider>
-          </ApiDataContextProvider>
+          <BottomSheetModalProvider>
+            <ApiDataContextProvider>
+              <PrayerRequestDetailContextProvider>
+                <ToasterContextProvider>
+                  <>
+                    <Stack screenOptions={{ headerShown: false }} />
+                    <ToasterPortal />
+                  </>
+                </ToasterContextProvider>
+              </PrayerRequestDetailContextProvider>
+            </ApiDataContextProvider>
+          </BottomSheetModalProvider>
         </PaperProvider>
       </GestureHandlerRootView>
     </SafeAreaProvider>

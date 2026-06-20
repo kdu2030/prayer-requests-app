@@ -22,7 +22,6 @@ export function PrayerRequestEditPage({
   const {
     initialValues,
     requestDescriptionRef,
-    editFormRef,
     isEditLoading,
     saveEditPrayerRequest,
   } = usePrayerRequestEditPage(prayerRequestId);
@@ -35,7 +34,6 @@ export function PrayerRequestEditPage({
         validationSchema={validationSchema}
         initialValues={initialValues ?? {}}
         onSubmit={saveEditPrayerRequest}
-        innerRef={editFormRef}
       >
         {({ submitForm }) => (
           <ScrollView

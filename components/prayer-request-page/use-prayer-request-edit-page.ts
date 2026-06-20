@@ -1,7 +1,6 @@
 import { router } from "expo-router";
-import { FormikProps } from "formik";
 import * as React from "react";
-import { TextInput } from "react-native";
+import { Keyboard, TextInput } from "react-native";
 
 import {
   PutPrayerRequestBody,
@@ -20,7 +19,6 @@ export function usePrayerRequestEditPage(prayerRequestId: number) {
 
   const { translate } = useI18N();
 
-  const editFormRef = React.useRef<FormikProps<CreatePrayerRequestForm>>(null);
   const requestDescriptionRef = React.useRef<TextInput>(null);
 
   const putPrayerRequest = usePutPrayerRequest();
@@ -46,9 +44,7 @@ export function usePrayerRequestEditPage(prayerRequestId: number) {
   async function saveEditPrayerRequest(
     editPrayerRequestValues: CreatePrayerRequestForm,
   ) {
-    if (!editFormRef.current) {
-      return;
-    }
+    Keyboard.dismiss();
 
     setIsEditLoading(true);
 
@@ -81,7 +77,6 @@ export function usePrayerRequestEditPage(prayerRequestId: number) {
   return {
     initialValues,
     requestDescriptionRef,
-    editFormRef,
     saveEditPrayerRequest,
     isEditLoading,
   };

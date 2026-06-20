@@ -215,4 +215,7 @@ export const englishTranslations = {
   "toaster.editComment.failure": "Failed to edit comment",
   "toaster.deleteComment.success": "Deleted comment",
   "toaster.deleteComment.failure": "Failed to delete comment",
+
+  "toaster.editPrayerRequest.success": "Edited prayer request",
+  "toaster.editPrayerRequest.failure": "Failed to edit prayer request",
 };

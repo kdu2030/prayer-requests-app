@@ -1,12 +1,30 @@
+import { FormikProps } from "formik";
 import * as React from "react";
 import { TextInput } from "react-native";
 
+import {
+  PutPrayerRequestBody,
+  usePutPrayerRequest,
+} from "../../api/put-prayer-request";
+import { useI18N } from "../../hooks/use-i18n";
+import { CreatePrayerRequestForm } from "../prayer-group/create-prayer-request/create-prayer-request-types";
 import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
+import { useToasterContext } from "../toasters/toaster-context";
 
 export function usePrayerRequestEditPage(prayerRequestId: number) {
-  const { getPrayerRequestFromStore } = usePrayerRequestDetailContext();
+  const { getPrayerRequestFromStore, setPrayerRequest } =
+    usePrayerRequestDetailContext();
 
+  const { openToaster } = useToasterContext();
+
+  const { translate } = useI18N();
+
+  const editFormRef = React.useRef<FormikProps<CreatePrayerRequestForm>>(null);
   const requestDescriptionRef = React.useRef<TextInput>(null);
+
+  const putPrayerRequest = usePutPrayerRequest();
+
+  const [isEditLoading, setIsEditLoading] = React.useState<boolean>(false);
 
   const [isInitialFocusComplete, setIsInitialFocusComplete] =
     React.useState<boolean>(false);
@@ -24,8 +42,44 @@ export function usePrayerRequestEditPage(prayerRequestId: number) {
     setIsInitialFocusComplete(true);
   }, [isInitialFocusComplete]);
 
+  async function saveEditPrayerRequest() {
+    if (!editFormRef.current) {
+      return;
+    }
+
+    setIsEditLoading(true);
+
+    const editPrayerRequestValues = editFormRef.current.values;
+
+    const putRequestBody: PutPrayerRequestBody = {
+      requestTitle: editPrayerRequestValues.requestTitle ?? "",
+      requestDescription: editPrayerRequestValues.requestDescription ?? "",
+      expirationDate: initialValues?.expirationDate,
+    };
+
+    const response = await putPrayerRequest(prayerRequestId, putRequestBody);
+    setIsEditLoading(false);
+
+    if (response.isError) {
+      openToaster({
+        variant: "error",
+        message: translate("toaster.editPrayerRequest.failure"),
+      });
+      return;
+    }
+
+    setPrayerRequest(prayerRequestId, { ...initialValues, ...response.value });
+    openToaster({
+      variant: "success",
+      message: translate("toaster.editPrayerRequest.failure"),
+    });
+  }
+
   return {
     initialValues,
     requestDescriptionRef,
+    editFormRef,
+    saveEditPrayerRequest,
+    isEditLoading,
   };
 }

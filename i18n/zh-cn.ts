@@ -208,4 +208,7 @@ export const chineseTranslations: Translations = {
   "toaster.editComment.failure": "编辑评论失败了。",
   "toaster.deleteComment.success": "已删除评论。",
   "toaster.deleteComment.failure": "删除评论失败了。",
+
+  "toaster.editPrayerRequest.success": "已编辑祷告事项。",
+  "toaster.editPrayerRequest.failure": "编辑祷告事项失败了。",
 };

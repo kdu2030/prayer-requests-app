@@ -18,8 +18,14 @@ export function PrayerRequestEditPage({
 }: PrayerRequestEditPageProps) {
   const { translate } = useI18N();
   const theme = useTheme();
-  const { initialValues, requestDescriptionRef } =
-    usePrayerRequestEditPage(prayerRequestId);
+
+  const {
+    initialValues,
+    requestDescriptionRef,
+    editFormRef,
+    isEditLoading,
+    saveEditPrayerRequest,
+  } = usePrayerRequestEditPage(prayerRequestId);
 
   const validationSchema = useRequestBodyValidationSchema();
 
@@ -29,6 +35,7 @@ export function PrayerRequestEditPage({
         validationSchema={validationSchema}
         initialValues={initialValues ?? {}}
         onSubmit={() => {}}
+        innerRef={editFormRef}
       >
         <ScrollView
           automaticallyAdjustKeyboardInsets
@@ -40,7 +47,11 @@ export function PrayerRequestEditPage({
         >
           <View className="p-4">
             <View className="flex flex-row w-full mb-2 justify-end">
-              <Button mode="contained">
+              <Button
+                mode="contained"
+                onPress={saveEditPrayerRequest}
+                loading={isEditLoading}
+              >
                 {translate("common.actions.save")}
               </Button>
             </View>

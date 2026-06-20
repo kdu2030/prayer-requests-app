@@ -183,6 +183,8 @@ export const englishTranslations = {
   "prayerRequest.comments.placeholder":
     "This prayer request does not have comments yet.",
 
+  "prayerRequest.edit.label": "Edit Prayer Request",
+
   "prayerGroup.joinRequest.label":
     "This is a private prayer group. To join, please submit a join request.",
   "prayerGroup.joinRequest.submitJoinRequest": "Submit Join Request",

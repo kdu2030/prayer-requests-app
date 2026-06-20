@@ -1,10 +1,12 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, TouchableRipple, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
+import { DismissButton } from "../../inputs/dismiss-button";
+import { DismissTouchableRipple } from "../../inputs/dismiss-touchable-ripple";
 
 type Props = {
   role: PrayerGroupRole | undefined;

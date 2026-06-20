@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { isEmpty } from "lodash";
 import * as React from "react";
 import { Keyboard, View } from "react-native";
-import { TouchableRipple, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
 
 import { formatDate, formatNumber } from "../../helpers/formatting-helpers";
@@ -11,6 +11,7 @@ import { useI18N } from "../../hooks/use-i18n";
 import { CultureCode } from "../../types/languages";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { DismissButton } from "../inputs/dismiss-button";
+import { DismissTouchableRipple } from "../inputs/dismiss-touchable-ripple";
 import { ProfilePicture } from "../layouts/profile-picture";
 import { PrayerRequestCardTestIds } from "./tests/test-ids";
 
@@ -93,10 +94,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
           <DismissTouchableRipple
             rippleColor={"rgba(0, 0, 0, 0.12)"}
             style={{ borderRadius: 9999 }}
-            onPress={() => {
-              Keyboard.dismiss();
-              onOpenMenu();
-            }}
+            onPress={onOpenMenu}
             borderless
           >
             <MaterialIcons

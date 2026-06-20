@@ -2,11 +2,12 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useApiDataContext } from "../../../hooks/use-api-data";
+import { DismissTouchableOpacity } from "../../inputs/dismiss-touchable-opacity";
 import { ProfilePicture } from "../../layouts/profile-picture";
 
 type Props = {

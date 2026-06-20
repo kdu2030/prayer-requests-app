@@ -1,9 +1,10 @@
 import { Formik } from "formik";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { DismissButton } from "../inputs/dismiss-button";
 import { TextInput } from "../inputs/text-input";
 import { useRequestBodyValidationSchema } from "../prayer-group/create-prayer-request/request-body-step/use-request-body-validation-schema";
 import { PrayerGroupContentContainer } from "../prayer-group/section-header/prayer-group-content-container";

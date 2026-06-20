@@ -46,14 +46,14 @@ export function usePrayerRequestEditPage(
     setIsInitialFocusComplete(true);
   }, [isInitialFocusComplete]);
 
-  async function saveEditPrayerRequest() {
+  async function saveEditPrayerRequest(
+    editPrayerRequestValues: CreatePrayerRequestForm,
+  ) {
     if (!editFormRef.current) {
       return;
     }
 
     setIsEditLoading(true);
-
-    const editPrayerRequestValues = editFormRef.current.values;
 
     const putRequestBody: PutPrayerRequestBody = {
       requestTitle: editPrayerRequestValues.requestTitle ?? "",

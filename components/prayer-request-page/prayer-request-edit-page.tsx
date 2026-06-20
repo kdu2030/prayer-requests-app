@@ -36,51 +36,53 @@ export function PrayerRequestEditPage({
       <Formik
         validationSchema={validationSchema}
         initialValues={initialValues ?? {}}
-        onSubmit={() => {}}
+        onSubmit={saveEditPrayerRequest}
         innerRef={editFormRef}
       >
-        <ScrollView
-          automaticallyAdjustKeyboardInsets
-          contentContainerStyle={{
-            display: "flex",
-            flexGrow: 1,
-            backgroundColor: theme.colors.background,
-          }}
-        >
-          <View className="p-4">
-            <View className="flex flex-row w-full mb-2 justify-end">
-              <Button
-                mode="contained"
-                onPress={saveEditPrayerRequest}
-                loading={isEditLoading}
-              >
-                {translate("common.actions.save")}
-              </Button>
+        {({ submitForm }) => (
+          <ScrollView
+            automaticallyAdjustKeyboardInsets
+            contentContainerStyle={{
+              display: "flex",
+              flexGrow: 1,
+              backgroundColor: theme.colors.background,
+            }}
+          >
+            <View className="p-4">
+              <View className="flex flex-row w-full mb-2 justify-end">
+                <Button
+                  mode="contained"
+                  onPress={submitForm}
+                  loading={isEditLoading}
+                >
+                  {translate("common.actions.save")}
+                </Button>
+              </View>
+
+              <TextInput
+                mode="outlined"
+                name="requestTitle"
+                placeholder={translate("prayerGroup.request.title")}
+                contentStyle={{ fontWeight: "bold", fontSize: 20 }}
+                outlineStyle={{ borderColor: theme.colors.background }}
+                errorClassNames="mb-3"
+              />
+
+              <TextInput
+                mode="outlined"
+                name="requestDescription"
+                placeholder={translate(
+                  "createPrayerGroup.groupNameDescription.description",
+                )}
+                outlineStyle={{ borderColor: theme.colors.background }}
+                multiline
+                contentStyle={{ paddingTop: 16 }}
+                customRef={requestDescriptionRef}
+                style={{ minHeight: 200 }}
+              />
             </View>
-
-            <TextInput
-              mode="outlined"
-              name="requestTitle"
-              placeholder={translate("prayerGroup.request.title")}
-              contentStyle={{ fontWeight: "bold", fontSize: 20 }}
-              outlineStyle={{ borderColor: theme.colors.background }}
-              errorClassNames="mb-3"
-            />
-
-            <TextInput
-              mode="outlined"
-              name="requestDescription"
-              placeholder={translate(
-                "createPrayerGroup.groupNameDescription.description",
-              )}
-              outlineStyle={{ borderColor: theme.colors.background }}
-              multiline
-              contentStyle={{ paddingTop: 16 }}
-              customRef={requestDescriptionRef}
-              style={{ minHeight: 200 }}
-            />
-          </View>
-        </ScrollView>
+          </ScrollView>
+        )}
       </Formik>
     </PrayerGroupContentContainer>
   );

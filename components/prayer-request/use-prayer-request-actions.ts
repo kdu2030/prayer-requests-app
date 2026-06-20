@@ -140,6 +140,8 @@ export const usePrayerRequestActions = (
         id_1: selectedPrayerRequest.prayerRequestId,
       },
     });
+
+    onClose();
   };
 
   return {

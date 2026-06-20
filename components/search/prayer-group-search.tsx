@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
-import { FlatList, TouchableOpacity, View } from "react-native";
+import { FlatList, Keyboard, TouchableOpacity, View } from "react-native";
 import { Text, TouchableRipple, useTheme } from "react-native-paper";
 import { TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -76,11 +76,14 @@ export const PrayerGroupSearch: React.FC = () => {
           <FlatList
             data={groupSearchResults}
             testID={PrayerGroupSearchTestIds.prayerGroupResultsList}
+            keyboardShouldPersistTaps="handled"
             renderItem={({ item: group, index }) => (
               <TouchableRipple
                 rippleColor={"rgba(0, 0, 0, 0.12)"}
                 onPress={() => {
                   if (group.prayerGroupId) {
+                    Keyboard.dismiss();
+
                     router.push({
                       pathname: "/prayergroup/[id]",
                       params: { id: group.prayerGroupId },

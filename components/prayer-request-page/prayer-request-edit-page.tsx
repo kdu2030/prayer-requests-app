@@ -77,7 +77,7 @@ export function PrayerRequestEditPage({
               multiline
               contentStyle={{ paddingTop: 16 }}
               customRef={requestDescriptionRef}
-              style={{ height: 200 }}
+              style={{ minHeight: 200 }}
             />
           </View>
         </ScrollView>

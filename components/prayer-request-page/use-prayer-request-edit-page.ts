@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { FormikProps } from "formik";
 import * as React from "react";
 import { TextInput } from "react-native";
@@ -11,7 +12,10 @@ import { CreatePrayerRequestForm } from "../prayer-group/create-prayer-request/c
 import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
 import { useToasterContext } from "../toasters/toaster-context";
 
-export function usePrayerRequestEditPage(prayerRequestId: number) {
+export function usePrayerRequestEditPage(
+  prayerRequestId: number,
+  prayerGroupId: number,
+) {
   const { getPrayerRequestFromStore, setPrayerRequest } =
     usePrayerRequestDetailContext();
 
@@ -71,7 +75,12 @@ export function usePrayerRequestEditPage(prayerRequestId: number) {
     setPrayerRequest(prayerRequestId, { ...initialValues, ...response.value });
     openToaster({
       variant: "success",
-      message: translate("toaster.editPrayerRequest.failure"),
+      message: translate("toaster.editPrayerRequest.success"),
+    });
+
+    router.replace({
+      pathname: "/prayergroup/[id]/prayerrequest/[id]",
+      params: { id: prayerGroupId, id_1: prayerRequestId },
     });
   }
 

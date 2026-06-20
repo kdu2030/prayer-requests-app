@@ -9,10 +9,17 @@ type PrayerRequestPageParams = {
 };
 
 function PrayerRequestEditContainer() {
-  const { id_1 } = useLocalSearchParams<PrayerRequestPageParams>();
+  const { id, id_1 } = useLocalSearchParams<PrayerRequestPageParams>();
+
+  const prayerGroupId = Number.parseInt(id);
   const prayerRequestId = Number.parseInt(id_1);
 
-  return <PrayerRequestEditPage prayerRequestId={prayerRequestId} />;
+  return (
+    <PrayerRequestEditPage
+      prayerRequestId={prayerRequestId}
+      prayerGroupId={prayerGroupId}
+    />
+  );
 }
 
 export default PrayerRequestEditContainer;

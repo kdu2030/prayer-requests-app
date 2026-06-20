@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import * as React from "react";
 import { ScrollView } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { TextInput } from "../inputs/text-input";
@@ -17,7 +17,12 @@ export function PrayerRequestEditPage({
 }: PrayerRequestEditPageProps) {
   const { translate } = useI18N();
   const theme = useTheme();
-  const { initialValues } = usePrayerRequestEditPage(prayerRequestId);
+  const {
+    initialValues,
+    onScrollViewLayout,
+    onRequestTitleLayout,
+    requestDescriptionHeight,
+  } = usePrayerRequestEditPage(prayerRequestId);
 
   return (
     <PrayerGroupContentContainer title={translate("prayerRequest.edit.label")}>
@@ -28,6 +33,7 @@ export function PrayerRequestEditPage({
             flexGrow: 1,
             backgroundColor: theme.colors.background,
           }}
+          onLayout={onScrollViewLayout}
         >
           <TextInput
             mode="outlined"
@@ -36,19 +42,22 @@ export function PrayerRequestEditPage({
             contentStyle={{ fontWeight: "bold", fontSize: 20 }}
             outlineStyle={{ borderColor: theme.colors.background }}
             errorClassNames="mb-3"
+            onLayout={onRequestTitleLayout}
           />
 
-          <TextInput
-            mode="outlined"
-            name="requestDescription"
-            placeholder={translate(
-              "createPrayerGroup.groupNameDescription.description",
-            )}
-            // outlineStyle={{ borderColor: theme.colors.background }}
-            multiline
-            contentStyle={{ paddingTop: 16 }}
-            style={{ height: 200 }}
-          />
+          {requestDescriptionHeight != null && (
+            <TextInput
+              mode="outlined"
+              name="requestDescription"
+              placeholder={translate(
+                "createPrayerGroup.groupNameDescription.description",
+              )}
+              outlineStyle={{ borderColor: theme.colors.background }}
+              multiline
+              contentStyle={{ paddingTop: 16 }}
+              style={{ height: requestDescriptionHeight }}
+            />
+          )}
         </ScrollView>
       </Formik>
     </PrayerGroupContentContainer>

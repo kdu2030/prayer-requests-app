@@ -2,6 +2,7 @@ import "../i18n/i18n";
 
 import { Stack } from "expo-router";
 import * as React from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -14,18 +15,20 @@ import { ApiDataContextProvider } from "../hooks/use-api-data";
 const BaseStack: React.FC = () => {
   return (
     <SafeAreaProvider>
-      <PaperProvider theme={LIGHT_THEME}>
-        <ApiDataContextProvider>
-          <PrayerRequestDetailContextProvider>
-            <ToasterContextProvider>
-              <>
-                <Stack screenOptions={{ headerShown: false }} />
-                <ToasterPortal />
-              </>
-            </ToasterContextProvider>
-          </PrayerRequestDetailContextProvider>
-        </ApiDataContextProvider>
-      </PaperProvider>
+      <GestureHandlerRootView className="flex-1">
+        <PaperProvider theme={LIGHT_THEME}>
+          <ApiDataContextProvider>
+            <PrayerRequestDetailContextProvider>
+              <ToasterContextProvider>
+                <>
+                  <Stack screenOptions={{ headerShown: false }} />
+                  <ToasterPortal />
+                </>
+              </ToasterContextProvider>
+            </PrayerRequestDetailContextProvider>
+          </ApiDataContextProvider>
+        </PaperProvider>
+      </GestureHandlerRootView>
     </SafeAreaProvider>
   );
 };

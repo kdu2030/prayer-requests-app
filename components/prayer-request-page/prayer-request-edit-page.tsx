@@ -10,13 +10,11 @@ import { PrayerGroupContentContainer } from "../prayer-group/section-header/pray
 import { usePrayerRequestEditPage } from "./use-prayer-request-edit-page";
 
 type PrayerRequestEditPageProps = {
-  prayerGroupId: number;
   prayerRequestId: number;
 };
 
 export function PrayerRequestEditPage({
   prayerRequestId,
-  prayerGroupId,
 }: PrayerRequestEditPageProps) {
   const { translate } = useI18N();
   const theme = useTheme();
@@ -27,7 +25,7 @@ export function PrayerRequestEditPage({
     editFormRef,
     isEditLoading,
     saveEditPrayerRequest,
-  } = usePrayerRequestEditPage(prayerRequestId, prayerGroupId);
+  } = usePrayerRequestEditPage(prayerRequestId);
 
   const validationSchema = useRequestBodyValidationSchema();
 
@@ -47,6 +45,7 @@ export function PrayerRequestEditPage({
               flexGrow: 1,
               backgroundColor: theme.colors.background,
             }}
+            keyboardShouldPersistTaps="handled"
           >
             <View className="p-4">
               <View className="flex flex-row w-full mb-2 justify-end">

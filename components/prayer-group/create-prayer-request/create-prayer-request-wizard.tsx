@@ -34,6 +34,7 @@ export const CreatePrayerRequestWizard: React.FC = () => {
             flexGrow: 1,
             backgroundColor: theme.colors.background,
           }}
+          keyboardShouldPersistTaps="handled"
         >
           <View className="flex flex-col p-4">
             <>{getPrayerRequestWizardContent()}</>

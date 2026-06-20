@@ -12,10 +12,7 @@ import { CreatePrayerRequestForm } from "../prayer-group/create-prayer-request/c
 import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
 import { useToasterContext } from "../toasters/toaster-context";
 
-export function usePrayerRequestEditPage(
-  prayerRequestId: number,
-  prayerGroupId: number,
-) {
+export function usePrayerRequestEditPage(prayerRequestId: number) {
   const { getPrayerRequestFromStore, setPrayerRequest } =
     usePrayerRequestDetailContext();
 
@@ -78,10 +75,7 @@ export function usePrayerRequestEditPage(
       message: translate("toaster.editPrayerRequest.success"),
     });
 
-    router.replace({
-      pathname: "/prayergroup/[id]/prayerrequest/[id]",
-      params: { id: prayerGroupId, id_1: prayerRequestId },
-    });
+    router.back();
   }
 
   return {

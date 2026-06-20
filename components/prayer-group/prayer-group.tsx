@@ -40,7 +40,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     onAddUser,
     isAddUserLoading,
     onRetry,
-    prayerGroupOptionsRef,
+    isPrayerGroupOptionsOpen,
+    setIsPrayerGroupOptionsOpen,
     onOpenOptions,
     prayerRequestLoadStatus,
     onEndReached,
@@ -152,7 +153,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         <PrayerGroupOptions
           prayerGroupDetails={prayerGroupDetails}
           setShowLeavePrayerGroupModal={setShowLeavePrayerGroupModal}
-          bottomSheetRef={prayerGroupOptionsRef}
+          isOpen={isPrayerGroupOptionsOpen}
+          onClose={() => setIsPrayerGroupOptionsOpen(false)}
         />
 
         <PrayerRequestActions

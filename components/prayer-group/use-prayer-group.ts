@@ -1,5 +1,3 @@
-import { BottomSheetProps } from "@gorhom/bottom-sheet";
-import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { router } from "expo-router";
 import * as React from "react";
 
@@ -49,9 +47,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const { openToaster } = useToasterContext();
 
-  const prayerGroupOptionsRef = React.useRef<
-    BottomSheetProps & BottomSheetMethods
-  >(null);
+  const [isPrayerGroupOptionsOpen, setIsPrayerGroupOptionsOpen] =
+    React.useState<boolean>(false);
 
   const { userData, setUserData } = useApiDataContext();
 
@@ -204,11 +201,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   };
 
   const onOpenOptions = () => {
-    if (!prayerGroupOptionsRef.current) {
-      return;
-    }
-
-    prayerGroupOptionsRef.current.snapToIndex(0);
+    setIsPrayerGroupOptionsOpen(true);
   };
 
   const onEndReached = async () => {
@@ -278,7 +271,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     onAddUser,
     isAddUserLoading,
     onRetry,
-    prayerGroupOptionsRef,
+    isPrayerGroupOptionsOpen,
+    setIsPrayerGroupOptionsOpen,
     onOpenOptions,
     prayerRequestFilters,
     setPrayerRequestFilters,

@@ -49,7 +49,7 @@ export const AppBottomSheet: React.FC<Props> = ({
   return (
     <BottomSheetModal
       enableDynamicSizing
-      // index={-1}
+      enablePanDownToClose
       backdropComponent={renderBackdrop}
       backgroundStyle={{ backgroundColor: theme.colors.background }}
       onDismiss={onClose}

@@ -47,6 +47,7 @@ export const PrayerGroupOptions: React.FC<Props> = ({
         pathname: route as RelativePathString,
         params: { id: prayerGroupDetails?.prayerGroupId },
       });
+    onClose();
   };
 
   return (

@@ -44,7 +44,10 @@ export const PrayerGroupEdit: React.FC = () => {
           groupName: prayerGroupDetails?.groupName,
         })}
       >
-        <ScrollView automaticallyAdjustKeyboardInsets>
+        <ScrollView
+          automaticallyAdjustKeyboardInsets
+          keyboardShouldPersistTaps="handled"
+        >
           <View className="p-4">
             <Formik
               initialValues={prayerGroupDetails ?? {}}

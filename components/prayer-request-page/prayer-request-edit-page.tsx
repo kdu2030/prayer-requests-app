@@ -1,10 +1,11 @@
 import { Formik } from "formik";
 import * as React from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { TextInput } from "../inputs/text-input";
+import { useRequestBodyValidationSchema } from "../prayer-group/create-prayer-request/request-body-step/use-request-body-validation-schema";
 import { PrayerGroupContentContainer } from "../prayer-group/section-header/prayer-group-content-container";
 import { usePrayerRequestEditPage } from "./use-prayer-request-edit-page";
 
@@ -20,9 +21,15 @@ export function PrayerRequestEditPage({
   const { initialValues, requestDescriptionRef } =
     usePrayerRequestEditPage(prayerRequestId);
 
+  const validationSchema = useRequestBodyValidationSchema();
+
   return (
     <PrayerGroupContentContainer title={translate("prayerRequest.edit.label")}>
-      <Formik initialValues={initialValues ?? {}} onSubmit={() => {}}>
+      <Formik
+        validationSchema={validationSchema}
+        initialValues={initialValues ?? {}}
+        onSubmit={() => {}}
+      >
         <ScrollView
           automaticallyAdjustKeyboardInsets
           contentContainerStyle={{
@@ -31,27 +38,29 @@ export function PrayerRequestEditPage({
             backgroundColor: theme.colors.background,
           }}
         >
-          <TextInput
-            mode="outlined"
-            name="requestTitle"
-            placeholder={translate("prayerGroup.request.title")}
-            contentStyle={{ fontWeight: "bold", fontSize: 20 }}
-            outlineStyle={{ borderColor: theme.colors.background }}
-            errorClassNames="mb-3"
-          />
+          <View className="p-4">
+            <TextInput
+              mode="outlined"
+              name="requestTitle"
+              placeholder={translate("prayerGroup.request.title")}
+              contentStyle={{ fontWeight: "bold", fontSize: 20 }}
+              outlineStyle={{ borderColor: theme.colors.background }}
+              errorClassNames="mb-3"
+            />
 
-          <TextInput
-            mode="outlined"
-            name="requestDescription"
-            placeholder={translate(
-              "createPrayerGroup.groupNameDescription.description",
-            )}
-            outlineStyle={{ borderColor: theme.colors.background }}
-            multiline
-            contentStyle={{ paddingTop: 16 }}
-            customRef={requestDescriptionRef}
-            style={{ height: 200 }}
-          />
+            <TextInput
+              mode="outlined"
+              name="requestDescription"
+              placeholder={translate(
+                "createPrayerGroup.groupNameDescription.description",
+              )}
+              outlineStyle={{ borderColor: theme.colors.background }}
+              multiline
+              contentStyle={{ paddingTop: 16 }}
+              customRef={requestDescriptionRef}
+              style={{ height: 200 }}
+            />
+          </View>
         </ScrollView>
       </Formik>
     </PrayerGroupContentContainer>

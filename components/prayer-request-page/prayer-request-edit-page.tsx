@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
-import { useTheme } from "react-native-paper";
+import { Button, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { TextInput } from "../inputs/text-input";
@@ -39,6 +39,12 @@ export function PrayerRequestEditPage({
           }}
         >
           <View className="p-4">
+            <View className="flex flex-row w-full mb-2 justify-end">
+              <Button mode="contained">
+                {translate("common.actions.save")}
+              </Button>
+            </View>
+
             <TextInput
               mode="outlined"
               name="requestTitle"

@@ -167,14 +167,14 @@ export const PrayerGroupJoinRequests: React.FC<Props> = ({ prayerGroupId }) => {
             className="p-4 border-t"
             style={{ borderTopColor: theme.colors.outline }}
           >
-            <Button
+            <DismissButton
               mode="contained"
               onPress={saveManageJoinRequests}
               loading={isSaveLoading}
               testID={JoinRequestTestIds.saveButton}
             >
               {translate("common.actions.save")}
-            </Button>
+            </DismissButton>
           </View>
         </View>
       )}

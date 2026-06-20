@@ -40,12 +40,12 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
         }}
       >
         <View className="flex flex-row items-center">
-          <TouchableOpacity
+          <DismissTouchableOpacity
             onPress={() => navigation.openDrawer()}
             className="mr-2"
           >
             <Ionicons name="menu" size={28} color={theme.colors.onSurface} />
-          </TouchableOpacity>
+          </DismissTouchableOpacity>
           <Text
             variant="titleLarge"
             className="font-bold"
@@ -56,12 +56,12 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ navigation }) => {
         </View>
 
         <View className="flex flex-row items-center">
-          <TouchableOpacity
+          <DismissTouchableOpacity
             onPress={() => router.push("/(drawer)/search")}
             className="mr-4"
           >
             <Ionicons name="search" size={28} color={theme.colors.onSurface} />
-          </TouchableOpacity>
+          </DismissTouchableOpacity>
 
           <ProfilePicture
             url={userData?.image?.fileUrl}

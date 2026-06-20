@@ -1,10 +1,11 @@
 import { Formik, FormikProps } from "formik";
 import * as React from "react";
 import { FlatList, View } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
+import { DismissButton } from "../inputs/dismiss-button";
 import { TextInput } from "../inputs/text-input";
 import { PrayerGroupContentContainer } from "../prayer-group/section-header/prayer-group-content-container";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
@@ -131,12 +132,12 @@ export const PrayerRequestPage: React.FC<Props> = ({
 
               <View className="flex flex-row self-end gap-2">
                 {values.formAction === CommentFormAction.Edit && (
-                  <Button mode="outlined" onPress={onCancelEditComment}>
+                  <DismissButton mode="outlined" onPress={onCancelEditComment}>
                     {translate("common.actions.cancel")}
-                  </Button>
+                  </DismissButton>
                 )}
 
-                <Button
+                <DismissButton
                   mode="contained"
                   disabled={!values.comment || values.comment.trim().length < 1}
                   loading={isPostCommentLoading}
@@ -146,7 +147,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
                   {values.formAction === CommentFormAction.Create
                     ? translate("prayerRequest.comment.post")
                     : translate("common.actions.save")}
-                </Button>
+                </DismissButton>
               </View>
             </View>
 

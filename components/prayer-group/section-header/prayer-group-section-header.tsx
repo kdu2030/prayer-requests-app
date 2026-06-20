@@ -30,13 +30,13 @@ export const PrayerGroupSectionHeader: React.FC<Props> = ({ title }) => {
         }}
       >
         <View className="flex-row items-center">
-          <TouchableOpacity onPress={() => router.back()}>
+          <DismissTouchableOpacity onPress={() => router.back()}>
             <MaterialCommunityIcons
               name="close"
               size={28}
               color={theme.colors.onSurface}
             />
-          </TouchableOpacity>
+          </DismissTouchableOpacity>
 
           {title && (
             <Text

@@ -4,13 +4,14 @@ import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { postSignup } from "../../api/post-signup";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SignupForm } from "../../types/forms/auth-forms";
+import { DismissButton } from "../inputs/dismiss-button";
 import { TextInput } from "../inputs/text-input";
 import { useToasterContext } from "../toasters/toaster-context";
 import { SignupTestIds } from "./auth-constants";
@@ -163,7 +164,7 @@ const Signup: React.FC = () => {
                     required
                   />
 
-                  <Button
+                  <DismissButton
                     mode="contained"
                     className="mt-3 mb-10"
                     onPress={() => onSubmit(props)}
@@ -172,7 +173,7 @@ const Signup: React.FC = () => {
                     testID={SignupTestIds.submitButton}
                   >
                     {translate("authScreen.signup.action")}
-                  </Button>
+                  </DismissButton>
                 </>
               )}
             </Formik>

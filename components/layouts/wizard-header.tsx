@@ -1,11 +1,13 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as React from "react";
-import { Keyboard, TouchableOpacity, View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Keyboard, View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
 
 import { formatNumber } from "../../helpers/formatting-helpers";
 import { useI18N } from "../../hooks/use-i18n";
 import { CultureCode } from "../../types/languages";
+import { DismissButton } from "../inputs/dismiss-button";
+import { DismissTouchableOpacity } from "../inputs/dismiss-touchable-opacity";
 
 export type WizardHeaderTestIDs = {
   backButton?: string;
@@ -45,7 +47,7 @@ export const WizardHeader: React.FC<Props> = ({
     <View className="flex flex-row items-center justify-between">
       <View className="flex flex-row items-center">
         {showBackButton && (
-          <TouchableOpacity
+          <DismissTouchableOpacity
             className="mr-3"
             onPress={() => {
               Keyboard.dismiss();
@@ -58,7 +60,7 @@ export const WizardHeader: React.FC<Props> = ({
               size={28}
               color={theme.colors.onSurface}
             />
-          </TouchableOpacity>
+          </DismissTouchableOpacity>
         )}
         <View
           className="flex items-center justify-center p-2 rounded-full"
@@ -79,21 +81,20 @@ export const WizardHeader: React.FC<Props> = ({
       </View>
 
       {showNextButton && (
-        <Button
+        <DismissButton
           mode="outlined"
           onPress={() => {
-            Keyboard.dismiss();
             onNext?.();
           }}
           loading={isLoading}
           testID={testIDs?.nextButton}
         >
           {translate("wizard.next")}
-        </Button>
+        </DismissButton>
       )}
 
       {showSaveButton && (
-        <Button
+        <DismissButton
           mode="contained"
           onPress={() => {
             Keyboard.dismiss();
@@ -103,7 +104,7 @@ export const WizardHeader: React.FC<Props> = ({
           testID={testIDs?.saveButton}
         >
           {translate("common.actions.save")}
-        </Button>
+        </DismissButton>
       )}
     </View>
   );

@@ -38,13 +38,16 @@ export const PrayerGroupSearch: React.FC = () => {
         }}
       >
         <View className="flex flex-row items-center">
-          <TouchableOpacity onPress={() => router.back()} className="mr-2">
+          <DismissTouchableOpacity
+            onPress={() => router.back()}
+            className="mr-2"
+          >
             <MaterialIcons
               name="arrow-back"
               size={28}
               color={theme.colors.onSurface}
             />
-          </TouchableOpacity>
+          </DismissTouchableOpacity>
           <TextInput
             value={groupQuery}
             onChangeText={onChangeQuery}

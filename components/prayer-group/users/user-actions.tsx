@@ -31,23 +31,23 @@ export const UserActions: React.FC<Props> = ({
       <View className="flex flex-row items-center gap-x-2 flex-1">
         <View className="flex-1">
           {role === PrayerGroupRole.Admin ? (
-            <Button
+            <DismissButton
               mode="text"
               icon={"crown"}
               onPress={() => onRoleChange(index, PrayerGroupRole.Member)}
               testID={roleChangeTestID}
             >
               {translate("prayerGroup.manageUsers.admin")}
-            </Button>
+            </DismissButton>
           ) : (
-            <Button
+            <DismissButton
               mode="text"
               icon={"account"}
               onPress={() => onRoleChange(index, PrayerGroupRole.Admin)}
               testID={roleChangeTestID}
             >
               {translate("prayerGroup.manageUsers.member")}
-            </Button>
+            </DismissButton>
           )}
         </View>
 

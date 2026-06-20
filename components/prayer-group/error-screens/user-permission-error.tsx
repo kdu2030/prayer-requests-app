@@ -40,9 +40,13 @@ export const PrayerGroupPermissionError: React.FC = () => {
           {translate("prayerGroup.permissionError.message")}
         </Text>
 
-        <Button mode="contained" className="mt-5" onPress={goBackToGroup}>
+        <DismissButton
+          mode="contained"
+          className="mt-5"
+          onPress={goBackToGroup}
+        >
           {translate("prayerGroup.permissionError.goBackToGroup")}
-        </Button>
+        </DismissButton>
       </View>
     </PrayerGroupContentContainer>
   );

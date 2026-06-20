@@ -34,7 +34,7 @@ export const PrivatePrayerGroupPlaceholder: React.FC<Props> = ({
 
         <View className="mt-5">
           {joinStatus === JoinStatus.NotJoined ? (
-            <Button
+            <DismissButton
               mode="contained"
               onPress={onSubmitJoinRequest}
               loading={submitRequestLoadStatus === LoadStatus.Loading}
@@ -43,11 +43,11 @@ export const PrivatePrayerGroupPlaceholder: React.FC<Props> = ({
               }
             >
               {translate("prayerGroup.joinRequest.submitJoinRequest")}
-            </Button>
+            </DismissButton>
           ) : (
-            <Button mode="contained" disabled={true}>
+            <DismissButton mode="contained" disabled={true}>
               {translate("prayerGroup.joinRequest.joinRequestSubmitted")}
-            </Button>
+            </DismissButton>
           )}
         </View>
       </View>

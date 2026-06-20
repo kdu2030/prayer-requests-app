@@ -62,7 +62,7 @@ export const PrayerGroupEdit: React.FC = () => {
             >
               {({ values, errors, submitForm }) => (
                 <>
-                  <Button
+                  <DismissButton
                     mode="contained"
                     className="self-end"
                     loading={isLoading}
@@ -70,7 +70,7 @@ export const PrayerGroupEdit: React.FC = () => {
                     testID={PrayerGroupEditTestIds.saveButton}
                   >
                     {translate("common.actions.save")}
-                  </Button>
+                  </DismissButton>
 
                   <Text className="font-bold mb-3" variant="bodyLarge">
                     {translate("common.actions.preview")}
@@ -140,7 +140,7 @@ export const PrayerGroupEdit: React.FC = () => {
                     <Text variant="bodyLarge" className="w-1/2">
                       {translate("createPrayerGroup.groupImageColorStep.image")}
                     </Text>
-                    <Button
+                    <DismissButton
                       mode="outlined"
                       className="w-1/2"
                       onPress={() => selectImage("avatarFile", [1, 1])}
@@ -148,7 +148,7 @@ export const PrayerGroupEdit: React.FC = () => {
                       {translate(
                         "createPrayerGroup.groupImageColorStep.selectImage",
                       )}
-                    </Button>
+                    </DismissButton>
                   </View>
 
                   {values.avatarFile && (
@@ -171,7 +171,7 @@ export const PrayerGroupEdit: React.FC = () => {
                         "createPrayerGroup.groupImageColorStep.banner",
                       )}
                     </Text>
-                    <Button
+                    <DismissButton
                       mode="outlined"
                       className="w-1/2"
                       onPress={() => selectImage("bannerFile", [10, 3])}
@@ -179,7 +179,7 @@ export const PrayerGroupEdit: React.FC = () => {
                       {translate(
                         "createPrayerGroup.groupImageColorStep.selectImage",
                       )}
-                    </Button>
+                    </DismissButton>
                   </View>
 
                   {values.bannerFile && (

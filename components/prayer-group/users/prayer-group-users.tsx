@@ -151,14 +151,14 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
             className="p-4 border-t"
             style={{ borderTopColor: theme.colors.outline }}
           >
-            <Button
+            <DismissButton
               mode="contained"
               loading={isSaveLoading}
               onPress={onSavePrayerGroupUsers}
               testID={PrayerGroupUsersTestIds.saveButton}
             >
               {translate("common.actions.save")}
-            </Button>
+            </DismissButton>
           </View>
         </View>
       )}

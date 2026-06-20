@@ -23,9 +23,9 @@ export const SelectedImageCard: React.FC<Props> = ({
         <Text className="w-4/5" numberOfLines={1} ellipsizeMode="tail">
           {fileName}
         </Text>
-        <TouchableOpacity onPress={onRemoveImage}>
+        <DismissTouchableOpacity onPress={onRemoveImage}>
           <EvilIcons name="trash" size={28} color={theme.colors.error} />
-        </TouchableOpacity>
+        </DismissTouchableOpacity>
       </View>
     </View>
   );

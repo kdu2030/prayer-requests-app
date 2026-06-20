@@ -47,13 +47,13 @@ export function PrayerRequestEditPage({
           >
             <View className="p-4">
               <View className="flex flex-row w-full mb-2 justify-end">
-                <Button
+                <DismissButton
                   mode="contained"
                   onPress={submitForm}
                   loading={isEditLoading}
                 >
                   {translate("common.actions.save")}
-                </Button>
+                </DismissButton>
               </View>
 
               <TextInput

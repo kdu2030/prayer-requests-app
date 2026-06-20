@@ -31,7 +31,8 @@ const mountPrayerGroupOptions = (prayerGroupDetails: PrayerGroupDetails) => {
   return mountComponent(
     <PrayerGroupOptions
       prayerGroupDetails={prayerGroupDetails}
-      bottomSheetRef={bottomSheetRef}
+      isOpen
+      onClose={() => {}}
       setShowLeavePrayerGroupModal={() => {}}
     />,
   );

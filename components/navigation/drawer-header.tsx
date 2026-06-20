@@ -3,13 +3,14 @@ import { DrawerHeaderProps } from "@react-navigation/drawer";
 import { router, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { Text } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
+import { DismissTouchableOpacity } from "../inputs/dismiss-touchable-opacity";
 import { ProfilePicture } from "../layouts/profile-picture";
 import { ROUTES_WITHOUT_HEADER } from "./drawer-constants";
 

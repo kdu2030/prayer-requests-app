@@ -2,7 +2,6 @@ import * as ImagePicker from "expo-image-picker";
 import { usePathname } from "expo-router";
 import { FormikHelpers, FormikProps } from "formik";
 import * as React from "react";
-import { Keyboard } from "react-native";
 
 import { useDeleteFile } from "../../../api/delete-file";
 import { useGetPrayerGroupNameValidation } from "../../../api/get-prayer-group-name-validation";
@@ -143,8 +142,6 @@ export const usePrayerGroupEdit = () => {
   ) => {
     const valuesToSubmit: PrayerGroupDetails = { ...values };
     const { setFieldError } = formikHelpers;
-
-    Keyboard.dismiss();
 
     setIsLoading(true);
 

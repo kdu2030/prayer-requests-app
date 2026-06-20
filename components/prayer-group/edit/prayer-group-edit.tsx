@@ -2,13 +2,14 @@ import { Formik } from "formik";
 import * as React from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { Button, HelperText } from "react-native-paper";
+import { HelperText } from "react-native-paper";
 import { Text } from "react-native-paper";
 
 import { TEXT_INPUT_MAX_LENGTH } from "../../../constants/input-constants";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { CultureCode } from "../../../types/languages";
+import { DismissButton } from "../../inputs/dismiss-button";
 import { FormikSelect } from "../../inputs/formik-select";
 import { TextInput } from "../../inputs/text-input";
 import { GroupPreview } from "../../layouts/group-preview";

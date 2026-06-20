@@ -1,7 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { Modal, Portal, Text, useTheme } from "react-native-paper";
+
+import { DismissTouchableOpacity } from "../inputs/dismiss-touchable-opacity";
 
 type Props = {
   isOpen: boolean;

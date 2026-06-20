@@ -85,6 +85,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
         >
           <View className="flex flex-1">
             <FlatList
+              keyboardShouldPersistTaps="handled"
               ListHeaderComponent={
                 <PrayerRequestCard
                   prayerRequest={prayerRequest}

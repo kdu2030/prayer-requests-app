@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { isEmpty } from "lodash";
 import * as React from "react";
-import { View } from "react-native";
+import { Keyboard, View } from "react-native";
 import { Button, TouchableRipple, useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
 
@@ -92,7 +92,10 @@ export const PrayerRequestCard: React.FC<Props> = ({
           <TouchableRipple
             rippleColor={"rgba(0, 0, 0, 0.12)"}
             style={{ borderRadius: 9999 }}
-            onPress={onOpenMenu}
+            onPress={() => {
+              Keyboard.dismiss();
+              onOpenMenu();
+            }}
             borderless
           >
             <MaterialIcons
@@ -134,7 +137,10 @@ export const PrayerRequestCard: React.FC<Props> = ({
             mode="outlined"
             icon={likeIcon}
             loading={isLikeLoading}
-            onPress={onLikePress}
+            onPress={() => {
+              Keyboard.dismiss();
+              onLikePress();
+            }}
             testID={getArrayTestId(
               PrayerRequestCardTestIds.likeButton,
               prayerRequest.prayerRequestId,
@@ -154,7 +160,10 @@ export const PrayerRequestCard: React.FC<Props> = ({
                 ? "comment"
                 : "comment-outline"
             }
-            onPress={onCommentPress}
+            onPress={() => {
+              Keyboard.dismiss();
+              onCommentPress();
+            }}
             testID={getArrayTestId(
               PrayerRequestCardTestIds.commentButton,
               prayerRequest.prayerRequestId,
@@ -175,7 +184,10 @@ export const PrayerRequestCard: React.FC<Props> = ({
               ? "cross"
               : "cross-outline"
           }
-          onPress={() => onPrayPress()}
+          onPress={() => {
+            Keyboard.dismiss();
+            onPrayPress();
+          }}
           testID={getArrayTestId(
             PrayerRequestCardTestIds.prayedButton,
             prayerRequest.prayerRequestId,

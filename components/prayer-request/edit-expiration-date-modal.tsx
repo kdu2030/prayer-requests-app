@@ -43,6 +43,7 @@ export function EditExpirationDateModal({
 
             <FormikSelect
               name="timeToLive"
+              mode="flat"
               options={expirationDateOptions}
               label={translate("prayerRequest.editExpirationDate.extendBy")}
             />

@@ -2,12 +2,11 @@ import { Formik } from "formik";
 import * as React from "react";
 import { Text } from "react-native-paper";
 
-import { formatDate } from "../../helpers/formatting-helpers";
 import { useI18N } from "../../hooks/use-i18n";
-import { CultureCode } from "../../types/languages";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { FormikSelect } from "../inputs/formik-select";
 import { RoundedModal } from "../modals/rounded-modal";
+import { EditExpirationDateForm } from "./prayer-request-types";
 import { useEditExpirationDateModal } from "./use-edit-expiration-date-modal";
 
 type EditExpirationDateProps = {
@@ -21,8 +20,9 @@ export function EditExpirationDateModal({
   onClose,
   prayerRequest,
 }: EditExpirationDateProps) {
-  const { translate, i18n } = useI18N();
-  const { expirationDateOptions } = useEditExpirationDateModal();
+  const { translate } = useI18N();
+  const { expirationDateOptions, getUpdatedExpirationDate } =
+    useEditExpirationDateModal(prayerRequest);
 
   return (
     <RoundedModal
@@ -31,21 +31,18 @@ export function EditExpirationDateModal({
       onClose={onClose}
     >
       <Formik initialValues={{}} onSubmit={() => {}}>
-        {() => (
+        {({ values }) => (
           <>
             <Text variant="bodyLarge" className="mb-4">
               {translate("prayerRequest.editExpirationDate.date", {
-                date: prayerRequest.expirationDate
-                  ? formatDate(
-                      prayerRequest.expirationDate,
-                      i18n.language as CultureCode,
-                    )
-                  : undefined,
+                date: getUpdatedExpirationDate(
+                  values as EditExpirationDateForm,
+                ),
               })}
             </Text>
 
             <FormikSelect
-              name="expirationDate"
+              name="timeToLive"
               options={expirationDateOptions}
               label={translate("prayerRequest.editExpirationDate.extendBy")}
             />

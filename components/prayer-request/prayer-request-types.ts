@@ -1,3 +1,5 @@
+import { TimeToLiveOption } from "../prayer-group/create-prayer-request/create-prayer-request-types";
+
 export enum CommentFormAction {
   Create = "create",
   Edit = "edit",
@@ -9,5 +11,5 @@ export type PrayerRequestCommentForm = {
 };
 
 export type EditExpirationDateForm = {
-  expirationDate: string;
+  timeToLive: TimeToLiveOption;
 };

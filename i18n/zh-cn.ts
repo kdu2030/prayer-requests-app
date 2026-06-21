@@ -177,7 +177,8 @@ export const chineseTranslations: Translations = {
 
   "prayerRequest.edit.label": "编辑祷告事项",
 
-  "prayerRequest.editExpirationDate.label": "编辑可见时间",
+  "prayerRequest.editExpirationDate.label": "编辑过期日期",
+  "prayerRequest.editExpirationDate.date": "这个祷告事项在{{date}}会过期。",
 
   "prayerRequestPage.loading": "加载祷告事项",
   "prayerRequestPage.failedToLoad": "加载祷告事项失败了。",

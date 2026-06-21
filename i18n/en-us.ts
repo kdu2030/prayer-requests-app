@@ -186,6 +186,8 @@ export const englishTranslations = {
   "prayerRequest.edit.label": "Edit Prayer Request",
 
   "prayerRequest.editExpirationDate.label": "Edit Expiration Date",
+  "prayerRequest.editExpirationDate.date":
+    "This prayer request will expire on {{date}}.",
 
   "prayerGroup.joinRequest.label":
     "This is a private prayer group. To join, please submit a join request.",

@@ -8,6 +8,7 @@ import { LoadStatus } from "../../types/api-response-types";
 import { DismissButton } from "../inputs/dismiss-button";
 import { TextInput } from "../inputs/text-input";
 import { PrayerGroupContentContainer } from "../prayer-group/section-header/prayer-group-content-container";
+import { EditExpirationDateModal } from "../prayer-request/edit-expiration-date-modal";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import {
@@ -63,6 +64,9 @@ export const PrayerRequestPage: React.FC<Props> = ({
     scrollToCommentSection,
     onCommentListLayout,
     setCommentPlaceholderPosition,
+    isExpirationModalOpen,
+    setIsExpirationModalOpen,
+    openEditExpirationDateModal,
   } = usePrayerRequestPage(prayerRequestId, scrollToCommentsOnLoad);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -155,6 +159,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
               isOpen={isPrayerRequestActionsOpen}
               showExtendedActions={showExtendedActions}
               selectedPrayerRequest={prayerRequest}
+              openEditExpirationModal={openEditExpirationDateModal}
               onClose={closePrayerRequestActions}
             />
 
@@ -170,6 +175,14 @@ export const PrayerRequestPage: React.FC<Props> = ({
                 isDeleteLoading={isDeleteCommentLoading}
                 onClose={onCancelDeleteComment}
                 onConfirmDelete={onConfirmDeleteComment}
+              />
+            )}
+
+            {isExpirationModalOpen && (
+              <EditExpirationDateModal
+                isOpen={isExpirationModalOpen}
+                onClose={() => setIsExpirationModalOpen(false)}
+                prayerRequest={prayerRequest}
               />
             )}
           </View>

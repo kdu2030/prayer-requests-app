@@ -14,6 +14,7 @@ type Props = {
   selectedPrayerRequest: PrayerRequestModel | undefined;
   isOpen: boolean;
   onClose: () => void;
+  openEditExpirationModal: () => void;
 };
 
 export const PrayerRequestActions: React.FC<Props> = ({
@@ -21,6 +22,7 @@ export const PrayerRequestActions: React.FC<Props> = ({
   isOpen,
   onClose,
   showExtendedActions,
+  openEditExpirationModal,
 }) => {
   const theme = useTheme();
   const { translate } = useI18N();
@@ -87,7 +89,7 @@ export const PrayerRequestActions: React.FC<Props> = ({
                 />
               }
               label={translate("prayerRequest.editExpirationDate.label")}
-              onPress={() => {}}
+              onPress={openEditExpirationModal}
             />
           </>
         )}

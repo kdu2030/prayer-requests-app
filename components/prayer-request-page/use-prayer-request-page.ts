@@ -50,6 +50,9 @@ export const usePrayerRequestPage = (
   const [isDeleteCommentLoading, setIsDeleteCommentLoading] =
     React.useState<boolean>(false);
 
+  const [isExpirationModalOpen, setIsExpirationModalOpen] =
+    React.useState<boolean>(false);
+
   const {
     openPrayerRequestActions,
     showExtendedActions,
@@ -476,6 +479,11 @@ export const usePrayerRequestPage = (
     }
   };
 
+  const openEditExpirationDateModal = () => {
+    closePrayerRequestActions();
+    setIsExpirationModalOpen(true);
+  };
+
   return {
     prayerRequest,
     prayerRequestLoadStatus,
@@ -507,5 +515,8 @@ export const usePrayerRequestPage = (
     scrollToCommentSection,
     onCommentListLayout,
     setCommentPlaceholderPosition,
+    isExpirationModalOpen,
+    setIsExpirationModalOpen,
+    openEditExpirationDateModal,
   };
 };

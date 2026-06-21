@@ -77,6 +77,18 @@ export const PrayerRequestActions: React.FC<Props> = ({
               onPress={onEditPrayerRequest}
               label={translate("prayerRequest.edit.label")}
             />
+
+            <PrayerGroupOptionButton
+              icon={
+                <MaterialIcons
+                  name="edit-calendar"
+                  size={24}
+                  color={theme.colors.onSurface}
+                />
+              }
+              label={translate("prayerRequest.editExpirationDate.label")}
+              onPress={() => {}}
+            />
           </>
         )}
       </View>

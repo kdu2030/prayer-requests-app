@@ -185,6 +185,8 @@ export const englishTranslations = {
 
   "prayerRequest.edit.label": "Edit Prayer Request",
 
+  "prayerRequest.editExpirationDate.label": "Edit Expiration Date",
+
   "prayerGroup.joinRequest.label":
     "This is a private prayer group. To join, please submit a join request.",
   "prayerGroup.joinRequest.submitJoinRequest": "Submit Join Request",

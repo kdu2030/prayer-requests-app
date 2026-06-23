@@ -170,21 +170,18 @@ export const PrayerRequestPage: React.FC<Props> = ({
               onDeleteComment={onDeleteComment}
             />
 
-            {isDeleteCommentModalOpen && (
-              <DeletePrayerRequestCommentModal
-                isDeleteLoading={isDeleteCommentLoading}
-                onClose={onCancelDeleteComment}
-                onConfirmDelete={onConfirmDeleteComment}
-              />
-            )}
+            <DeletePrayerRequestCommentModal
+              isOpen={isDeleteCommentModalOpen}
+              isDeleteLoading={isDeleteCommentLoading}
+              onClose={onCancelDeleteComment}
+              onConfirmDelete={onConfirmDeleteComment}
+            />
 
-            {isExpirationModalOpen && (
-              <EditExpirationDateModal
-                isOpen={isExpirationModalOpen}
-                onClose={() => setIsExpirationModalOpen(false)}
-                prayerRequest={prayerRequest}
-              />
-            )}
+            <EditExpirationDateModal
+              isOpen={isExpirationModalOpen}
+              onClose={() => setIsExpirationModalOpen(false)}
+              prayerRequest={prayerRequest}
+            />
           </View>
         </PrayerGroupContentContainer>
       )}

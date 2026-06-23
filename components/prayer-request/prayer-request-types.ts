@@ -11,5 +11,5 @@ export type PrayerRequestCommentForm = {
 };
 
 export type EditExpirationDateForm = {
-  timeToLive: TimeToLiveOption;
+  timeToLive?: TimeToLiveOption;
 };

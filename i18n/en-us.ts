@@ -223,4 +223,7 @@ export const englishTranslations = {
 
   "toaster.editPrayerRequest.success": "Edited prayer request",
   "toaster.editPrayerRequest.failure": "Failed to edit prayer request",
+
+  "toaster.editExpirationDate.success": "Extended expiration date",
+  "toaster.editExpirationDate.failure": "Failed to extend expiration date",
 };

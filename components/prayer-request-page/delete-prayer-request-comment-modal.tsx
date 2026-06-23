@@ -8,12 +8,14 @@ import { RoundedModal } from "../modals/rounded-modal";
 import { PrayerRequestPageTestIds } from "./tests/test-ids";
 
 type Props = {
+  isOpen: boolean;
   isDeleteLoading: boolean;
   onClose: () => void;
   onConfirmDelete: () => void;
 };
 
 export const DeletePrayerRequestCommentModal: React.FC<Props> = ({
+  isOpen,
   onClose,
   isDeleteLoading,
   onConfirmDelete,
@@ -23,7 +25,7 @@ export const DeletePrayerRequestCommentModal: React.FC<Props> = ({
 
   return (
     <RoundedModal
-      isOpen
+      isOpen={isOpen}
       onClose={onClose}
       title={translate("prayerRequest.comment.deleteComment")}
     >

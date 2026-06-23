@@ -23,8 +23,12 @@ export function EditExpirationDateModal({
   prayerRequest,
 }: EditExpirationDateProps) {
   const { translate } = useI18N();
-  const { expirationDateOptions, getUpdatedExpirationDate } =
-    useEditExpirationDateModal(prayerRequest);
+  const {
+    expirationDateOptions,
+    getFormattedExpirationDate,
+    isLoading,
+    onSave,
+  } = useEditExpirationDateModal(prayerRequest, onClose);
 
   return (
     <RoundedModal
@@ -32,12 +36,12 @@ export function EditExpirationDateModal({
       isOpen={isOpen}
       onClose={onClose}
     >
-      <Formik initialValues={{}} onSubmit={() => {}}>
-        {({ values }) => (
+      <Formik initialValues={{}} onSubmit={onSave}>
+        {({ values, submitForm }) => (
           <>
             <Text variant="bodyLarge" className="mb-4">
               {translate("prayerRequest.editExpirationDate.date", {
-                date: getUpdatedExpirationDate(
+                date: getFormattedExpirationDate(
                   values as EditExpirationDateForm,
                 ),
               })}
@@ -55,7 +59,11 @@ export function EditExpirationDateModal({
                 {translate("common.actions.cancel")}
               </DismissButton>
 
-              <DismissButton mode="contained" onPress={() => {}}>
+              <DismissButton
+                mode="contained"
+                onPress={submitForm}
+                loading={isLoading}
+              >
                 {translate("common.actions.save")}
               </DismissButton>
             </View>

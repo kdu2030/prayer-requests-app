@@ -215,4 +215,7 @@ export const chineseTranslations: Translations = {
 
   "toaster.editPrayerRequest.success": "已编辑祷告事项。",
   "toaster.editPrayerRequest.failure": "编辑祷告事项失败了。",
+
+  "toaster.editExpirationDate.success": "已延长了可见时间。",
+  "toaster.editExpirationDate.failure": "延长可见时间失败了。",
 };

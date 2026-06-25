@@ -178,15 +178,11 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           />
         )}
 
-        {selectedPrayerRequest && (
-          <EditExpirationDateModal
-            prayerRequest={
-              expirationModalPrayerRequest ?? selectedPrayerRequest
-            }
-            isOpen={isExpirationModalOpen}
-            onClose={onExpirationDateModalClose}
-          />
-        )}
+        <EditExpirationDateModal
+          prayerRequest={expirationModalPrayerRequest}
+          isOpen={isExpirationModalOpen}
+          onClose={onExpirationDateModalClose}
+        />
       </View>
     </>
   );

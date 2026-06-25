@@ -15,7 +15,7 @@ import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
 import { EditExpirationDateForm } from "./prayer-request-types";
 
 export function useEditExpirationDateModal(
-  prayerRequest: PrayerRequestModel,
+  prayerRequest: PrayerRequestModel | undefined,
   onClose: () => void,
 ) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -54,7 +54,7 @@ export function useEditExpirationDateModal(
   function getUpdatedExpirationDate(
     values: EditExpirationDateForm,
   ): Date | undefined {
-    if (!prayerRequest.expirationDate) {
+    if (!prayerRequest?.expirationDate) {
       return undefined;
     }
 
@@ -87,7 +87,7 @@ export function useEditExpirationDateModal(
       return;
     }
 
-    if (!prayerRequest.prayerRequestId) {
+    if (!prayerRequest?.prayerRequestId) {
       return;
     }
 

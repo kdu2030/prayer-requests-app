@@ -12,7 +12,7 @@ import { EditExpirationDateForm } from "./prayer-request-types";
 import { useEditExpirationDateModal } from "./use-edit-expiration-date-modal";
 
 type EditExpirationDateProps = {
-  prayerRequest: PrayerRequestModel;
+  prayerRequest: PrayerRequestModel | undefined;
   isOpen: boolean;
   onClose: () => void;
 };
@@ -36,40 +36,42 @@ export function EditExpirationDateModal({
       isOpen={isOpen}
       onClose={onClose}
     >
-      <Formik initialValues={{}} onSubmit={onSave}>
-        {({ values, submitForm }) => (
-          <>
-            <Text variant="bodyLarge" className="mb-4">
-              {translate("prayerRequest.editExpirationDate.date", {
-                date: getFormattedExpirationDate(
-                  values as EditExpirationDateForm,
-                ),
-              })}
-            </Text>
+      {prayerRequest && (
+        <Formik initialValues={{}} onSubmit={onSave}>
+          {({ values, submitForm }) => (
+            <>
+              <Text variant="bodyLarge" className="mb-4">
+                {translate("prayerRequest.editExpirationDate.date", {
+                  date: getFormattedExpirationDate(
+                    values as EditExpirationDateForm,
+                  ),
+                })}
+              </Text>
 
-            <FormikSelect
-              name="timeToLive"
-              mode="flat"
-              options={expirationDateOptions}
-              label={translate("prayerRequest.editExpirationDate.extendBy")}
-            />
+              <FormikSelect
+                name="timeToLive"
+                mode="flat"
+                options={expirationDateOptions}
+                label={translate("prayerRequest.editExpirationDate.extendBy")}
+              />
 
-            <View className="flex flex-row gap-2 mt-6 self-end">
-              <DismissButton mode="outlined" onPress={onClose}>
-                {translate("common.actions.cancel")}
-              </DismissButton>
+              <View className="flex flex-row gap-2 mt-6 self-end">
+                <DismissButton mode="outlined" onPress={onClose}>
+                  {translate("common.actions.cancel")}
+                </DismissButton>
 
-              <DismissButton
-                mode="contained"
-                onPress={submitForm}
-                loading={isLoading}
-              >
-                {translate("common.actions.save")}
-              </DismissButton>
-            </View>
-          </>
-        )}
-      </Formik>
+                <DismissButton
+                  mode="contained"
+                  onPress={submitForm}
+                  loading={isLoading}
+                >
+                  {translate("common.actions.save")}
+                </DismissButton>
+              </View>
+            </>
+          )}
+        </Formik>
+      )}
     </RoundedModal>
   );
 }

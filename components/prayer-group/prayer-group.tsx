@@ -8,6 +8,7 @@ import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
+import { EditExpirationDateModal } from "../prayer-request/edit-expiration-date-modal";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
 import { PrayerRequestListCard } from "../prayer-request/prayer-request-list-card";
@@ -54,6 +55,10 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     prayerRequestFilters,
     nextPrayerRequestsLoadStatus,
     navigateToPrayerRequestPage,
+    isExpirationModalOpen,
+    expirationModalPrayerRequest,
+    onExpirationDateModalOpen,
+    onExpirationDateModalClose,
   } = usePrayerGroup(prayerGroupId);
 
   const {
@@ -162,6 +167,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           showExtendedActions={showExtendedActions}
           selectedPrayerRequest={selectedPrayerRequest}
           onClose={closePrayerRequestActions}
+          openEditExpirationModal={onExpirationDateModalOpen}
         />
 
         {showLeavePrayerGroupModal && (
@@ -169,6 +175,16 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
             isRemoveUserLoading={isRemoveUserLoading}
             onRemoveUser={onRemoveUser}
             onCancel={() => setShowLeavePrayerGroupModal(false)}
+          />
+        )}
+
+        {selectedPrayerRequest && (
+          <EditExpirationDateModal
+            prayerRequest={
+              expirationModalPrayerRequest ?? selectedPrayerRequest
+            }
+            isOpen={isExpirationModalOpen}
+            onClose={onExpirationDateModalClose}
           />
         )}
       </View>

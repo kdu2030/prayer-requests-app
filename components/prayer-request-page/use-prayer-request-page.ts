@@ -50,14 +50,15 @@ export const usePrayerRequestPage = (
   const [isDeleteCommentLoading, setIsDeleteCommentLoading] =
     React.useState<boolean>(false);
 
-  const [isExpirationModalOpen, setIsExpirationModalOpen] =
-    React.useState<boolean>(false);
-
   const {
     openPrayerRequestActions,
     showExtendedActions,
     isPrayerRequestActionsOpen,
     closePrayerRequestActions,
+    isExpirationModalOpen,
+    expirationModalPrayerRequest,
+    onExpirationDateModalOpen,
+    onExpirationDateModalClose,
   } = usePrayerRequestActionsContainer();
 
   const { userData } = useApiDataContext();
@@ -479,11 +480,6 @@ export const usePrayerRequestPage = (
     }
   };
 
-  const openEditExpirationDateModal = () => {
-    closePrayerRequestActions();
-    setIsExpirationModalOpen(true);
-  };
-
   return {
     prayerRequest,
     prayerRequestLoadStatus,
@@ -516,7 +512,8 @@ export const usePrayerRequestPage = (
     onCommentListLayout,
     setCommentPlaceholderPosition,
     isExpirationModalOpen,
-    setIsExpirationModalOpen,
-    openEditExpirationDateModal,
+    onExpirationDateModalClose,
+    onExpirationDateModalOpen,
+    expirationModalPrayerRequest,
   };
 };

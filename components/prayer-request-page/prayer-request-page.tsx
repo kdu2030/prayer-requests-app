@@ -65,8 +65,9 @@ export const PrayerRequestPage: React.FC<Props> = ({
     onCommentListLayout,
     setCommentPlaceholderPosition,
     isExpirationModalOpen,
-    setIsExpirationModalOpen,
-    openEditExpirationDateModal,
+    onExpirationDateModalClose,
+    onExpirationDateModalOpen,
+    expirationModalPrayerRequest,
   } = usePrayerRequestPage(prayerRequestId, scrollToCommentsOnLoad);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -159,7 +160,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
               isOpen={isPrayerRequestActionsOpen}
               showExtendedActions={showExtendedActions}
               selectedPrayerRequest={prayerRequest}
-              openEditExpirationModal={openEditExpirationDateModal}
+              openEditExpirationModal={onExpirationDateModalOpen}
               onClose={closePrayerRequestActions}
             />
 
@@ -179,8 +180,8 @@ export const PrayerRequestPage: React.FC<Props> = ({
 
             <EditExpirationDateModal
               isOpen={isExpirationModalOpen}
-              onClose={() => setIsExpirationModalOpen(false)}
-              prayerRequest={prayerRequest}
+              onClose={onExpirationDateModalClose}
+              prayerRequest={expirationModalPrayerRequest}
             />
           </View>
         </PrayerGroupContentContainer>

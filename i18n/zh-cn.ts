@@ -177,9 +177,9 @@ export const chineseTranslations: Translations = {
 
   "prayerRequest.edit.label": "编辑祷告事项",
 
-  "prayerRequest.editExpirationDate.label": "编辑可见时间",
+  "prayerRequest.editExpirationDate.label": "编辑到期日",
   "prayerRequest.editExpirationDate.date": "这个祷告事项会在{{date}}过期。",
-  "prayerRequest.editExpirationDate.extendBy": "延长可见时间",
+  "prayerRequest.editExpirationDate.extendBy": "延长到期日",
 
   "prayerRequestPage.loading": "加载祷告事项",
   "prayerRequestPage.failedToLoad": "加载祷告事项失败了。",
@@ -216,6 +216,6 @@ export const chineseTranslations: Translations = {
   "toaster.editPrayerRequest.success": "已编辑祷告事项。",
   "toaster.editPrayerRequest.failure": "编辑祷告事项失败了。",
 
-  "toaster.editExpirationDate.success": "已延长了可见时间。",
-  "toaster.editExpirationDate.failure": "延长可见时间失败了。",
+  "toaster.editExpirationDate.success": "已延长了到期日。",
+  "toaster.editExpirationDate.failure": "延长到期日失败了。。",
 };

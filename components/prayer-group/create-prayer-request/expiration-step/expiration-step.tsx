@@ -18,8 +18,12 @@ type Props = {
 
 export const ExpirationStep: React.FC<Props> = ({ setWizardStep }) => {
   const { translate } = useI18N();
-  const { expirationDateOptions, onSavePrayerRequest, isLoading } =
-    useExpirationStep();
+  const {
+    expirationDateOptions,
+    onSavePrayerRequest,
+    isLoading,
+    expirationDate,
+  } = useExpirationStep();
 
   return (
     <View>
@@ -44,6 +48,14 @@ export const ExpirationStep: React.FC<Props> = ({ setWizardStep }) => {
         <Text variant="bodyLarge">
           {translate("prayerGroup.request.expirationDate.description")}
         </Text>
+
+        {expirationDate && (
+          <Text variant="bodyLarge" className="mt-5">
+            {translate("prayerRequest.editExpirationDate.date", {
+              date: expirationDate,
+            })}
+          </Text>
+        )}
 
         <FormikSelect
           containerClassName="mt-5"

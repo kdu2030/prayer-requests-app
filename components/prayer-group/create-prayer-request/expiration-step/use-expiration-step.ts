@@ -4,10 +4,12 @@ import { isEmpty } from "lodash";
 import * as React from "react";
 
 import { usePostPrayerRequest } from "../../../../api/post-prayer-request";
+import { formatDate } from "../../../../helpers/formatting-helpers";
 import { useApiDataContext } from "../../../../hooks/use-api-data";
 import { useI18N } from "../../../../hooks/use-i18n";
 import { mapCreatePrayerRequest } from "../../../../mappers/map-create-prayer-request";
 import { DropdownOption } from "../../../../types/inputs/dropdown";
+import { CultureCode } from "../../../../types/languages";
 import { PrayerRequestFilterCriteria } from "../../../../types/prayer-request-types";
 import { usePrayerRequestContext } from "../../../prayer-request/prayer-request-context";
 import { useToasterContext } from "../../../toasters/toaster-context";
@@ -19,7 +21,7 @@ import {
 } from "../create-prayer-request-types";
 
 export const useExpirationStep = () => {
-  const { translate } = useI18N();
+  const { translate, i18n } = useI18N();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const { openToaster } = useToasterContext();
 
@@ -59,6 +61,20 @@ export const useExpirationStep = () => {
     ],
     [translate],
   );
+
+  const expirationDate = React.useMemo(() => {
+    if (!values.timeToLive) {
+      return;
+    }
+
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + values.timeToLive);
+
+    return formatDate(
+      expirationDate.toISOString(),
+      i18n.language as CultureCode,
+    );
+  }, [i18n.language, values.timeToLive]);
 
   const refreshPrayerRequests = async (prayerGroupId: number) => {
     const filtersForRefresh: PrayerRequestFilterCriteria = {
@@ -121,5 +137,6 @@ export const useExpirationStep = () => {
     expirationDateOptions,
     onSavePrayerRequest,
     isLoading,
+    expirationDate,
   };
 };

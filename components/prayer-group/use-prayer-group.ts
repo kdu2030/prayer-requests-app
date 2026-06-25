@@ -13,10 +13,7 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
-import {
-  PrayerRequestFilterCriteria,
-  PrayerRequestModel,
-} from "../../types/prayer-request-types";
+import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
 import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
 import { useToasterContext } from "../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
@@ -28,12 +25,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     React.useState<LoadStatus>(LoadStatus.NotStarted);
   const [showLeavePrayerGroupModal, setShowLeavePrayerGroupModal] =
     React.useState<boolean>(false);
-
-  const [isExpirationModalOpen, setIsExpirationModalOpen] =
-    React.useState<boolean>(false);
-
-  const [expirationModalPrayerRequest, setExpirationModalPrayerRequest] =
-    React.useState<PrayerRequestModel | undefined>();
 
   const {
     prayerRequestFilters,
@@ -272,18 +263,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     });
   };
 
-  const onExpirationDateModalOpen = (
-    selectedPrayerRequest: PrayerRequestModel,
-  ) => {
-    setIsExpirationModalOpen(true);
-    setExpirationModalPrayerRequest(selectedPrayerRequest);
-  };
-
-  const onExpirationDateModalClose = () => {
-    setIsExpirationModalOpen(false);
-    setExpirationModalPrayerRequest(undefined);
-  };
-
   return {
     prayerGroupLoadStatus,
     setPrayerGroupLoadStatus,
@@ -307,10 +286,5 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setUserJoinStatus,
     numNotLoadedRequests,
     navigateToPrayerRequestPage,
-    isExpirationModalOpen,
-    setIsExpirationModalOpen,
-    expirationModalPrayerRequest,
-    onExpirationDateModalClose,
-    onExpirationDateModalOpen,
   };
 };

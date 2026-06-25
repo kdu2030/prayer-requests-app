@@ -13,6 +13,12 @@ export const usePrayerRequestActionsContainer = () => {
     PrayerRequestModel | undefined
   >();
 
+  const [isExpirationModalOpen, setIsExpirationModalOpen] =
+    React.useState<boolean>(false);
+
+  const [expirationModalPrayerRequest, setExpirationModalPrayerRequest] =
+    React.useState<PrayerRequestModel | undefined>();
+
   const openPrayerRequestActions = (
     prayerRequest: PrayerRequestModel,
     showExtended: boolean = false,
@@ -28,6 +34,21 @@ export const usePrayerRequestActionsContainer = () => {
     setShowExtendedActions(false);
   };
 
+  const onExpirationDateModalOpen = () => {
+    if (!selectedPrayerRequest) {
+      return;
+    }
+
+    setIsExpirationModalOpen(true);
+    setExpirationModalPrayerRequest(selectedPrayerRequest);
+    closePrayerRequestActions();
+  };
+
+  const onExpirationDateModalClose = () => {
+    setIsExpirationModalOpen(false);
+    setExpirationModalPrayerRequest(undefined);
+  };
+
   return {
     selectedPrayerRequest,
     openPrayerRequestActions,
@@ -35,5 +56,9 @@ export const usePrayerRequestActionsContainer = () => {
     setSelectedPrayerRequest,
     showExtendedActions,
     isPrayerRequestActionsOpen,
+    isExpirationModalOpen,
+    onExpirationDateModalOpen,
+    onExpirationDateModalClose,
+    expirationModalPrayerRequest,
   };
 };

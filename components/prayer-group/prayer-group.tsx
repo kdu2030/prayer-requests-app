@@ -55,10 +55,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     prayerRequestFilters,
     nextPrayerRequestsLoadStatus,
     navigateToPrayerRequestPage,
-    isExpirationModalOpen,
-    expirationModalPrayerRequest,
-    onExpirationDateModalOpen,
-    onExpirationDateModalClose,
   } = usePrayerGroup(prayerGroupId);
 
   const {
@@ -67,6 +63,10 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     showExtendedActions,
     isPrayerRequestActionsOpen,
     closePrayerRequestActions,
+    isExpirationModalOpen,
+    expirationModalPrayerRequest,
+    onExpirationDateModalOpen,
+    onExpirationDateModalClose,
   } = usePrayerRequestActionsContainer();
 
   const prayerGroupHeader = React.useMemo(

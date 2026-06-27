@@ -5,18 +5,30 @@ import { Text, useTheme } from "react-native-paper";
 import { useI18N } from "../../hooks/use-i18n";
 import { DismissButton } from "../inputs/dismiss-button";
 import { RoundedModal } from "../modals/rounded-modal";
+import { useDeletePrayerRequestModal } from "./use-delete-prayer-request-modal";
 
 type DeletePrayerRequestModalProps = {
   isOpen: boolean;
+  prayerRequestIdToDelete: number | undefined;
   onClose: () => void;
+  onDeleteSuccess?: (deletedPrayerRequestId: number) => void;
 };
 
 export function DeletePrayerRequestModal({
   isOpen,
+  prayerRequestIdToDelete,
   onClose,
+  onDeleteSuccess,
 }: DeletePrayerRequestModalProps) {
   const { translate } = useI18N();
   const theme = useTheme();
+
+  const { isDeleteLoading, onDeletePrayerRequest } =
+    useDeletePrayerRequestModal(
+      prayerRequestIdToDelete,
+      onClose,
+      onDeleteSuccess,
+    );
 
   return (
     <RoundedModal
@@ -36,8 +48,9 @@ export function DeletePrayerRequestModal({
 
           <DismissButton
             mode="contained"
-            onPress={() => {}}
+            onPress={onDeletePrayerRequest}
             buttonColor={theme.colors.error}
+            loading={isDeleteLoading}
           >
             {translate("common.actions.delete")}
           </DismissButton>

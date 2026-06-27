@@ -71,6 +71,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     onDeleteConfirmationModalOpen,
     isDeleteConfirmationModalOpen,
     onDeleteConfirmationModalClose,
+    prayerRequestIdToDelete,
   } = usePrayerRequestActionsContainer();
 
   const prayerGroupHeader = React.useMemo(
@@ -190,6 +191,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         />
 
         <DeletePrayerRequestModal
+          prayerRequestIdToDelete={prayerRequestIdToDelete}
           isOpen={isDeleteConfirmationModalOpen}
           onClose={onDeleteConfirmationModalClose}
         />

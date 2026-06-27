@@ -230,4 +230,7 @@ export const englishTranslations = {
 
   "toaster.editExpirationDate.success": "Extended expiration date",
   "toaster.editExpirationDate.failure": "Failed to extend expiration date",
+
+  "toaster.deletePrayerRequest.success": "Deleted prayer request",
+  "toaster.deletePrayerRequest.failure": "Failed to delete prayer request",
 };

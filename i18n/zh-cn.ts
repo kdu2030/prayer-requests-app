@@ -181,6 +181,10 @@ export const chineseTranslations: Translations = {
   "prayerRequest.editExpirationDate.date": "这个祷告事项会在{{date}}过期。",
   "prayerRequest.editExpirationDate.extendBy": "延长到期日",
 
+  "prayerRequest.deletePrayerRequest.label": "删除祷告事项",
+  "prayerRequest.deletePrayerRequest.warning":
+    "确定要删除这个祷告事项吗？删除后将无法回复。",
+
   "prayerRequestPage.loading": "加载祷告事项",
   "prayerRequestPage.failedToLoad": "加载祷告事项失败了。",
 

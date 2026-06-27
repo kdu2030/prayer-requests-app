@@ -43,7 +43,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
 
-  const { prayerRequests } = usePrayerRequestDetailContext();
+  const { getPrayerRequestFromStore } = usePrayerRequestDetailContext();
 
   const [isRemoveUserLoading, setIsRemoveUserLoading] =
     React.useState<boolean>(false);
@@ -274,7 +274,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     setPrayerRequestIds((prayerRequestIds) => {
       prayerRequestIds.forEach((prayerRequestId) => {
-        if (Object.hasOwn(prayerRequests, prayerRequestId.toString())) {
+        if (getPrayerRequestFromStore(prayerRequestId)) {
           updatedPrayerRequestIds.push(prayerRequestId);
         } else {
           numRemoved++;
@@ -308,8 +308,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       };
     });
   }, [
+    getPrayerRequestFromStore,
     prayerRequestFilters.pageSize,
-    prayerRequests,
     setPrayerRequestIds,
     setPrayerRequestMetadata,
   ]);

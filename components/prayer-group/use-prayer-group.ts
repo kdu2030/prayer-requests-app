@@ -18,6 +18,7 @@ import {
   PrayerRequestMetadata,
 } from "../../types/prayer-request-types";
 import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
+import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
 import { useToasterContext } from "../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
@@ -44,6 +45,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   } = usePrayerRequestContext();
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
+
+  const { prayerRequests } = usePrayerRequestDetailContext();
 
   const [isRemoveUserLoading, setIsRemoveUserLoading] =
     React.useState<boolean>(false);
@@ -268,14 +271,14 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     });
   };
 
-  const onDeletePrayerRequestSuccess = async (
-    deletedPrayerRequestId: number,
-  ) => {
-    const updatedPrayerRequestIds = prayerRequestIds.filter(
-      (prayerRequestId) => {
-        return prayerRequestId !== deletedPrayerRequestId;
-      },
-    );
+  const cleanupRemovedPrayerRequestIds = React.useCallback(() => {
+    const updatedPrayerRequestIds: number[] = [];
+
+    prayerRequestIds.forEach((prayerRequestId) => {
+      if (Object.hasOwn(prayerRequests, prayerRequestId.toString())) {
+        updatedPrayerRequestIds.push(prayerRequestId);
+      }
+    });
 
     setPrayerRequestIds(updatedPrayerRequestIds);
 
@@ -296,7 +299,18 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     };
 
     setPrayerRequestMetadata(updatedPrayerRequestMetadata);
-  };
+  }, [
+    prayerRequestFilters.pageSize,
+    prayerRequestIds,
+    prayerRequestMetadata,
+    prayerRequests,
+    setPrayerRequestIds,
+    setPrayerRequestMetadata,
+  ]);
+
+  React.useEffect(() => {
+    cleanupRemovedPrayerRequestIds();
+  }, [cleanupRemovedPrayerRequestIds]);
 
   return {
     prayerGroupLoadStatus,
@@ -321,6 +335,5 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setUserJoinStatus,
     numNotLoadedRequests,
     navigateToPrayerRequestPage,
-    onDeletePrayerRequestSuccess,
   };
 };

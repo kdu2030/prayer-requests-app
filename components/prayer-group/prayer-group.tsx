@@ -56,7 +56,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     prayerRequestFilters,
     nextPrayerRequestsLoadStatus,
     navigateToPrayerRequestPage,
-    onDeletePrayerRequestSuccess,
   } = usePrayerGroup(prayerGroupId);
 
   const {
@@ -195,7 +194,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           prayerRequestIdToDelete={prayerRequestIdToDelete}
           isOpen={isDeleteConfirmationModalOpen}
           onClose={onDeleteConfirmationModalClose}
-          onDeleteSuccess={onDeletePrayerRequestSuccess}
         />
       </View>
     </>

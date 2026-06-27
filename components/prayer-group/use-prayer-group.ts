@@ -271,24 +271,30 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const onDeletePrayerRequestSuccess = async (
     deletedPrayerRequestId: number,
   ) => {
-    setPrayerRequestIds((prayerRequestIds) =>
-      prayerRequestIds.filter((prayerRequestId) => {
+    const updatedPrayerRequestIds = prayerRequestIds.filter(
+      (prayerRequestId) => {
         return prayerRequestId !== deletedPrayerRequestId;
-      }),
+      },
     );
+
+    setPrayerRequestIds(updatedPrayerRequestIds);
 
     const currentTotalCount = prayerRequestMetadata.totalCount;
     const updatedCount = currentTotalCount ? currentTotalCount - 1 : 0;
 
-    const updatedNumPages = Math.ceil(
-      updatedCount / (prayerRequestFilters.pageSize ?? 10),
-    );
+    const pageSize = prayerRequestFilters.pageSize ?? 10;
+    const updatedNumPages = Math.ceil(updatedCount / pageSize);
+
+    const pageIndex = Math.floor(updatedPrayerRequestIds.length / pageSize);
 
     const updatedPrayerRequestMetadata: PrayerRequestMetadata = {
       ...prayerRequestMetadata,
       totalCount: currentTotalCount ? currentTotalCount - 1 : 0,
       numberOfPages: updatedNumPages,
+      pageIndex,
     };
+
+    console.log(updatedPrayerRequestMetadata);
 
     setPrayerRequestMetadata(updatedPrayerRequestMetadata);
   };

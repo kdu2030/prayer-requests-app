@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { Formik, FormikProps } from "formik";
 import * as React from "react";
 import { FlatList, View } from "react-native";
@@ -8,6 +9,7 @@ import { LoadStatus } from "../../types/api-response-types";
 import { DismissButton } from "../inputs/dismiss-button";
 import { TextInput } from "../inputs/text-input";
 import { PrayerGroupContentContainer } from "../prayer-group/section-header/prayer-group-content-container";
+import { DeletePrayerRequestModal } from "../prayer-request/delete-prayer-request-modal";
 import { EditExpirationDateModal } from "../prayer-request/edit-expiration-date-modal";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
@@ -68,6 +70,10 @@ export const PrayerRequestPage: React.FC<Props> = ({
     onExpirationDateModalClose,
     onExpirationDateModalOpen,
     expirationModalPrayerRequest,
+    isDeleteConfirmationModalOpen,
+    prayerRequestIdToDelete,
+    onDeleteConfirmationModalClose,
+    onDeleteConfirmationModalOpen,
   } = usePrayerRequestPage(prayerRequestId, scrollToCommentsOnLoad);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -162,6 +168,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
               selectedPrayerRequest={prayerRequest}
               openEditExpirationModal={onExpirationDateModalOpen}
               onClose={closePrayerRequestActions}
+              openDeletePrayerRequestModal={onDeleteConfirmationModalOpen}
             />
 
             <PrayerRequestCommentActions
@@ -182,6 +189,13 @@ export const PrayerRequestPage: React.FC<Props> = ({
               isOpen={isExpirationModalOpen}
               onClose={onExpirationDateModalClose}
               prayerRequest={expirationModalPrayerRequest}
+            />
+
+            <DeletePrayerRequestModal
+              isOpen={isDeleteConfirmationModalOpen}
+              prayerRequestIdToDelete={prayerRequestIdToDelete}
+              onClose={onDeleteConfirmationModalClose}
+              onDeleteSuccess={() => router.back()}
             />
           </View>
         </PrayerGroupContentContainer>

@@ -59,6 +59,10 @@ export const usePrayerRequestPage = (
     expirationModalPrayerRequest,
     onExpirationDateModalOpen,
     onExpirationDateModalClose,
+    isDeleteConfirmationModalOpen,
+    prayerRequestIdToDelete,
+    onDeleteConfirmationModalClose,
+    onDeleteConfirmationModalOpen,
   } = usePrayerRequestActionsContainer();
 
   const { userData } = useApiDataContext();
@@ -515,5 +519,9 @@ export const usePrayerRequestPage = (
     onExpirationDateModalClose,
     onExpirationDateModalOpen,
     expirationModalPrayerRequest,
+    isDeleteConfirmationModalOpen,
+    prayerRequestIdToDelete,
+    onDeleteConfirmationModalClose,
+    onDeleteConfirmationModalOpen,
   };
 };

@@ -270,20 +270,29 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const cleanupRemovedPrayerRequestIds = React.useCallback(() => {
     const updatedPrayerRequestIds: number[] = [];
+    let numRemoved = 0;
 
     setPrayerRequestIds((prayerRequestIds) => {
       prayerRequestIds.forEach((prayerRequestId) => {
         if (Object.hasOwn(prayerRequests, prayerRequestId.toString())) {
           updatedPrayerRequestIds.push(prayerRequestId);
+        } else {
+          numRemoved++;
         }
       });
 
       return updatedPrayerRequestIds;
     });
 
+    if (numRemoved == 0) {
+      return;
+    }
+
     setPrayerRequestMetadata((prayerRequestMetadata) => {
       const currentTotalCount = prayerRequestMetadata.totalCount;
-      const updatedCount = currentTotalCount ? currentTotalCount - 1 : 0;
+      const updatedCount = currentTotalCount
+        ? currentTotalCount - numRemoved
+        : 0;
 
       const pageSize = prayerRequestFilters.pageSize ?? 10;
       const updatedNumPages = Math.ceil(updatedCount / pageSize);
@@ -292,7 +301,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
       return {
         ...prayerRequestMetadata,
-        totalCount: currentTotalCount ? currentTotalCount - 1 : 0,
+        totalCount: updatedCount,
         numberOfPages: updatedNumPages,
         pageIndex,
         prayerRequestsLoaded: updatedPrayerRequestIds.length,
@@ -309,7 +318,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     cleanupRemovedPrayerRequestIds();
   }, [cleanupRemovedPrayerRequestIds]);
 
-  // FIXME: For debugging purposes only, remove
+  // // FIXME: For debugging purposes only, remove
   React.useEffect(() => {
     console.log(prayerRequestIds);
     console.log(prayerRequestMetadata);

@@ -131,6 +131,7 @@ describe(PrayerGroup, () => {
 
   test("Mount test", async () => {
     mockUsePrayerRequestDetailsContext.mockReturnValue({
+      prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
     });
@@ -143,6 +144,7 @@ describe(PrayerGroup, () => {
 
   test("Prayer group banner displays if not null", async () => {
     mockUsePrayerRequestDetailsContext.mockReturnValue({
+      prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
     });
@@ -158,6 +160,7 @@ describe(PrayerGroup, () => {
 
   test("Prayer group banner placeholder displays if banner is null", async () => {
     mockUsePrayerRequestDetailsContext.mockReturnValue({
+      prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
     });
@@ -176,6 +179,7 @@ describe(PrayerGroup, () => {
 
   test("Correct buttons display if user is a member", async () => {
     mockUsePrayerRequestDetailsContext.mockReturnValue({
+      prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
     });
@@ -194,6 +198,7 @@ describe(PrayerGroup, () => {
 
   test("Join prayer group button displays if user is not a member", async () => {
     mockUsePrayerRequestDetailsContext.mockReturnValue({
+      prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
     });
@@ -219,6 +224,7 @@ describe(PrayerGroup, () => {
 
   test("Post prayer group user gets called when the user presses the join button", async () => {
     mockUsePrayerRequestDetailsContext.mockReturnValue({
+      prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
     });
@@ -270,6 +276,7 @@ describe(PrayerGroup, () => {
     });
 
     mockUsePrayerRequestDetailsContext.mockReturnValue({
+      prayerRequests: {},
       getPrayerRequestFromStore: (prayerRequestId: number) => {
         return mockPrayerRequestMap[prayerRequestId];
       },
@@ -296,6 +303,7 @@ describe(PrayerGroup, () => {
 
   test("Submit join request button shows up when the user is not joined on a private prayer group", async () => {
     mockUsePrayerRequestDetailsContext.mockReturnValue({
+      prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
     });

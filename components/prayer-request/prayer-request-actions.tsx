@@ -15,6 +15,7 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   openEditExpirationModal: () => void;
+  openDeletePrayerRequestModal: () => void;
 };
 
 export const PrayerRequestActions: React.FC<Props> = ({
@@ -23,6 +24,7 @@ export const PrayerRequestActions: React.FC<Props> = ({
   onClose,
   showExtendedActions,
   openEditExpirationModal,
+  openDeletePrayerRequestModal,
 }) => {
   const theme = useTheme();
   const { translate } = useI18N();
@@ -90,6 +92,19 @@ export const PrayerRequestActions: React.FC<Props> = ({
               }
               label={translate("prayerRequest.editExpirationDate.label")}
               onPress={openEditExpirationModal}
+            />
+
+            <PrayerGroupOptionButton
+              icon={
+                <MaterialCommunityIcons
+                  name="trash-can"
+                  size={24}
+                  color={theme.colors.error}
+                />
+              }
+              label={translate("prayerRequest.deletePrayerRequest.label")}
+              labelStyles={{ color: theme.colors.error }}
+              onPress={openDeletePrayerRequestModal}
             />
           </>
         )}

@@ -55,9 +55,14 @@ export const usePrayerRequestActionsContainer = () => {
     setExpirationModalPrayerRequest(undefined);
   };
 
-  const onDeleteConfirmationModalOpen = (prayerRequestIdToDelete: number) => {
+  const onDeleteConfirmationModalOpen = () => {
+    if (!selectedPrayerRequest?.prayerRequestId) {
+      return;
+    }
+
     setIsDeleteConfirmationModalOpen(true);
-    setPrayerRequestIdToDelete(prayerRequestIdToDelete);
+    setPrayerRequestIdToDelete(selectedPrayerRequest.prayerRequestId);
+    closePrayerRequestActions();
   };
 
   const onDeleteConfirmationModalClose = () => {

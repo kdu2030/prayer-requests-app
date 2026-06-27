@@ -67,6 +67,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     expirationModalPrayerRequest,
     onExpirationDateModalOpen,
     onExpirationDateModalClose,
+    onDeleteConfirmationModalOpen,
   } = usePrayerRequestActionsContainer();
 
   const prayerGroupHeader = React.useMemo(
@@ -168,6 +169,7 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           selectedPrayerRequest={selectedPrayerRequest}
           onClose={closePrayerRequestActions}
           openEditExpirationModal={onExpirationDateModalOpen}
+          openDeletePrayerRequestModal={onDeleteConfirmationModalOpen}
         />
 
         {showLeavePrayerGroupModal && (

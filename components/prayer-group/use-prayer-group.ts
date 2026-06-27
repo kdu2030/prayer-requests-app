@@ -13,10 +13,7 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
-import {
-  PrayerRequestFilterCriteria,
-  PrayerRequestMetadata,
-} from "../../types/prayer-request-types";
+import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
 import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
 import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
 import { useToasterContext } from "../toasters/toaster-context";
@@ -274,35 +271,35 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const cleanupRemovedPrayerRequestIds = React.useCallback(() => {
     const updatedPrayerRequestIds: number[] = [];
 
-    prayerRequestIds.forEach((prayerRequestId) => {
-      if (Object.hasOwn(prayerRequests, prayerRequestId.toString())) {
-        updatedPrayerRequestIds.push(prayerRequestId);
-      }
+    setPrayerRequestIds((prayerRequestIds) => {
+      prayerRequestIds.forEach((prayerRequestId) => {
+        if (Object.hasOwn(prayerRequests, prayerRequestId.toString())) {
+          updatedPrayerRequestIds.push(prayerRequestId);
+        }
+      });
+
+      return updatedPrayerRequestIds;
     });
 
-    setPrayerRequestIds(updatedPrayerRequestIds);
+    setPrayerRequestMetadata((prayerRequestMetadata) => {
+      const currentTotalCount = prayerRequestMetadata.totalCount;
+      const updatedCount = currentTotalCount ? currentTotalCount - 1 : 0;
 
-    const currentTotalCount = prayerRequestMetadata.totalCount;
-    const updatedCount = currentTotalCount ? currentTotalCount - 1 : 0;
+      const pageSize = prayerRequestFilters.pageSize ?? 10;
+      const updatedNumPages = Math.ceil(updatedCount / pageSize);
 
-    const pageSize = prayerRequestFilters.pageSize ?? 10;
-    const updatedNumPages = Math.ceil(updatedCount / pageSize);
+      const pageIndex = Math.floor(updatedPrayerRequestIds.length / pageSize);
 
-    const pageIndex = Math.floor(updatedPrayerRequestIds.length / pageSize);
-
-    const updatedPrayerRequestMetadata: PrayerRequestMetadata = {
-      ...prayerRequestMetadata,
-      totalCount: currentTotalCount ? currentTotalCount - 1 : 0,
-      numberOfPages: updatedNumPages,
-      pageIndex,
-      prayerRequestsLoaded: updatedPrayerRequestIds.length,
-    };
-
-    setPrayerRequestMetadata(updatedPrayerRequestMetadata);
+      return {
+        ...prayerRequestMetadata,
+        totalCount: currentTotalCount ? currentTotalCount - 1 : 0,
+        numberOfPages: updatedNumPages,
+        pageIndex,
+        prayerRequestsLoaded: updatedPrayerRequestIds.length,
+      };
+    });
   }, [
     prayerRequestFilters.pageSize,
-    prayerRequestIds,
-    prayerRequestMetadata,
     prayerRequests,
     setPrayerRequestIds,
     setPrayerRequestMetadata,

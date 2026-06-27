@@ -324,12 +324,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setPrayerRequestIdsAfterRemoval();
   }, [setPrayerRequestIdsAfterRemoval]);
 
-  // // FIXME: For debugging purposes only, remove
-  React.useEffect(() => {
-    console.log(prayerRequestIds);
-    console.log(prayerRequestMetadata);
-  }, [prayerRequestIds, prayerRequestMetadata]);
-
   return {
     prayerGroupLoadStatus,
     setPrayerGroupLoadStatus,

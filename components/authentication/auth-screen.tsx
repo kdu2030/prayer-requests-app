@@ -2,9 +2,10 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { DismissButton } from "../inputs/dismiss-button";
 import { AuthContainer } from "./auth-container";
 
 export function AuthScreen() {
@@ -29,20 +30,20 @@ export function AuthScreen() {
           {translate("authScreen.tagline.text")}
         </Text>
         <View className="flex flex-row w-full mt-auto mb-10">
-          <Button
+          <DismissButton
             mode="contained"
             className="w-2/5 mr-3"
             onPress={() => router.push("/auth/sign-in")}
           >
             {translate("authScreen.signin.action")}
-          </Button>
-          <Button
+          </DismissButton>
+          <DismissButton
             mode="outlined"
             className="w-2/5"
             onPress={() => router.push("/auth/sign-up")}
           >
             {translate("authScreen.signup.action")}
-          </Button>
+          </DismissButton>
         </View>
       </AuthContainer>
     </>

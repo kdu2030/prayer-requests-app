@@ -11,6 +11,7 @@ export type PrayerGroupUserSummary = {
   username?: string;
   image?: MediaFile;
   prayerGroupRole?: PrayerGroupRole;
+  joinDate?: string;
 };
 
 export type PrayerGroupDetails = {
@@ -25,10 +26,13 @@ export type PrayerGroupDetails = {
   avatarFile?: MediaFile;
   bannerFile?: MediaFile;
   joinRequestCount?: number;
+  userJoinDate?: string;
 };
 
 export type PrayerGroupSummary = {
   prayerGroupId?: number;
   groupName?: string;
   avatarFile?: MediaFile;
+  joinStatus?: JoinStatus;
+  addedDate?: string;
 };

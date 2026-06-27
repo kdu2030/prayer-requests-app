@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { isEmpty } from "lodash";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, TouchableRipple, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import { Text } from "react-native-paper";
 
 import { formatDate, formatNumber } from "../../helpers/formatting-helpers";
@@ -10,6 +10,8 @@ import { getArrayTestId } from "../../helpers/utils";
 import { useI18N } from "../../hooks/use-i18n";
 import { CultureCode } from "../../types/languages";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
+import { DismissButton } from "../inputs/dismiss-button";
+import { DismissTouchableRipple } from "../inputs/dismiss-touchable-ripple";
 import { ProfilePicture } from "../layouts/profile-picture";
 import { PrayerRequestCardTestIds } from "./tests/test-ids";
 
@@ -89,7 +91,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
         )}
 
         <View className="ml-auto">
-          <TouchableRipple
+          <DismissTouchableRipple
             rippleColor={"rgba(0, 0, 0, 0.12)"}
             style={{ borderRadius: 9999 }}
             onPress={onOpenMenu}
@@ -100,7 +102,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
               name="more-vert"
               color={theme.colors.onSurface}
             />
-          </TouchableRipple>
+          </DismissTouchableRipple>
         </View>
       </View>
 
@@ -130,7 +132,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
 
       <View className="flex flex-row items-center justify-between mt-6">
         <View className="flex flex-row items-center gap-x-3">
-          <Button
+          <DismissButton
             mode="outlined"
             icon={likeIcon}
             loading={isLikeLoading}
@@ -145,9 +147,9 @@ export const PrayerRequestCard: React.FC<Props> = ({
               i18n.language as CultureCode,
               { notation: "compact", compactDisplay: "short" },
             )}
-          </Button>
+          </DismissButton>
 
-          <Button
+          <DismissButton
             mode="outlined"
             icon={
               !isEmpty(prayerRequest.userCommentIds)
@@ -165,17 +167,17 @@ export const PrayerRequestCard: React.FC<Props> = ({
               i18n.language as CultureCode,
               { notation: "compact", compactDisplay: "short" },
             )}
-          </Button>
+          </DismissButton>
         </View>
 
-        <Button
+        <DismissButton
           mode="outlined"
           icon={
             !isEmpty(prayerRequest.userPrayerSessionIds)
               ? "cross"
               : "cross-outline"
           }
-          onPress={() => onPrayPress()}
+          onPress={onPrayPress}
           testID={getArrayTestId(
             PrayerRequestCardTestIds.prayedButton,
             prayerRequest.prayerRequestId,
@@ -186,7 +188,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
             i18n.language as CultureCode,
             { notation: "compact", compactDisplay: "short" },
           )}
-        </Button>
+        </DismissButton>
       </View>
     </View>
   );

@@ -14,20 +14,23 @@ type Props = {
   selectedPrayerRequest: PrayerRequestModel | undefined;
   isOpen: boolean;
   onClose: () => void;
+  openEditExpirationModal: () => void;
+  openDeletePrayerRequestModal: () => void;
 };
 
 export const PrayerRequestActions: React.FC<Props> = ({
   selectedPrayerRequest,
   isOpen,
   onClose,
+  showExtendedActions,
+  openEditExpirationModal,
+  openDeletePrayerRequestModal,
 }) => {
   const theme = useTheme();
   const { translate } = useI18N();
 
-  const { toggleBookmark, isToggleBookmarkLoading } = usePrayerRequestActions(
-    onClose,
-    selectedPrayerRequest,
-  );
+  const { toggleBookmark, isToggleBookmarkLoading, onEditPrayerRequest } =
+    usePrayerRequestActions(onClose, selectedPrayerRequest);
 
   return (
     <AppBottomSheet isOpen={isOpen} onClose={onClose}>
@@ -64,6 +67,47 @@ export const PrayerRequestActions: React.FC<Props> = ({
           onPress={toggleBookmark}
           isLoading={isToggleBookmarkLoading}
         />
+
+        {showExtendedActions && (
+          <>
+            <PrayerGroupOptionButton
+              icon={
+                <MaterialCommunityIcons
+                  name="pencil"
+                  size={24}
+                  color={theme.colors.onSurface}
+                />
+              }
+              onPress={onEditPrayerRequest}
+              label={translate("prayerRequest.edit.label")}
+            />
+
+            <PrayerGroupOptionButton
+              icon={
+                <MaterialIcons
+                  name="edit-calendar"
+                  size={24}
+                  color={theme.colors.onSurface}
+                />
+              }
+              label={translate("prayerRequest.editExpirationDate.label")}
+              onPress={openEditExpirationModal}
+            />
+
+            <PrayerGroupOptionButton
+              icon={
+                <MaterialCommunityIcons
+                  name="trash-can"
+                  size={24}
+                  color={theme.colors.error}
+                />
+              }
+              label={translate("prayerRequest.deletePrayerRequest.label")}
+              labelStyles={{ color: theme.colors.error }}
+              onPress={openDeletePrayerRequestModal}
+            />
+          </>
+        )}
       </View>
     </AppBottomSheet>
   );

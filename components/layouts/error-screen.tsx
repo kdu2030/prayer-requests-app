@@ -2,10 +2,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 import classNames from "classnames";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { DismissButton } from "../inputs/dismiss-button";
 
 type Props = {
   errorLabel: string;
@@ -37,7 +38,7 @@ export const ErrorScreen: React.FC<Props> = ({
         className={classNames(
           "flex items-center justify-center",
           fillContainer && "flex-1",
-          className
+          className,
         )}
         style={{
           backgroundColor: theme.colors.background,
@@ -49,9 +50,9 @@ export const ErrorScreen: React.FC<Props> = ({
           {errorLabel}
         </Text>
 
-        <Button mode="contained" className="mt-5" onPress={onRetry}>
+        <DismissButton mode="contained" className="mt-5" onPress={onRetry}>
           {translate("common.actions.retry")}
-        </Button>
+        </DismissButton>
       </View>
     </>
   );

@@ -6,6 +6,7 @@ import {
 
 import { GetPrayerGroupNameValidationResponse } from "../../../../api/get-prayer-group-name-validation";
 import { PutPrayerGroupRequest } from "../../../../api/put-prayer-group";
+import { JoinStatus } from "../../../../constants/prayer-group-constants";
 import { mountComponent } from "../../../../tests/utils/test-utils";
 import { UserData } from "../../../../types/context/api-data-context-type";
 import { ManagedErrorResponse } from "../../../../types/error-handling";
@@ -220,6 +221,7 @@ describe(PrayerGroupEdit, () => {
             prayerGroupId: 2,
             avatarFile: { ...mockMediaFile, mediaFileId: 4 },
             groupName: "Prayer Group 2",
+            joinStatus: JoinStatus.Joined,
           },
         ],
       };

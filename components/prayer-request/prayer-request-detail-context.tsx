@@ -3,13 +3,13 @@ import * as React from "react";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 
 export type PrayerRequestDetailContextType = {
-  prayerRequests: Record<number, PrayerRequestModel>;
+  prayerRequests: Record<number, PrayerRequestModel | undefined>;
   getPrayerRequestFromStore: (
     prayerRequestId: number,
   ) => PrayerRequestModel | undefined;
   setPrayerRequest: (
     prayerRequestId: number,
-    prayerRequest: PrayerRequestModel,
+    prayerRequest: PrayerRequestModel | undefined,
   ) => void;
   addPrayerRequestsToStore: (prayerRequests: PrayerRequestModel[]) => void;
 };
@@ -30,7 +30,7 @@ export const PrayerRequestDetailContextProvider: React.FC<Props> = ({
   children,
 }) => {
   const [prayerRequests, setPrayerRequests] = React.useState<
-    Record<number, PrayerRequestModel>
+    Record<number, PrayerRequestModel | undefined>
   >({});
 
   const getPrayerRequest = (
@@ -41,7 +41,7 @@ export const PrayerRequestDetailContextProvider: React.FC<Props> = ({
 
   const setPrayerRequest = (
     prayerRequestId: number,
-    prayerRequest: PrayerRequestModel,
+    prayerRequest: PrayerRequestModel | undefined,
   ) => {
     setPrayerRequests((prayerRequests) => ({
       ...prayerRequests,
@@ -51,7 +51,10 @@ export const PrayerRequestDetailContextProvider: React.FC<Props> = ({
 
   const addPrayerRequests = (prayerRequests: PrayerRequestModel[]) => {
     setPrayerRequests((currentPrayerRequests) => {
-      const updatedPrayerRequests: Record<number, PrayerRequestModel> = {
+      const updatedPrayerRequests: Record<
+        number,
+        PrayerRequestModel | undefined
+      > = {
         ...currentPrayerRequests,
       };
 

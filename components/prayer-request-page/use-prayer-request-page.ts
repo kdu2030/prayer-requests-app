@@ -1,6 +1,6 @@
 import { FormikProps } from "formik";
 import * as React from "react";
-import { FlatList, Keyboard } from "react-native";
+import { FlatList } from "react-native";
 
 import { useDeletePrayerRequestComment } from "../../api/delete-prayer-request-comment";
 import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like";
@@ -55,6 +55,14 @@ export const usePrayerRequestPage = (
     showExtendedActions,
     isPrayerRequestActionsOpen,
     closePrayerRequestActions,
+    isExpirationModalOpen,
+    expirationModalPrayerRequest,
+    onExpirationDateModalOpen,
+    onExpirationDateModalClose,
+    isDeleteConfirmationModalOpen,
+    prayerRequestIdToDelete,
+    onDeleteConfirmationModalClose,
+    onDeleteConfirmationModalOpen,
   } = usePrayerRequestActionsContainer();
 
   const { userData } = useApiDataContext();
@@ -223,8 +231,6 @@ export const usePrayerRequestPage = (
     if (!values.comment || values.comment.trim().length < 1) {
       return;
     }
-
-    Keyboard.dismiss();
 
     setIsPostCommentLoading(true);
 
@@ -509,5 +515,13 @@ export const usePrayerRequestPage = (
     scrollToCommentSection,
     onCommentListLayout,
     setCommentPlaceholderPosition,
+    isExpirationModalOpen,
+    onExpirationDateModalClose,
+    onExpirationDateModalOpen,
+    expirationModalPrayerRequest,
+    isDeleteConfirmationModalOpen,
+    prayerRequestIdToDelete,
+    onDeleteConfirmationModalClose,
+    onDeleteConfirmationModalOpen,
   };
 };

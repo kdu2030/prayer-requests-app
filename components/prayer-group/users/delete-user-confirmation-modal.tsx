@@ -1,8 +1,9 @@
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
+import { DismissButton } from "../../inputs/dismiss-button";
 import { RoundedModal } from "../../modals/rounded-modal";
 import { PrayerGroupUsersTestIds } from "./tests/test-ids";
 
@@ -33,22 +34,22 @@ export const DeleteUserConfirmationModal: React.FC<Props> = ({
       </Text>
 
       <View className="self-end gap-x-2 mt-6 flex-row">
-        <Button
+        <DismissButton
           mode="outlined"
           onPress={onCancel}
           testID={PrayerGroupUsersTestIds.deleteCancelButton}
         >
           {translate("common.actions.cancel")}
-        </Button>
+        </DismissButton>
 
-        <Button
+        <DismissButton
           mode="contained"
           onPress={onDelete}
           buttonColor={theme.colors.error}
           testID={PrayerGroupUsersTestIds.deleteConfirmButton}
         >
           {translate("prayerGroup.kickUser.label")}
-        </Button>
+        </DismissButton>
       </View>
     </RoundedModal>
   );

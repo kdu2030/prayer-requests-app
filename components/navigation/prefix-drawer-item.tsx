@@ -9,14 +9,17 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { Text, TouchableRipple, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { ThemeProp } from "react-native-paper/lib/typescript/types";
+
+import { DismissTouchableRipple } from "../inputs/dismiss-touchable-ripple";
 
 export type Props = React.ComponentPropsWithRef<typeof View> & {
   /**
    * The label text of the item.
    */
   label: string;
+  labelClassName?: string;
   /**
    * Icon to display for the `DrawerItem`.
    */
@@ -83,6 +86,7 @@ export type Props = React.ComponentPropsWithRef<typeof View> & {
 export const PrefixDrawerItem = ({
   left,
   label,
+  labelClassName,
   active,
   disabled,
 
@@ -114,7 +118,7 @@ export const PrefixDrawerItem = ({
 
   return (
     <View {...rest}>
-      <TouchableRipple
+      <DismissTouchableRipple
         borderless
         disabled={disabled}
         background={background}
@@ -136,6 +140,7 @@ export const PrefixDrawerItem = ({
             {left}
             <Text
               variant="labelLarge"
+              className={labelClassName}
               selectable={false}
               numberOfLines={1}
               style={[
@@ -154,7 +159,7 @@ export const PrefixDrawerItem = ({
 
           {right?.({ color: contentColor })}
         </View>
-      </TouchableRipple>
+      </DismissTouchableRipple>
     </View>
   );
 };

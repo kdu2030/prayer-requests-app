@@ -183,6 +183,17 @@ export const englishTranslations = {
   "prayerRequest.comments.placeholder":
     "This prayer request does not have comments yet.",
 
+  "prayerRequest.edit.label": "Edit Prayer Request",
+
+  "prayerRequest.editExpirationDate.label": "Edit Expiration Date",
+  "prayerRequest.editExpirationDate.date":
+    "This prayer request will expire on {{date}}.",
+  "prayerRequest.editExpirationDate.extendBy": "Extend expiration by",
+
+  "prayerRequest.deletePrayerRequest.label": "Delete Prayer Request",
+  "prayerRequest.deletePrayerRequest.warning":
+    "Are you sure you want to delete this prayer request? This cannot be undone.",
+
   "prayerGroup.joinRequest.label":
     "This is a private prayer group. To join, please submit a join request.",
   "prayerGroup.joinRequest.submitJoinRequest": "Submit Join Request",
@@ -213,4 +224,13 @@ export const englishTranslations = {
   "toaster.editComment.failure": "Failed to edit comment",
   "toaster.deleteComment.success": "Deleted comment",
   "toaster.deleteComment.failure": "Failed to delete comment",
+
+  "toaster.editPrayerRequest.success": "Edited prayer request",
+  "toaster.editPrayerRequest.failure": "Failed to edit prayer request",
+
+  "toaster.editExpirationDate.success": "Extended expiration date",
+  "toaster.editExpirationDate.failure": "Failed to extend expiration date",
+
+  "toaster.deletePrayerRequest.success": "Deleted prayer request",
+  "toaster.deletePrayerRequest.failure": "Failed to delete prayer request",
 };

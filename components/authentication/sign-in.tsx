@@ -4,7 +4,7 @@ import { Formik, FormikProps, setNestedObjectValues } from "formik";
 import { isEmpty } from "lodash";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { postSignin } from "../../api/post-signin";
@@ -12,6 +12,7 @@ import { TextInput } from "../../components/inputs/text-input";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { SigninForm } from "../../types/forms/auth-forms";
+import { DismissButton } from "../inputs/dismiss-button";
 import { useToasterContext } from "../toasters/toaster-context";
 import { SigninErrors, SigninTestIds } from "./auth-constants";
 import { handleSuccessfulAuthentication } from "./auth-helpers";
@@ -134,7 +135,7 @@ export const Signin: React.FC = () => {
                     required
                   />
 
-                  <Button
+                  <DismissButton
                     mode="contained"
                     className="mt-3 mb-10"
                     onPress={() => {
@@ -145,7 +146,7 @@ export const Signin: React.FC = () => {
                     loading={isLoading}
                   >
                     {translate("authScreen.signin.action")}
-                  </Button>
+                  </DismissButton>
                 </>
               )}
             </Formik>

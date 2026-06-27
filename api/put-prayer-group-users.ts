@@ -13,6 +13,7 @@ export type PrayerGroupUserUpdateModel = {
 
 export type PutPrayerGroupUserUpdateRequest = {
   prayerGroupUsers: PrayerGroupUserUpdateModel[];
+  updateDate?: string;
 };
 
 export type PutPrayerGroupUserUpdateResponse = {
@@ -29,6 +30,7 @@ const putPrayerGroupUsers = async (
 
   const prayerGroupUsersRequest: PutPrayerGroupUserUpdateRequest = {
     prayerGroupUsers,
+    updateDate: new Date().toISOString(),
   };
 
   try {

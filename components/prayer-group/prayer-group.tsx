@@ -8,6 +8,8 @@ import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
+import { DeletePrayerRequestModal } from "../prayer-request/delete-prayer-request-modal";
+import { EditExpirationDateModal } from "../prayer-request/edit-expiration-date-modal";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
 import { PrayerRequestListCard } from "../prayer-request/prayer-request-list-card";
@@ -40,7 +42,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     onAddUser,
     isAddUserLoading,
     onRetry,
-    prayerGroupOptionsRef,
+    isPrayerGroupOptionsOpen,
+    setIsPrayerGroupOptionsOpen,
     onOpenOptions,
     prayerRequestLoadStatus,
     onEndReached,
@@ -61,6 +64,14 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     showExtendedActions,
     isPrayerRequestActionsOpen,
     closePrayerRequestActions,
+    isExpirationModalOpen,
+    expirationModalPrayerRequest,
+    onExpirationDateModalOpen,
+    onExpirationDateModalClose,
+    onDeleteConfirmationModalOpen,
+    isDeleteConfirmationModalOpen,
+    onDeleteConfirmationModalClose,
+    prayerRequestIdToDelete,
   } = usePrayerRequestActionsContainer();
 
   const prayerGroupHeader = React.useMemo(
@@ -152,7 +163,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         <PrayerGroupOptions
           prayerGroupDetails={prayerGroupDetails}
           setShowLeavePrayerGroupModal={setShowLeavePrayerGroupModal}
-          bottomSheetRef={prayerGroupOptionsRef}
+          isOpen={isPrayerGroupOptionsOpen}
+          onClose={() => setIsPrayerGroupOptionsOpen(false)}
         />
 
         <PrayerRequestActions
@@ -160,6 +172,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           showExtendedActions={showExtendedActions}
           selectedPrayerRequest={selectedPrayerRequest}
           onClose={closePrayerRequestActions}
+          openEditExpirationModal={onExpirationDateModalOpen}
+          openDeletePrayerRequestModal={onDeleteConfirmationModalOpen}
         />
 
         {showLeavePrayerGroupModal && (
@@ -169,6 +183,18 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
             onCancel={() => setShowLeavePrayerGroupModal(false)}
           />
         )}
+
+        <EditExpirationDateModal
+          prayerRequest={expirationModalPrayerRequest}
+          isOpen={isExpirationModalOpen}
+          onClose={onExpirationDateModalClose}
+        />
+
+        <DeletePrayerRequestModal
+          prayerRequestIdToDelete={prayerRequestIdToDelete}
+          isOpen={isDeleteConfirmationModalOpen}
+          onClose={onDeleteConfirmationModalClose}
+        />
       </View>
     </>
   );

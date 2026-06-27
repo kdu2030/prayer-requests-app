@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import classNames from "classnames";
 import * as React from "react";
 import { View } from "react-native";
-import { Text, TouchableRipple, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 
 import { formatDate } from "../../helpers/formatting-helpers";
 import { getArrayTestId } from "../../helpers/utils";
@@ -10,6 +10,7 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { CultureCode } from "../../types/languages";
 import { PrayerRequestCommentModel } from "../../types/prayer-request-types";
+import { DismissTouchableRipple } from "../inputs/dismiss-touchable-ripple";
 import { ProfilePicture } from "../layouts/profile-picture";
 import { PrayerRequestPageTestIds } from "./tests/test-ids";
 
@@ -78,7 +79,7 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
         </View>
 
         {prayerRequestComment.user?.userId === userData?.userId && (
-          <TouchableRipple
+          <DismissTouchableRipple
             rippleColor={"rgba(0, 0, 0, 0.12)"}
             style={{ borderRadius: 9999 }}
             onPress={onOpenActions}
@@ -93,7 +94,7 @@ export const PrayerRequestCommentCard: React.FC<Props> = ({
               name="more-vert"
               color={theme.colors.onSurface}
             />
-          </TouchableRipple>
+          </DismissTouchableRipple>
         )}
       </View>
 

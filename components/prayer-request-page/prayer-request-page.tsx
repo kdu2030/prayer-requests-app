@@ -1,12 +1,16 @@
+import { router } from "expo-router";
 import { Formik, FormikProps } from "formik";
 import * as React from "react";
 import { FlatList, View } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
+import { DismissButton } from "../inputs/dismiss-button";
 import { TextInput } from "../inputs/text-input";
 import { PrayerGroupContentContainer } from "../prayer-group/section-header/prayer-group-content-container";
+import { DeletePrayerRequestModal } from "../prayer-request/delete-prayer-request-modal";
+import { EditExpirationDateModal } from "../prayer-request/edit-expiration-date-modal";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import {
@@ -62,6 +66,14 @@ export const PrayerRequestPage: React.FC<Props> = ({
     scrollToCommentSection,
     onCommentListLayout,
     setCommentPlaceholderPosition,
+    isExpirationModalOpen,
+    onExpirationDateModalClose,
+    onExpirationDateModalOpen,
+    expirationModalPrayerRequest,
+    isDeleteConfirmationModalOpen,
+    prayerRequestIdToDelete,
+    onDeleteConfirmationModalClose,
+    onDeleteConfirmationModalOpen,
   } = usePrayerRequestPage(prayerRequestId, scrollToCommentsOnLoad);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -85,6 +97,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
         >
           <View className="flex flex-1">
             <FlatList
+              keyboardShouldPersistTaps="handled"
               ListHeaderComponent={
                 <PrayerRequestCard
                   prayerRequest={prayerRequest}
@@ -130,12 +143,12 @@ export const PrayerRequestPage: React.FC<Props> = ({
 
               <View className="flex flex-row self-end gap-2">
                 {values.formAction === CommentFormAction.Edit && (
-                  <Button mode="outlined" onPress={onCancelEditComment}>
+                  <DismissButton mode="outlined" onPress={onCancelEditComment}>
                     {translate("common.actions.cancel")}
-                  </Button>
+                  </DismissButton>
                 )}
 
-                <Button
+                <DismissButton
                   mode="contained"
                   disabled={!values.comment || values.comment.trim().length < 1}
                   loading={isPostCommentLoading}
@@ -145,7 +158,7 @@ export const PrayerRequestPage: React.FC<Props> = ({
                   {values.formAction === CommentFormAction.Create
                     ? translate("prayerRequest.comment.post")
                     : translate("common.actions.save")}
-                </Button>
+                </DismissButton>
               </View>
             </View>
 
@@ -153,7 +166,9 @@ export const PrayerRequestPage: React.FC<Props> = ({
               isOpen={isPrayerRequestActionsOpen}
               showExtendedActions={showExtendedActions}
               selectedPrayerRequest={prayerRequest}
+              openEditExpirationModal={onExpirationDateModalOpen}
               onClose={closePrayerRequestActions}
+              openDeletePrayerRequestModal={onDeleteConfirmationModalOpen}
             />
 
             <PrayerRequestCommentActions
@@ -163,13 +178,25 @@ export const PrayerRequestPage: React.FC<Props> = ({
               onDeleteComment={onDeleteComment}
             />
 
-            {isDeleteCommentModalOpen && (
-              <DeletePrayerRequestCommentModal
-                isDeleteLoading={isDeleteCommentLoading}
-                onClose={onCancelDeleteComment}
-                onConfirmDelete={onConfirmDeleteComment}
-              />
-            )}
+            <DeletePrayerRequestCommentModal
+              isOpen={isDeleteCommentModalOpen}
+              isDeleteLoading={isDeleteCommentLoading}
+              onClose={onCancelDeleteComment}
+              onConfirmDelete={onConfirmDeleteComment}
+            />
+
+            <EditExpirationDateModal
+              isOpen={isExpirationModalOpen}
+              onClose={onExpirationDateModalClose}
+              prayerRequest={expirationModalPrayerRequest}
+            />
+
+            <DeletePrayerRequestModal
+              isOpen={isDeleteConfirmationModalOpen}
+              prayerRequestIdToDelete={prayerRequestIdToDelete}
+              onClose={onDeleteConfirmationModalClose}
+              onDeleteSuccess={() => router.back()}
+            />
           </View>
         </PrayerGroupContentContainer>
       )}

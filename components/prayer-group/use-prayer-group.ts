@@ -1,5 +1,3 @@
-import { BottomSheetProps } from "@gorhom/bottom-sheet";
-import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { router } from "expo-router";
 import * as React from "react";
 
@@ -17,9 +15,11 @@ import { LoadStatus } from "../../types/api-response-types";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
 import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
 import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
+import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
 import { useToasterContext } from "../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
+import { addNewPrayerGroupToUserGroups } from "./prayer-group-helpers";
 
 export const usePrayerGroup = (prayerGroupId: number) => {
   const [prayerGroupLoadStatus, setPrayerGroupLoadStatus] =
@@ -31,7 +31,9 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     prayerRequestFilters,
     setPrayerRequestFilters,
     prayerRequestIds,
+    setPrayerRequestIds,
     prayerRequestMetadata,
+    setPrayerRequestMetadata,
     cleanupPrayerRequests,
     loadNextPrayerRequestsForGroup,
     prayerRequestLoadStatus,
@@ -41,6 +43,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
 
+  const { getPrayerRequestFromStore } = usePrayerRequestDetailContext();
+
   const [isRemoveUserLoading, setIsRemoveUserLoading] =
     React.useState<boolean>(false);
   const [isAddUserLoading, setIsAddUserLoading] =
@@ -48,9 +52,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const { openToaster } = useToasterContext();
 
-  const prayerGroupOptionsRef = React.useRef<
-    BottomSheetProps & BottomSheetMethods
-  >(null);
+  const [isPrayerGroupOptionsOpen, setIsPrayerGroupOptionsOpen] =
+    React.useState<boolean>(false);
 
   const { userData, setUserData } = useApiDataContext();
 
@@ -133,6 +136,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       prayerGroupId,
       groupName: prayerGroupDetails?.groupName,
       avatarFile: prayerGroupDetails?.avatarFile,
+      joinStatus: JoinStatus.Joined,
     };
 
     setPrayerGroupDetails({
@@ -140,10 +144,13 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       userJoinStatus: JoinStatus.Joined,
       prayerGroupRole: PrayerGroupRole.Member,
     });
+
     setUserData((existingUserData) => {
-      const updatedPrayerGroups = existingUserData.prayerGroups?.concat(
+      const updatedPrayerGroups = addNewPrayerGroupToUserGroups(
+        existingUserData.prayerGroups ?? [],
         joinedPrayerGroupSummary,
       );
+
       return {
         ...existingUserData,
         prayerGroups: updatedPrayerGroups,
@@ -199,11 +206,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   };
 
   const onOpenOptions = () => {
-    if (!prayerGroupOptionsRef.current) {
-      return;
-    }
-
-    prayerGroupOptionsRef.current.snapToIndex(0);
+    setIsPrayerGroupOptionsOpen(true);
   };
 
   const onEndReached = async () => {
@@ -265,6 +268,62 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     });
   };
 
+  const cleanupRemovedPrayerRequestIds = React.useCallback(
+    (prayerRequestIds: number[]): number[] => {
+      const updatedPrayerRequestIds: number[] = [];
+      let numRemoved = 0;
+
+      prayerRequestIds.forEach((prayerRequestId) => {
+        if (getPrayerRequestFromStore(prayerRequestId)) {
+          updatedPrayerRequestIds.push(prayerRequestId);
+        } else {
+          numRemoved++;
+        }
+      });
+
+      if (numRemoved == 0) {
+        return updatedPrayerRequestIds;
+      }
+
+      setPrayerRequestMetadata((prayerRequestMetadata) => {
+        const currentTotalCount = prayerRequestMetadata.totalCount;
+        const updatedCount = currentTotalCount
+          ? currentTotalCount - numRemoved
+          : 0;
+
+        const pageSize = prayerRequestFilters.pageSize ?? 10;
+        const updatedNumPages = Math.ceil(updatedCount / pageSize);
+
+        const pageIndex = Math.floor(updatedPrayerRequestIds.length / pageSize);
+
+        return {
+          ...prayerRequestMetadata,
+          totalCount: updatedCount,
+          numberOfPages: updatedNumPages,
+          pageIndex,
+          prayerRequestsLoaded: updatedPrayerRequestIds.length,
+        };
+      });
+
+      return updatedPrayerRequestIds;
+    },
+    [
+      getPrayerRequestFromStore,
+      prayerRequestFilters.pageSize,
+      setPrayerRequestMetadata,
+    ],
+  );
+
+  const setPrayerRequestIdsAfterRemoval = React.useCallback(() => {
+    setPrayerRequestIds((prayerRequestIds) =>
+      cleanupRemovedPrayerRequestIds(prayerRequestIds),
+    );
+  }, [cleanupRemovedPrayerRequestIds, setPrayerRequestIds]);
+
+  React.useEffect(() => {
+    setPrayerRequestIdsAfterRemoval();
+  }, [setPrayerRequestIdsAfterRemoval]);
+
   return {
     prayerGroupLoadStatus,
     setPrayerGroupLoadStatus,
@@ -273,7 +332,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     onAddUser,
     isAddUserLoading,
     onRetry,
-    prayerGroupOptionsRef,
+    isPrayerGroupOptionsOpen,
+    setIsPrayerGroupOptionsOpen,
     onOpenOptions,
     prayerRequestFilters,
     setPrayerRequestFilters,

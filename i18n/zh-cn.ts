@@ -175,6 +175,16 @@ export const chineseTranslations: Translations = {
     "确定要删除评论吗？删除后将无法回复。",
   "prayerRequest.comments.placeholder": "这个祷告事项还没有评论。",
 
+  "prayerRequest.edit.label": "编辑祷告事项",
+
+  "prayerRequest.editExpirationDate.label": "编辑到期日",
+  "prayerRequest.editExpirationDate.date": "这个祷告事项会在{{date}}过期。",
+  "prayerRequest.editExpirationDate.extendBy": "延长到期日",
+
+  "prayerRequest.deletePrayerRequest.label": "删除祷告事项",
+  "prayerRequest.deletePrayerRequest.warning":
+    "确定要删除这个祷告事项吗？删除后将无法回复。",
+
   "prayerRequestPage.loading": "加载祷告事项",
   "prayerRequestPage.failedToLoad": "加载祷告事项失败了。",
 
@@ -206,4 +216,13 @@ export const chineseTranslations: Translations = {
   "toaster.editComment.failure": "编辑评论失败了。",
   "toaster.deleteComment.success": "已删除评论。",
   "toaster.deleteComment.failure": "删除评论失败了。",
+
+  "toaster.editPrayerRequest.success": "已编辑祷告事项。",
+  "toaster.editPrayerRequest.failure": "编辑祷告事项失败了。",
+
+  "toaster.editExpirationDate.success": "已延长了到期日。",
+  "toaster.editExpirationDate.failure": "延长到期日失败了。",
+
+  "toaster.deletePrayerRequest.success": "已删除祷告事项。",
+  "toaster.deletePrayerRequest.failure": "删除祷告事项失败了。",
 };

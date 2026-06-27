@@ -2,11 +2,11 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Text } from "react-native-paper";
-import { Button } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { CultureCode } from "../../types/languages";
 import { AuthContainer } from "../authentication/auth-container";
+import { DismissButton } from "../inputs/dismiss-button";
 import { Select } from "../inputs/select";
 import { useToasterContext } from "../toasters/toaster-context";
 import { getLanguageDropdownOptions } from "./helpers/language-helper";
@@ -47,13 +47,13 @@ export const LanguageForm: React.FC = () => {
             await setLanguage(value);
           }}
         />
-        <Button
+        <DismissButton
           mode="contained"
           className="mt-20 portrait:mt-8"
           onPress={onClick}
         >
           {translate("common.actions.save")}
-        </Button>
+        </DismissButton>
       </AuthContainer>
     </>
   );

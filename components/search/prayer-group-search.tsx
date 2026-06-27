@@ -2,12 +2,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
-import { FlatList, TouchableOpacity, View } from "react-native";
-import { Text, TouchableRipple, useTheme } from "react-native-paper";
+import { FlatList, View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
 import { TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
+import { DismissTouchableOpacity } from "../inputs/dismiss-touchable-opacity";
+import { DismissTouchableRipple } from "../inputs/dismiss-touchable-ripple";
 import { useBlurOnHide } from "../inputs/use-blur-on-hide";
 import { ProfilePicture } from "../layouts/profile-picture";
 import { PrayerGroupSearchTestIds } from "./tests/test-ids";
@@ -38,13 +40,16 @@ export const PrayerGroupSearch: React.FC = () => {
         }}
       >
         <View className="flex flex-row items-center">
-          <TouchableOpacity onPress={() => router.back()} className="mr-2">
+          <DismissTouchableOpacity
+            onPress={() => router.back()}
+            className="mr-2"
+          >
             <MaterialIcons
               name="arrow-back"
               size={28}
               color={theme.colors.onSurface}
             />
-          </TouchableOpacity>
+          </DismissTouchableOpacity>
           <TextInput
             value={groupQuery}
             onChangeText={onChangeQuery}
@@ -76,8 +81,9 @@ export const PrayerGroupSearch: React.FC = () => {
           <FlatList
             data={groupSearchResults}
             testID={PrayerGroupSearchTestIds.prayerGroupResultsList}
+            keyboardShouldPersistTaps="handled"
             renderItem={({ item: group, index }) => (
-              <TouchableRipple
+              <DismissTouchableRipple
                 rippleColor={"rgba(0, 0, 0, 0.12)"}
                 onPress={() => {
                   if (group.prayerGroupId) {
@@ -99,7 +105,7 @@ export const PrayerGroupSearch: React.FC = () => {
                   />
                   <Text variant="titleMedium">{group.groupName}</Text>
                 </View>
-              </TouchableRipple>
+              </DismissTouchableRipple>
             )}
           />
         </View>

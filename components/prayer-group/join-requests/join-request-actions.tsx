@@ -1,10 +1,11 @@
 import color from "color";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
 import { JoinRequestForm } from "../../../types/join-request-types";
+import { DismissButton } from "../../inputs/dismiss-button";
 
 type JoinRequestActionsProps = {
   joinRequestId: number;
@@ -28,7 +29,7 @@ export const JoinRequestActions: React.FC<JoinRequestActionsProps> = ({
 
   const selectedColor = React.useMemo(
     () => color(theme.colors.primary).alpha(0.12).rgb().toString(),
-    [theme.colors.primary]
+    [theme.colors.primary],
   );
 
   const isSelected = React.useMemo(() => {
@@ -42,7 +43,7 @@ export const JoinRequestActions: React.FC<JoinRequestActionsProps> = ({
   return (
     <View className="flex flex-row items-center gap-x-1 flex-1">
       <View className="flex-1">
-        <Button
+        <DismissButton
           mode="text"
           icon={"check"}
           buttonColor={isSelected ? selectedColor : undefined}
@@ -50,11 +51,11 @@ export const JoinRequestActions: React.FC<JoinRequestActionsProps> = ({
           testID={approveTestID}
         >
           {translate("common.actions.approve")}
-        </Button>
+        </DismissButton>
       </View>
 
       <View className="flex-1">
-        <Button
+        <DismissButton
           mode="text"
           icon={"close"}
           textColor={theme.colors.error}
@@ -64,7 +65,7 @@ export const JoinRequestActions: React.FC<JoinRequestActionsProps> = ({
           testID={rejectTestID}
         >
           {translate("common.actions.reject")}
-        </Button>
+        </DismissButton>
       </View>
     </View>
   );

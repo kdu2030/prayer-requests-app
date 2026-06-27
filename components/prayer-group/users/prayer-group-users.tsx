@@ -1,9 +1,10 @@
 import * as React from "react";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { Button, Text, TextInput, useTheme } from "react-native-paper";
+import { Text, TextInput, useTheme } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
+import { DismissButton } from "../../inputs/dismiss-button";
 import { useBlurOnHide } from "../../inputs/use-blur-on-hide";
 import { ErrorScreen } from "../../layouts/error-screen";
 import { ProfilePicture } from "../../layouts/profile-picture";
@@ -151,14 +152,14 @@ export const PrayerGroupUsers: React.FC<Props> = ({ prayerGroupId }) => {
             className="p-4 border-t"
             style={{ borderTopColor: theme.colors.outline }}
           >
-            <Button
+            <DismissButton
               mode="contained"
               loading={isSaveLoading}
               onPress={onSavePrayerGroupUsers}
               testID={PrayerGroupUsersTestIds.saveButton}
             >
               {translate("common.actions.save")}
-            </Button>
+            </DismissButton>
           </View>
         </View>
       )}

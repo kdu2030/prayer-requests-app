@@ -30,6 +30,7 @@ export const CreatePrayerGroupWizard: React.FC = () => {
           paddingLeft: insets.left,
           paddingRight: insets.right,
         }}
+        keyboardShouldPersistTaps="handled"
       >
         <View className="flex flex-col w-full p-4">
           <View>{getWizardContent()}</View>

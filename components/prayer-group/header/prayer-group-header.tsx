@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 
 import {
   JoinStatus,
@@ -10,6 +10,7 @@ import {
 } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { PrayerGroupDetails } from "../../../types/prayer-group-types";
+import { DismissButton } from "../../inputs/dismiss-button";
 import { ProfilePicture } from "../../layouts/profile-picture";
 import { PrayerGroupBanner } from "./prayer-group-banner";
 import { PrayerGroupHeaderTestIds } from "./tests/test-ids";
@@ -70,7 +71,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
 
         <View className="flex-row gap-x-4 mt-4">
           {prayerGroupDetails?.userJoinStatus === JoinStatus.Joined && (
-            <Button
+            <DismissButton
               icon="plus"
               className="flex-1"
               mode={"contained"}
@@ -84,12 +85,12 @@ export const PrayerGroupHeader: React.FC<Props> = ({
               }
             >
               {translate("prayerGroup.actions.addPrayerRequest")}
-            </Button>
+            </DismissButton>
           )}
 
           {prayerGroupDetails?.visibilityLevel === VisibilityLevel.Private &&
             prayerGroupDetails.userJoinStatus !== JoinStatus.Joined && (
-              <Button
+              <DismissButton
                 icon="information"
                 className="flex-1"
                 mode="contained"
@@ -103,11 +104,11 @@ export const PrayerGroupHeader: React.FC<Props> = ({
                 }}
               >
                 {translate("prayerGroup.options.about")}
-              </Button>
+              </DismissButton>
             )}
 
           {showJoinButton && (
-            <Button
+            <DismissButton
               icon={"account-multiple-plus"}
               className="flex-1"
               mode={"contained"}
@@ -116,10 +117,10 @@ export const PrayerGroupHeader: React.FC<Props> = ({
               testID={PrayerGroupHeaderTestIds.joinGroupButton}
             >
               {translate("prayerGroup.actions.join")}
-            </Button>
+            </DismissButton>
           )}
 
-          <Button
+          <DismissButton
             icon="dots-horizontal"
             className="flex-1"
             mode={"outlined"}
@@ -127,7 +128,7 @@ export const PrayerGroupHeader: React.FC<Props> = ({
             testID={PrayerGroupHeaderTestIds.optionsButton}
           >
             {translate("prayerGroup.actions.groupOptions")}
-          </Button>
+          </DismissButton>
         </View>
       </View>
     </View>

@@ -1,6 +1,7 @@
 import { PostCreatePrayerGroupRequest } from "../api/post-prayer-group";
 import { PutPrayerGroupRequest } from "../api/put-prayer-group";
 import { CreatePrayerGroupForm } from "../components/create-prayer-group/create-prayer-group-types";
+import { JoinStatus } from "../constants/prayer-group-constants";
 import {
   PrayerGroupDetails,
   PrayerGroupSummary,
@@ -9,7 +10,7 @@ import {
 export const mapCreatePrayerGroupRequest = (
   createPrayerGroupForm: CreatePrayerGroupForm,
   avatarFileId: number | undefined,
-  bannerFileId: number | undefined
+  bannerFileId: number | undefined,
 ): PostCreatePrayerGroupRequest => {
   return {
     groupName: createPrayerGroupForm.groupName,
@@ -22,17 +23,18 @@ export const mapCreatePrayerGroupRequest = (
 };
 
 export const mapPrayerGroupSummaryFromPrayerGroupDetails = (
-  prayerGroupDetails: PrayerGroupDetails
+  prayerGroupDetails: PrayerGroupDetails,
 ): PrayerGroupSummary => {
   return {
     prayerGroupId: prayerGroupDetails.prayerGroupId,
     groupName: prayerGroupDetails.groupName,
     avatarFile: prayerGroupDetails.avatarFile,
+    joinStatus: JoinStatus.Joined,
   };
 };
 
 export const mapPrayerGroupToPutPrayerGroupRequest = (
-  prayerGroupDetails: PrayerGroupDetails
+  prayerGroupDetails: PrayerGroupDetails,
 ): PutPrayerGroupRequest => {
   return {
     groupName: prayerGroupDetails.groupName,

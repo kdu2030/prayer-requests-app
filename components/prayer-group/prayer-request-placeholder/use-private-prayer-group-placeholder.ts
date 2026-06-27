@@ -6,10 +6,11 @@ import { useApiDataContext } from "../../../hooks/use-api-data";
 import { useI18N } from "../../../hooks/use-i18n";
 import { LoadStatus } from "../../../types/api-response-types";
 import { useToasterContext } from "../../toasters/toaster-context";
+import { usePrayerGroupContext } from "../prayer-group-context";
 
 export const usePrivatePrayerGroupPlaceholder = (
   prayerGroupId: number,
-  setUserJoinStatus: (joinStatus: JoinStatus) => void
+  setUserJoinStatus: (joinStatus: JoinStatus) => void,
 ) => {
   const { translate } = useI18N();
   const { openToaster } = useToasterContext();
@@ -18,7 +19,9 @@ export const usePrivatePrayerGroupPlaceholder = (
     React.useState<LoadStatus>(LoadStatus.NotStarted);
 
   const postJoinRequest = usePostJoinRequest();
-  const { userData } = useApiDataContext();
+  const { userData, setUserData } = useApiDataContext();
+
+  const { prayerGroupDetails } = usePrayerGroupContext();
 
   const onSubmitJoinRequest = async () => {
     if (!userData?.userId) {
@@ -44,6 +47,20 @@ export const usePrivatePrayerGroupPlaceholder = (
     });
 
     setUserJoinStatus(JoinStatus.RequestSubmitted);
+
+    const userPrayerGroups = [...(userData.prayerGroups ?? [])];
+    userPrayerGroups.push({
+      prayerGroupId,
+      groupName: prayerGroupDetails?.groupName,
+      avatarFile: prayerGroupDetails?.avatarFile,
+      joinStatus: JoinStatus.RequestSubmitted,
+      addedDate: new Date().toISOString(),
+    });
+
+    setUserData((userData) => ({
+      ...userData,
+      prayerGroups: userPrayerGroups,
+    }));
   };
 
   return {

@@ -1,9 +1,9 @@
-import BottomSheet, {
+import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
+  BottomSheetModal,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
 import { useTheme } from "react-native-paper";
 
@@ -19,7 +19,7 @@ export const AppBottomSheet: React.FC<Props> = ({
   children,
 }) => {
   const theme = useTheme();
-  const bottomSheetRef = React.useRef<BottomSheetMethods>(null);
+  const bottomSheetRef = React.useRef<BottomSheetModal>(null);
 
   React.useEffect(() => {
     if (!bottomSheetRef.current) {
@@ -27,7 +27,7 @@ export const AppBottomSheet: React.FC<Props> = ({
     }
 
     if (isOpen) {
-      bottomSheetRef.current.snapToIndex(0);
+      bottomSheetRef.current.present();
     } else {
       bottomSheetRef.current.close();
     }
@@ -47,15 +47,15 @@ export const AppBottomSheet: React.FC<Props> = ({
   );
 
   return (
-    <BottomSheet
+    <BottomSheetModal
       enableDynamicSizing
-      index={-1}
+      enablePanDownToClose
       backdropComponent={renderBackdrop}
       backgroundStyle={{ backgroundColor: theme.colors.background }}
-      onClose={onClose}
+      onDismiss={onClose}
       ref={bottomSheetRef}
     >
       <BottomSheetView>{children}</BottomSheetView>
-    </BottomSheet>
+    </BottomSheetModal>
   );
 };

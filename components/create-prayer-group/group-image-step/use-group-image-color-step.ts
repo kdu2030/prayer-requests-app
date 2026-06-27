@@ -18,6 +18,7 @@ import {
 } from "../../../mappers/map-prayer-group";
 import { ManagedErrorResponse } from "../../../types/error-handling";
 import { MediaFile } from "../../../types/media-file-types";
+import { addNewPrayerGroupToUserGroups } from "../../prayer-group/prayer-group-helpers";
 import { useToasterContext } from "../../toasters/toaster-context";
 import { CreatePrayerGroupForm } from "../create-prayer-group-types";
 
@@ -147,10 +148,10 @@ export const useGroupImageColorStep = () => {
       createPrayerGroupResponse.value,
     );
 
-    const prayerGroups = [
-      ...(userData?.prayerGroups ?? []),
+    const prayerGroups = addNewPrayerGroupToUserGroups(
+      userData?.prayerGroups ?? [],
       prayerGroupSummary,
-    ];
+    );
 
     setUserData({ ...userData, prayerGroups });
     prayerGroupId &&

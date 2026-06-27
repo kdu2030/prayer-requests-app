@@ -1,7 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { Modal, Portal, Text, useTheme } from "react-native-paper";
+
+import { DismissTouchableOpacity } from "../inputs/dismiss-touchable-opacity";
 
 type Props = {
   isOpen: boolean;
@@ -37,9 +39,9 @@ export const RoundedModal: React.FC<Props> = ({
             {title}
           </Text>
 
-          <TouchableOpacity onPress={onClose}>
+          <DismissTouchableOpacity onPress={onClose}>
             <Ionicons name="close" size={28} color={theme.colors.onSurface} />
-          </TouchableOpacity>
+          </DismissTouchableOpacity>
         </View>
 
         <View className="p-5">{children}</View>

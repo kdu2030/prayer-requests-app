@@ -1,7 +1,9 @@
 import { EvilIcons } from "@expo/vector-icons";
 import * as React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
+
+import { DismissTouchableOpacity } from "../inputs/dismiss-touchable-opacity";
 
 type Props = {
   fileName: string;
@@ -23,9 +25,9 @@ export const SelectedImageCard: React.FC<Props> = ({
         <Text className="w-4/5" numberOfLines={1} ellipsizeMode="tail">
           {fileName}
         </Text>
-        <TouchableOpacity onPress={onRemoveImage}>
+        <DismissTouchableOpacity onPress={onRemoveImage}>
           <EvilIcons name="trash" size={28} color={theme.colors.error} />
-        </TouchableOpacity>
+        </DismissTouchableOpacity>
       </View>
     </View>
   );

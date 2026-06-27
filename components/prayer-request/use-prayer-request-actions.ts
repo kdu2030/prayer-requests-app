@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import * as React from "react";
 
 import { useDeletePrayerRequestBookmark } from "../../api/delete-prayer-request-bookmark";
@@ -124,8 +125,28 @@ export const usePrayerRequestActions = (
     await removePrayerRequestBookmark(selectedPrayerRequest.userBookmarkId);
   };
 
+  const onEditPrayerRequest = () => {
+    if (
+      !selectedPrayerRequest?.prayerRequestId ||
+      !selectedPrayerRequest.prayerGroup?.prayerGroupId
+    ) {
+      return;
+    }
+
+    router.push({
+      pathname: "/prayergroup/[id]/prayerrequest/[id]/edit",
+      params: {
+        id: selectedPrayerRequest.prayerGroup.prayerGroupId,
+        id_1: selectedPrayerRequest.prayerRequestId,
+      },
+    });
+
+    onClose();
+  };
+
   return {
     isToggleBookmarkLoading,
     toggleBookmark,
+    onEditPrayerRequest,
   };
 };

@@ -2,13 +2,14 @@ import { Formik } from "formik";
 import * as React from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { Button, HelperText } from "react-native-paper";
+import { HelperText } from "react-native-paper";
 import { Text } from "react-native-paper";
 
 import { TEXT_INPUT_MAX_LENGTH } from "../../../constants/input-constants";
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
 import { CultureCode } from "../../../types/languages";
+import { DismissButton } from "../../inputs/dismiss-button";
 import { FormikSelect } from "../../inputs/formik-select";
 import { TextInput } from "../../inputs/text-input";
 import { GroupPreview } from "../../layouts/group-preview";
@@ -44,7 +45,10 @@ export const PrayerGroupEdit: React.FC = () => {
           groupName: prayerGroupDetails?.groupName,
         })}
       >
-        <ScrollView automaticallyAdjustKeyboardInsets>
+        <ScrollView
+          automaticallyAdjustKeyboardInsets
+          keyboardShouldPersistTaps="handled"
+        >
           <View className="p-4">
             <Formik
               initialValues={prayerGroupDetails ?? {}}
@@ -59,7 +63,7 @@ export const PrayerGroupEdit: React.FC = () => {
             >
               {({ values, errors, submitForm }) => (
                 <>
-                  <Button
+                  <DismissButton
                     mode="contained"
                     className="self-end"
                     loading={isLoading}
@@ -67,7 +71,7 @@ export const PrayerGroupEdit: React.FC = () => {
                     testID={PrayerGroupEditTestIds.saveButton}
                   >
                     {translate("common.actions.save")}
-                  </Button>
+                  </DismissButton>
 
                   <Text className="font-bold mb-3" variant="bodyLarge">
                     {translate("common.actions.preview")}
@@ -137,7 +141,7 @@ export const PrayerGroupEdit: React.FC = () => {
                     <Text variant="bodyLarge" className="w-1/2">
                       {translate("createPrayerGroup.groupImageColorStep.image")}
                     </Text>
-                    <Button
+                    <DismissButton
                       mode="outlined"
                       className="w-1/2"
                       onPress={() => selectImage("avatarFile", [1, 1])}
@@ -145,7 +149,7 @@ export const PrayerGroupEdit: React.FC = () => {
                       {translate(
                         "createPrayerGroup.groupImageColorStep.selectImage",
                       )}
-                    </Button>
+                    </DismissButton>
                   </View>
 
                   {values.avatarFile && (
@@ -168,7 +172,7 @@ export const PrayerGroupEdit: React.FC = () => {
                         "createPrayerGroup.groupImageColorStep.banner",
                       )}
                     </Text>
-                    <Button
+                    <DismissButton
                       mode="outlined"
                       className="w-1/2"
                       onPress={() => selectImage("bannerFile", [10, 3])}
@@ -176,7 +180,7 @@ export const PrayerGroupEdit: React.FC = () => {
                       {translate(
                         "createPrayerGroup.groupImageColorStep.selectImage",
                       )}
-                    </Button>
+                    </DismissButton>
                   </View>
 
                   {values.bannerFile && (

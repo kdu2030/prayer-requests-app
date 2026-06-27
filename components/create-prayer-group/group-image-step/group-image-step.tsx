@@ -2,9 +2,10 @@ import { useFormikContext } from "formik";
 import { get } from "lodash";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, HelperText, Text } from "react-native-paper";
+import { HelperText, Text } from "react-native-paper";
 
 import { useI18N } from "../../../hooks/use-i18n";
+import { DismissButton } from "../../inputs/dismiss-button";
 import { GroupPreview } from "../../layouts/group-preview";
 import { SelectedImageCard } from "../../layouts/selected-image-card";
 import { WizardHeader } from "../../layouts/wizard-header";
@@ -72,14 +73,14 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
           <Text variant="bodyLarge" className="w-1/2">
             {translate("createPrayerGroup.groupImageColorStep.image")}
           </Text>
-          <Button
+          <DismissButton
             mode="outlined"
             className="w-1/2"
             onPress={() => selectImage("avatarFile", [1, 1])}
             testID={GroupImageColorStepTestIds.selectImageButton}
           >
             {translate("createPrayerGroup.groupImageColorStep.selectImage")}
-          </Button>
+          </DismissButton>
         </View>
 
         {values.avatarFile && (
@@ -97,14 +98,14 @@ export const GroupImageStep: React.FC<Props> = ({ setWizardStep }) => {
         <Text variant="bodyLarge" className="w-1/2">
           {translate("createPrayerGroup.groupImageColorStep.banner")}
         </Text>
-        <Button
+        <DismissButton
           mode="outlined"
           className="w-1/2"
           onPress={() => selectImage("bannerFile", [10, 3])}
           testID={GroupImageColorStepTestIds.selectImageButton}
         >
           {translate("createPrayerGroup.groupImageColorStep.selectImage")}
-        </Button>
+        </DismissButton>
       </View>
 
       {values.bannerFile && (

@@ -1,11 +1,8 @@
 import * as React from "react";
 import { TextStyle, View } from "react-native";
-import {
-  ActivityIndicator,
-  Text,
-  TouchableRipple,
-  useTheme,
-} from "react-native-paper";
+import { ActivityIndicator, Text, useTheme } from "react-native-paper";
+
+import { DismissTouchableRipple } from "../../inputs/dismiss-touchable-ripple";
 
 type Props = {
   label: string;
@@ -31,7 +28,7 @@ export const PrayerGroupOptionButton: React.FC<Props> = ({
   const theme = useTheme();
 
   return (
-    <TouchableRipple
+    <DismissTouchableRipple
       rippleColor={"rgba(0, 0, 0, 0.12)"}
       onPress={onPress}
       style={{ borderRadius: 8 }}
@@ -52,6 +49,6 @@ export const PrayerGroupOptionButton: React.FC<Props> = ({
         </Text>
         {endAdornment}
       </View>
-    </TouchableRipple>
+    </DismissTouchableRipple>
   );
 };

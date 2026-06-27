@@ -1,10 +1,12 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as React from "react";
 import { View } from "react-native";
-import { Button, TouchableRipple, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 
 import { PrayerGroupRole } from "../../../constants/prayer-group-constants";
 import { useI18N } from "../../../hooks/use-i18n";
+import { DismissButton } from "../../inputs/dismiss-button";
+import { DismissTouchableRipple } from "../../inputs/dismiss-touchable-ripple";
 
 type Props = {
   role: PrayerGroupRole | undefined;
@@ -31,28 +33,28 @@ export const UserActions: React.FC<Props> = ({
       <View className="flex flex-row items-center gap-x-2 flex-1">
         <View className="flex-1">
           {role === PrayerGroupRole.Admin ? (
-            <Button
+            <DismissButton
               mode="text"
               icon={"crown"}
               onPress={() => onRoleChange(index, PrayerGroupRole.Member)}
               testID={roleChangeTestID}
             >
               {translate("prayerGroup.manageUsers.admin")}
-            </Button>
+            </DismissButton>
           ) : (
-            <Button
+            <DismissButton
               mode="text"
               icon={"account"}
               onPress={() => onRoleChange(index, PrayerGroupRole.Admin)}
               testID={roleChangeTestID}
             >
               {translate("prayerGroup.manageUsers.member")}
-            </Button>
+            </DismissButton>
           )}
         </View>
 
         <View>
-          <TouchableRipple
+          <DismissTouchableRipple
             style={{
               borderRadius: 9999,
             }}
@@ -66,7 +68,7 @@ export const UserActions: React.FC<Props> = ({
               size={36}
               color={theme.colors.error}
             />
-          </TouchableRipple>
+          </DismissTouchableRipple>
         </View>
       </View>
     </>

@@ -292,9 +292,8 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       totalCount: currentTotalCount ? currentTotalCount - 1 : 0,
       numberOfPages: updatedNumPages,
       pageIndex,
+      prayerRequestsLoaded: updatedPrayerRequestIds.length,
     };
-
-    console.log(updatedPrayerRequestMetadata);
 
     setPrayerRequestMetadata(updatedPrayerRequestMetadata);
   };

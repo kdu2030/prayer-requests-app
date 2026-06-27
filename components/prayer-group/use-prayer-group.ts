@@ -13,7 +13,10 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
-import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
+import {
+  PrayerRequestFilterCriteria,
+  PrayerRequestMetadata,
+} from "../../types/prayer-request-types";
 import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
 import { useToasterContext } from "../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
@@ -30,7 +33,9 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     prayerRequestFilters,
     setPrayerRequestFilters,
     prayerRequestIds,
+    setPrayerRequestIds,
     prayerRequestMetadata,
+    setPrayerRequestMetadata,
     cleanupPrayerRequests,
     loadNextPrayerRequestsForGroup,
     prayerRequestLoadStatus,
@@ -263,6 +268,31 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     });
   };
 
+  const onDeletePrayerRequestSuccess = async (
+    deletedPrayerRequestId: number,
+  ) => {
+    setPrayerRequestIds((prayerRequestIds) =>
+      prayerRequestIds.filter((prayerRequestId) => {
+        return prayerRequestId !== deletedPrayerRequestId;
+      }),
+    );
+
+    const currentTotalCount = prayerRequestMetadata.totalCount;
+    const updatedCount = currentTotalCount ? currentTotalCount - 1 : 0;
+
+    const updatedNumPages = Math.ceil(
+      updatedCount / (prayerRequestFilters.pageSize ?? 10),
+    );
+
+    const updatedPrayerRequestMetadata: PrayerRequestMetadata = {
+      ...prayerRequestMetadata,
+      totalCount: currentTotalCount ? currentTotalCount - 1 : 0,
+      numberOfPages: updatedNumPages,
+    };
+
+    setPrayerRequestMetadata(updatedPrayerRequestMetadata);
+  };
+
   return {
     prayerGroupLoadStatus,
     setPrayerGroupLoadStatus,
@@ -286,5 +316,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setUserJoinStatus,
     numNotLoadedRequests,
     navigateToPrayerRequestPage,
+    onDeletePrayerRequestSuccess,
   };
 };

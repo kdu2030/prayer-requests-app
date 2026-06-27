@@ -8,6 +8,7 @@ import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
+import { DeletePrayerRequestModal } from "../prayer-request/delete-prayer-request-modal";
 import { EditExpirationDateModal } from "../prayer-request/edit-expiration-date-modal";
 import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
@@ -68,6 +69,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     onExpirationDateModalOpen,
     onExpirationDateModalClose,
     onDeleteConfirmationModalOpen,
+    isDeleteConfirmationModalOpen,
+    onDeleteConfirmationModalClose,
   } = usePrayerRequestActionsContainer();
 
   const prayerGroupHeader = React.useMemo(
@@ -184,6 +187,11 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           prayerRequest={expirationModalPrayerRequest}
           isOpen={isExpirationModalOpen}
           onClose={onExpirationDateModalClose}
+        />
+
+        <DeletePrayerRequestModal
+          isOpen={isDeleteConfirmationModalOpen}
+          onClose={onDeleteConfirmationModalClose}
         />
       </View>
     </>

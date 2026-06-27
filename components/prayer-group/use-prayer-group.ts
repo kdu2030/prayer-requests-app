@@ -268,11 +268,11 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     });
   };
 
-  const cleanupRemovedPrayerRequestIds = React.useCallback(() => {
-    const updatedPrayerRequestIds: number[] = [];
-    let numRemoved = 0;
+  const cleanupRemovedPrayerRequestIds = React.useCallback(
+    (prayerRequestIds: number[]): number[] => {
+      const updatedPrayerRequestIds: number[] = [];
+      let numRemoved = 0;
 
-    setPrayerRequestIds((prayerRequestIds) => {
       prayerRequestIds.forEach((prayerRequestId) => {
         if (getPrayerRequestFromStore(prayerRequestId)) {
           updatedPrayerRequestIds.push(prayerRequestId);
@@ -281,42 +281,48 @@ export const usePrayerGroup = (prayerGroupId: number) => {
         }
       });
 
+      if (numRemoved == 0) {
+        return updatedPrayerRequestIds;
+      }
+
+      setPrayerRequestMetadata((prayerRequestMetadata) => {
+        const currentTotalCount = prayerRequestMetadata.totalCount;
+        const updatedCount = currentTotalCount
+          ? currentTotalCount - numRemoved
+          : 0;
+
+        const pageSize = prayerRequestFilters.pageSize ?? 10;
+        const updatedNumPages = Math.ceil(updatedCount / pageSize);
+
+        const pageIndex = Math.floor(updatedPrayerRequestIds.length / pageSize);
+
+        return {
+          ...prayerRequestMetadata,
+          totalCount: updatedCount,
+          numberOfPages: updatedNumPages,
+          pageIndex,
+          prayerRequestsLoaded: updatedPrayerRequestIds.length,
+        };
+      });
+
       return updatedPrayerRequestIds;
-    });
+    },
+    [
+      getPrayerRequestFromStore,
+      prayerRequestFilters.pageSize,
+      setPrayerRequestMetadata,
+    ],
+  );
 
-    if (numRemoved == 0) {
-      return;
-    }
-
-    setPrayerRequestMetadata((prayerRequestMetadata) => {
-      const currentTotalCount = prayerRequestMetadata.totalCount;
-      const updatedCount = currentTotalCount
-        ? currentTotalCount - numRemoved
-        : 0;
-
-      const pageSize = prayerRequestFilters.pageSize ?? 10;
-      const updatedNumPages = Math.ceil(updatedCount / pageSize);
-
-      const pageIndex = Math.floor(updatedPrayerRequestIds.length / pageSize);
-
-      return {
-        ...prayerRequestMetadata,
-        totalCount: updatedCount,
-        numberOfPages: updatedNumPages,
-        pageIndex,
-        prayerRequestsLoaded: updatedPrayerRequestIds.length,
-      };
-    });
-  }, [
-    getPrayerRequestFromStore,
-    prayerRequestFilters.pageSize,
-    setPrayerRequestIds,
-    setPrayerRequestMetadata,
-  ]);
+  const setPrayerRequestIdsAfterRemoval = React.useCallback(() => {
+    setPrayerRequestIds((prayerRequestIds) =>
+      cleanupRemovedPrayerRequestIds(prayerRequestIds),
+    );
+  }, [cleanupRemovedPrayerRequestIds, setPrayerRequestIds]);
 
   React.useEffect(() => {
-    cleanupRemovedPrayerRequestIds();
-  }, [cleanupRemovedPrayerRequestIds]);
+    setPrayerRequestIdsAfterRemoval();
+  }, [setPrayerRequestIdsAfterRemoval]);
 
   // // FIXME: For debugging purposes only, remove
   React.useEffect(() => {

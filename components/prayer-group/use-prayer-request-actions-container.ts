@@ -19,6 +19,12 @@ export const usePrayerRequestActionsContainer = () => {
   const [expirationModalPrayerRequest, setExpirationModalPrayerRequest] =
     React.useState<PrayerRequestModel | undefined>();
 
+  const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
+    React.useState<boolean>(false);
+
+  const [prayerRequestIdToDelete, setPrayerRequestIdToDelete] =
+    React.useState<number>();
+
   const openPrayerRequestActions = (
     prayerRequest: PrayerRequestModel,
     showExtended: boolean = false,
@@ -49,6 +55,16 @@ export const usePrayerRequestActionsContainer = () => {
     setExpirationModalPrayerRequest(undefined);
   };
 
+  const onDeleteConfirmationModalOpen = (prayerRequestIdToDelete: number) => {
+    setIsDeleteConfirmationModalOpen(true);
+    setPrayerRequestIdToDelete(prayerRequestIdToDelete);
+  };
+
+  const onDeleteConfirmationModalClose = () => {
+    setIsDeleteConfirmationModalOpen(false);
+    setPrayerRequestIdToDelete(undefined);
+  };
+
   return {
     selectedPrayerRequest,
     openPrayerRequestActions,
@@ -60,5 +76,9 @@ export const usePrayerRequestActionsContainer = () => {
     onExpirationDateModalOpen,
     onExpirationDateModalClose,
     expirationModalPrayerRequest,
+    onDeleteConfirmationModalClose,
+    onDeleteConfirmationModalOpen,
+    prayerRequestIdToDelete,
+    isDeleteConfirmationModalOpen,
   };
 };

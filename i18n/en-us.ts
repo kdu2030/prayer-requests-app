@@ -209,6 +209,9 @@ export const englishTranslations = {
     "Failed to save join request updates.",
   "prayerGroup.joinRequest.saved": "Saved join request updates.",
 
+  "home.prayerRequests.noPrayerGroupsJoined":
+    "You haven't joined any prayer groups yet.",
+
   "toaster.joinPrayerGroup.success": "Successfully joined prayer group.",
   "toaster.joinPrayerGroup.failure": "Failed to join prayer group.",
   "toaster.joinRequestSubmit.success": "Join request submitted.",

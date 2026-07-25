@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Text } from "react-native";
+
+import { UserHomePage } from "../../components/home/user-home-page";
 
 const Home: React.FC = () => {
-  return <Text>User Home</Text>;
+  return <UserHomePage />;
 };
 
 export default Home;

@@ -1,4 +1,4 @@
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
@@ -64,6 +64,13 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
             icon="home"
             onPress={() => router.push("/home")}
           />
+
+          <Drawer.Item
+            label={translate("prayerGroup.search.placeholder")}
+            icon={(props) => <Ionicons {...props} name="search" />}
+            onPress={() => router.push("/search")}
+          />
+
           <Drawer.Item
             label={translate("navigation.drawer.screen.createPrayerGroup")}
             icon="plus"

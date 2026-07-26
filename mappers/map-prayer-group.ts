@@ -29,7 +29,11 @@ export const mapPrayerGroupSummaryFromPrayerGroupDetails = (
     prayerGroupId: prayerGroupDetails.prayerGroupId,
     groupName: prayerGroupDetails.groupName,
     avatarFile: prayerGroupDetails.avatarFile,
-    joinStatus: JoinStatus.Joined,
+    joinStatus: prayerGroupDetails.userJoinStatus,
+    addedDate:
+      prayerGroupDetails.userJoinStatus === JoinStatus.RequestSubmitted
+        ? prayerGroupDetails.userRequestSubmittedDate
+        : prayerGroupDetails.userJoinDate,
   };
 };
 

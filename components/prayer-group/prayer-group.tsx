@@ -105,6 +105,20 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     );
   }
 
+  if (!showPrayerRequestList) {
+    return (
+      <PrayerRequestPlaceholderBody
+        prayerGroupId={prayerGroupId}
+        prayerGroupHeader={prayerGroupHeader}
+        prayerRequestLoadStatus={prayerRequestLoadStatus}
+        loadNextPrayerRequestsForGroup={loadNextPrayerRequestsForGroup}
+        visibilityLevel={prayerGroupDetails?.visibilityLevel}
+        joinStatus={prayerGroupDetails?.userJoinStatus}
+        setUserJoinStatus={setUserJoinStatus}
+      />
+    );
+  }
+
   return (
     <>
       <View
@@ -116,18 +130,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
           backgroundColor: theme.colors.background,
         }}
       >
-        {!showPrayerRequestList && (
-          <PrayerRequestPlaceholderBody
-            prayerGroupId={prayerGroupId}
-            prayerGroupHeader={prayerGroupHeader}
-            prayerRequestLoadStatus={prayerRequestLoadStatus}
-            loadNextPrayerRequestsForGroup={loadNextPrayerRequestsForGroup}
-            visibilityLevel={prayerGroupDetails?.visibilityLevel}
-            joinStatus={prayerGroupDetails?.userJoinStatus}
-            setUserJoinStatus={setUserJoinStatus}
-          />
-        )}
-
         {prayerRequestLoadStatus === LoadStatus.Success &&
           prayerRequestIds.length > 0 && (
             <FlatList

@@ -1,5 +1,7 @@
 import * as React from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
+import { useTheme } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import {
   JoinStatus,
@@ -35,6 +37,7 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
   setUserJoinStatus,
 }) => {
   const { translate } = useI18N();
+  const theme = useTheme();
 
   const isLoadingSuccessful = prayerRequestLoadStatus === LoadStatus.Success;
   const showPrivatePrayerGroupPlaceholder =
@@ -42,37 +45,45 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
     joinStatus !== JoinStatus.Joined;
 
   return (
-    <>
-      {prayerGroupHeader}
-      <View className="mt-32">
-        {prayerRequestLoadStatus === LoadStatus.Loading && (
-          <PrayerRequestListSpinner
-            textClassName="mt-5"
-            labelVariant={"titleMedium"}
-          />
-        )}
+    <SafeAreaView
+      className="flex-1"
+      edges={["left", "right", "bottom"]}
+      style={{ backgroundColor: theme.colors.background }}
+    >
+      <ScrollView className="flex-1">
+        {prayerGroupHeader}
+        <View className="mt-32">
+          {prayerRequestLoadStatus === LoadStatus.Loading && (
+            <PrayerRequestListSpinner
+              textClassName="mt-5"
+              labelVariant={"titleMedium"}
+            />
+          )}
 
-        {prayerRequestLoadStatus === LoadStatus.Error && (
-          <ErrorScreen
-            errorLabel={translate("prayerRequest.loading.failure")}
-            showSafeArea={false}
-            fillContainer={false}
-            onRetry={() => loadNextPrayerRequestsForGroup(prayerGroupId, true)}
-          />
-        )}
+          {prayerRequestLoadStatus === LoadStatus.Error && (
+            <ErrorScreen
+              errorLabel={translate("prayerRequest.loading.failure")}
+              showSafeArea={false}
+              fillContainer={false}
+              onRetry={() =>
+                loadNextPrayerRequestsForGroup(prayerGroupId, true)
+              }
+            />
+          )}
 
-        {isLoadingSuccessful && !showPrivatePrayerGroupPlaceholder && (
-          <PrayerRequestPlaceholder />
-        )}
+          {isLoadingSuccessful && !showPrivatePrayerGroupPlaceholder && (
+            <PrayerRequestPlaceholder />
+          )}
 
-        {showPrivatePrayerGroupPlaceholder && (
-          <PrivatePrayerGroupPlaceholder
-            prayerGroupId={prayerGroupId}
-            joinStatus={joinStatus ?? JoinStatus.NotJoined}
-            setUserJoinStatus={setUserJoinStatus}
-          />
-        )}
-      </View>
-    </>
+          {showPrivatePrayerGroupPlaceholder && (
+            <PrivatePrayerGroupPlaceholder
+              prayerGroupId={prayerGroupId}
+              joinStatus={joinStatus ?? JoinStatus.NotJoined}
+              setUserJoinStatus={setUserJoinStatus}
+            />
+          )}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };

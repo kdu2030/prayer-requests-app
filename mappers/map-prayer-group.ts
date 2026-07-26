@@ -37,6 +37,50 @@ export const mapPrayerGroupSummaryFromPrayerGroupDetails = (
   };
 };
 
+export const sortPrayerGroupSummaries = (
+  prayerGroupSummaries: PrayerGroupSummary[],
+): PrayerGroupSummary[] => {
+  const sortedPrayerGroups = [...prayerGroupSummaries];
+
+  sortedPrayerGroups.sort((prayerGroupA, prayerGroupB) => {
+    const joinStatusA = prayerGroupA.joinStatus ?? JoinStatus.NotJoined;
+    const joinStatusB = prayerGroupB.joinStatus ?? JoinStatus.NotJoined;
+
+    if (
+      joinStatusA === JoinStatus.Joined &&
+      joinStatusB !== JoinStatus.Joined
+    ) {
+      return -1;
+    }
+
+    if (
+      joinStatusB === JoinStatus.Joined &&
+      joinStatusA !== JoinStatus.Joined
+    ) {
+      return 1;
+    }
+
+    const addedDateA = prayerGroupA.addedDate
+      ? new Date(prayerGroupA.addedDate)
+      : undefined;
+    const addedDateB = prayerGroupB.addedDate
+      ? new Date(prayerGroupB.addedDate)
+      : undefined;
+
+    if (addedDateA && !addedDateB) {
+      return -1;
+    }
+
+    if (!addedDateA && addedDateB) {
+      return 1;
+    }
+
+    return (addedDateA?.getDate() ?? 0) - (addedDateB?.getDate() ?? 0);
+  });
+
+  return sortedPrayerGroups;
+};
+
 export const mapPrayerGroupToPutPrayerGroupRequest = (
   prayerGroupDetails: PrayerGroupDetails,
 ): PutPrayerGroupRequest => {

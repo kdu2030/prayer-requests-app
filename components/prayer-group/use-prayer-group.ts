@@ -11,7 +11,10 @@ import {
 } from "../../constants/prayer-group-constants";
 import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
-import { mapPrayerGroupSummaryFromPrayerGroupDetails } from "../../mappers/map-prayer-group";
+import {
+  mapPrayerGroupSummaryFromPrayerGroupDetails,
+  sortPrayerGroupSummaries,
+} from "../../mappers/map-prayer-group";
 import { LoadStatus } from "../../types/api-response-types";
 import {
   PrayerGroupDetails,
@@ -78,13 +81,15 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
     setUserData((userData) => {
       const userPrayerGroups = userData.prayerGroups ?? [];
-      const updatedPrayerGroups = userPrayerGroups.map((prayerGroup) => {
+      let updatedPrayerGroups = userPrayerGroups.map((prayerGroup) => {
         if (prayerGroup !== prayerGroupId) {
           return prayerGroup;
         }
 
         return mapPrayerGroupSummaryFromPrayerGroupDetails(prayerGroupDetails);
       });
+
+      updatedPrayerGroups = sortPrayerGroupSummaries(updatedPrayerGroups);
 
       return { ...userData, prayerGroups: updatedPrayerGroups };
     });

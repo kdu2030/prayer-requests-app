@@ -1,7 +1,7 @@
+import { compact } from "lodash";
 import * as React from "react";
 
 import { usePostPrayerRequestFilter } from "../../api/post-prayer-request-filter";
-import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import {
@@ -39,6 +39,7 @@ export type PrayerRequestContextType = {
     customFilters?: PrayerRequestFilterCriteria,
   ) => Promise<void>;
   numNotLoadedRequests: number;
+  refreshPrayerRequestsForGroup: (prayerGroupId: number) => Promise<void>;
 };
 
 const PrayerRequestContext = React.createContext<PrayerRequestContextType>({
@@ -55,6 +56,7 @@ const PrayerRequestContext = React.createContext<PrayerRequestContextType>({
   cleanupPrayerRequests: () => {},
   loadNextPrayerRequestsForGroup: async () => {},
   numNotLoadedRequests: 0,
+  refreshPrayerRequestsForGroup: async () => {},
 });
 
 type Props = {
@@ -79,7 +81,6 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
   const { translate } = useI18N();
 
   const { openToaster } = useToasterContext();
-  const { userData } = useApiDataContext();
 
   const postPrayerRequestFilter = usePostPrayerRequestFilter();
 
@@ -102,10 +103,6 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
       : setNextPrayerRequestsLoadStatus;
 
     const filters = customFilters ?? prayerRequestFilters;
-
-    if (!userData?.userId) {
-      return;
-    }
 
     setLoadStatus(LoadStatus.Loading);
 
@@ -163,6 +160,47 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
     });
   };
 
+  const refreshPrayerRequestsForGroup = async (prayerGroupId: number) => {
+    const filters: PrayerRequestFilterCriteria = {
+      ...prayerRequestFilters,
+      pageIndex: 0,
+      pageSize: DEFAULT_PRAYER_REQUEST_FILTERS.pageSize,
+      prayerGroupIds: [prayerGroupId],
+    };
+
+    const response = await postPrayerRequestFilter(filters);
+
+    if (response.isError) {
+      setPrayerRequestLoadStatus(LoadStatus.Error);
+      setPrayerRequestIds([]);
+      return;
+    }
+
+    const newPrayerRequests = response.value.prayerRequests ?? [];
+
+    setPrayerRequestMetadata({
+      pageIndex: response.value.pageIndex,
+      numberOfPages: response.value.numberOfPages,
+      totalCount: response.value.totalCount,
+      prayerRequestsLoaded: newPrayerRequests.length,
+    });
+
+    setPrayerRequestLoadStatus(LoadStatus.Success);
+
+    if (!response.value.prayerRequests) {
+      return;
+    }
+
+    const prayerRequestIds = compact(
+      response.value.prayerRequests.map(
+        (prayerRequest) => prayerRequest.prayerRequestId,
+      ),
+    );
+
+    setPrayerRequestIds(prayerRequestIds);
+    addPrayerRequestsToStore(response.value.prayerRequests);
+  };
+
   const numNotLoadedRequests = React.useMemo(() => {
     return (
       (prayerRequestMetadata.totalCount ?? 0) -
@@ -189,6 +227,7 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
         cleanupPrayerRequests,
         loadNextPrayerRequestsForGroup,
         numNotLoadedRequests,
+        refreshPrayerRequestsForGroup,
       }}
     >
       {children}

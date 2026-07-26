@@ -43,6 +43,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     prayerRequestLoadStatus,
     nextPrayerRequestsLoadStatus,
     numNotLoadedRequests,
+    refreshPrayerRequestsForGroup,
   } = usePrayerRequestContext();
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
@@ -91,16 +92,25 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const refreshPrayerGroup = async () => {
     setIsPrayerGroupRefreshing(true);
-    // FIXME: Add Prayer Request Refresh Here
     const prayerGroupResponse = await getPrayerGroup(prayerGroupId);
-    setIsPrayerGroupRefreshing(false);
 
     if (prayerGroupResponse.isError) {
       setPrayerGroupLoadStatus(LoadStatus.Error);
+      setIsPrayerGroupRefreshing(false);
       return;
     }
 
     setUpdatedPrayerGroupData(prayerGroupResponse.value);
+
+    const canUserViewRequests =
+      prayerGroupDetails?.visibilityLevel === VisibilityLevel.Public ||
+      prayerGroupDetails?.userJoinStatus === JoinStatus.Joined;
+
+    if (canUserViewRequests) {
+      await refreshPrayerRequestsForGroup(prayerGroupId);
+    }
+
+    setIsPrayerGroupRefreshing(false);
   };
 
   const loadPrayerGroup = async () => {

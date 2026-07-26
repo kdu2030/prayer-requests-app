@@ -1,22 +1,21 @@
 import { min } from "lodash";
 import * as React from "react";
-import { FlatList, Pressable, View } from "react-native";
+import { FlatList, Pressable } from "react-native";
 import { useTheme } from "react-native-paper";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
 import { SpinnerScreen } from "../layouts/spinner-screen";
-import { DeletePrayerRequestModal } from "../prayer-request/delete-prayer-request-modal";
-import { EditExpirationDateModal } from "../prayer-request/edit-expiration-date-modal";
-import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
 import { PrayerRequestListCard } from "../prayer-request/prayer-request-list-card";
 import { PrayerRequestSkeletonList } from "../prayer-request/prayer-request-skeleton-list";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
-import { LeavePrayerGroupModal } from "./leave-prayer-group/leave-prayer-group-modal";
-import { PrayerGroupOptions } from "./options/prayer-group-options";
+import {
+  PrayerGroupActionsContainer,
+  PrayerGroupActionsContainerProps,
+} from "./prayer-group-actions-container";
 import { usePrayerGroupContext } from "./prayer-group-context";
 import { PrayerRequestPlaceholderBody } from "./prayer-request-placeholder/prayer-request-placeholder-body";
 import { usePrayerGroup } from "./use-prayer-group";
@@ -27,7 +26,6 @@ type Props = {
 };
 
 export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
-  const { left, right, bottom } = useSafeAreaInsets();
   const { translate } = useI18N();
   const theme = useTheme();
 
@@ -74,6 +72,28 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     prayerRequestIdToDelete,
   } = usePrayerRequestActionsContainer();
 
+  const prayerGroupActionsProps: PrayerGroupActionsContainerProps = {
+    prayerGroupDetails,
+    setShowLeavePrayerGroupModal,
+    isPrayerGroupOptionsOpen,
+    isPrayerRequestActionsOpen,
+    setIsPrayerGroupOptionsOpen,
+    selectedPrayerRequest,
+    showExtendedActions,
+    closePrayerRequestActions,
+    onExpirationDateModalOpen,
+    onDeleteConfirmationModalOpen,
+    showLeavePrayerGroupModal,
+    isRemoveUserLoading,
+    onRemoveUser,
+    expirationModalPrayerRequest,
+    isExpirationModalOpen,
+    onExpirationDateModalClose,
+    prayerRequestIdToDelete,
+    isDeleteConfirmationModalOpen,
+    onDeleteConfirmationModalClose,
+  };
+
   const prayerGroupHeader = React.useMemo(
     () => (
       <PrayerGroupHeader
@@ -115,89 +135,50 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         visibilityLevel={prayerGroupDetails?.visibilityLevel}
         joinStatus={prayerGroupDetails?.userJoinStatus}
         setUserJoinStatus={setUserJoinStatus}
+        prayerGroupActionsProps={prayerGroupActionsProps}
       />
     );
   }
 
   return (
-    <>
-      <View
-        className="flex-1"
-        style={{
-          paddingLeft: left,
-          paddingRight: right,
-          paddingBottom: bottom,
-          backgroundColor: theme.colors.background,
-        }}
-      >
-        {prayerRequestLoadStatus === LoadStatus.Success &&
-          prayerRequestIds.length > 0 && (
-            <FlatList
-              ListHeaderComponent={prayerGroupHeader}
-              data={prayerRequestIds}
-              renderItem={({ item }) => (
-                <Pressable onPress={() => navigateToPrayerRequestPage(item)}>
-                  <PrayerRequestListCard
-                    prayerRequestId={item}
-                    openPrayerRequestActions={openPrayerRequestActions}
-                    onCommentPress={() =>
-                      navigateToPrayerRequestPage(item, true)
-                    }
-                    key={item}
-                  />
-                </Pressable>
-              )}
-              ListFooterComponent={
-                nextPrayerRequestsLoadStatus === LoadStatus.Loading ? (
-                  <PrayerRequestSkeletonList
-                    numCards={min([
-                      numNotLoadedRequests,
-                      prayerRequestFilters.pageSize ?? 0,
-                    ])}
-                  />
-                ) : undefined
-              }
-              onEndReachedThreshold={0.8}
-              onEndReached={onEndReached}
-            />
-          )}
-
-        <PrayerGroupOptions
-          prayerGroupDetails={prayerGroupDetails}
-          setShowLeavePrayerGroupModal={setShowLeavePrayerGroupModal}
-          isOpen={isPrayerGroupOptionsOpen}
-          onClose={() => setIsPrayerGroupOptionsOpen(false)}
-        />
-
-        <PrayerRequestActions
-          isOpen={isPrayerRequestActionsOpen}
-          showExtendedActions={showExtendedActions}
-          selectedPrayerRequest={selectedPrayerRequest}
-          onClose={closePrayerRequestActions}
-          openEditExpirationModal={onExpirationDateModalOpen}
-          openDeletePrayerRequestModal={onDeleteConfirmationModalOpen}
-        />
-
-        {showLeavePrayerGroupModal && (
-          <LeavePrayerGroupModal
-            isRemoveUserLoading={isRemoveUserLoading}
-            onRemoveUser={onRemoveUser}
-            onCancel={() => setShowLeavePrayerGroupModal(false)}
+    <SafeAreaView
+      className="flex-1"
+      edges={["left", "right", "bottom"]}
+      style={{
+        backgroundColor: theme.colors.background,
+      }}
+    >
+      {prayerRequestLoadStatus === LoadStatus.Success &&
+        prayerRequestIds.length > 0 && (
+          <FlatList
+            ListHeaderComponent={prayerGroupHeader}
+            data={prayerRequestIds}
+            renderItem={({ item }) => (
+              <Pressable onPress={() => navigateToPrayerRequestPage(item)}>
+                <PrayerRequestListCard
+                  prayerRequestId={item}
+                  openPrayerRequestActions={openPrayerRequestActions}
+                  onCommentPress={() => navigateToPrayerRequestPage(item, true)}
+                  key={item}
+                />
+              </Pressable>
+            )}
+            ListFooterComponent={
+              nextPrayerRequestsLoadStatus === LoadStatus.Loading ? (
+                <PrayerRequestSkeletonList
+                  numCards={min([
+                    numNotLoadedRequests,
+                    prayerRequestFilters.pageSize ?? 0,
+                  ])}
+                />
+              ) : undefined
+            }
+            onEndReachedThreshold={0.8}
+            onEndReached={onEndReached}
           />
         )}
 
-        <EditExpirationDateModal
-          prayerRequest={expirationModalPrayerRequest}
-          isOpen={isExpirationModalOpen}
-          onClose={onExpirationDateModalClose}
-        />
-
-        <DeletePrayerRequestModal
-          prayerRequestIdToDelete={prayerRequestIdToDelete}
-          isOpen={isDeleteConfirmationModalOpen}
-          onClose={onDeleteConfirmationModalClose}
-        />
-      </View>
-    </>
+      <PrayerGroupActionsContainer {...prayerGroupActionsProps} />
+    </SafeAreaView>
   );
 };

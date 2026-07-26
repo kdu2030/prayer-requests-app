@@ -10,6 +10,10 @@ import {
 import { useI18N } from "../../../hooks/use-i18n";
 import { LoadStatus } from "../../../types/api-response-types";
 import { ErrorScreen } from "../../layouts/error-screen";
+import {
+  PrayerGroupActionsContainer,
+  PrayerGroupActionsContainerProps,
+} from "../prayer-group-actions-container";
 import { PrayerRequestPlaceholder } from "../prayer-request-placeholder";
 import { PrayerRequestListSpinner } from "../spinners/prayer-request-list-spinner";
 import { PrivatePrayerGroupPlaceholder } from "./private-prayer-group-placeholder";
@@ -25,6 +29,7 @@ type Props = {
   visibilityLevel?: VisibilityLevel;
   joinStatus?: JoinStatus;
   setUserJoinStatus: (joinStatus: JoinStatus) => void;
+  prayerGroupActionsProps: PrayerGroupActionsContainerProps;
 };
 
 export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
@@ -35,6 +40,7 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
   visibilityLevel,
   joinStatus,
   setUserJoinStatus,
+  prayerGroupActionsProps,
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
@@ -82,6 +88,8 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
               setUserJoinStatus={setUserJoinStatus}
             />
           )}
+
+          <PrayerGroupActionsContainer {...prayerGroupActionsProps} />
         </View>
       </ScrollView>
     </SafeAreaView>

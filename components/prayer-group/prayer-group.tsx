@@ -1,6 +1,6 @@
 import { min } from "lodash";
 import * as React from "react";
-import { FlatList, Pressable } from "react-native";
+import { FlatList, Pressable, RefreshControl } from "react-native";
 import { useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -179,6 +179,14 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
             }
             onEndReachedThreshold={0.8}
             onEndReached={onEndReached}
+            refreshControl={
+              <RefreshControl
+                colors={[theme.colors.primary]}
+                tintColor={theme.colors.primary}
+                refreshing={isPrayerGroupRefreshing}
+                onRefresh={refreshPrayerGroup}
+              />
+            }
           />
         )}
 

@@ -30,7 +30,8 @@ type Props = {
   joinStatus?: JoinStatus;
   setUserJoinStatus: (joinStatus: JoinStatus) => void;
   prayerGroupActionsProps: PrayerGroupActionsContainerProps;
-  loadPrayerGroupData: () => void;
+  isPrayerGroupRefreshing: boolean;
+  refreshPrayerGroup: () => void;
 };
 
 export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
@@ -42,7 +43,8 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
   joinStatus,
   setUserJoinStatus,
   prayerGroupActionsProps,
-  loadPrayerGroupData,
+  isPrayerGroupRefreshing,
+  refreshPrayerGroup,
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
@@ -64,6 +66,8 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
           <RefreshControl
             colors={[theme.colors.primary]}
             tintColor={theme.colors.primary}
+            refreshing={isPrayerGroupRefreshing}
+            onRefresh={refreshPrayerGroup}
           />
         }
       >

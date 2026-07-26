@@ -13,7 +13,10 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { useI18N } from "../../hooks/use-i18n";
 import { mapPrayerGroupSummaryFromPrayerGroupDetails } from "../../mappers/map-prayer-group";
 import { LoadStatus } from "../../types/api-response-types";
-import { PrayerGroupSummary } from "../../types/prayer-group-types";
+import {
+  PrayerGroupDetails,
+  PrayerGroupSummary,
+} from "../../types/prayer-group-types";
 import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
 import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
 import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
@@ -51,6 +54,9 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const [isAddUserLoading, setIsAddUserLoading] =
     React.useState<boolean>(false);
 
+  const [isPrayerGroupRefreshing, setIsPrayerGroupRefreshing] =
+    React.useState<boolean>(false);
+
   const { openToaster } = useToasterContext();
 
   const [isPrayerGroupOptionsOpen, setIsPrayerGroupOptionsOpen] =
@@ -63,6 +69,39 @@ export const usePrayerGroup = (prayerGroupId: number) => {
   const postPrayerGroupUser = usePostPrayerGroupUser();
 
   const { translate } = useI18N();
+
+  const setUpdatedPrayerGroupData = (
+    prayerGroupDetails: PrayerGroupDetails,
+  ) => {
+    setPrayerGroupDetails(prayerGroupDetails);
+
+    setUserData((userData) => {
+      const userPrayerGroups = userData.prayerGroups ?? [];
+      const updatedPrayerGroups = userPrayerGroups.map((prayerGroup) => {
+        if (prayerGroup !== prayerGroupId) {
+          return prayerGroup;
+        }
+
+        return mapPrayerGroupSummaryFromPrayerGroupDetails(prayerGroupDetails);
+      });
+
+      return { ...userData, prayerGroups: updatedPrayerGroups };
+    });
+  };
+
+  const refreshPrayerGroup = async () => {
+    setIsPrayerGroupRefreshing(true);
+    // FIXME: Add Prayer Request Refresh Here
+    const prayerGroupResponse = await getPrayerGroup(prayerGroupId);
+    setIsPrayerGroupRefreshing(false);
+
+    if (prayerGroupResponse.isError) {
+      setPrayerGroupLoadStatus(LoadStatus.Error);
+      return;
+    }
+
+    setUpdatedPrayerGroupData(prayerGroupResponse.value);
+  };
 
   const loadPrayerGroup = async () => {
     setPrayerGroupDetails(undefined);
@@ -82,21 +121,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
       return;
     }
 
-    setPrayerGroupDetails(response.value);
-
-    setUserData((userData) => {
-      const userPrayerGroups = userData.prayerGroups ?? [];
-      const updatedPrayerGroups = userPrayerGroups.map((prayerGroup) => {
-        if (prayerGroup !== prayerGroupId) {
-          return prayerGroup;
-        }
-
-        return mapPrayerGroupSummaryFromPrayerGroupDetails(response.value);
-      });
-
-      return { ...userData, prayerGroups: updatedPrayerGroups };
-    });
-
+    setUpdatedPrayerGroupData(response.value);
     return response.value;
   };
 
@@ -362,6 +387,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setUserJoinStatus,
     numNotLoadedRequests,
     navigateToPrayerRequestPage,
-    loadPrayerGroupData,
+    isPrayerGroupRefreshing,
+    refreshPrayerGroup,
   };
 };

@@ -54,7 +54,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     prayerRequestFilters,
     nextPrayerRequestsLoadStatus,
     navigateToPrayerRequestPage,
-    loadPrayerGroupData,
+    refreshPrayerGroup,
+    isPrayerGroupRefreshing,
   } = usePrayerGroup(prayerGroupId);
 
   const {
@@ -137,7 +138,8 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
         joinStatus={prayerGroupDetails?.userJoinStatus}
         setUserJoinStatus={setUserJoinStatus}
         prayerGroupActionsProps={prayerGroupActionsProps}
-        loadPrayerGroupData={loadPrayerGroupData}
+        isPrayerGroupRefreshing={isPrayerGroupRefreshing}
+        refreshPrayerGroup={refreshPrayerGroup}
       />
     );
   }

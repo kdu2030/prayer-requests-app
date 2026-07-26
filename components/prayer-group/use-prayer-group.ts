@@ -362,5 +362,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setUserJoinStatus,
     numNotLoadedRequests,
     navigateToPrayerRequestPage,
+    loadPrayerGroupData,
   };
 };

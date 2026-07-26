@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ScrollView, View } from "react-native";
+import { RefreshControl, ScrollView, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -30,6 +30,7 @@ type Props = {
   joinStatus?: JoinStatus;
   setUserJoinStatus: (joinStatus: JoinStatus) => void;
   prayerGroupActionsProps: PrayerGroupActionsContainerProps;
+  loadPrayerGroupData: () => void;
 };
 
 export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
@@ -41,6 +42,7 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
   joinStatus,
   setUserJoinStatus,
   prayerGroupActionsProps,
+  loadPrayerGroupData,
 }) => {
   const { translate } = useI18N();
   const theme = useTheme();
@@ -56,7 +58,15 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
       edges={["left", "right", "bottom"]}
       style={{ backgroundColor: theme.colors.background }}
     >
-      <ScrollView className="flex-1">
+      <ScrollView
+        className="flex-1"
+        refreshControl={
+          <RefreshControl
+            colors={[theme.colors.primary]}
+            tintColor={theme.colors.primary}
+          />
+        }
+      >
         {prayerGroupHeader}
         <View className="mt-32">
           {prayerRequestLoadStatus === LoadStatus.Loading && (

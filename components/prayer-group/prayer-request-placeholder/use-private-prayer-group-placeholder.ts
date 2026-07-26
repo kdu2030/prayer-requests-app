@@ -21,7 +21,7 @@ export const usePrivatePrayerGroupPlaceholder = (
   const postJoinRequest = usePostJoinRequest();
   const { userData, setUserData } = useApiDataContext();
 
-  const { prayerGroupDetails } = usePrayerGroupContext();
+  const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
 
   const onSubmitJoinRequest = async () => {
     if (!userData?.userId) {
@@ -49,17 +49,25 @@ export const usePrivatePrayerGroupPlaceholder = (
     setUserJoinStatus(JoinStatus.RequestSubmitted);
 
     const userPrayerGroups = [...(userData.prayerGroups ?? [])];
+
+    const requestSubmittedDate = new Date().toISOString();
+
     userPrayerGroups.push({
       prayerGroupId,
       groupName: prayerGroupDetails?.groupName,
       avatarFile: prayerGroupDetails?.avatarFile,
       joinStatus: JoinStatus.RequestSubmitted,
-      addedDate: new Date().toISOString(),
+      addedDate: requestSubmittedDate,
     });
 
     setUserData((userData) => ({
       ...userData,
       prayerGroups: userPrayerGroups,
+    }));
+
+    setPrayerGroupDetails((prayerGroupDetails) => ({
+      ...prayerGroupDetails,
+      userRequestSubmittedDate: requestSubmittedDate,
     }));
   };
 

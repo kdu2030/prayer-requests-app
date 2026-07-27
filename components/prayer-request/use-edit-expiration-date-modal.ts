@@ -11,7 +11,7 @@ import { CultureCode } from "../../types/languages";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { TimeToLiveOption } from "../prayer-group/create-prayer-request/create-prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
-import { useGlobalPrayerRequestsContext } from "./prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "./global-prayer-requests-context";
 import { EditExpirationDateForm } from "./prayer-request-types";
 
 export function useEditExpirationDateModal(

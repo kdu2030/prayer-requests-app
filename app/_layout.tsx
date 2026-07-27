@@ -7,7 +7,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { GlobalPrayerRequestsContextProvider } from "../components/prayer-request/prayer-request-detail-context";
+import { GlobalPrayerRequestsContextProvider } from "../components/prayer-request/global-prayer-requests-context";
 import { ToasterContextProvider } from "../components/toasters/toaster-context";
 import { ToasterPortal } from "../components/toasters/toaster-portal";
 import { LIGHT_THEME } from "../constants/theme/theme";

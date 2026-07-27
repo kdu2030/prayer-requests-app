@@ -9,7 +9,7 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
-import { useGlobalPrayerRequestsContext } from "./prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "./global-prayer-requests-context";
 
 export const usePrayerRequestListCard = (
   prayerRequest: PrayerRequestModel | undefined,

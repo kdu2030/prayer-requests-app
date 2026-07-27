@@ -8,7 +8,7 @@ import {
 } from "../../api/put-prayer-request";
 import { useI18N } from "../../hooks/use-i18n";
 import { CreatePrayerRequestForm } from "../prayer-group/create-prayer-request/create-prayer-request-types";
-import { useGlobalPrayerRequestsContext } from "../prayer-request/prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "../prayer-request/global-prayer-requests-context";
 import { useToasterContext } from "../toasters/toaster-context";
 
 export function usePrayerRequestEditPage(prayerRequestId: number) {

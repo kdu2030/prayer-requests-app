@@ -13,7 +13,7 @@ import {
   DEFAULT_PRAYER_REQUEST_METADATA,
 } from "../prayer-group/prayer-group-constants";
 import { useToasterContext } from "../toasters/toaster-context";
-import { useGlobalPrayerRequestsContext } from "./prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "./global-prayer-requests-context";
 
 export type PrayerRequestContextType = {
   prayerRequestFilters: PrayerRequestFilterCriteria;

@@ -3,7 +3,7 @@ import * as React from "react";
 import { useDeletePrayerRequest } from "../../api/delete-prayer-request";
 import { useI18N } from "../../hooks/use-i18n";
 import { useToasterContext } from "../toasters/toaster-context";
-import { useGlobalPrayerRequestsContext } from "./prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "./global-prayer-requests-context";
 
 export function useDeletePrayerRequestModal(
   prayerRequestIdToDelete: number | undefined,

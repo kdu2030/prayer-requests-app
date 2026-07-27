@@ -19,7 +19,7 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { usePrayerRequestActionsContainer } from "../prayer-group/use-prayer-request-actions-container";
-import { useGlobalPrayerRequestsContext } from "../prayer-request/prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "../prayer-request/global-prayer-requests-context";
 import {
   CommentFormAction,
   PrayerRequestCommentForm,

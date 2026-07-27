@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { Formik, FormikProps } from "formik";
 import * as React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, RefreshControl, View } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
@@ -74,6 +74,8 @@ export const PrayerRequestPage: React.FC<Props> = ({
     prayerRequestIdToDelete,
     onDeleteConfirmationModalClose,
     onDeleteConfirmationModalOpen,
+    isPrayerRequestRefreshing,
+    onRefreshPrayerRequest,
   } = usePrayerRequestPage(prayerRequestId, scrollToCommentsOnLoad);
 
   if (prayerRequestLoadStatus !== LoadStatus.Success || !prayerRequest) {
@@ -125,6 +127,14 @@ export const PrayerRequestPage: React.FC<Props> = ({
               }
               onLayout={onCommentListLayout}
               ref={prayerRequestCommentListRef}
+              refreshControl={
+                <RefreshControl
+                  colors={[theme.colors.primary]}
+                  tintColor={theme.colors.primary}
+                  refreshing={isPrayerRequestRefreshing}
+                  onRefresh={onRefreshPrayerRequest}
+                />
+              }
             />
 
             <View

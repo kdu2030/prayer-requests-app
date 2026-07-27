@@ -499,6 +499,9 @@ export const usePrayerRequestPage = (
       });
       return;
     }
+
+    setPrayerRequest(prayerRequestResponse.value);
+    setPrayerRequestGlobal(prayerRequestId, prayerRequestResponse.value);
   };
 
   return {
@@ -540,5 +543,7 @@ export const usePrayerRequestPage = (
     prayerRequestIdToDelete,
     onDeleteConfirmationModalClose,
     onDeleteConfirmationModalOpen,
+    onRefreshPrayerRequest,
+    isPrayerRequestRefreshing,
   };
 };

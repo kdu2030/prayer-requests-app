@@ -3,7 +3,7 @@ import * as React from "react";
 import { useDeletePrayerRequest } from "../../api/delete-prayer-request";
 import { useI18N } from "../../hooks/use-i18n";
 import { useToasterContext } from "../toasters/toaster-context";
-import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "./prayer-request-detail-context";
 
 export function useDeletePrayerRequestModal(
   prayerRequestIdToDelete: number | undefined,
@@ -15,7 +15,7 @@ export function useDeletePrayerRequestModal(
   const deletePrayerRequest = useDeletePrayerRequest();
   const { openToaster } = useToasterContext();
 
-  const { setPrayerRequest } = usePrayerRequestDetailContext();
+  const { setPrayerRequest } = useGlobalPrayerRequestsContext();
 
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false);
 

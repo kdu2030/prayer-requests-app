@@ -10,7 +10,7 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
-import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "./prayer-request-detail-context";
 
 export const usePrayerRequestActions = (
   onClose: () => void,
@@ -29,7 +29,7 @@ export const usePrayerRequestActions = (
   const { userData } = useApiDataContext();
 
   const { setPrayerRequest, getPrayerRequestFromStore: getPrayerRequest } =
-    usePrayerRequestDetailContext();
+    useGlobalPrayerRequestsContext();
 
   const addPrayerRequestBookmark = async (prayerRequestId: number) => {
     if (!userData?.userId) {

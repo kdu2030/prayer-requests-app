@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { PrayerRequestCard } from "./prayer-request-card";
-import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "./prayer-request-detail-context";
 import { usePrayerRequestListCard } from "./use-prayer-request-list-card";
 
 type Props = {
@@ -22,7 +22,7 @@ export const PrayerRequestListCard: React.FC<Props> = ({
   onCommentPress,
 }) => {
   const { getPrayerRequestFromStore: getPrayerRequest } =
-    usePrayerRequestDetailContext();
+    useGlobalPrayerRequestsContext();
 
   const prayerRequest = getPrayerRequest(prayerRequestId);
   const { isLikeLoading, onLikePress } =

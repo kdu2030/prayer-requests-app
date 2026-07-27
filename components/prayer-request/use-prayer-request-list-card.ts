@@ -9,7 +9,7 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
-import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "./prayer-request-detail-context";
 
 export const usePrayerRequestListCard = (
   prayerRequest: PrayerRequestModel | undefined,
@@ -24,7 +24,7 @@ export const usePrayerRequestListCard = (
 
   const { userData } = useApiDataContext();
 
-  const { setPrayerRequest } = usePrayerRequestDetailContext();
+  const { setPrayerRequest } = useGlobalPrayerRequestsContext();
 
   const addPrayerRequestLike = async (prayerRequestId: number) => {
     const userId = userData?.userId;

@@ -8,12 +8,12 @@ import {
 } from "../../api/put-prayer-request";
 import { useI18N } from "../../hooks/use-i18n";
 import { CreatePrayerRequestForm } from "../prayer-group/create-prayer-request/create-prayer-request-types";
-import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "../prayer-request/prayer-request-detail-context";
 import { useToasterContext } from "../toasters/toaster-context";
 
 export function usePrayerRequestEditPage(prayerRequestId: number) {
   const { getPrayerRequestFromStore, setPrayerRequest } =
-    usePrayerRequestDetailContext();
+    useGlobalPrayerRequestsContext();
 
   const { openToaster } = useToasterContext();
 

@@ -11,7 +11,7 @@ import { CultureCode } from "../../types/languages";
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { TimeToLiveOption } from "../prayer-group/create-prayer-request/create-prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
-import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "./prayer-request-detail-context";
 import { EditExpirationDateForm } from "./prayer-request-types";
 
 export function useEditExpirationDateModal(
@@ -20,7 +20,7 @@ export function useEditExpirationDateModal(
 ) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const { setPrayerRequest } = usePrayerRequestDetailContext();
+  const { setPrayerRequest } = useGlobalPrayerRequestsContext();
 
   const { translate, i18n } = useI18N();
   const putPrayerRequest = usePutPrayerRequest();

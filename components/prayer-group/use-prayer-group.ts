@@ -22,7 +22,7 @@ import {
 } from "../../types/prayer-group-types";
 import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
 import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
-import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "../prayer-request/prayer-request-detail-context";
 import { useToasterContext } from "../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";
@@ -51,7 +51,7 @@ export const usePrayerGroup = (prayerGroupId: number) => {
 
   const { prayerGroupDetails, setPrayerGroupDetails } = usePrayerGroupContext();
 
-  const { getPrayerRequestFromStore } = usePrayerRequestDetailContext();
+  const { getPrayerRequestFromStore } = useGlobalPrayerRequestsContext();
 
   const [isRemoveUserLoading, setIsRemoveUserLoading] =
     React.useState<boolean>(false);

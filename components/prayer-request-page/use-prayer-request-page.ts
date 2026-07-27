@@ -19,7 +19,7 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { usePrayerRequestActionsContainer } from "../prayer-group/use-prayer-request-actions-container";
-import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "../prayer-request/prayer-request-detail-context";
 import {
   CommentFormAction,
   PrayerRequestCommentForm,
@@ -84,7 +84,7 @@ export const usePrayerRequestPage = (
   const {
     setPrayerRequest: setPrayerRequestGlobal,
     getPrayerRequestFromStore,
-  } = usePrayerRequestDetailContext();
+  } = useGlobalPrayerRequestsContext();
 
   const storedPrayerRequest = getPrayerRequestFromStore(prayerRequestId);
 

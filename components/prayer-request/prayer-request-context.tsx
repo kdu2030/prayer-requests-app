@@ -13,7 +13,7 @@ import {
   DEFAULT_PRAYER_REQUEST_METADATA,
 } from "../prayer-group/prayer-group-constants";
 import { useToasterContext } from "../toasters/toaster-context";
-import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "./prayer-request-detail-context";
 
 export type PrayerRequestContextType = {
   prayerRequestFilters: PrayerRequestFilterCriteria;
@@ -69,7 +69,7 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
 
   const [prayerRequestIds, setPrayerRequestIds] = React.useState<number[]>([]);
 
-  const { addPrayerRequestsToStore } = usePrayerRequestDetailContext();
+  const { addPrayerRequestsToStore } = useGlobalPrayerRequestsContext();
 
   const [prayerRequestMetadata, setPrayerRequestMetadata] =
     React.useState<PrayerRequestMetadata>(DEFAULT_PRAYER_REQUEST_METADATA);

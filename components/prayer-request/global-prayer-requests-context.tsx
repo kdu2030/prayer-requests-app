@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 
-export type PrayerRequestDetailContextType = {
+export type GlobalPrayerRequestsContextType = {
   prayerRequests: Record<number, PrayerRequestModel | undefined>;
   getPrayerRequestFromStore: (
     prayerRequestId: number,
@@ -14,19 +14,19 @@ export type PrayerRequestDetailContextType = {
   addPrayerRequestsToStore: (prayerRequests: PrayerRequestModel[]) => void;
 };
 
-export const PrayerRequestDetailContext =
-  React.createContext<PrayerRequestDetailContextType>({
+export const GlobalPrayerRequestsContext =
+  React.createContext<GlobalPrayerRequestsContextType>({
     prayerRequests: {},
     getPrayerRequestFromStore: () => {},
     setPrayerRequest: () => {},
     addPrayerRequestsToStore: () => {},
-  } as PrayerRequestDetailContextType);
+  } as GlobalPrayerRequestsContextType);
 
 type Props = {
   children: React.ReactNode;
 };
 
-export const PrayerRequestDetailContextProvider: React.FC<Props> = ({
+export const GlobalPrayerRequestsContextProvider: React.FC<Props> = ({
   children,
 }) => {
   const [prayerRequests, setPrayerRequests] = React.useState<
@@ -71,7 +71,7 @@ export const PrayerRequestDetailContextProvider: React.FC<Props> = ({
   };
 
   return (
-    <PrayerRequestDetailContext.Provider
+    <GlobalPrayerRequestsContext.Provider
       value={{
         addPrayerRequestsToStore: addPrayerRequests,
         prayerRequests,
@@ -80,9 +80,9 @@ export const PrayerRequestDetailContextProvider: React.FC<Props> = ({
       }}
     >
       {children}
-    </PrayerRequestDetailContext.Provider>
+    </GlobalPrayerRequestsContext.Provider>
   );
 };
 
-export const usePrayerRequestDetailContext = () =>
-  React.useContext(PrayerRequestDetailContext);
+export const useGlobalPrayerRequestsContext = () =>
+  React.useContext(GlobalPrayerRequestsContext);

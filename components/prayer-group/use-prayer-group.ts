@@ -100,7 +100,10 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     const prayerGroupResponse = await getPrayerGroup(prayerGroupId);
 
     if (prayerGroupResponse.isError) {
-      setPrayerGroupLoadStatus(LoadStatus.Error);
+      openToaster({
+        message: translate("toaster.prayerGroupRefresh.failure"),
+        variant: "error",
+      });
       setIsPrayerGroupRefreshing(false);
       return;
     }

@@ -96,6 +96,9 @@ export const usePrayerRequestPage = (
   const prayerRequestCommentListRef = React.useRef<FlatList>(null);
   const isScrollOnLoadCompleteRef = React.useRef<boolean>(false);
 
+  const [isPrayerRequestRefreshing, setIsPrayerRequestRefreshing] =
+    React.useState<boolean>(false);
+
   const loadPrayerRequest = async () => {
     setPrayerRequestLoadStatus(LoadStatus.Loading);
     const prayerRequestResponse = await getPrayerRequest(prayerRequestId);
@@ -481,6 +484,20 @@ export const usePrayerRequestPage = (
     if (scrollToCommentsOnLoad) {
       scrollToCommentSection();
       isScrollOnLoadCompleteRef.current = true;
+    }
+  };
+
+  const onRefreshPrayerRequest = async () => {
+    setIsPrayerRequestRefreshing(true);
+    const prayerRequestResponse = await getPrayerRequest(prayerRequestId);
+    setIsPrayerRequestRefreshing(false);
+
+    if (prayerRequestResponse.isError) {
+      openToaster({
+        message: translate("toaster.prayerRequestRefresh.failure"),
+        variant: "error",
+      });
+      return;
     }
   };
 

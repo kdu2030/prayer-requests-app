@@ -171,8 +171,11 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
     const response = await postPrayerRequestFilter(filters);
 
     if (response.isError) {
-      setPrayerRequestLoadStatus(LoadStatus.Error);
-      setPrayerRequestIds([]);
+      openToaster({
+        message: translate("toaster.prayerRequestsRefresh.failure"),
+        variant: "error",
+      });
+
       return;
     }
 

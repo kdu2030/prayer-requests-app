@@ -236,4 +236,7 @@ export const englishTranslations = {
 
   "toaster.deletePrayerRequest.success": "Deleted prayer request",
   "toaster.deletePrayerRequest.failure": "Failed to delete prayer request",
+  "toaster.prayerRequestRefresh.failure": "Failed to refresh prayer request",
+  "toaster.prayerGroupRefresh.failure": "Failed to refresh prayer group",
+  "toaster.prayerRequestsRefresh.failure": "Failed to refresh prayer requests",
 };

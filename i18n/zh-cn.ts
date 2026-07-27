@@ -227,4 +227,8 @@ export const chineseTranslations: Translations = {
 
   "toaster.deletePrayerRequest.success": "已删除祷告事项。",
   "toaster.deletePrayerRequest.failure": "删除祷告事项失败了。",
+
+  "toaster.prayerRequestRefresh.failure": "更新祷告事项失败了。",
+  "toaster.prayerGroupRefresh.failure": "更新祷告小组失败了。",
+  "toaster.prayerRequestsRefresh.failure": "更新祷告事项失败了。",
 };

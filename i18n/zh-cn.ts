@@ -202,6 +202,7 @@ export const chineseTranslations: Translations = {
   "prayerGroup.joinRequest.saved": "加入恳求的编辑已保存",
 
   "home.prayerRequests.noPrayerGroupsJoined": "你还没有加入任何祷告小组。",
+  "home.prayerRequests.noRecentPrayerRequests": "暂无最近祷告事项。",
 
   "toaster.joinPrayerGroup.success": "你已成功加入祷告小组。",
   "toaster.joinPrayerGroup.failure": "加入祷告小组失败。",

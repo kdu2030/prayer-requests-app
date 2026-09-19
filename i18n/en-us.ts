@@ -211,6 +211,7 @@ export const englishTranslations = {
 
   "home.prayerRequests.noPrayerGroupsJoined":
     "You haven't joined any prayer groups yet.",
+  "home.prayerRequests.noRecentPrayerRequests": "No recent prayer requests.",
 
   "toaster.joinPrayerGroup.success": "Successfully joined prayer group.",
   "toaster.joinPrayerGroup.failure": "Failed to join prayer group.",

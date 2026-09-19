@@ -12,6 +12,7 @@ export type PrayerRequestFilterCriteria = {
   bookmarkedByUserId?: number;
   includeExpiredPrayerRequests?: boolean;
   sortConfig: SortConfig;
+  excludedCreatorUserIds?: number[];
 };
 
 export type PrayerRequestMetadata = {

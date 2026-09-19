@@ -2,13 +2,10 @@ import * as React from "react";
 import { useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { NoGroupsPlaceholder } from "./no-groups-placeholder";
-import { useUserHomePage } from "./use-user-home-page";
+import { UserHomePageBody } from "./user-home-page-body";
 
 export const UserHomePage: React.FC = () => {
   const theme = useTheme();
-
-  const { joinedNoPrayerGroups } = useUserHomePage();
 
   return (
     <SafeAreaView
@@ -16,7 +13,7 @@ export const UserHomePage: React.FC = () => {
       edges={["bottom", "left", "right"]}
       style={{ backgroundColor: theme.colors.background }}
     >
-      {joinedNoPrayerGroups && <NoGroupsPlaceholder />}
+      <UserHomePageBody />
     </SafeAreaView>
   );
 };

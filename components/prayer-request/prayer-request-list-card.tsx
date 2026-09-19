@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import { PrayerRequestModel } from "../../types/prayer-request-types";
-import { PrayerRequestCard } from "./prayer-request-card";
 import { useGlobalPrayerRequestsContext } from "./global-prayer-requests-context";
+import { PrayerRequestCard } from "./prayer-request-card";
 import { usePrayerRequestListCard } from "./use-prayer-request-list-card";
 
 type Props = {

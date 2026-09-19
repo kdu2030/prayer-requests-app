@@ -123,5 +123,6 @@ export const useUserHomePageBody = () => {
     prayerRequestFilters,
     prayerRequestMetadata,
     initializePrayerRequests,
+    prayerRequestIds
   };
 };

@@ -1,8 +1,12 @@
 import * as React from "react";
+import { FlatList } from "react-native";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
+import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
+import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
+import { PrayerRequestListCard } from "../prayer-request/prayer-request-list-card";
 import { PrayerRequestSkeletonList } from "../prayer-request/prayer-request-skeleton-list";
 import { NoGroupsPlaceholder } from "./no-groups-placeholder";
 import { NoRecentPostsPlaceholder } from "./no-recent-posts-placeholder";
@@ -16,6 +20,7 @@ export const UserHomePageBody: React.FC = () => {
     loadedPrayerRequests,
     homePageLoadStatus,
     initializePrayerRequests,
+    prayerRequestIds,
   } = useUserHomePageBody();
 
   if (
@@ -38,7 +43,21 @@ export const UserHomePageBody: React.FC = () => {
   return (
     <>
       {joinedNoPrayerGroups && <NoGroupsPlaceholder />}
-      {loadedPrayerRequests.length === 0 && <NoRecentPostsPlaceholder />}
+      {loadedPrayerRequests.length === 0 ? (
+        <NoRecentPostsPlaceholder />
+      ) : (
+        <FlatList
+          data={prayerRequestIds}
+          renderItem={({ item }) => (
+            <PrayerRequestListCard
+              prayerRequestId={item}
+              openPrayerRequestActions={() => {}}
+              onCommentPress={() => {}}
+              showCreatedUser={false}
+            />
+          )}
+        />
+      )}
     </>
   );
 };

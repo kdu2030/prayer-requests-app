@@ -15,7 +15,7 @@ export const UserHomePageBody: React.FC = () => {
     joinedNoPrayerGroups,
     loadedPrayerRequests,
     homePageLoadStatus,
-    loadPrayerRequestsForHomePage,
+    initializePrayerRequests,
   } = useUserHomePageBody();
 
   if (
@@ -30,7 +30,7 @@ export const UserHomePageBody: React.FC = () => {
       <ErrorScreen
         errorLabel={translate("prayerRequest.loading.failure")}
         showSafeArea={false}
-        onRetry={loadPrayerRequestsForHomePage}
+        onRetry={initializePrayerRequests}
       />
     );
   }

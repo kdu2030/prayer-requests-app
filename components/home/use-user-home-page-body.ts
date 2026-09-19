@@ -99,6 +99,10 @@ export const useUserHomePageBody = () => {
     userPrayerGroupIds,
   ]);
 
+  React.useEffect(() => {
+    initializePrayerRequests();
+  }, [initializePrayerRequests]);
+
   const loadedPrayerRequests = React.useMemo(() => {
     return prayerRequestIds.reduce(
       (prayerRequests: PrayerRequestModel[], prayerRequestId) => {

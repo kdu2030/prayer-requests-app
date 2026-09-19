@@ -91,13 +91,8 @@ export const useUserHomePageBody = () => {
 
     addPrayerRequestsToStore(prayerRequestResponse.value.prayerRequests ?? []);
     setPrayerRequestIds(prayerRequestIds);
-  }, [
-    addPrayerRequestsToStore,
-    joinedPrayerGroups.length,
-    postPrayerRequestFilter,
-    userData?.userId,
-    userPrayerGroupIds,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [joinedPrayerGroups.length, userData?.userId, userPrayerGroupIds]);
 
   React.useEffect(() => {
     initializePrayerRequests();

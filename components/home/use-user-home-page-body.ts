@@ -24,6 +24,8 @@ export const useUserHomePageBody = () => {
     if (joinedPrayerGroups.length === 0) {
       return;
     }
+
+    setHomePageLoadStatus(LoadStatus.Loading);
   }, [joinedPrayerGroups.length]);
 
   const loadedPrayerRequests = React.useMemo(() => {
@@ -42,9 +44,11 @@ export const useUserHomePageBody = () => {
   }, [getPrayerRequestFromStore, prayerRequestIds]);
 
   return {
+    homePageLoadStatus,
     joinedPrayerGroups,
     joinedNoPrayerGroups,
     loadedPrayerRequests,
     setPrayerRequestIds,
+    loadPrayerRequestsForHomePage,
   };
 };

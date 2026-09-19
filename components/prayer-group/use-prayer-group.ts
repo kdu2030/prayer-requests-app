@@ -1,4 +1,3 @@
-import { router } from "expo-router";
 import * as React from "react";
 
 import { useDeletePrayerGroupUser } from "../../api/delete-prayer-group-user";
@@ -308,24 +307,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     }));
   };
 
-  const navigateToPrayerRequestPage = (
-    prayerRequestId: number,
-    scrollToCommentsOnLoad: boolean = false,
-  ) => {
-    if (!prayerGroupDetails?.prayerGroupId) {
-      return;
-    }
-
-    router.push({
-      pathname: "/prayergroup/[id]/prayerrequest/[id]",
-      params: {
-        id: prayerGroupDetails.prayerGroupId,
-        id_1: prayerRequestId,
-        scrollToCommentsOnLoad: scrollToCommentsOnLoad.toString(),
-      },
-    });
-  };
-
   const cleanupRemovedPrayerRequestIds = React.useCallback(
     (prayerRequestIds: number[]): number[] => {
       const updatedPrayerRequestIds: number[] = [];
@@ -404,7 +385,6 @@ export const usePrayerGroup = (prayerGroupId: number) => {
     setShowLeavePrayerGroupModal,
     setUserJoinStatus,
     numNotLoadedRequests,
-    navigateToPrayerRequestPage,
     isPrayerGroupRefreshing,
     refreshPrayerGroup,
   };

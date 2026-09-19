@@ -99,7 +99,7 @@ export const usePrayerRequestListCard = (
     setIsLikeLoading(false);
   };
 
-  const onCommentPress = () => {
+  const navigateToPrayerRequest = (scrollToComments: boolean) => {
     if (
       !prayerRequest?.prayerRequestId ||
       !prayerRequest.prayerGroup?.prayerGroupId
@@ -112,7 +112,7 @@ export const usePrayerRequestListCard = (
       params: {
         id: prayerRequest.prayerGroup.prayerGroupId,
         id_1: prayerRequest.prayerRequestId,
-        scrollToCommentsOnLoad: "true",
+        scrollToCommentsOnLoad: scrollToComments.toString(),
       },
     });
   };
@@ -120,6 +120,6 @@ export const usePrayerRequestListCard = (
   return {
     isLikeLoading,
     onLikePress,
-    onCommentPress,
+    navigateToPrayerRequest,
   };
 };

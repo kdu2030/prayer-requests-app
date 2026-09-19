@@ -1,6 +1,6 @@
 import { min } from "lodash";
 import * as React from "react";
-import { FlatList, Pressable, RefreshControl } from "react-native";
+import { FlatList, RefreshControl } from "react-native";
 import { useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -53,7 +53,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     numNotLoadedRequests,
     prayerRequestFilters,
     nextPrayerRequestsLoadStatus,
-    navigateToPrayerRequestPage,
     refreshPrayerGroup,
     isPrayerGroupRefreshing,
   } = usePrayerGroup(prayerGroupId);
@@ -158,13 +157,11 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
             ListHeaderComponent={prayerGroupHeader}
             data={prayerRequestIds}
             renderItem={({ item }) => (
-              <Pressable onPress={() => navigateToPrayerRequestPage(item)}>
-                <PrayerRequestListCard
-                  prayerRequestId={item}
-                  openPrayerRequestActions={openPrayerRequestActions}
-                  key={item}
-                />
-              </Pressable>
+              <PrayerRequestListCard
+                prayerRequestId={item}
+                openPrayerRequestActions={openPrayerRequestActions}
+                key={item}
+              />
             )}
             ListFooterComponent={
               nextPrayerRequestsLoadStatus === LoadStatus.Loading ? (

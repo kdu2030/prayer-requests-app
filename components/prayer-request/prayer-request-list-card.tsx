@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Pressable } from "react-native";
 
 import { PrayerRequestModel } from "../../types/prayer-request-types";
 import { useGlobalPrayerRequestsContext } from "./global-prayer-requests-context";
@@ -23,7 +24,7 @@ export const PrayerRequestListCard: React.FC<Props> = ({
     useGlobalPrayerRequestsContext();
 
   const prayerRequest = getPrayerRequest(prayerRequestId);
-  const { isLikeLoading, onLikePress, onCommentPress } =
+  const { isLikeLoading, onLikePress, navigateToPrayerRequest } =
     usePrayerRequestListCard(prayerRequest);
 
   if (!prayerRequest) {
@@ -31,14 +32,16 @@ export const PrayerRequestListCard: React.FC<Props> = ({
   }
 
   return (
-    <PrayerRequestCard
-      prayerRequest={prayerRequest}
-      onOpenMenu={() => openPrayerRequestActions(prayerRequest, true)}
-      isLikeLoading={isLikeLoading}
-      onLikePress={onLikePress}
-      onPrayPress={() => openPrayerRequestActions(prayerRequest, false)}
-      onCommentPress={onCommentPress}
-      showCreatedUser={showCreatedUser}
-    />
+    <Pressable onPress={() => navigateToPrayerRequest(false)}>
+      <PrayerRequestCard
+        prayerRequest={prayerRequest}
+        onOpenMenu={() => openPrayerRequestActions(prayerRequest, true)}
+        isLikeLoading={isLikeLoading}
+        onLikePress={onLikePress}
+        onPrayPress={() => openPrayerRequestActions(prayerRequest, false)}
+        onCommentPress={() => navigateToPrayerRequest(true)}
+        showCreatedUser={showCreatedUser}
+      />
+    </Pressable>
   );
 };

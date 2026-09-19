@@ -4,6 +4,10 @@ import { FlatList } from "react-native";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
+import { usePrayerRequestActionsContainer } from "../prayer-group/use-prayer-request-actions-container";
+import { DeletePrayerRequestModal } from "../prayer-request/delete-prayer-request-modal";
+import { EditExpirationDateModal } from "../prayer-request/edit-expiration-date-modal";
+import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
 import { PrayerRequestListCard } from "../prayer-request/prayer-request-list-card";
 import { PrayerRequestSkeletonList } from "../prayer-request/prayer-request-skeleton-list";
 import { NoGroupsPlaceholder } from "./no-groups-placeholder";
@@ -20,6 +24,22 @@ export const UserHomePageBody: React.FC = () => {
     initializePrayerRequests,
     prayerRequestIds,
   } = useUserHomePageBody();
+
+  const {
+    isPrayerRequestActionsOpen,
+    openPrayerRequestActions,
+    showExtendedActions,
+    selectedPrayerRequest,
+    closePrayerRequestActions,
+    onExpirationDateModalOpen,
+    onDeleteConfirmationModalOpen,
+    expirationModalPrayerRequest,
+    isExpirationModalOpen,
+    onExpirationDateModalClose,
+    isDeleteConfirmationModalOpen,
+    prayerRequestIdToDelete,
+    onDeleteConfirmationModalClose,
+  } = usePrayerRequestActionsContainer();
 
   if (
     homePageLoadStatus === LoadStatus.Loading ||
@@ -49,12 +69,33 @@ export const UserHomePageBody: React.FC = () => {
           renderItem={({ item }) => (
             <PrayerRequestListCard
               prayerRequestId={item}
-              openPrayerRequestActions={() => {}}
+              openPrayerRequestActions={openPrayerRequestActions}
               showCreatedUser={false}
             />
           )}
         />
       )}
+
+      <PrayerRequestActions
+        selectedPrayerRequest={selectedPrayerRequest}
+        isOpen={isPrayerRequestActionsOpen}
+        showExtendedActions={showExtendedActions}
+        onClose={closePrayerRequestActions}
+        openDeletePrayerRequestModal={onDeleteConfirmationModalOpen}
+        openEditExpirationModal={onExpirationDateModalOpen}
+      />
+
+      <EditExpirationDateModal
+        prayerRequest={expirationModalPrayerRequest}
+        isOpen={isExpirationModalOpen}
+        onClose={onExpirationDateModalClose}
+      />
+
+      <DeletePrayerRequestModal
+        isOpen={isDeleteConfirmationModalOpen}
+        prayerRequestIdToDelete={prayerRequestIdToDelete}
+        onClose={onDeleteConfirmationModalClose}
+      />
     </>
   );
 };

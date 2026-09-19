@@ -12,20 +12,18 @@ type Props = {
     showExtendedOptions?: boolean,
   ) => void;
   showCreatedUser?: boolean;
-  onCommentPress: () => void;
 };
 
 export const PrayerRequestListCard: React.FC<Props> = ({
   prayerRequestId,
   showCreatedUser = true,
   openPrayerRequestActions,
-  onCommentPress,
 }) => {
   const { getPrayerRequestFromStore: getPrayerRequest } =
     useGlobalPrayerRequestsContext();
 
   const prayerRequest = getPrayerRequest(prayerRequestId);
-  const { isLikeLoading, onLikePress } =
+  const { isLikeLoading, onLikePress, onCommentPress } =
     usePrayerRequestListCard(prayerRequest);
 
   if (!prayerRequest) {

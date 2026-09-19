@@ -21,8 +21,8 @@ import {
   PrayerGroupSummary,
 } from "../../types/prayer-group-types";
 import { PrayerRequestFilterCriteria } from "../../types/prayer-request-types";
-import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
 import { useGlobalPrayerRequestsContext } from "../prayer-request/global-prayer-requests-context";
+import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
 import { useToasterContext } from "../toasters/toaster-context";
 import { DEFAULT_PRAYER_REQUEST_FILTERS } from "./prayer-group-constants";
 import { usePrayerGroupContext } from "./prayer-group-context";

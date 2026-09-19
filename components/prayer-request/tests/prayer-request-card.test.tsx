@@ -67,7 +67,6 @@ const mountPrayerRequestCard = (prayerRequest: PrayerRequestModel) => {
   return mountComponent(
     <PrayerRequestListCard
       prayerRequestId={prayerRequest.prayerRequestId!}
-      onCommentPress={() => {}}
       showCreatedUser
       openPrayerRequestActions={() => {}}
     />,

@@ -4,8 +4,6 @@ import { FlatList } from "react-native";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
-import { PrayerRequestActions } from "../prayer-request/prayer-request-actions";
-import { PrayerRequestCard } from "../prayer-request/prayer-request-card";
 import { PrayerRequestListCard } from "../prayer-request/prayer-request-list-card";
 import { PrayerRequestSkeletonList } from "../prayer-request/prayer-request-skeleton-list";
 import { NoGroupsPlaceholder } from "./no-groups-placeholder";
@@ -52,7 +50,6 @@ export const UserHomePageBody: React.FC = () => {
             <PrayerRequestListCard
               prayerRequestId={item}
               openPrayerRequestActions={() => {}}
-              onCommentPress={() => {}}
               showCreatedUser={false}
             />
           )}

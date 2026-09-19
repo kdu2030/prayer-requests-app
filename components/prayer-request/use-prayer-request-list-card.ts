@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import * as React from "react";
 
 import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like";
@@ -98,8 +99,27 @@ export const usePrayerRequestListCard = (
     setIsLikeLoading(false);
   };
 
+  const onCommentPress = () => {
+    if (
+      !prayerRequest?.prayerRequestId ||
+      !prayerRequest.prayerGroup?.prayerGroupId
+    ) {
+      return;
+    }
+
+    router.push({
+      pathname: "/prayergroup/[id]/prayerrequest/[id]",
+      params: {
+        id: prayerRequest.prayerGroup.prayerGroupId,
+        id_1: prayerRequest.prayerRequestId,
+        scrollToCommentsOnLoad: "true",
+      },
+    });
+  };
+
   return {
     isLikeLoading,
     onLikePress,
+    onCommentPress,
   };
 };

@@ -1,5 +1,6 @@
 export enum PrayerRequestCardTestIds {
   userProfilePicture = "prayer-request-card-user-profile-picture",
+  prayerGroupProfilePicture = "prayer-request-card-prayer-group-picture",
   createdDate = "prayer-request-card-created-date",
   likeButton = "prayer-request-card-like-button",
   commentButton = "prayer-request-card-comment-button",

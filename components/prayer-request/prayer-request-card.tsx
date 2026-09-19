@@ -57,7 +57,7 @@ export const PrayerRequestCard: React.FC<Props> = ({
       }}
     >
       <View className="flex flex-row items-center w-full">
-        {displayUser && (
+        {displayUser ? (
           <View className="flex flex-row items-center">
             <ProfilePicture
               url={prayerRequest.user?.image?.fileUrl}
@@ -70,6 +70,21 @@ export const PrayerRequestCard: React.FC<Props> = ({
             />
             <Text className="ml-2" variant="bodyMedium" numberOfLines={1}>
               {prayerRequest.user?.fullName}
+            </Text>
+          </View>
+        ) : (
+          <View className="flex flex-row items-center">
+            <ProfilePicture
+              url={prayerRequest.prayerGroup?.avatarFile?.fileUrl}
+              width={24}
+              height={24}
+              testID={getArrayTestId(
+                PrayerRequestCardTestIds.prayerGroupProfilePicture,
+                prayerRequest.prayerGroup?.prayerGroupId,
+              )}
+            />
+            <Text className="ml-2" variant="bodyMedium" numberOfLines={1}>
+              {prayerRequest.prayerGroup?.groupName}
             </Text>
           </View>
         )}

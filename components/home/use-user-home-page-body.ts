@@ -6,6 +6,7 @@ import { useApiDataContext } from "../../hooks/use-api-data";
 import { LoadStatus } from "../../types/api-response-types";
 import {
   PrayerRequestFilterCriteria,
+  PrayerRequestGetResponse,
   PrayerRequestMetadata,
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
@@ -44,6 +45,32 @@ export const useUserHomePageBody = () => {
     );
   }, [joinedPrayerGroups]);
 
+  const updatePrayerRequestsData = React.useCallback(
+    (prayerRequestResponse: PrayerRequestGetResponse) => {
+      setPrayerRequestMetadata({
+        totalCount: prayerRequestResponse.totalCount,
+        numberOfPages: prayerRequestResponse.numberOfPages,
+        pageIndex: 0,
+      });
+
+      const prayerRequestIds =
+        prayerRequestResponse.prayerRequests?.reduce(
+          (prayerRequestIds: number[], prayerRequest) => {
+            if (!prayerRequest.prayerRequestId) {
+              return prayerRequestIds;
+            }
+
+            return prayerRequestIds.concat(prayerRequest.prayerRequestId);
+          },
+          [],
+        ) ?? [];
+
+      addPrayerRequestsToStore(prayerRequestResponse.prayerRequests ?? []);
+      setPrayerRequestIds(prayerRequestIds);
+    },
+    [addPrayerRequestsToStore],
+  );
+
   const initializePrayerRequests = React.useCallback(async () => {
     if (joinedPrayerGroups.length === 0 || !userData?.userId) {
       return;
@@ -69,30 +96,14 @@ export const useUserHomePageBody = () => {
     }
 
     setHomePageLoadStatus(LoadStatus.Success);
-
-    setPrayerRequestFilters(initialFilterCriteria);
-    setPrayerRequestMetadata({
-      totalCount: prayerRequestResponse.value.totalCount,
-      numberOfPages: prayerRequestResponse.value.numberOfPages,
-      pageIndex: 0,
-    });
-
-    const prayerRequestIds =
-      prayerRequestResponse.value.prayerRequests?.reduce(
-        (prayerRequestIds: number[], prayerRequest) => {
-          if (!prayerRequest.prayerRequestId) {
-            return prayerRequestIds;
-          }
-
-          return prayerRequestIds.concat(prayerRequest.prayerRequestId);
-        },
-        [],
-      ) ?? [];
-
-    addPrayerRequestsToStore(prayerRequestResponse.value.prayerRequests ?? []);
-    setPrayerRequestIds(prayerRequestIds);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [joinedPrayerGroups.length, userData?.userId, userPrayerGroupIds]);
+    updatePrayerRequestsData(prayerRequestResponse.value);
+  }, [
+    joinedPrayerGroups.length,
+    postPrayerRequestFilter,
+    updatePrayerRequestsData,
+    userData?.userId,
+    userPrayerGroupIds,
+  ]);
 
   React.useEffect(() => {
     initializePrayerRequests();

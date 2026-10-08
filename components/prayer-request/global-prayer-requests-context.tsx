@@ -33,42 +33,49 @@ export const GlobalPrayerRequestsContextProvider: React.FC<Props> = ({
     Record<number, PrayerRequestModel | undefined>
   >({});
 
-  const getPrayerRequest = (
-    prayerRequestId: number,
-  ): PrayerRequestModel | undefined => {
-    return prayerRequests[prayerRequestId];
-  };
+  const getPrayerRequest = React.useCallback(
+    (prayerRequestId: number): PrayerRequestModel | undefined => {
+      return prayerRequests[prayerRequestId];
+    },
+    [prayerRequests],
+  );
 
-  const setPrayerRequest = (
-    prayerRequestId: number,
-    prayerRequest: PrayerRequestModel | undefined,
-  ) => {
-    setPrayerRequests((prayerRequests) => ({
-      ...prayerRequests,
-      [prayerRequestId]: prayerRequest,
-    }));
-  };
+  const setPrayerRequest = React.useCallback(
+    (
+      prayerRequestId: number,
+      prayerRequest: PrayerRequestModel | undefined,
+    ) => {
+      setPrayerRequests((prayerRequests) => ({
+        ...prayerRequests,
+        [prayerRequestId]: prayerRequest,
+      }));
+    },
+    [],
+  );
 
-  const addPrayerRequests = (prayerRequests: PrayerRequestModel[]) => {
-    setPrayerRequests((currentPrayerRequests) => {
-      const updatedPrayerRequests: Record<
-        number,
-        PrayerRequestModel | undefined
-      > = {
-        ...currentPrayerRequests,
-      };
+  const addPrayerRequests = React.useCallback(
+    (prayerRequests: PrayerRequestModel[]) => {
+      setPrayerRequests((currentPrayerRequests) => {
+        const updatedPrayerRequests: Record<
+          number,
+          PrayerRequestModel | undefined
+        > = {
+          ...currentPrayerRequests,
+        };
 
-      prayerRequests.forEach((prayerRequest) => {
-        if (!prayerRequest.prayerRequestId) {
-          return;
-        }
+        prayerRequests.forEach((prayerRequest) => {
+          if (!prayerRequest.prayerRequestId) {
+            return;
+          }
 
-        updatedPrayerRequests[prayerRequest.prayerRequestId] = prayerRequest;
+          updatedPrayerRequests[prayerRequest.prayerRequestId] = prayerRequest;
+        });
+
+        return updatedPrayerRequests;
       });
-
-      return updatedPrayerRequests;
-    });
-  };
+    },
+    [],
+  );
 
   return (
     <GlobalPrayerRequestsContext.Provider

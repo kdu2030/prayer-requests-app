@@ -1,5 +1,6 @@
 import * as React from "react";
-import { FlatList } from "react-native";
+import { FlatList, RefreshControl } from "react-native";
+import { useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
@@ -15,7 +16,9 @@ import { NoRecentPostsPlaceholder } from "./no-recent-posts-placeholder";
 import { useUserHomePageBody } from "./use-user-home-page-body";
 
 export const UserHomePageBody: React.FC = () => {
-  const { translate } = useI18N()!;
+  const { translate } = useI18N();
+
+  const theme = useTheme();
 
   const {
     joinedNoPrayerGroups,
@@ -23,6 +26,8 @@ export const UserHomePageBody: React.FC = () => {
     homePageLoadStatus,
     initializePrayerRequests,
     prayerRequestIds,
+    isRefreshing,
+    refreshPrayerRequests,
   } = useUserHomePageBody();
 
   const {
@@ -73,6 +78,14 @@ export const UserHomePageBody: React.FC = () => {
               showCreatedUser={false}
             />
           )}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              colors={[theme.colors.primary]}
+              tintColor={theme.colors.primary}
+              onRefresh={refreshPrayerRequests}
+            />
+          }
         />
       )}
 

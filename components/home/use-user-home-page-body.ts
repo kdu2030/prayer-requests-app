@@ -3,6 +3,7 @@ import * as React from "react";
 
 import { usePostPrayerRequestFilter } from "../../api/post-prayer-request-filter";
 import { useApiDataContext } from "../../hooks/use-api-data";
+import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import {
   PrayerRequestFilterCriteria,
@@ -12,6 +13,8 @@ import {
 } from "../../types/prayer-request-types";
 import { getJoinedPrayerGroups } from "../prayer-group/prayer-group-helpers";
 import { useGlobalPrayerRequestsContext } from "../prayer-request/global-prayer-requests-context";
+import { useToasterContext } from "../toasters/toaster-context";
+import { HOME_BASE_PRAYER_REQUEST_FILTERS } from "./home-constants";
 import { getHomePrayerRequestFilterCriteria } from "./home-helpers";
 
 export const useUserHomePageBody = () => {
@@ -32,6 +35,11 @@ export const useUserHomePageBody = () => {
     React.useState<LoadStatus>(LoadStatus.NotStarted);
 
   const postPrayerRequestFilter = usePostPrayerRequestFilter();
+
+  const [isRefreshing, setIsRefreshing] = React.useState<boolean>(false);
+
+  const { openToaster } = useToasterContext();
+  const { translate } = useI18N();
 
   const joinedPrayerGroups = React.useMemo(() => {
     return getJoinedPrayerGroups(userData?.prayerGroups ?? []);
@@ -105,6 +113,35 @@ export const useUserHomePageBody = () => {
     userPrayerGroupIds,
   ]);
 
+  const refreshPrayerRequests = async () => {
+    const prayerRequestFilterCriteria: PrayerRequestFilterCriteria = {
+      ...prayerRequestFilters,
+      pageIndex: 0,
+      pageSize: HOME_BASE_PRAYER_REQUEST_FILTERS.pageSize,
+      sortConfig:
+        prayerRequestFilters?.sortConfig ??
+        HOME_BASE_PRAYER_REQUEST_FILTERS.sortConfig,
+    };
+
+    setPrayerRequestFilters(prayerRequestFilterCriteria);
+
+    setIsRefreshing(true);
+
+    const response = await postPrayerRequestFilter(prayerRequestFilterCriteria);
+
+    setIsRefreshing(false);
+
+    if (response.isError) {
+      openToaster({
+        message: translate("toaster.prayerRequestsRefresh.failure"),
+        variant: "success",
+      });
+      return;
+    }
+
+    updatePrayerRequestsData(response.value);
+  };
+
   React.useEffect(() => {
     initializePrayerRequests();
   }, [initializePrayerRequests]);
@@ -134,5 +171,7 @@ export const useUserHomePageBody = () => {
     prayerRequestMetadata,
     initializePrayerRequests,
     prayerRequestIds,
+    refreshPrayerRequests,
+    isRefreshing,
   };
 };

@@ -144,9 +144,13 @@ export const usePrayerRequestActions = (
     onClose();
   };
 
+  const showCreatorActions =
+    selectedPrayerRequest?.user?.userId === userData?.userId;
+
   return {
     isToggleBookmarkLoading,
     toggleBookmark,
     onEditPrayerRequest,
+    showCreatorActions,
   };
 };

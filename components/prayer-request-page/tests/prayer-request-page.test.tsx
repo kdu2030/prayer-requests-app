@@ -39,8 +39,8 @@ jest.mock("../../toasters/toaster-context", () => ({
   }),
 }));
 
-jest.mock("../../prayer-request/prayer-request-detail-context", () => ({
-  usePrayerRequestDetailContext: () => ({
+jest.mock("../../prayer-request/global-prayer-requests-context", () => ({
+  useGlobalPrayerRequestsContext: () => ({
     setPrayerRequest: mockSetPrayerRequestGlobal,
     getPrayerRequestFromStore: mockGetPrayerRequestFromStore,
   }),

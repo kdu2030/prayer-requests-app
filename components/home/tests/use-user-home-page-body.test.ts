@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-native";
+import { renderHook, waitFor } from "@testing-library/react-native";
 
 import { JoinStatus } from "../../../constants/prayer-group-constants";
 import { UserData } from "../../../types/context/api-data-context-type";
@@ -6,6 +6,7 @@ import { ManagedErrorResponse } from "../../../types/error-handling";
 import {
   PrayerRequestFilterCriteria,
   PrayerRequestGetResponse,
+  PrayerRequestModel,
 } from "../../../types/prayer-request-types";
 import {
   mockPrayerRequests,
@@ -103,5 +104,42 @@ describe(useUserHomePageBody, () => {
       );
 
     expect(joinedPrayerGroupIds).toStrictEqual([1, 2]);
+  });
+
+  test("Adds prayer requests to store correctly upon initialization", async () => {
+    let prayerRequestsAdded: PrayerRequestModel[] = [];
+
+    mockAddPrayerRequestsToStore.mockImplementation((prayerRequests) => {
+      prayerRequestsAdded = prayerRequests;
+    });
+
+    mockGetUserData.mockReturnValue(mockUserData);
+
+    const prayerRequestGetResponse: ManagedErrorResponse<PrayerRequestGetResponse> =
+      {
+        isError: false,
+        value: {
+          prayerRequests: mockPrayerRequests,
+          totalCount: mockPrayerRequests.length,
+          pageIndex: 0,
+          numberOfPages: 1,
+        },
+      };
+
+    mockPostPrayerRequestFilter.mockReturnValue(prayerRequestGetResponse);
+
+    renderHook(() => useUserHomePageBody());
+
+    await waitFor(() => {
+      const prayerRequestIdsAdded = prayerRequestsAdded.map(
+        (prayerRequest) => prayerRequest.prayerRequestId,
+      );
+
+      const expectedPrayerRequestIds = mockPrayerRequests.map(
+        (prayerRequest) => prayerRequest.prayerRequestId,
+      );
+
+      expect(prayerRequestIdsAdded).toStrictEqual(expectedPrayerRequestIds);
+    });
   });
 });

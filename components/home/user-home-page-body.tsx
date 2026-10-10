@@ -1,6 +1,10 @@
-import { min } from "lodash";
 import * as React from "react";
-import { FlatList, RefreshControl } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  View,
+} from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { useI18N } from "../../hooks/use-i18n";
@@ -31,8 +35,6 @@ export const UserHomePageBody: React.FC = () => {
     refreshPrayerRequests,
     loadPrayerRequestsWhenEndReached,
     nextPageLoadStatus,
-    prayerRequestFilters,
-    prayerRequestsLeftToLoad,
   } = useUserHomePageBody();
 
   const {
@@ -74,36 +76,50 @@ export const UserHomePageBody: React.FC = () => {
       {loadedPrayerRequests.length === 0 ? (
         <NoRecentPostsPlaceholder />
       ) : (
-        <FlatList
-          data={prayerRequestIds}
-          renderItem={({ item }) => (
-            <PrayerRequestListCard
-              prayerRequestId={item}
-              openPrayerRequestActions={openPrayerRequestActions}
-              showCreatedUser={false}
-            />
-          )}
-          refreshControl={
-            <RefreshControl
-              refreshing={isRefreshing}
-              colors={[theme.colors.primary]}
-              tintColor={theme.colors.primary}
-              onRefresh={refreshPrayerRequests}
-            />
-          }
-          onEndReachedThreshold={0.8}
-          onEndReached={loadPrayerRequestsWhenEndReached}
-          ListFooterComponent={
-            nextPageLoadStatus === LoadStatus.Loading ? (
-              <PrayerRequestSkeletonList
-                numCards={min([
-                  prayerRequestsLeftToLoad,
-                  prayerRequestFilters?.pageSize ?? 0,
-                ])}
+        <View className="flex flex-col relative">
+          <FlatList
+            data={prayerRequestIds}
+            renderItem={({ item }) => (
+              <PrayerRequestListCard
+                prayerRequestId={item}
+                openPrayerRequestActions={openPrayerRequestActions}
+                showCreatedUser={false}
               />
-            ) : undefined
-          }
-        />
+            )}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                colors={[theme.colors.primary]}
+                tintColor={theme.colors.primary}
+                onRefresh={refreshPrayerRequests}
+              />
+            }
+            onEndReachedThreshold={0.8}
+            onEndReached={loadPrayerRequestsWhenEndReached}
+            ListFooterComponent={
+              <>
+                {nextPageLoadStatus === LoadStatus.Loading && (
+                  <View
+                    className="rounded-full shadow-sm bg-white z-10"
+                    style={{ shadowColor: theme.colors.shadow }}
+                  >
+                    <ActivityIndicator
+                      animating={true}
+                      size={48}
+                      color={theme.colors.primary}
+                    />
+                  </View>
+                )}
+              </>
+            }
+            ListFooterComponentStyle={{
+              position: "absolute",
+              bottom: 24,
+              alignSelf: "center",
+              zIndex: 10,
+            }}
+          />
+        </View>
       )}
 
       <PrayerRequestActions

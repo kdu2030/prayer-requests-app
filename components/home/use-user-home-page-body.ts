@@ -165,11 +165,19 @@ export const useUserHomePageBody = () => {
     );
   }, [getPrayerRequestFromStore, prayerRequestIds]);
 
+  const prayerRequestsLeftToLoad =
+    (prayerRequestMetadata?.totalCount ?? 0) -
+    (prayerRequestMetadata?.prayerRequestsLoaded ?? 0);
+
   const loadPrayerRequestsWhenEndReached = async () => {
     if (
       nextPageLoadStatus === LoadStatus.Loading ||
       nextPageLoadStatus === LoadStatus.Error
     ) {
+      return;
+    }
+
+    if (prayerRequestsLeftToLoad <= 0) {
       return;
     }
 
@@ -202,7 +210,9 @@ export const useUserHomePageBody = () => {
     setPrayerRequestMetadata({
       totalCount: prayerRequestResponse.totalCount,
       numberOfPages: prayerRequestResponse.numberOfPages,
-      prayerRequestsLoaded: prayerRequestResponse.prayerRequests?.length ?? 0,
+      prayerRequestsLoaded:
+        (prayerRequestMetadata?.prayerRequestsLoaded ?? 0) +
+        (prayerRequestResponse.prayerRequests?.length ?? 0),
     });
 
     const nextPagePrayerRequestIds =
@@ -220,10 +230,6 @@ export const useUserHomePageBody = () => {
     addPrayerRequestsToStore(prayerRequestResponse.prayerRequests ?? []);
     setPrayerRequestIds(prayerRequestIds.concat(nextPagePrayerRequestIds));
   };
-
-  const prayerRequestsLeftToLoad =
-    (prayerRequestMetadata?.totalCount ?? 0) -
-    (prayerRequestMetadata?.prayerRequestsLoaded ?? 0);
 
   return {
     homePageLoadStatus,

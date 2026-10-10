@@ -1,16 +1,16 @@
-import { min } from "lodash";
 import * as React from "react";
 import { FlatList, RefreshControl } from "react-native";
 import { useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { INFINITE_SCROLLER_SPINNER_STYLES } from "../../constants/infinite-scroller-constants";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
+import { InfiniteScrollerSpinner } from "../layouts/infinite-scroller-spinner";
 import { SpinnerScreen } from "../layouts/spinner-screen";
 import { usePrayerRequestContext } from "../prayer-request/prayer-request-context";
 import { PrayerRequestListCard } from "../prayer-request/prayer-request-list-card";
-import { PrayerRequestSkeletonList } from "../prayer-request/prayer-request-skeleton-list";
 import { PrayerGroupHeader } from "./header/prayer-group-header";
 import {
   PrayerGroupActionsContainer,
@@ -50,8 +50,6 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
     showLeavePrayerGroupModal,
     setShowLeavePrayerGroupModal,
     setUserJoinStatus,
-    numNotLoadedRequests,
-    prayerRequestFilters,
     nextPrayerRequestsLoadStatus,
     refreshPrayerGroup,
     isPrayerGroupRefreshing,
@@ -165,14 +163,10 @@ export const PrayerGroup: React.FC<Props> = ({ prayerGroupId }) => {
             )}
             ListFooterComponent={
               nextPrayerRequestsLoadStatus === LoadStatus.Loading ? (
-                <PrayerRequestSkeletonList
-                  numCards={min([
-                    numNotLoadedRequests,
-                    prayerRequestFilters.pageSize ?? 0,
-                  ])}
-                />
+                <InfiniteScrollerSpinner />
               ) : undefined
             }
+            ListFooterComponentStyle={INFINITE_SCROLLER_SPINNER_STYLES}
             onEndReachedThreshold={0.8}
             onEndReached={onEndReached}
             refreshControl={

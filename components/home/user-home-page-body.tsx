@@ -1,15 +1,12 @@
 import * as React from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-  View,
-} from "react-native";
+import { FlatList, RefreshControl, View } from "react-native";
 import { useTheme } from "react-native-paper";
 
+import { INFINITE_SCROLLER_SPINNER_STYLES } from "../../constants/infinite-scroller-constants";
 import { useI18N } from "../../hooks/use-i18n";
 import { LoadStatus } from "../../types/api-response-types";
 import { ErrorScreen } from "../layouts/error-screen";
+import { InfiniteScrollerSpinner } from "../layouts/infinite-scroller-spinner";
 import { usePrayerRequestActionsContainer } from "../prayer-group/use-prayer-request-actions-container";
 import { DeletePrayerRequestModal } from "../prayer-request/delete-prayer-request-modal";
 import { EditExpirationDateModal } from "../prayer-request/edit-expiration-date-modal";
@@ -99,25 +96,11 @@ export const UserHomePageBody: React.FC = () => {
             ListFooterComponent={
               <>
                 {nextPageLoadStatus === LoadStatus.Loading && (
-                  <View
-                    className="rounded-full shadow-sm bg-white z-10"
-                    style={{ shadowColor: theme.colors.shadow }}
-                  >
-                    <ActivityIndicator
-                      animating={true}
-                      size={48}
-                      color={theme.colors.primary}
-                    />
-                  </View>
+                  <InfiniteScrollerSpinner />
                 )}
               </>
             }
-            ListFooterComponentStyle={{
-              position: "absolute",
-              bottom: 24,
-              alignSelf: "center",
-              zIndex: 10,
-            }}
+            ListFooterComponentStyle={INFINITE_SCROLLER_SPINNER_STYLES}
           />
         </View>
       )}

@@ -10,12 +10,12 @@ import {
 import { useI18N } from "../../../hooks/use-i18n";
 import { LoadStatus } from "../../../types/api-response-types";
 import { ErrorScreen } from "../../layouts/error-screen";
+import { PrayerRequestSkeletonList } from "../../prayer-request/prayer-request-skeleton-list";
 import {
   PrayerGroupActionsContainer,
   PrayerGroupActionsContainerProps,
 } from "../prayer-group-actions-container";
 import { PrayerRequestPlaceholder } from "../prayer-request-placeholder";
-import { PrayerRequestListSpinner } from "../spinners/prayer-request-list-spinner";
 import { PrivatePrayerGroupPlaceholder } from "./private-prayer-group-placeholder";
 
 type Props = {
@@ -72,15 +72,13 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
         }
       >
         {prayerGroupHeader}
-        <View className="mt-32">
-          {prayerRequestLoadStatus === LoadStatus.Loading && (
-            <PrayerRequestListSpinner
-              textClassName="mt-5"
-              labelVariant={"titleMedium"}
-            />
-          )}
 
-          {prayerRequestLoadStatus === LoadStatus.Error && (
+        {prayerRequestLoadStatus === LoadStatus.Loading && (
+          <PrayerRequestSkeletonList numCards={5} />
+        )}
+
+        {prayerRequestLoadStatus === LoadStatus.Error && (
+          <View className="mt-32">
             <ErrorScreen
               errorLabel={translate("prayerRequest.loading.failure")}
               showSafeArea={false}
@@ -89,22 +87,26 @@ export const PrayerRequestPlaceholderBody: React.FC<Props> = ({
                 loadNextPrayerRequestsForGroup(prayerGroupId, true)
               }
             />
-          )}
+          </View>
+        )}
 
-          {isLoadingSuccessful && !showPrivatePrayerGroupPlaceholder && (
+        {isLoadingSuccessful && !showPrivatePrayerGroupPlaceholder && (
+          <View className="mt-32">
             <PrayerRequestPlaceholder />
-          )}
+          </View>
+        )}
 
-          {showPrivatePrayerGroupPlaceholder && (
+        {showPrivatePrayerGroupPlaceholder && (
+          <View className="mt-32">
             <PrivatePrayerGroupPlaceholder
               prayerGroupId={prayerGroupId}
               joinStatus={joinStatus ?? JoinStatus.NotJoined}
               setUserJoinStatus={setUserJoinStatus}
             />
-          )}
+          </View>
+        )}
 
-          <PrayerGroupActionsContainer {...prayerGroupActionsProps} />
-        </View>
+        <PrayerGroupActionsContainer {...prayerGroupActionsProps} />
       </ScrollView>
     </SafeAreaView>
   );

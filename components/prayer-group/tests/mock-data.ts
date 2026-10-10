@@ -60,8 +60,16 @@ export const mockUserData: UserData = {
   fullName: "Jim Halpert",
   image: undefined,
   prayerGroups: [
-    { groupName: "Prayer Group 1", prayerGroupId: 1 },
-    { groupName: "Prayer Group 2", prayerGroupId: 2 },
+    {
+      groupName: "Prayer Group 1",
+      prayerGroupId: 1,
+      joinStatus: JoinStatus.Joined,
+    },
+    {
+      groupName: "Prayer Group 2",
+      prayerGroupId: 2,
+      joinStatus: JoinStatus.Joined,
+    },
   ],
   userId: 1,
   username: "jhalpert",

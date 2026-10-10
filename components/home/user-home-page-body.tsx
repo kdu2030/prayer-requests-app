@@ -1,3 +1,4 @@
+import { min } from "lodash";
 import * as React from "react";
 import { FlatList, RefreshControl } from "react-native";
 import { useTheme } from "react-native-paper";
@@ -28,6 +29,10 @@ export const UserHomePageBody: React.FC = () => {
     prayerRequestIds,
     isRefreshing,
     refreshPrayerRequests,
+    loadPrayerRequestsWhenEndReached,
+    nextPageLoadStatus,
+    prayerRequestFilters,
+    prayerRequestsLeftToLoad,
   } = useUserHomePageBody();
 
   const {
@@ -85,6 +90,18 @@ export const UserHomePageBody: React.FC = () => {
               tintColor={theme.colors.primary}
               onRefresh={refreshPrayerRequests}
             />
+          }
+          onEndReachedThreshold={0.8}
+          onEndReached={loadPrayerRequestsWhenEndReached}
+          ListFooterComponent={
+            nextPageLoadStatus === LoadStatus.Loading ? (
+              <PrayerRequestSkeletonList
+                numCards={min([
+                  prayerRequestsLeftToLoad,
+                  prayerRequestFilters?.pageSize ?? 0,
+                ])}
+              />
+            ) : undefined
           }
         />
       )}

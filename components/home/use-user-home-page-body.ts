@@ -62,6 +62,7 @@ export const useUserHomePageBody = () => {
       setPrayerRequestMetadata({
         totalCount: prayerRequestResponse.totalCount,
         numberOfPages: prayerRequestResponse.numberOfPages,
+        prayerRequestsLoaded: prayerRequestResponse.prayerRequests?.length ?? 0,
       });
 
       const prayerRequestIds =
@@ -180,6 +181,8 @@ export const useUserHomePageBody = () => {
         DEFAULT_PRAYER_REQUEST_FILTERS.sortConfig,
     };
 
+    setNextPageLoadStatus(LoadStatus.Loading);
+
     const response = await postPrayerRequestFilter(nextPageFilterCriteria);
 
     if (response.isError) {
@@ -193,8 +196,34 @@ export const useUserHomePageBody = () => {
     }
 
     setNextPageLoadStatus(LoadStatus.Success);
-    updatePrayerRequestsData(response.value);
+
+    const prayerRequestResponse = response.value;
+
+    setPrayerRequestMetadata({
+      totalCount: prayerRequestResponse.totalCount,
+      numberOfPages: prayerRequestResponse.numberOfPages,
+      prayerRequestsLoaded: prayerRequestResponse.prayerRequests?.length ?? 0,
+    });
+
+    const nextPagePrayerRequestIds =
+      prayerRequestResponse.prayerRequests?.reduce(
+        (prayerRequestIds: number[], prayerRequest) => {
+          if (!prayerRequest.prayerRequestId) {
+            return prayerRequestIds;
+          }
+
+          return prayerRequestIds.concat(prayerRequest.prayerRequestId);
+        },
+        [],
+      ) ?? [];
+
+    addPrayerRequestsToStore(prayerRequestResponse.prayerRequests ?? []);
+    setPrayerRequestIds(prayerRequestIds.concat(nextPagePrayerRequestIds));
   };
+
+  const prayerRequestsLeftToLoad =
+    (prayerRequestMetadata?.totalCount ?? 0) -
+    (prayerRequestMetadata?.prayerRequestsLoaded ?? 0);
 
   return {
     homePageLoadStatus,
@@ -209,5 +238,7 @@ export const useUserHomePageBody = () => {
     refreshPrayerRequests,
     isRefreshing,
     loadPrayerRequestsWhenEndReached,
+    nextPageLoadStatus,
+    prayerRequestsLeftToLoad,
   };
 };

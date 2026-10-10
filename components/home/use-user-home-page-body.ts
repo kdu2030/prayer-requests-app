@@ -11,6 +11,7 @@ import {
   PrayerRequestMetadata,
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
+import { DEFAULT_PRAYER_REQUEST_FILTERS } from "../prayer-group/prayer-group-constants";
 import { getJoinedPrayerGroups } from "../prayer-group/prayer-group-helpers";
 import { useGlobalPrayerRequestsContext } from "../prayer-request/global-prayer-requests-context";
 import { useToasterContext } from "../toasters/toaster-context";
@@ -160,6 +161,15 @@ export const useUserHomePageBody = () => {
       [],
     );
   }, [getPrayerRequestFromStore, prayerRequestIds]);
+
+  // const loadNextPrayerRequests = () => {
+  //   const nextPageFilterCriteria: PrayerRequestFilterCriteria = {
+  //     ...prayerRequestFilters,
+  //     sortConfig:
+  //       prayerRequestFilters?.sortConfig ??
+  //       DEFAULT_PRAYER_REQUEST_FILTERS.sortConfig,
+  //   };
+  // };
 
   return {
     homePageLoadStatus,

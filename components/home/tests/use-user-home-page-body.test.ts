@@ -2,8 +2,15 @@ import { renderHook } from "@testing-library/react-native";
 
 import { JoinStatus } from "../../../constants/prayer-group-constants";
 import { UserData } from "../../../types/context/api-data-context-type";
-import { PrayerRequestFilterCriteria } from "../../../types/prayer-request-types";
-import { mockUserData } from "../../prayer-group/tests/mock-data";
+import { ManagedErrorResponse } from "../../../types/error-handling";
+import {
+  PrayerRequestFilterCriteria,
+  PrayerRequestGetResponse,
+} from "../../../types/prayer-request-types";
+import {
+  mockPrayerRequests,
+  mockUserData,
+} from "../../prayer-group/tests/mock-data";
 import { useUserHomePageBody } from "../use-user-home-page-body";
 
 const mockAddPrayerRequestsToStore = jest.fn();
@@ -13,7 +20,7 @@ const mockPostPrayerRequestFilter = jest.fn();
 const mockPostPrayerRequestFilterCallback = (
   filterCriteria: PrayerRequestFilterCriteria,
 ) => {
-  mockPostPrayerRequestFilter(filterCriteria);
+  return mockPostPrayerRequestFilter(filterCriteria);
 };
 
 const mockGetUserData = jest.fn();
@@ -52,7 +59,7 @@ describe(useUserHomePageBody, () => {
     jest.clearAllMocks();
   });
 
-  test("Counts joined prayer groups correctly", () => {
+  test("Identifies joined prayer groups correctly", () => {
     const userDataWithJoinRequestGroups: UserData = {
       ...mockUserData,
       prayerGroups: [
@@ -74,6 +81,19 @@ describe(useUserHomePageBody, () => {
       ],
     };
 
+    const prayerRequestGetResponse: ManagedErrorResponse<PrayerRequestGetResponse> =
+      {
+        isError: false,
+        value: {
+          prayerRequests: mockPrayerRequests,
+          totalCount: mockPrayerRequests.length,
+          pageIndex: 0,
+          numberOfPages: 1,
+        },
+      };
+
+    mockPostPrayerRequestFilter.mockReturnValue(prayerRequestGetResponse);
+
     mockGetUserData.mockReturnValue(userDataWithJoinRequestGroups);
 
     const useUserHomePageBodyRef = renderHook(() => useUserHomePageBody());
@@ -82,6 +102,6 @@ describe(useUserHomePageBody, () => {
         (group) => group.prayerGroupId,
       );
 
-    expect(joinedPrayerGroupIds).toContain([1, 2]);
+    expect(joinedPrayerGroupIds).toStrictEqual([1, 2]);
   });
 });

@@ -198,4 +198,39 @@ describe(useUserHomePageBody, () => {
       expect(mockPostPrayerRequestFilter).toHaveBeenCalledTimes(2);
     });
   });
+
+  test("Fetching next page is skipped when there aren't any remaining prayer requests to load", async () => {
+    mockGetUserData.mockReturnValue(mockUserData);
+
+    const firstPagePrayerRequestGetResponse: ManagedErrorResponse<PrayerRequestGetResponse> =
+      {
+        isError: false,
+        value: {
+          prayerRequests: mockPrayerRequests,
+          totalCount: mockPrayerRequests.length,
+          pageIndex: 0,
+          numberOfPages: 2,
+        },
+      };
+
+    mockPostPrayerRequestFilter.mockReturnValueOnce(
+      firstPagePrayerRequestGetResponse,
+    );
+
+    const useUserHomePageBodyRef = renderHook(() => useUserHomePageBody());
+
+    await waitFor(() => {
+      expect(
+        useUserHomePageBodyRef.result.current.prayerRequestsLeftToLoad,
+      ).toBe(0);
+    });
+
+    await act(async () => {
+      await useUserHomePageBodyRef.result.current.loadPrayerRequestsWhenEndReached();
+    });
+
+    await waitFor(() => {
+      expect(mockPostPrayerRequestFilter).toHaveBeenCalledTimes(1);
+    });
+  });
 });

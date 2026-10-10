@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@testing-library/react-native";
+import { act, renderHook, waitFor } from "@testing-library/react-native";
 
 import { JoinStatus } from "../../../constants/prayer-group-constants";
 import { UserData } from "../../../types/context/api-data-context-type";
@@ -35,7 +35,7 @@ jest.mock("../../../hooks/use-api-data", () => ({
 jest.mock("../../prayer-request/global-prayer-requests-context", () => ({
   useGlobalPrayerRequestsContext: () => ({
     addPrayerRequestsToStore: mockAddPrayerRequestsToStore,
-    getPrayerRequestsFromStore: mockGetPrayerRequestsFromStore,
+    getPrayerRequestFromStore: mockGetPrayerRequestsFromStore,
   }),
 }));
 
@@ -140,6 +140,62 @@ describe(useUserHomePageBody, () => {
       );
 
       expect(prayerRequestIdsAdded).toStrictEqual(expectedPrayerRequestIds);
+    });
+  });
+
+  test("Fetches next page when there are remaining prayer requests to load", async () => {
+    mockGetUserData.mockReturnValue(mockUserData);
+
+    const firstPagePrayerRequestGetResponse: ManagedErrorResponse<PrayerRequestGetResponse> =
+      {
+        isError: false,
+        value: {
+          prayerRequests: mockPrayerRequests,
+          totalCount: mockPrayerRequests.length + 2,
+          pageIndex: 0,
+          numberOfPages: 2,
+        },
+      };
+
+    mockPostPrayerRequestFilter.mockReturnValueOnce(
+      firstPagePrayerRequestGetResponse,
+    );
+
+    const useUserHomePageBodyRef = renderHook(() => useUserHomePageBody());
+
+    await waitFor(() => {
+      expect(
+        useUserHomePageBodyRef.result.current.prayerRequestsLeftToLoad,
+      ).toBe(2);
+    });
+
+    const secondPagePrayerRequestGetResponse: ManagedErrorResponse<PrayerRequestGetResponse> =
+      {
+        isError: false,
+        value: {
+          prayerRequests: [
+            {
+              prayerRequestId: 10,
+              requestTitle: "Prayer request 10",
+            },
+            { prayerRequestId: 11, requestTitle: "Prayer request 11" },
+          ],
+          totalCount: mockPrayerRequests.length + 2,
+          pageIndex: 1,
+          numberOfPages: 2,
+        },
+      };
+
+    mockPostPrayerRequestFilter.mockReturnValueOnce(
+      secondPagePrayerRequestGetResponse,
+    );
+
+    await act(async () => {
+      await useUserHomePageBodyRef.result.current.loadPrayerRequestsWhenEndReached();
+    });
+
+    await waitFor(() => {
+      expect(mockPostPrayerRequestFilter).toHaveBeenCalledTimes(2);
     });
   });
 });

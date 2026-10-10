@@ -18,7 +18,6 @@ export type PrayerRequestFilterCriteria = {
 export type PrayerRequestMetadata = {
   totalCount?: number;
   numberOfPages?: number;
-  pageIndex?: number;
   prayerRequestsLoaded?: number;
 };
 

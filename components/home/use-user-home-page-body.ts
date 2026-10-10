@@ -35,6 +35,9 @@ export const useUserHomePageBody = () => {
   const [homePageLoadStatus, setHomePageLoadStatus] =
     React.useState<LoadStatus>(LoadStatus.NotStarted);
 
+  const [nextPageLoadStatus, setNextPageLoadStatus] =
+    React.useState<LoadStatus>(LoadStatus.NotStarted);
+
   const postPrayerRequestFilter = usePostPrayerRequestFilter();
 
   const [isRefreshing, setIsRefreshing] = React.useState<boolean>(false);
@@ -59,7 +62,6 @@ export const useUserHomePageBody = () => {
       setPrayerRequestMetadata({
         totalCount: prayerRequestResponse.totalCount,
         numberOfPages: prayerRequestResponse.numberOfPages,
-        pageIndex: 0,
       });
 
       const prayerRequestIds =
@@ -162,14 +164,37 @@ export const useUserHomePageBody = () => {
     );
   }, [getPrayerRequestFromStore, prayerRequestIds]);
 
-  // const loadNextPrayerRequests = () => {
-  //   const nextPageFilterCriteria: PrayerRequestFilterCriteria = {
-  //     ...prayerRequestFilters,
-  //     sortConfig:
-  //       prayerRequestFilters?.sortConfig ??
-  //       DEFAULT_PRAYER_REQUEST_FILTERS.sortConfig,
-  //   };
-  // };
+  const loadPrayerRequestsWhenEndReached = async () => {
+    if (
+      nextPageLoadStatus === LoadStatus.Loading ||
+      nextPageLoadStatus === LoadStatus.Error
+    ) {
+      return;
+    }
+
+    const nextPageFilterCriteria: PrayerRequestFilterCriteria = {
+      ...prayerRequestFilters,
+      pageIndex: (prayerRequestFilters?.pageIndex ?? 0) + 1,
+      sortConfig:
+        prayerRequestFilters?.sortConfig ??
+        DEFAULT_PRAYER_REQUEST_FILTERS.sortConfig,
+    };
+
+    const response = await postPrayerRequestFilter(nextPageFilterCriteria);
+
+    if (response.isError) {
+      openToaster({
+        message: translate("prayerRequest.loading.failure"),
+        variant: "error",
+      });
+
+      setNextPageLoadStatus(LoadStatus.Error);
+      return;
+    }
+
+    setNextPageLoadStatus(LoadStatus.Success);
+    updatePrayerRequestsData(response.value);
+  };
 
   return {
     homePageLoadStatus,
@@ -183,5 +208,6 @@ export const useUserHomePageBody = () => {
     prayerRequestIds,
     refreshPrayerRequests,
     isRefreshing,
+    loadPrayerRequestsWhenEndReached,
   };
 };

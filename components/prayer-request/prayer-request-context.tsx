@@ -184,7 +184,6 @@ export const PrayerRequestContextProvider: React.FC<Props> = ({ children }) => {
     setPrayerRequestFilters(filters);
 
     setPrayerRequestMetadata({
-      pageIndex: response.value.pageIndex,
       numberOfPages: response.value.numberOfPages,
       totalCount: response.value.totalCount,
       prayerRequestsLoaded: newPrayerRequests.length,

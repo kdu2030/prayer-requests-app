@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FlatList } from "react-native";
+import { View } from "react-native";
 
 import { PrayerRequestSkeleton } from "./prayer-request-skeleton";
 
@@ -9,9 +9,10 @@ type Props = {
 
 export const PrayerRequestSkeletonList: React.FC<Props> = ({ numCards }) => {
   return (
-    <FlatList
-      data={Array(numCards)}
-      renderItem={() => <PrayerRequestSkeleton />}
-    />
+    <View className="flex flex-1 ">
+      {[...Array(numCards)].map((_value, index) => (
+        <PrayerRequestSkeleton key={index} />
+      ))}
+    </View>
   );
 };

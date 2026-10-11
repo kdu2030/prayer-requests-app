@@ -27,6 +27,7 @@ export type PrayerGroupDetails = {
   bannerFile?: MediaFile;
   joinRequestCount?: number;
   userJoinDate?: string;
+  userRequestSubmittedDate?: string;
 };
 
 export type PrayerGroupSummary = {

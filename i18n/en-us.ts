@@ -209,6 +209,10 @@ export const englishTranslations = {
     "Failed to save join request updates.",
   "prayerGroup.joinRequest.saved": "Saved join request updates.",
 
+  "home.prayerRequests.noPrayerGroupsJoined":
+    "You haven't joined any prayer groups yet.",
+  "home.prayerRequests.noRecentPrayerRequests": "No recent prayer requests.",
+
   "toaster.joinPrayerGroup.success": "Successfully joined prayer group.",
   "toaster.joinPrayerGroup.failure": "Failed to join prayer group.",
   "toaster.joinRequestSubmit.success": "Join request submitted.",
@@ -233,4 +237,7 @@ export const englishTranslations = {
 
   "toaster.deletePrayerRequest.success": "Deleted prayer request",
   "toaster.deletePrayerRequest.failure": "Failed to delete prayer request",
+  "toaster.prayerRequestRefresh.failure": "Failed to refresh prayer request",
+  "toaster.prayerGroupRefresh.failure": "Failed to refresh prayer group",
+  "toaster.prayerRequestsRefresh.failure": "Failed to refresh prayer requests",
 };

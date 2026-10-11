@@ -19,7 +19,7 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { usePrayerRequestActionsContainer } from "../prayer-group/use-prayer-request-actions-container";
-import { usePrayerRequestDetailContext } from "../prayer-request/prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "../prayer-request/global-prayer-requests-context";
 import {
   CommentFormAction,
   PrayerRequestCommentForm,
@@ -84,7 +84,7 @@ export const usePrayerRequestPage = (
   const {
     setPrayerRequest: setPrayerRequestGlobal,
     getPrayerRequestFromStore,
-  } = usePrayerRequestDetailContext();
+  } = useGlobalPrayerRequestsContext();
 
   const storedPrayerRequest = getPrayerRequestFromStore(prayerRequestId);
 
@@ -95,6 +95,9 @@ export const usePrayerRequestPage = (
 
   const prayerRequestCommentListRef = React.useRef<FlatList>(null);
   const isScrollOnLoadCompleteRef = React.useRef<boolean>(false);
+
+  const [isPrayerRequestRefreshing, setIsPrayerRequestRefreshing] =
+    React.useState<boolean>(false);
 
   const loadPrayerRequest = async () => {
     setPrayerRequestLoadStatus(LoadStatus.Loading);
@@ -484,6 +487,23 @@ export const usePrayerRequestPage = (
     }
   };
 
+  const onRefreshPrayerRequest = async () => {
+    setIsPrayerRequestRefreshing(true);
+    const prayerRequestResponse = await getPrayerRequest(prayerRequestId);
+    setIsPrayerRequestRefreshing(false);
+
+    if (prayerRequestResponse.isError) {
+      openToaster({
+        message: translate("toaster.prayerRequestRefresh.failure"),
+        variant: "error",
+      });
+      return;
+    }
+
+    setPrayerRequest(prayerRequestResponse.value);
+    setPrayerRequestGlobal(prayerRequestId, prayerRequestResponse.value);
+  };
+
   return {
     prayerRequest,
     prayerRequestLoadStatus,
@@ -523,5 +543,7 @@ export const usePrayerRequestPage = (
     prayerRequestIdToDelete,
     onDeleteConfirmationModalClose,
     onDeleteConfirmationModalOpen,
+    onRefreshPrayerRequest,
+    isPrayerRequestRefreshing,
   };
 };

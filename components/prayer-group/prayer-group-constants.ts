@@ -18,5 +18,4 @@ export const DEFAULT_PRAYER_REQUEST_FILTERS: PrayerRequestFilterCriteria = {
 export const DEFAULT_PRAYER_REQUEST_METADATA: PrayerRequestMetadata = {
   numberOfPages: 0,
   totalCount: 0,
-  pageIndex: 0,
 };

@@ -12,12 +12,12 @@ export type PrayerRequestFilterCriteria = {
   bookmarkedByUserId?: number;
   includeExpiredPrayerRequests?: boolean;
   sortConfig: SortConfig;
+  excludedCreatorUserIds?: number[];
 };
 
 export type PrayerRequestMetadata = {
   totalCount?: number;
   numberOfPages?: number;
-  pageIndex?: number;
   prayerRequestsLoaded?: number;
 };
 

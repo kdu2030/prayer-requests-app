@@ -1,10 +1,10 @@
 import { JoinStatus } from "../../constants/prayer-group-constants";
 import { PrayerGroupSummary } from "../../types/prayer-group-types";
 
-export function addNewPrayerGroupToUserGroups(
+export const addNewPrayerGroupToUserGroups = (
   existingPrayerGroups: PrayerGroupSummary[],
   newPrayerGroup: PrayerGroupSummary,
-): PrayerGroupSummary[] {
+): PrayerGroupSummary[] => {
   const updatedPrayerGroups = [...existingPrayerGroups];
 
   const indexToAdd = updatedPrayerGroups.findIndex(
@@ -18,4 +18,12 @@ export function addNewPrayerGroupToUserGroups(
   }
 
   return updatedPrayerGroups;
-}
+};
+
+export const getJoinedPrayerGroups = (
+  prayerGroups: PrayerGroupSummary[],
+): PrayerGroupSummary[] => {
+  return prayerGroups.filter(
+    (prayerGroup) => prayerGroup.joinStatus === JoinStatus.Joined,
+  );
+};

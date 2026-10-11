@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import * as React from "react";
 
 import { useDeletePrayerRequestLike } from "../../api/delete-prayer-request-like";
@@ -9,7 +10,7 @@ import {
   PrayerRequestModel,
 } from "../../types/prayer-request-types";
 import { useToasterContext } from "../toasters/toaster-context";
-import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
+import { useGlobalPrayerRequestsContext } from "./global-prayer-requests-context";
 
 export const usePrayerRequestListCard = (
   prayerRequest: PrayerRequestModel | undefined,
@@ -24,7 +25,7 @@ export const usePrayerRequestListCard = (
 
   const { userData } = useApiDataContext();
 
-  const { setPrayerRequest } = usePrayerRequestDetailContext();
+  const { setPrayerRequest } = useGlobalPrayerRequestsContext();
 
   const addPrayerRequestLike = async (prayerRequestId: number) => {
     const userId = userData?.userId;
@@ -98,8 +99,27 @@ export const usePrayerRequestListCard = (
     setIsLikeLoading(false);
   };
 
+  const navigateToPrayerRequest = (scrollToComments: boolean) => {
+    if (
+      !prayerRequest?.prayerRequestId ||
+      !prayerRequest.prayerGroup?.prayerGroupId
+    ) {
+      return;
+    }
+
+    router.push({
+      pathname: "/prayergroup/[id]/prayerrequest/[id]",
+      params: {
+        id: prayerRequest.prayerGroup.prayerGroupId,
+        id_1: prayerRequest.prayerRequestId,
+        scrollToCommentsOnLoad: scrollToComments.toString(),
+      },
+    });
+  };
+
   return {
     isLikeLoading,
     onLikePress,
+    navigateToPrayerRequest,
   };
 };

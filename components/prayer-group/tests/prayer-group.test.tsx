@@ -38,7 +38,7 @@ const mockPostPrayerGroupUser = jest.fn();
 const mockDeletePrayerGroupUser = jest.fn();
 const mockPostPrayerRequestFilter = jest.fn();
 
-const mockUsePrayerRequestDetailsContext = jest.fn();
+const mockUseGlobalPrayerRequestsContext = jest.fn();
 
 jest.mock("@gorhom/bottom-sheet", () => ({
   __esModule: true,
@@ -70,8 +70,8 @@ jest.mock("../../../api/post-prayer-request-filter", () => ({
       mockPostPrayerRequestFilter(filterCriteria),
 }));
 
-jest.mock("../../prayer-request/prayer-request-detail-context", () => ({
-  usePrayerRequestDetailContext: () => mockUsePrayerRequestDetailsContext(),
+jest.mock("../../prayer-request/global-prayer-requests-context", () => ({
+  useGlobalPrayerRequestsContext: () => mockUseGlobalPrayerRequestsContext(),
 }));
 
 const MockSkeleton = View;
@@ -130,7 +130,7 @@ describe(PrayerGroup, () => {
   });
 
   test("Mount test", async () => {
-    mockUsePrayerRequestDetailsContext.mockReturnValue({
+    mockUseGlobalPrayerRequestsContext.mockReturnValue({
       prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
@@ -143,7 +143,7 @@ describe(PrayerGroup, () => {
   });
 
   test("Prayer group banner displays if not null", async () => {
-    mockUsePrayerRequestDetailsContext.mockReturnValue({
+    mockUseGlobalPrayerRequestsContext.mockReturnValue({
       prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
@@ -159,7 +159,7 @@ describe(PrayerGroup, () => {
   });
 
   test("Prayer group banner placeholder displays if banner is null", async () => {
-    mockUsePrayerRequestDetailsContext.mockReturnValue({
+    mockUseGlobalPrayerRequestsContext.mockReturnValue({
       prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
@@ -178,7 +178,7 @@ describe(PrayerGroup, () => {
   });
 
   test("Correct buttons display if user is a member", async () => {
-    mockUsePrayerRequestDetailsContext.mockReturnValue({
+    mockUseGlobalPrayerRequestsContext.mockReturnValue({
       prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
@@ -197,7 +197,7 @@ describe(PrayerGroup, () => {
   });
 
   test("Join prayer group button displays if user is not a member", async () => {
-    mockUsePrayerRequestDetailsContext.mockReturnValue({
+    mockUseGlobalPrayerRequestsContext.mockReturnValue({
       prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
@@ -223,7 +223,7 @@ describe(PrayerGroup, () => {
   });
 
   test("Post prayer group user gets called when the user presses the join button", async () => {
-    mockUsePrayerRequestDetailsContext.mockReturnValue({
+    mockUseGlobalPrayerRequestsContext.mockReturnValue({
       prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},
@@ -275,7 +275,7 @@ describe(PrayerGroup, () => {
       mockPrayerRequestMap[prayerRequest.prayerRequestId!] = prayerRequest;
     });
 
-    mockUsePrayerRequestDetailsContext.mockReturnValue({
+    mockUseGlobalPrayerRequestsContext.mockReturnValue({
       prayerRequests: {},
       getPrayerRequestFromStore: (prayerRequestId: number) => {
         return mockPrayerRequestMap[prayerRequestId];
@@ -302,7 +302,7 @@ describe(PrayerGroup, () => {
   });
 
   test("Submit join request button shows up when the user is not joined on a private prayer group", async () => {
-    mockUsePrayerRequestDetailsContext.mockReturnValue({
+    mockUseGlobalPrayerRequestsContext.mockReturnValue({
       prayerRequests: {},
       getPrayerRequestFromStore: () => {},
       addPrayerRequestsToStore: () => {},

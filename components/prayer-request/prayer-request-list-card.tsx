@@ -1,8 +1,9 @@
 import * as React from "react";
+import { Pressable } from "react-native";
 
 import { PrayerRequestModel } from "../../types/prayer-request-types";
+import { useGlobalPrayerRequestsContext } from "./global-prayer-requests-context";
 import { PrayerRequestCard } from "./prayer-request-card";
-import { usePrayerRequestDetailContext } from "./prayer-request-detail-context";
 import { usePrayerRequestListCard } from "./use-prayer-request-list-card";
 
 type Props = {
@@ -12,20 +13,18 @@ type Props = {
     showExtendedOptions?: boolean,
   ) => void;
   showCreatedUser?: boolean;
-  onCommentPress: () => void;
 };
 
 export const PrayerRequestListCard: React.FC<Props> = ({
   prayerRequestId,
   showCreatedUser = true,
   openPrayerRequestActions,
-  onCommentPress,
 }) => {
   const { getPrayerRequestFromStore: getPrayerRequest } =
-    usePrayerRequestDetailContext();
+    useGlobalPrayerRequestsContext();
 
   const prayerRequest = getPrayerRequest(prayerRequestId);
-  const { isLikeLoading, onLikePress } =
+  const { isLikeLoading, onLikePress, navigateToPrayerRequest } =
     usePrayerRequestListCard(prayerRequest);
 
   if (!prayerRequest) {
@@ -33,14 +32,16 @@ export const PrayerRequestListCard: React.FC<Props> = ({
   }
 
   return (
-    <PrayerRequestCard
-      prayerRequest={prayerRequest}
-      onOpenMenu={() => openPrayerRequestActions(prayerRequest, true)}
-      isLikeLoading={isLikeLoading}
-      onLikePress={onLikePress}
-      onPrayPress={() => openPrayerRequestActions(prayerRequest, false)}
-      onCommentPress={onCommentPress}
-      showCreatedUser={showCreatedUser}
-    />
+    <Pressable onPress={() => navigateToPrayerRequest(false)}>
+      <PrayerRequestCard
+        prayerRequest={prayerRequest}
+        onOpenMenu={() => openPrayerRequestActions(prayerRequest, true)}
+        isLikeLoading={isLikeLoading}
+        onLikePress={onLikePress}
+        onPrayPress={() => openPrayerRequestActions(prayerRequest, false)}
+        onCommentPress={() => navigateToPrayerRequest(true)}
+        showCreatedUser={showCreatedUser}
+      />
+    </Pressable>
   );
 };

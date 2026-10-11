@@ -201,6 +201,9 @@ export const chineseTranslations: Translations = {
     "保存加入恳求的编辑失败。",
   "prayerGroup.joinRequest.saved": "加入恳求的编辑已保存",
 
+  "home.prayerRequests.noPrayerGroupsJoined": "你还没有加入任何祷告小组。",
+  "home.prayerRequests.noRecentPrayerRequests": "暂无最近祷告事项。",
+
   "toaster.joinPrayerGroup.success": "你已成功加入祷告小组。",
   "toaster.joinPrayerGroup.failure": "加入祷告小组失败。",
   "toaster.joinRequestSubmit.success": "加如请求已提交。",
@@ -225,4 +228,8 @@ export const chineseTranslations: Translations = {
 
   "toaster.deletePrayerRequest.success": "已删除祷告事项。",
   "toaster.deletePrayerRequest.failure": "删除祷告事项失败了。",
+
+  "toaster.prayerRequestRefresh.failure": "更新祷告事项失败了。",
+  "toaster.prayerGroupRefresh.failure": "更新祷告小组失败了。",
+  "toaster.prayerRequestsRefresh.failure": "更新祷告事项失败了。",
 };

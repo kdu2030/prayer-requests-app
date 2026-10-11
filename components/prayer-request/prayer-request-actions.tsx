@@ -29,8 +29,12 @@ export const PrayerRequestActions: React.FC<Props> = ({
   const theme = useTheme();
   const { translate } = useI18N();
 
-  const { toggleBookmark, isToggleBookmarkLoading, onEditPrayerRequest } =
-    usePrayerRequestActions(onClose, selectedPrayerRequest);
+  const {
+    toggleBookmark,
+    isToggleBookmarkLoading,
+    onEditPrayerRequest,
+    showCreatorActions,
+  } = usePrayerRequestActions(onClose, selectedPrayerRequest);
 
   return (
     <AppBottomSheet isOpen={isOpen} onClose={onClose}>
@@ -68,7 +72,7 @@ export const PrayerRequestActions: React.FC<Props> = ({
           isLoading={isToggleBookmarkLoading}
         />
 
-        {showExtendedActions && (
+        {showExtendedActions && showCreatorActions && (
           <>
             <PrayerGroupOptionButton
               icon={

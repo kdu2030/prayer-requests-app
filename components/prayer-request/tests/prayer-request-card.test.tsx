@@ -25,7 +25,7 @@ let component: RenderResult;
 const mockSetPrayerRequest = jest.fn();
 const mockPostPrayerRequestLike = jest.fn();
 const mockDeletePrayerRequestLike = jest.fn();
-const mockUsePrayerRequestDetailContext = jest.fn();
+const mockUseGlobalPrayerRequestsContext = jest.fn();
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
@@ -49,12 +49,12 @@ jest.mock("../../../api/delete-prayer-request-like", () => ({
     mockDeletePrayerRequestLike(prayerRequestLikeId),
 }));
 
-jest.mock("../prayer-request-detail-context", () => ({
-  usePrayerRequestDetailContext: () => mockUsePrayerRequestDetailContext(),
+jest.mock("../global-prayer-requests-context", () => ({
+  useGlobalPrayerRequestsContext: () => mockUseGlobalPrayerRequestsContext(),
 }));
 
 const mountPrayerRequestCard = (prayerRequest: PrayerRequestModel) => {
-  mockUsePrayerRequestDetailContext.mockReturnValue({
+  mockUseGlobalPrayerRequestsContext.mockReturnValue({
     getPrayerRequestFromStore: () => {
       return prayerRequest;
     },
@@ -67,7 +67,6 @@ const mountPrayerRequestCard = (prayerRequest: PrayerRequestModel) => {
   return mountComponent(
     <PrayerRequestListCard
       prayerRequestId={prayerRequest.prayerRequestId!}
-      onCommentPress={() => {}}
       showCreatedUser
       openPrayerRequestActions={() => {}}
     />,

@@ -37,6 +37,7 @@ export const PrayerGroupSearch: React.FC = () => {
           backgroundColor: theme.colors.background,
           shadowColor: theme.colors.shadow,
           paddingTop: insets.top + 8,
+          zIndex: 10,
         }}
       >
         <View className="flex flex-row items-center">
@@ -64,52 +65,57 @@ export const PrayerGroupSearch: React.FC = () => {
         </View>
       </View>
 
-      {placeholderMessage && groupSearchResults.length === 0 && (
-        <View className="flex flex-row items-center justify-center mt-16">
-          <Text
-            variant="bodyLarge"
-            className="font-bold"
-            testID={PrayerGroupSearchTestIds.prayerGroupPlaceholder}
-          >
-            {placeholderMessage}
-          </Text>
-        </View>
-      )}
+      <View
+        className="flex flex-col flex-1"
+        style={{ backgroundColor: theme.colors.background }}
+      >
+        {placeholderMessage && groupSearchResults.length === 0 && (
+          <View className="flex flex-row items-center justify-center mt-16">
+            <Text
+              variant="bodyLarge"
+              className="font-bold"
+              testID={PrayerGroupSearchTestIds.prayerGroupPlaceholder}
+            >
+              {placeholderMessage}
+            </Text>
+          </View>
+        )}
 
-      {groupSearchResults.length > 0 && (
-        <View className="flex flex-col mt-4 mx-4">
-          <FlatList
-            data={groupSearchResults}
-            testID={PrayerGroupSearchTestIds.prayerGroupResultsList}
-            keyboardShouldPersistTaps="handled"
-            renderItem={({ item: group, index }) => (
-              <DismissTouchableRipple
-                rippleColor={"rgba(0, 0, 0, 0.12)"}
-                onPress={() => {
-                  if (group.prayerGroupId) {
-                    router.push({
-                      pathname: "/prayergroup/[id]",
-                      params: { id: group.prayerGroupId },
-                    });
-                  }
-                }}
-                style={{ borderRadius: 8, marginBottom: 8 }}
-                borderless
-                testID={`${PrayerGroupSearchTestIds.prayerGroupResult}[${index}]`}
-              >
-                <View className="flex-row gap-x-3 items-center px-4 py-2">
-                  <ProfilePicture
-                    url={group.avatarFile?.fileUrl}
-                    width={36}
-                    height={36}
-                  />
-                  <Text variant="titleMedium">{group.groupName}</Text>
-                </View>
-              </DismissTouchableRipple>
-            )}
-          />
-        </View>
-      )}
+        {groupSearchResults.length > 0 && (
+          <View className="flex flex-col mt-4 mx-4">
+            <FlatList
+              data={groupSearchResults}
+              testID={PrayerGroupSearchTestIds.prayerGroupResultsList}
+              keyboardShouldPersistTaps="handled"
+              renderItem={({ item: group, index }) => (
+                <DismissTouchableRipple
+                  rippleColor={"rgba(0, 0, 0, 0.12)"}
+                  onPress={() => {
+                    if (group.prayerGroupId) {
+                      router.push({
+                        pathname: "/prayergroup/[id]",
+                        params: { id: group.prayerGroupId },
+                      });
+                    }
+                  }}
+                  style={{ borderRadius: 8, marginBottom: 8 }}
+                  borderless
+                  testID={`${PrayerGroupSearchTestIds.prayerGroupResult}[${index}]`}
+                >
+                  <View className="flex-row gap-x-3 items-center px-4 py-2">
+                    <ProfilePicture
+                      url={group.avatarFile?.fileUrl}
+                      width={36}
+                      height={36}
+                    />
+                    <Text variant="titleMedium">{group.groupName}</Text>
+                  </View>
+                </DismissTouchableRipple>
+              )}
+            />
+          </View>
+        )}
+      </View>
     </>
   );
 };
